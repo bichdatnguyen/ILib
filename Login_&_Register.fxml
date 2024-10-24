@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.GaussianBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="1328.0" fitWidth="2225.0" layoutX="-63.0" layoutY="-181.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Downloads/book-library-with-open-textbook.jpg" />
+         </image>
+         <effect>
+            <GaussianBlur radius="30.0" />
+         </effect>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="142.0" layoutX="467.0" layoutY="668.0" stroke="BLACK" strokeType="INSIDE" width="443.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="144.0" layoutX="984.0" layoutY="665.0" stroke="BLACK" strokeType="INSIDE" width="443.0" />
+      <Label alignment="CENTER" contentDisplay="TEXT_ONLY" graphicTextGap="0.0" layoutX="3.0" layoutY="-32.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" text="App Name" textFill="WHITE" textOverrun="CLIP" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="0.33333333333325754">
+         <font>
+            <Font name="#9Slide02 Tieu de rat dai 02" size="360.0" />
+         </font>
+      </Label>
+      <Label layoutX="1066.0" layoutY="697.0" text="Đăng Ký" textFill="WHITE">
+         <font>
+            <Font name="#9Slide02 Noi dung rat dai" size="80.0" />
+         </font>
+      </Label>
+      <Label layoutX="508.0" layoutY="687.0" text="Đăng Nhập" textAlignment="CENTER" textFill="WHITE" textOverrun="CLIP">
+         <font>
+            <Font name="#9Slide02 Noi dung rat dai" size="80.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
