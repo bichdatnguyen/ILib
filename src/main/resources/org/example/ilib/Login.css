@@ -1,0 +1,14 @@
+#Login {
+    -fx-font-size: 150pt;
+    -fx-text-fill: green;
+}
+
+#email {
+    -fx-font-size: 30pt;
+    -fx-text-fill: black;
+}
+
+#password {
+    -fx-font-size: 30pt;
+    -fx-text-fill: black;
+}

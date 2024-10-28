@@ -1,0 +1,15 @@
+#LoginButton {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+#RegisterButton {
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
+#title {
+    -fx-font-size: 125pt;
+    -fx-font-weight: bold;
+    -fx-text-fill: green;
+}
