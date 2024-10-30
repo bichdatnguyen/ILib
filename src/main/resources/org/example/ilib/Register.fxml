@@ -49,11 +49,11 @@
                <font>
                   <Font size="28.0" />
                </font></Label>
-            <TextField GridPane.columnIndex="1" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField prefHeight="26.0" prefWidth="322.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="RegisterIdentityNumberLabel" GridPane.columnIndex="1" />
+            <TextField fx:id="RegisterEmailLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="RegisterPhoneNumberLabel" prefHeight="26.0" prefWidth="322.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="RegisterFullNameLabel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <PasswordField fx:id="RegisterPasswordLabel" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <Button id="CreateAccount" fx:id="CreateAccountButton" layoutX="609.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#CreateAccount" prefHeight="58.0" prefWidth="143.0" text="Tạo tài khoản " />
