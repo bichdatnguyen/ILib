@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -23,6 +25,11 @@ public class Controller {
 
     @FXML
     private Button LoginSuccessButton;
+
+    @FXML
+    private TextField LoginEmailLabel;
+
+    private String email;
 
     @FXML
     void Login(MouseEvent event) throws IOException {
@@ -58,5 +65,7 @@ public class Controller {
         loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+        email = String.valueOf(Integer.parseInt(LoginEmailLabel.getText()));
+        System.out.println(email);
     }
 }

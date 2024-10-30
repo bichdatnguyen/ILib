@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#CreateAccount" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#CreateAccount" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller">
    <children>
-      <Label id="Title" layoutX="285.0" layoutY="111.0" text="Register" textFill="#52914f">
+      <Label id="Title" layoutX="105.0" layoutY="17.0" text="Register" textFill="#52914f">
          <font>
             <Font size="96.0" />
          </font></Label>
-      <GridPane layoutX="285.0" layoutY="402.0" prefHeight="362.0" prefWidth="537.0">
+      <GridPane layoutX="79.0" layoutY="144.0" prefHeight="362.0" prefWidth="537.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="255.99998168945314" minWidth="10.0" prefWidth="174.79998779296875" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.4000122070313" minWidth="10.0" prefWidth="354.4000122070313" />
@@ -56,6 +56,6 @@
             <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
-      <Button id="CreateAccount" fx:id="CreateAccountButton" layoutX="787.0" layoutY="852.0" mnemonicParsing="false" onMouseClicked="#CreateAccount" prefHeight="58.0" prefWidth="143.0" text="Tạo tài khoản " />
+      <Button id="CreateAccount" fx:id="CreateAccountButton" layoutX="609.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#CreateAccount" prefHeight="58.0" prefWidth="143.0" text="Tạo tài khoản " />
    </children>
 </AnchorPane>
