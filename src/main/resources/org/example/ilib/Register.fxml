@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -7,14 +8,18 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#CreateAccount" prefHeight="1080.0" prefWidth="1920.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller">
    <children>
-      <Label id="Title" layoutX="329.0" layoutY="48.0" text="Register" />
-      <GridPane layoutX="285.0" layoutY="402.0" prefHeight="362.0" prefWidth="529.0">
+      <Label id="Title" layoutX="285.0" layoutY="111.0" text="Register" textFill="#52914f">
+         <font>
+            <Font size="96.0" />
+         </font></Label>
+      <GridPane layoutX="285.0" layoutY="402.0" prefHeight="362.0" prefWidth="537.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="255.99998168945314" minWidth="10.0" prefWidth="255.99998168945314" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="236.00001831054686" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="255.99998168945314" minWidth="10.0" prefWidth="174.79998779296875" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="354.4000122070313" minWidth="10.0" prefWidth="354.4000122070313" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -24,11 +29,26 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label id="identityNumber" text="CCCD" />
-            <Label id="Email" text="Email" GridPane.rowIndex="1" />
-            <Label id="phoneNumber" text="Số điện thoại " GridPane.rowIndex="2" />
-            <Label id="fullName" text="Họ và tên " GridPane.rowIndex="3" />
-            <Label id="password" text="Mật khẩu " GridPane.rowIndex="4" />
+            <Label id="identityNumber" text="CCCD">
+               <font>
+                  <Font size="28.0" />
+               </font></Label>
+            <Label id="Email" text="Email" GridPane.rowIndex="1">
+               <font>
+                  <Font size="28.0" />
+               </font></Label>
+            <Label id="phoneNumber" text="Số điện thoại " GridPane.rowIndex="2">
+               <font>
+                  <Font size="28.0" />
+               </font></Label>
+            <Label id="fullName" text="Họ và tên " GridPane.rowIndex="3">
+               <font>
+                  <Font size="28.0" />
+               </font></Label>
+            <Label id="password" text="Mật khẩu " GridPane.rowIndex="4">
+               <font>
+                  <Font size="28.0" />
+               </font></Label>
             <TextField GridPane.columnIndex="1" />
             <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField prefHeight="26.0" prefWidth="322.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -36,5 +56,6 @@
             <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
+      <Button id="CreateAccount" fx:id="CreateAccountButton" layoutX="787.0" layoutY="852.0" mnemonicParsing="false" onMouseClicked="#CreateAccount" prefHeight="58.0" prefWidth="143.0" text="Tạo tài khoản " />
    </children>
 </AnchorPane>

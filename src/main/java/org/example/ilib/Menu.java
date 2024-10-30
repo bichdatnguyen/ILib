@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Register extends Application {
+public class Menu extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -16,8 +16,8 @@ public class Register extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Register.fxml"));
-        primaryStage.setTitle("Register");
+        Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
+        primaryStage.setTitle("Menu");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

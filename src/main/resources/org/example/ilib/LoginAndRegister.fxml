@@ -3,11 +3,24 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="title" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1080.0" prefWidth="1613.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="title" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller">
    <children>
-      <Button id="LoginButton" layoutX="328.0" layoutY="717.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="360.0" text="Đăng nhập " />
-      <Button id="RegisterButton" layoutX="892.0" layoutY="717.0" mnemonicParsing="false" prefHeight="109.0" prefWidth="330.0" text="Đăng ký " />
-      <Label id="title" layoutX="681.0" layoutY="283.0" prefHeight="170.0" prefWidth="294.0" text="iLib" />
+      <Button id="LoginButton" fx:id="LoginButton" layoutX="328.0" layoutY="717.0" mnemonicParsing="false" onMouseClicked="#Login" prefHeight="99.0" prefWidth="360.0" text="Đăng nhập">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Button>
+      <Button id="RegisterButton" fx:id="RegisterButton" layoutX="892.0" layoutY="717.0" mnemonicParsing="false" onMouseClicked="#Register" prefHeight="109.0" prefWidth="330.0" text="Đăng ký">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Button>
+      <Label id="titleLabel" layoutX="702.0" layoutY="281.0" prefHeight="183.0" prefWidth="191.0" text="iLib" textFill="#4a8c44">
+         <font>
+            <Font size="96.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
