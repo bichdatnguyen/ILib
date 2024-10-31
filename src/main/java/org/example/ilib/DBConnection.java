@@ -2,6 +2,8 @@ package org.example.ilib;
 
 import java.sql.*;
 
+import static java.lang.System.getenv;
+
 public class DBConnection {
 
     private String email;
@@ -24,8 +26,8 @@ public class DBConnection {
     public void createAccount() throws SQLException {
         Connection connection
                 = DriverManager.getConnection("jdbc:mysql://localhost:3306/ilib",
-                "root",
-                "12345678");
+                getenv("userName"),
+                getenv("userPassword"));
         Statement stmt = connection.createStatement();
         stmt.executeUpdate("INSERT INTO Voucher (email, discount_percentage, end_discount_date) " +
                 "VALUES ('" + email + "', 50, '2024-11-02')");
