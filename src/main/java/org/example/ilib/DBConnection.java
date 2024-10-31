@@ -25,7 +25,7 @@ public class DBConnection {
         Connection connection
                 = DriverManager.getConnection("jdbc:mysql://localhost:3306/ilib",
                 "root",
-                "Dat29072005#");
+                "12345678");
         Statement stmt = connection.createStatement();
         stmt.executeUpdate("INSERT INTO Voucher (email, discount_percentage, end_discount_date) " +
                 "VALUES ('" + email + "', 50, '2024-11-02')");
