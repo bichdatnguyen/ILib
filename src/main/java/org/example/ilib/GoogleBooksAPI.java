@@ -3,9 +3,6 @@ package org.example.ilib;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import javafx.fxml.FXML;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,13 +19,13 @@ public class GoogleBooksAPI {
         this.query = query;
     }
 
-    public void information() {
+    public String information() {
         String apiKey = "AIzaSyDEVPzzznqYZIZHikDUXZh20NutLJswsVo";
 
         try {
             String encodedQuery = URLEncoder.encode(this.query, StandardCharsets.UTF_8);
             String urlString = "https://www.googleapis.com/books/v1/volumes?q="
-                    + encodedQuery + "&maxResults=40&key=" + apiKey;
+                    + encodedQuery + "&maxResults=1&key=" + apiKey;
             URL url = new URL(urlString);
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -52,24 +49,56 @@ public class GoogleBooksAPI {
                 JsonObject jsonResponse = JsonParser.parseString(content.toString()).getAsJsonObject();
                 JsonArray items = jsonResponse.getAsJsonArray("items");
 
-                if (items != null && items.size() > 0) {
-                    for (int i=0; i<items.size(); i++) {
-                        JsonObject firstBook = items.get(i).getAsJsonObject().getAsJsonObject("volumeInfo");
+                if (items != null && !items.isEmpty()) {
+                    for (int i = 0; i < items.size(); i++) {
+                        JsonObject item = items.get(i).getAsJsonObject();
 
-                        String title = firstBook.has("title")
-                                ? firstBook.get("title").getAsString()
-                                : "No Title Available";
-                        String authors = firstBook.has("authors")
-                                ? firstBook.getAsJsonArray("authors").toString()
-                                : "No Authors Available";
-                        String description = firstBook.has("description")
-                                ? firstBook.get("description").getAsString()
-                                : "No Description Available";
+                        // Get the volume ID
+                        String bookID = item.has("id") ? item.get("id").getAsString() : "No ID";
 
+                        JsonObject volumeInfo = item.getAsJsonObject("volumeInfo");
+
+                        // Get title
+                        String title = volumeInfo.has("title") ? volumeInfo.get("title").getAsString() : "No title";
+
+                        // Get authors (array)
+                        String authors = "No authors";
+                        if (volumeInfo.has("authors")) {
+                            JsonArray authorsArray = volumeInfo.getAsJsonArray("authors");
+                            StringBuilder authorsBuilder = new StringBuilder();
+                            for (int j = 0; j < authorsArray.size(); j++) {
+                                authorsBuilder.append(authorsArray.get(j).getAsString());
+                                if (j < authorsArray.size() - 1) {
+                                    authorsBuilder.append(", ");
+                                }
+                            }
+                            authors = authorsBuilder.toString();
+                        }
+
+                        // Get description
+                        String description = volumeInfo.has("description") ? volumeInfo.get("description").getAsString() : "No description";
+
+                        // Get page count
+                        String pageCount = volumeInfo.has("pageCount") ? volumeInfo.get("pageCount").getAsString() : "No page count";
+
+                        String smallThumbnail = "No small thumbnail";
+                        String thumbnail = "No thumbnail";
+                        if(volumeInfo.has("imageLinks")) {
+                            JsonObject imageLinks = volumeInfo.getAsJsonObject("imageLinks");
+                            smallThumbnail = imageLinks.has("smallThumbnail") ? imageLinks.get("smallThumbnail").getAsString() : "No small thumbnail";
+                            thumbnail = imageLinks.has("thumbnail") ? imageLinks.get("thumbnail").getAsString() : "No thumbnail";
+                        }
+
+                        // Print details
                         System.out.println("Title: " + title);
                         System.out.println("Authors: " + authors);
                         System.out.println("Description: " + description);
+                        System.out.println("Book ID: " + bookID);
+                        System.out.println("Page Count: " + pageCount);
+                        System.out.println("Small Thumbnail: " + smallThumbnail);
+                        System.out.println("Thumbnail: " + thumbnail);
                         System.out.println(" ");
+                        return smallThumbnail;
                     }
                 } else {
                     System.out.println("No books found.");
@@ -80,5 +109,6 @@ public class GoogleBooksAPI {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
