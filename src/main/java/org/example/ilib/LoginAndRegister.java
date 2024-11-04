@@ -13,12 +13,6 @@ import java.util.Objects;
 
 public class LoginAndRegister extends Application {
 
-    @FXML
-    private Button LoginButton;
-
-    @FXML
-    private Button RegisterButton;
-
     public static void main(String[] args) {
         launch(args);
     }
