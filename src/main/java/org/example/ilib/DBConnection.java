@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class DBConnection {
     public static void main(String[] args) throws SQLException {
-        /*Connection connection
+        Connection connection
                 = DriverManager.getConnection("jdbc:mysql://localhost:3306/ilib",
                 "root",
                 "Dat29072005#");
@@ -18,7 +18,7 @@ public class DBConnection {
             String identityNumber = rs.getString("identityNumber");
             System.out.println("Email: " + email + " password: " + password + " fullName: " + fullName
                     + " phoneNumber: " + phoneNumber + " identityNumber: " + identityNumber);
-        }*/
+        }
         System.out.println("Connecting to database...");
     }
 }
