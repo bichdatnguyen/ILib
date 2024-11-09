@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Menu">
+<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.ControllerMenu">
    <children>
       <Label layoutX="208.0" layoutY="61.0" prefHeight="162.0" prefWidth="254.0" text="MENU" textFill="#3c8950">
          <font>
             <Font size="67.0" />
          </font>
       </Label>
+      <Button fx:id="signOut" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#signOutMenu" text="Sign Out" />
    </children>
 </AnchorPane>

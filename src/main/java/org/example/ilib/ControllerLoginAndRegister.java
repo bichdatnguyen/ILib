@@ -1,5 +1,6 @@
 package org.example.ilib;
 
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,20 +14,14 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Controller {
+public class ControllerLoginAndRegister {
 
     @FXML
     private Button LoginButton;
 
     @FXML
-    private Button LoginSuccessButton;
-
-    @FXML
-    private TextField LoginEmailLabel;
-    @FXML
     private Button RegisterButton;
 
-    private String email;
 
     @FXML
     void Login(MouseEvent event) throws IOException {
@@ -47,16 +42,6 @@ public class Controller {
     }
 
 
-    @FXML
-    void loginSuccess(MouseEvent event) throws IOException {
-        Stage stage = (Stage) LoginSuccessButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
-        email = String.valueOf(Integer.parseInt(LoginEmailLabel.getText()));
-        System.out.println(email);
-    }
 
     public void Exit(ActionEvent event) {
         // Tạo thông báo xác nhận thoát
@@ -74,12 +59,6 @@ public class Controller {
         // Nếu chọn Cancel, không cần thực hiện gì thêm (tiếp tục chương trình)
     }
 
-    public void backToMenu(ActionEvent event) throws IOException {
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("LoginAndRegister.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
-    }
+
 }
 
