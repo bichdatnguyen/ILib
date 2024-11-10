@@ -7,17 +7,17 @@
 
 <AnchorPane id="title" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller">
    <children>
-      <Button id="LoginButton" fx:id="LoginButton" layoutX="123.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#LoginAccount" prefHeight="99.0" prefWidth="360.0" text="Đăng nhập">
+      <Button id="LoginButton" fx:id="LoginButton" layoutX="123.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#Login" prefHeight="99.0" prefWidth="360.0" text="Đăng nhập">
          <font>
             <Font size="40.0" />
          </font>
       </Button>
-      <Button id="RegisterButton" fx:id="RegisterButton" layoutX="574.0" layoutY="405.0" mnemonicParsing="false" onMouseClicked="#RegisterAccount" prefHeight="109.0" prefWidth="330.0" text="Đăng ký">
+      <Button id="RegisterButton" fx:id="RegisterButton" layoutX="574.0" layoutY="405.0" mnemonicParsing="false" onMouseClicked="#Register" prefHeight="109.0" prefWidth="330.0" text="Đăng ký">
          <font>
             <Font size="40.0" />
          </font>
       </Button>
-      <Label id="titleLabel" layoutX="430.0" layoutY="52.0" prefHeight="183.0" prefWidth="191.0" text="iLib" textFill="#4a8c44">
+      <Label id="titleLabel" layoutX="425.0" layoutY="43.0" prefHeight="183.0" prefWidth="191.0" text="iLib" textFill="#4a8c44">
          <font>
             <Font size="96.0" />
          </font>

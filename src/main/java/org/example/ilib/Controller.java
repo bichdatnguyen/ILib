@@ -1,21 +1,16 @@
 package org.example.ilib;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Objects;
 
 public class Controller {
 
@@ -32,28 +27,12 @@ public class Controller {
     private Button LoginSuccessButton;
 
     @FXML
-    private TextField RegisterEmailLabel;
+    private TextField LoginEmailLabel;
+
+    private String email;
 
     @FXML
-    private TextField RegisterFullNameLabel;
-
-    @FXML
-    private TextField RegisterIdentityNumberLabel;
-
-    @FXML
-    private PasswordField RegisterPasswordLabel;
-
-    @FXML
-    private TextField RegisterPhoneNumberLabel;
-
-    @FXML
-    private TextField search;
-
-    @FXML
-    private ImageView result;
-
-    @FXML
-    void LoginAccount(MouseEvent event) throws IOException {
+    void Login(MouseEvent event) throws IOException {
         Stage stage = (Stage) LoginButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Login.fxml"));
@@ -62,7 +41,7 @@ public class Controller {
     }
 
     @FXML
-    void RegisterAccount(MouseEvent event) throws IOException {
+    void Register(MouseEvent event) throws IOException {
         Stage stage = (Stage) RegisterButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Register.fxml"));
@@ -71,19 +50,12 @@ public class Controller {
     }
 
     @FXML
-    void CreateAccount(MouseEvent event) throws IOException, SQLException {
+    void CreateAccount(MouseEvent event) throws IOException {
         Stage stage = (Stage) CreateAccountButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Login.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
-        String email = RegisterEmailLabel.getText();
-        String fullName = RegisterFullNameLabel.getText();
-        String identityNumber = RegisterIdentityNumberLabel.getText();
-        String password = RegisterPasswordLabel.getText();
-        String phoneNumber = RegisterPhoneNumberLabel.getText();
-        DBConnection db = new DBConnection(email, password, fullName, phoneNumber, identityNumber);
-        db.createAccount();
     }
 
     @FXML
@@ -93,18 +65,7 @@ public class Controller {
         loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
-    }
-
-    @FXML
-    void find(ActionEvent event) throws IOException {
-        Stage stage = (Stage) search.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
-        String query = search.getText();
-        GoogleBooksAPI qr = new GoogleBooksAPI(query);
-        String thumbnail = qr.information();
-        result.setImage(new Image(thumbnail));
+        email = String.valueOf(Integer.parseInt(LoginEmailLabel.getText()));
+        System.out.println(email);
     }
 }
