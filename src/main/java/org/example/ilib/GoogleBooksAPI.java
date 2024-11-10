@@ -11,6 +11,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import static java.lang.System.getenv;
+
 public class GoogleBooksAPI {
 
     private String query;
@@ -20,7 +22,7 @@ public class GoogleBooksAPI {
     }
 
     public String information() {
-        String apiKey = "AIzaSyDEVPzzznqYZIZHikDUXZh20NutLJswsVo";
+        String apiKey = getenv("APIKey");
 
         try {
             String encodedQuery = URLEncoder.encode(this.query, StandardCharsets.UTF_8);
