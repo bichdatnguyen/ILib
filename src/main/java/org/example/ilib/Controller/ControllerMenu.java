@@ -18,6 +18,13 @@ public class ControllerMenu {
     @FXML
     private TextField search;
 
+    /**
+     * signOutMenu handle MouseEvent event.
+     * this method will switch the scene to the login and register screen.
+     *
+     * @param event belong to MouseEvent type
+     * @throws IOException in case that FXML can not be used
+     */
     public void signOutMenu(MouseEvent event) throws IOException {
         Stage stage = (Stage) signOut.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));

@@ -35,7 +35,7 @@ public class ControllerRegister {
             alert.setContentText("Please enter a valid CCD number");
             alert.showAndWait();
             return;
-        } else if(!emailTextField.getText().matches("[a-zA-Z]+@gmail.com")){
+        } else if(!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Please enter a valid email address");
@@ -48,7 +48,7 @@ public class ControllerRegister {
             alert.showAndWait();
             return;
 
-        } else if(!nameTextField.getText().matches("[a-zA-Z]+")){
+        } else if(!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Please enter a valid name");

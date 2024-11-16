@@ -14,6 +14,12 @@ public class ControllerLogin {
     @FXML
     private Button LoginSuccessButton;
 
+    /**
+     * this method will switch to Menu scene.
+     *
+     * @param event MouseEvent
+     * @throws IOException in case FXML file cannot be loaded
+     */
     @FXML
     void loginSuccess(MouseEvent event) throws IOException {
         Stage stage = (Stage) LoginSuccessButton.getScene().getWindow();
@@ -24,6 +30,12 @@ public class ControllerLogin {
 
     }
 
+    /**
+     * this method will force user to back to the Menu.
+     *
+     * @param event MouseEvent
+     * @throws IOException in case FXML file cannot be loaded
+     */
     public void backToMenu(MouseEvent event) throws IOException {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();

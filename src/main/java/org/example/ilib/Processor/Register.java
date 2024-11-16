@@ -14,6 +14,15 @@ public class Register extends Application {
         launch(args);
     }
 
+    /**
+     * this method will be called when user want to create new account.
+     *
+     * @param primaryStage the primary stage for this application, onto which
+     * the application scene can be set.
+     * Applications may create other stages, if needed, but they will not be
+     * primary stages.
+     * @throws IOException in case FXML file cannot be loaded
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/org/example/ilib/Register.fxml"));
