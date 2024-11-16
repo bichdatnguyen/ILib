@@ -41,9 +41,7 @@ public class ControllerLoginAndRegister {
         stage.setScene(scene);
     }
 
-
-
-    public void Exit(ActionEvent event) {
+    public void Exit(MouseEvent event) {
         // Tạo thông báo xác nhận thoát
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit Confirmation");

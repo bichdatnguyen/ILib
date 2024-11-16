@@ -15,7 +15,6 @@ public class ControllerLogin {
     @FXML
     private Button LoginSuccessButton;
 
-
     @FXML
     void loginSuccess(MouseEvent event) throws IOException {
         Stage stage = (Stage) LoginSuccessButton.getScene().getWindow();
@@ -26,7 +25,7 @@ public class ControllerLogin {
 
     }
 
-    public void backToMenu(ActionEvent event) throws IOException {
+    public void backToMenu(MouseEvent event) throws IOException {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("LoginAndRegister.fxml"));

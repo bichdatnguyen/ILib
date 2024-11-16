@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.ControllerMenu">
+<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.ControllerMenu">
    <children>
-      <Label layoutX="208.0" layoutY="61.0" prefHeight="162.0" prefWidth="254.0" text="MENU" textFill="#3c8950">
+      <Button fx:id="signOut" layoutX="883.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#signOutMenu" text="Sign Out" />
+      <TextField fx:id="search" layoutX="183.0" layoutY="43.0" prefHeight="32.0" prefWidth="189.0" />
+      <Label alignment="CENTER" prefHeight="118.0" prefWidth="154.0" text="Ilib" textFill="#5eae53">
          <font>
-            <Font size="67.0" />
+            <Font size="63.0" />
          </font>
       </Label>
-      <Button fx:id="signOut" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#signOutMenu" text="Sign Out" />
+      <ScrollPane layoutX="142.0" layoutY="118.0" prefHeight="452.0" prefWidth="794.0" />
    </children>
 </AnchorPane>
