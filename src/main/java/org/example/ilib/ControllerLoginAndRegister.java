@@ -22,7 +22,12 @@ public class ControllerLoginAndRegister {
     @FXML
     private Button RegisterButton;
 
-
+    /**
+     * this method will handle event related to Login scene.
+     *
+     * @param event MouseEvent
+     * @throws IOException in case FXML file cannot be loaded
+     */
     @FXML
     void Login(MouseEvent event) throws IOException {
         Stage stage = (Stage) LoginButton.getScene().getWindow();
@@ -31,9 +36,15 @@ public class ControllerLoginAndRegister {
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
     }
+
+    /**
+     * this method will handle event related to Register scene.
+     *
+     * @param event MouseEvent
+     * @throws IOException in case FXML file cannot be loaded
+     */
     @FXML
     void Register(MouseEvent event) throws IOException {
-
         Stage stage = (Stage) RegisterButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Register.fxml"));
@@ -41,6 +52,11 @@ public class ControllerLoginAndRegister {
         stage.setScene(scene);
     }
 
+    /**
+     * this method will be called when user want to quit application.
+     *
+     * @param event MouseEvent
+     */
     public void Exit(MouseEvent event) {
         // Tạo thông báo xác nhận thoát
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
