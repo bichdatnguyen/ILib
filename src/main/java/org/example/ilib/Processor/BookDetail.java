@@ -1,5 +1,4 @@
-package org.example.ilib;
-
+package org.example.ilib.Processor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +7,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Menu extends Application {
+public class BookDetail extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -16,10 +15,15 @@ public class Menu extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Menu.fxml"));
-        primaryStage.setTitle("Menu");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ilib/bookDetail.fxml"));
+        Parent root = loader.load();
+
+        primaryStage.setTitle("Book detail");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+//        ControllerBookDetail controller = loader.getController();
+//        controller.setInformation();
     }
 }

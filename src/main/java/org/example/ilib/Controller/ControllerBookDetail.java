@@ -1,4 +1,4 @@
-package org.example.ilib;
+package org.example.ilib.Controller;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -43,7 +43,7 @@ public class ControllerBookDetail {
             thumbnail.setImage(new Image(thumbnailLink));
         } else {
             // thay thế lại absolute path để chạy được
-            thumbnail.setImage(new Image("E:\\java\\iLib\\ILib\\src\\main\\resources\\org\\assets\\noImage.png"));
+            thumbnail.setImage(new Image("/org/assets/noImage.png"));
         }
 
         if (volumeInfo.has("authors")) {

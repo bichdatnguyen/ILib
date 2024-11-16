@@ -1,4 +1,4 @@
-package org.example.ilib;
+package org.example.ilib.Processor;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -7,8 +7,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
-public class Login extends Application {
+public class LoginAndRegister extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -16,8 +17,8 @@ public class Login extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        primaryStage.setTitle("Login");
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml")));
+        primaryStage.setTitle("Login And Register");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();

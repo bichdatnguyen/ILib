@@ -1,6 +1,5 @@
-package org.example.ilib;
+package org.example.ilib.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -28,7 +27,7 @@ public class ControllerLogin {
     public void backToMenu(MouseEvent event) throws IOException {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("LoginAndRegister.fxml"));
+        loader.setLocation(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
     }

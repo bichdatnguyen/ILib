@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#CreateAccount" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.ControllerRegister">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#CreateAccount" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerRegister">
     <children>
         <Label id="Title" layoutX="105.0" layoutY="17.0" text="Register" textFill="#52914f">
             <font>
@@ -61,6 +61,6 @@
             </children>
         </GridPane>
         <Button id="CreateAccount" fx:id="CreateAccountButton" layoutX="609.0" layoutY="510.0" mnemonicParsing="false" onMouseClicked="#CreateAccount" prefHeight="58.0" prefWidth="143.0" text="Tạo tài khoản " />
-        <Button fx:id="BackButton" layoutX="56.0" layoutY="527.0" mnemonicParsing="false" onAction="#Back" text="Back" />
+        <Button fx:id="BackButton" layoutX="56.0" layoutY="527.0" mnemonicParsing="false" onMouseClicked="#Back" text="Back" />
     </children>
 </AnchorPane>

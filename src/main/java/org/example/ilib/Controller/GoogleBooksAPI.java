@@ -1,4 +1,4 @@
-package org.example.ilib;
+package org.example.ilib.Controller;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -11,8 +11,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 import static java.lang.System.getenv;
 

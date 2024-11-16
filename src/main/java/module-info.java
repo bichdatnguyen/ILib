@@ -4,6 +4,7 @@ module org.example.ilib {
     requires javafx.web;
     requires org.controlsfx.controls;
 
+
     requires google.api.client;
     requires com.google.api.client;
     requires com.google.api.client.auth;
@@ -13,5 +14,11 @@ module org.example.ilib {
     requires com.google.gson;
 
     opens org.example.ilib to javafx.fxml;
-    exports org.example.ilib;
+
+    exports org.example.ilib.Controller;
+    opens org.example.ilib.Controller to javafx.fxml;
+    exports org.example.ilib.Processor;
+    opens org.example.ilib.Processor to javafx.fxml;
+
+
 }

@@ -1,6 +1,5 @@
-package org.example.ilib;
+package org.example.ilib.Controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -70,7 +69,7 @@ public class ControllerRegister {
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
     }
-     public void Back(ActionEvent event) throws IOException {
+     public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage)BackButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));
