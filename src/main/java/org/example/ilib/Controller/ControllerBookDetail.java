@@ -62,10 +62,10 @@ public class ControllerBookDetail {
 
         if (volumeInfo.has("description")) {
             String description = volumeInfo.get("description").getAsString();
-            if (description.length() <= 100) {
+            if (description.length() <= 120) {
                 descriptionText.setText(volumeInfo.get("description").getAsString());
             } else {
-                descriptionText.setText(description.substring(0, 120) + "...");
+                descriptionText.setText(description.substring(0, 119) + "...");
             }
         } else {
             descriptionText.setText("No description available.");

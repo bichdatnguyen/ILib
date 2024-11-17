@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ControllerRegister {
     @FXML
@@ -27,8 +28,9 @@ public class ControllerRegister {
     TextField phoneTextField;
     @FXML
     private Button BackButton;
+
     @FXML
-    void CreateAccount(MouseEvent event) throws IOException {
+    void CreateAccount(MouseEvent event) throws IOException, SQLException {
         if(!(CCCDtextField.getText().matches("\\d+")) && CCCDtextField.getText().length() != 12){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -59,16 +61,25 @@ public class ControllerRegister {
             alert.setTitle("Error");
             alert.setContentText("Please enter a valid phone number");
             alert.showAndWait();
-            return ;
+            return;
         }
-
 
         Stage stage = (Stage) CreateAccountButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Login.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+
+        String email = emailTextField.getText();
+        String password = passwordTextField.getText();
+        String fullName = nameTextField.getText();
+        String phoneNumber = phoneTextField.getText();
+        String identityNumber = CCCDtextField.getText();
+        DBConnection db = DBConnection.getInstance(email, password,
+                fullName, phoneNumber, identityNumber);
+        db.createAccount();
     }
+
      public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage)BackButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();

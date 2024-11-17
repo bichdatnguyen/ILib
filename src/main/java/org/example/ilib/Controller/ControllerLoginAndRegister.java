@@ -68,7 +68,5 @@ public class ControllerLoginAndRegister {
         }
         // Nếu chọn Cancel, không cần thực hiện gì thêm (tiếp tục chương trình)
     }
-
-
 }
 
