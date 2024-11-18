@@ -11,6 +11,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ControllerRegister {
@@ -63,21 +66,30 @@ public class ControllerRegister {
             alert.showAndWait();
             return;
         }
+        DBConnection db = new DBConnection();
 
-        Stage stage = (Stage) CreateAccountButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/org/example/ilib/Login.fxml"));
-        Scene scene = new Scene(loader.load());
-        stage.setScene(scene);
+        boolean check = db.checkDataExit(emailTextField.getText());
+        if(check){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmation");
+            alert.setContentText("Tai khoan nay da co");
+            alert.showAndWait();
+            return;
+        }
 
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String fullName = nameTextField.getText();
         String phoneNumber = phoneTextField.getText();
         String identityNumber = CCCDtextField.getText();
-        DBConnection db = DBConnection.getInstance(email, password,
-                fullName, phoneNumber, identityNumber);
-        db.createAccount();
+//         db = DBConnection.getInstance(email, password,
+//                fullName, phoneNumber, identityNumber);
+//        db.createAccount();
+        Stage stage = (Stage) CreateAccountButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/org/example/ilib/Login.fxml"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
     }
 
      public void Back(MouseEvent event) throws IOException {
