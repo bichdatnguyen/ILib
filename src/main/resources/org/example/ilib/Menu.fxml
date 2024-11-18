@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -11,15 +12,137 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
-   <children>
-      <Button fx:id="signOut" layoutX="883.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#signOutMenu" text="Sign Out" />
-      <TextField fx:id="search" layoutX="183.0" layoutY="43.0" prefHeight="32.0" prefWidth="189.0" promptText="Enter book search" onKeyPressed="#handleSearch"/>
-      <Label alignment="CENTER" prefHeight="118.0" prefWidth="154.0" text="Ilib" textFill="#5eae53">
-         <font>
-            <Font size="63.0" />
-         </font>
-      </Label>
-      <ScrollPane layoutX="142.0" layoutY="118.0" prefHeight="452.0" prefWidth="794.0" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
+   <top>
+      <AnchorPane prefHeight="151.0" prefWidth="1028.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="17.0" prefHeight="84.0" prefWidth="116.0" text="Ilib" textFill="#17d355">
+               <font>
+                  <Font size="57.0" />
+               </font></Label>
+            <Button fx:id="signOut" layoutX="906.0" layoutY="33.0" mnemonicParsing="false" onMouseClicked="#signOutMenu" text="signOut" />
+            <TextField fx:id="search" layoutX="214.0" layoutY="33.0" onKeyPressed="#handleSearch" prefHeight="51.0" prefWidth="357.0" promptText="search" />
+            <ImageView fitHeight="49.0" fitWidth="81.0" layoutX="577.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/search-2907.png" />
+               </image></ImageView>
+            <Label layoutX="787.0" layoutY="41.0" text="User" />
+            <ImageView fitHeight="63.0" fitWidth="61.0" layoutX="694.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/user-3296.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </top>
+   <left>
+      <VBox prefHeight="595.0" prefWidth="247.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="320.0" prefWidth="247.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="92.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/increase-arrow-8418.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="72.0" prefWidth="151.0" text="Top Books" textFill="#5a18c3">
+                           <font>
+                              <Font size="25.0" />
+                           </font></Label>
+                     </children></HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="68.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/web-search-4289.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="67.0" prefWidth="163.0" text="Top Search" textFill="#911fab">
+                           <font>
+                              <Font size="25.0" />
+                           </font></Label>
+                     </children></HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="65.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/category-grid-5750.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="57.0" prefWidth="159.0" text="Categories" textFill="#d313da">
+                           <font>
+                              <Font size="25.0" />
+                           </font></Label>
+                     </children></HBox>
+               </children>
+            </VBox>
+            <VBox prefHeight="328.0" prefWidth="247.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="78.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/opened-book-3169.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="61.0" prefWidth="145.0" text="Reading" textFill="#bf1f1f">
+                           <font>
+                              <Font size="25.0" />
+                           </font></Label>
+                     </children></HBox>
+                  <HBox prefHeight="99.0" prefWidth="247.0">
+                     <children>
+                        <ImageView fitHeight="71.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/add-to-favorites-5788.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="70.0" prefWidth="148.0" text="Favorite" textFill="#277ad3">
+                           <font>
+                              <Font size="25.0" />
+                           </font></Label>
+                     </children></HBox>
+                  <HBox prefHeight="49.0" prefWidth="247.0">
+                     <children>
+                        <ImageView fitHeight="70.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/history-7610.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" prefHeight="67.0" prefWidth="152.0" text="History">
+                           <font>
+                              <Font size="25.0" />
+                           </font></Label>
+                     </children></HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="64.0" prefWidth="265.0" text="Recently Add">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
+            <ScrollPane prefHeight="261.0" prefWidth="781.0">
+               <content>
+                  <HBox prefHeight="260.0" prefWidth="1287.0" />
+               </content>
+            </ScrollPane>
+            <Label prefHeight="72.0" prefWidth="320.0" text="Recommended For You">
+               <font>
+                  <Font size="25.0" />
+               </font></Label>
+            <ScrollPane prefHeight="286.0" prefWidth="781.0">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+              </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
