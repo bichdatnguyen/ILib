@@ -14,7 +14,7 @@
 <AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
    <children>
       <Button fx:id="signOut" layoutX="883.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#signOutMenu" text="Sign Out" />
-      <TextField fx:id="search" layoutX="183.0" layoutY="43.0" prefHeight="32.0" prefWidth="189.0" />
+      <TextField fx:id="search" layoutX="183.0" layoutY="43.0" prefHeight="32.0" prefWidth="189.0" promptText="Enter book search" onKeyPressed="#handleSearch"/>
       <Label alignment="CENTER" prefHeight="118.0" prefWidth="154.0" text="Ilib" textFill="#5eae53">
          <font>
             <Font size="63.0" />

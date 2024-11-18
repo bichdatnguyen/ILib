@@ -12,6 +12,7 @@ module org.example.ilib {
     requires google.oauth.client.java6;
     requires com.google.api.client.extensions.jetty.auth;
     requires com.google.gson;
+    requires java.desktop;
 
     opens org.example.ilib to javafx.fxml;
 
