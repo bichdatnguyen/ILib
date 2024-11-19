@@ -38,21 +38,47 @@ public class DBConnection {
         ResultSet rs = stmt.executeQuery("SELECT * FROM user");
     }
 
-    /*public boolean checkDataExit(String email_){
+
+    public boolean checkDataExit(String email_)  {
         String query = "SELECT COUNT(*) FROM User WHERE email = ?";
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+        try (Connection connection1 = DriverManager.getConnection(url, userName, userPassword);
+             PreparedStatement preparedStatement = connection1.prepareStatement(query)) {
 
             preparedStatement.setString(1, email_); // Gán giá trị cho dấu ? trong câu lệnh SQL
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
                 int count = resultSet.getInt(1); // Lấy giá trị COUNT từ kết quả
-                return count > 0; // Nếu COUNT > 0 nghĩa là dữ liệu đã tồn tại
+                return count > 0;
             }
+
         } catch (Exception e) {
             System.err.println("Lỗi khi kiểm tra dữ liệu: " + e.getMessage());
         }
         return false;
-    }*/
+    }
+
+
+    public boolean checkDataExit(String email_, String password_) {
+        String query = "SELECT COUNT(*) FROM User WHERE email = ? AND password = ?";
+
+        try (Connection connection1 = DriverManager.getConnection(url, userName, userPassword);
+             PreparedStatement preparedStatement = connection1.prepareStatement(query)) {
+
+            preparedStatement.setString(1, email_); // Gán giá trị cho dấu ? trong câu lệnh SQL
+            preparedStatement.setString(2, password_);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1); // Lấy giá trị COUNT từ kết quả
+                return count > 0;
+            }
+
+        } catch (Exception e) {
+            System.err.println("Lỗi khi kiểm tra dữ liệu: " + e.getMessage());
+        }
+        return false;
+    }
 }

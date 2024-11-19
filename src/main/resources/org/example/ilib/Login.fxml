@@ -36,13 +36,13 @@
                         <Font size="42.0" />
                     </font>
                 </Label>
-                <TextField prefHeight="34.0" prefWidth="295.0" GridPane.columnIndex="1" />
+                <TextField fx:id="emailText" prefHeight="34.0" prefWidth="295.0" GridPane.columnIndex="1" />
                 <Label id="password" text="Password" GridPane.rowIndex="1">
                     <font>
                         <Font size="42.0" />
                     </font>
                 </Label>
-                <PasswordField prefHeight="34.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <PasswordField fx:id="passwordText" prefHeight="34.0" prefWidth="295.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Button id="LoginButton" fx:id="LoginSuccessButton" mnemonicParsing="false" onMouseClicked="#loginSuccess" prefHeight="71.0" prefWidth="197.0" text="Đăng nhập" GridPane.columnIndex="1" GridPane.rowIndex="2">
                     <font>
                         <Font size="22.0" />

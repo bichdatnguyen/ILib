@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="book_layout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="255.0" prefWidth="499.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBook">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image" fitHeight="285.0" fitWidth="256.0" pickOnBounds="true" preserveRatio="true" />
+      <AnchorPane prefHeight="255.0" prefWidth="241.0">
+         <children>
+            <Label fx:id="author" layoutX="45.0" layoutY="76.0" prefHeight="35.0" prefWidth="141.0" text="Author" />
+            <Label fx:id="title" layoutX="45.0" layoutY="155.0" prefHeight="35.0" prefWidth="101.0" text="Title" />
+         </children>
+      </AnchorPane>
    </children>
 </HBox>

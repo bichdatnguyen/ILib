@@ -69,15 +69,22 @@ public class ControllerRegister {
 
         DBConnection db = DBConnection.getInstance();
 
-        /*boolean check = db.checkDataExit(emailTextField.getText());
-        if(check){
+        boolean check = db.checkDataExit(emailTextField.getText(),passwordTextField.getText());
+        if(check) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
-            alert.setContentText("Tai khoan nay da co");
+            alert.setContentText("Tài khoản này đã có");
             alert.showAndWait();
             return;
-        }*/
-
+        }
+        boolean check2 = db.checkDataExit(emailTextField.getText());
+        if(check2){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Email này đã tồn tại");
+            alert.showAndWait();
+            return;
+        }
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String fullName = nameTextField.getText();

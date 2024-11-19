@@ -24,19 +24,19 @@
             <Label prefHeight="35.0" prefWidth="265.0" text="    Sách mới " textFill="#5726d1" />
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <HBox prefHeight="205.0" prefWidth="1373.0" />
+                  <HBox fx:id="sach_moi_hbox" prefHeight="205.0" prefWidth="1373.0" />
                </content>
             </ScrollPane>
             <Label prefHeight="35.0" prefWidth="243.0" text="   Tài liệu mượn nhiều " textFill="#a91abc" />
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <HBox prefHeight="189.0" prefWidth="1564.0" />
+                  <HBox fx:id="tai_lieu_hbox" prefHeight="189.0" prefWidth="1564.0" />
                </content>
             </ScrollPane>
             <Label prefHeight="35.0" prefWidth="230.0" text="  Tài liệu liên quan" textFill="#b21313" />
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <HBox prefHeight="199.0" prefWidth="1585.0" />
+                  <HBox fx:id="tai_lieu_2_hbox" prefHeight="199.0" prefWidth="1585.0" />
                </content>
             </ScrollPane>
          </children>
