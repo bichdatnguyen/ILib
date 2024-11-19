@@ -22,4 +22,10 @@ module org.example.ilib {
     opens org.example.ilib.Processor to javafx.fxml;
 
 
+    requires org.slf4j;
+    requires ch.qos.logback.classic;
+
+
+
+
 }

@@ -66,7 +66,7 @@ public class ControllerRegister {
             alert.showAndWait();
             return;
         }
-        DBConnection db = new DBConnection();
+        DBConnection db = DBConnection.getInstance();
 
         boolean check = db.checkDataExit(emailTextField.getText());
         if(check){
@@ -82,8 +82,7 @@ public class ControllerRegister {
         String fullName = nameTextField.getText();
         String phoneNumber = phoneTextField.getText();
         String identityNumber = CCCDtextField.getText();
-//         db = DBConnection.getInstance(email, password,
-//                fullName, phoneNumber, identityNumber);
+//        db.Initialize(email,password,fullName,phoneNumber,identityNumber);
 //        db.createAccount();
         Stage stage = (Stage) CreateAccountButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();

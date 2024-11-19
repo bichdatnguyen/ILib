@@ -46,6 +46,14 @@ public class DBConnection {
             return null;
         }
     }
+
+    public void Initialize(String email, String password,String fullName, String phoneNumber, String identiyNumber) {
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.identityNumber = identiyNumber;
+    }
     public void createAccount() throws SQLException {
         Connection connection
                 = getConnection();

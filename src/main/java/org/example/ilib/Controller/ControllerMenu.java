@@ -1,10 +1,12 @@
 package org.example.ilib.Controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -16,20 +18,30 @@ import java.io.IOException;
 
 public class ControllerMenu {
     @FXML
-    private Button signOut;
+    private MenuItem signOut;
 
     @FXML
     private TextField search;
+
+    @FXML
+    private Label topBooks;
+
+    @FXML
+    private Label Categories;
+    @FXML
+    private Label reading;
+
+
 
     /**
      * signOutMenu handle MouseEvent event.
      * this method will switch the scene to the login and register screen.
      *
-     * @param event belong to MouseEvent type
+     * @param actionEvent belong to MouseEvent type
      * @throws IOException in case that FXML can not be used
      */
-    public void signOutMenu(MouseEvent event) throws IOException {
-        Stage stage = (Stage) signOut.getScene().getWindow();
+    public void signOutMenu(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) signOut.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -61,4 +73,29 @@ public class ControllerMenu {
         }
     }
 
+
+    public void topBookMenu(MouseEvent event) throws IOException {
+        Stage stage = (Stage) topBooks.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/TopBooks.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    public void categoriesMenu(MouseEvent e) throws IOException {
+        Stage stage = (Stage) Categories.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/Categories.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
+    }
+
+    public void readingMenu(MouseEvent e) throws IOException {
+        Stage stage = (Stage) reading.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/Reading.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
+    }
 }

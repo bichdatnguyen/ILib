@@ -20,18 +20,26 @@
                <font>
                   <Font size="57.0" />
                </font></Label>
-            <Button fx:id="signOut" layoutX="906.0" layoutY="33.0" mnemonicParsing="false" onMouseClicked="#signOutMenu" text="signOut" />
             <TextField fx:id="search" layoutX="214.0" layoutY="33.0" onKeyPressed="#handleSearch" prefHeight="51.0" prefWidth="357.0" promptText="search" />
             <ImageView fitHeight="49.0" fitWidth="81.0" layoutX="577.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../assets/search-2907.png" />
                </image></ImageView>
-            <Label layoutX="787.0" layoutY="41.0" text="User" />
             <ImageView fitHeight="63.0" fitWidth="61.0" layoutX="694.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../assets/user-3296.png" />
                </image>
             </ImageView>
+            <MenuButton alignment="CENTER" layoutX="764.0" layoutY="28.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="134.0" text="User">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Account" />
+                <MenuItem mnemonicParsing="false" text="Cast" />
+                  <MenuItem fx:id="signOut" mnemonicParsing="false" onAction="#signOutMenu" text="signOut" />
+              </items>
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </MenuButton>
          </children>
       </AnchorPane>
    </top>
@@ -40,38 +48,35 @@
          <children>
             <VBox prefHeight="320.0" prefWidth="247.0">
                <children>
+                  <Label prefHeight="35.0" prefWidth="171.0" text="  Browse">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Separator prefHeight="29.0" prefWidth="247.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
+                        <Separator orientation="VERTICAL" prefHeight="91.0" prefWidth="16.0" />
                         <ImageView fitHeight="92.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../assets/increase-arrow-8418.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" prefHeight="72.0" prefWidth="151.0" text="Top Books" textFill="#5a18c3">
+                        <Label fx:id="topBooks" alignment="CENTER" onMouseClicked="#topBookMenu" prefHeight="72.0" prefWidth="151.0" text="Top Books" textFill="#5a18c3">
                            <font>
                               <Font size="25.0" />
                            </font></Label>
                      </children></HBox>
+                  <Separator prefHeight="11.0" prefWidth="247.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="68.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../assets/web-search-4289.png" />
-                           </image>
-                        </ImageView>
-                        <Label alignment="CENTER" prefHeight="67.0" prefWidth="163.0" text="Top Search" textFill="#911fab">
-                           <font>
-                              <Font size="25.0" />
-                           </font></Label>
-                     </children></HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="91.0" prefWidth="15.0" />
                         <ImageView fitHeight="65.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../assets/category-grid-5750.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" prefHeight="57.0" prefWidth="159.0" text="Categories" textFill="#d313da">
+                        <Label fx:id="Categories" alignment="CENTER" onMouseClicked="#categoriesMenu" prefHeight="57.0" prefWidth="159.0" text="Categories" textFill="#d313da">
                            <font>
                               <Font size="25.0" />
                            </font></Label>
@@ -80,42 +85,26 @@
             </VBox>
             <VBox prefHeight="328.0" prefWidth="247.0">
                <children>
+                  <Label prefHeight="35.0" prefWidth="194.0" text="  Your Books">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <Separator prefHeight="20.0" prefWidth="247.0" />
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
+                        <Separator orientation="VERTICAL" prefHeight="100.0" prefWidth="17.0" />
                         <ImageView fitHeight="78.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../assets/opened-book-3169.png" />
                            </image>
                         </ImageView>
-                        <Label alignment="CENTER" prefHeight="61.0" prefWidth="145.0" text="Reading" textFill="#bf1f1f">
+                        <Label fx:id="reading" alignment="CENTER" onMouseClicked="#readingMenu" prefHeight="61.0" prefWidth="145.0" text="Reading" textFill="#bf1f1f">
                            <font>
                               <Font size="25.0" />
                            </font></Label>
                      </children></HBox>
-                  <HBox prefHeight="99.0" prefWidth="247.0">
-                     <children>
-                        <ImageView fitHeight="71.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../assets/add-to-favorites-5788.png" />
-                           </image>
-                        </ImageView>
-                        <Label alignment="CENTER" prefHeight="70.0" prefWidth="148.0" text="Favorite" textFill="#277ad3">
-                           <font>
-                              <Font size="25.0" />
-                           </font></Label>
-                     </children></HBox>
-                  <HBox prefHeight="49.0" prefWidth="247.0">
-                     <children>
-                        <ImageView fitHeight="70.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../assets/history-7610.png" />
-                           </image>
-                        </ImageView>
-                        <Label alignment="CENTER" prefHeight="67.0" prefWidth="152.0" text="History">
-                           <font>
-                              <Font size="25.0" />
-                           </font></Label>
-                     </children></HBox>
+                  <Separator prefHeight="16.0" prefWidth="247.0" />
                </children>
             </VBox>
          </children>

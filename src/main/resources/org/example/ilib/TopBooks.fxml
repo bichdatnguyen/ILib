@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="788.0" prefWidth="994.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerCategories">
+   <top>
+      <AnchorPane prefHeight="100.0" prefWidth="1028.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" prefHeight="89.0" prefWidth="345.0" text="Sách bán chạy nhất" textFill="#c62323">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            <Button fx:id="Back" layoutX="906.0" layoutY="19.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <VBox prefHeight="639.0" prefWidth="1028.0" BorderPane.alignment="CENTER">
+         <children>
+            <ScrollPane prefHeight="345.0" prefWidth="1113.0">
+               <content>
+                  <HBox prefHeight="334.0" prefWidth="1569.0">
+                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="289.0" prefWidth="35.0" />
+                        <VBox prefHeight="315.0" prefWidth="200.0">
+                           <children>
+                              <Separator prefWidth="200.0" />
+                              <ImageView fitHeight="246.0" fitWidth="222.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/Java_pro.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" prefHeight="58.0" prefWidth="200.0" text="Java_Programing" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="305.0" prefWidth="40.0" />
+                        <VBox prefHeight="305.0" prefWidth="224.0">
+                           <children>
+                              <ImageView fitHeight="255.0" fitWidth="263.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/C++_For_Dummies.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" prefHeight="44.0" prefWidth="209.0" text="C++ For Dummies" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="305.0" prefWidth="34.0" />
+                        <VBox prefHeight="305.0" prefWidth="210.0">
+                           <children>
+                              <ImageView fitHeight="268.0" fitWidth="167.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/content.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label prefHeight="35.0" prefWidth="216.0" text="Rich Dad Poor Dad" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="305.0" prefWidth="24.0" />
+                        <VBox prefHeight="305.0" prefWidth="222.0">
+                           <children>
+                              <ImageView fitHeight="262.0" fitWidth="280.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/C++_for_Finance.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label text="C++ for Finance" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="200.0" />
+                        <VBox prefHeight="305.0" prefWidth="265.0">
+                           <children>
+                              <ImageView fitHeight="269.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/C++_how_to_progam.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label prefHeight="35.0" prefWidth="233.0" text="C++ how to Program" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="305.0" prefWidth="36.0" />
+                        <VBox prefHeight="305.0" prefWidth="267.0">
+                           <children>
+                              <ImageView fitHeight="270.0" fitWidth="223.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/TCP_IP_Sockets_in_Java.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label text="TCP/IP Sockets in Java" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content>
+            </ScrollPane>
+            <Separator prefHeight="42.0" prefWidth="994.0" />
+            <ScrollPane prefHeight="379.0" prefWidth="1572.0">
+               <content>
+                  <HBox prefHeight="351.0" prefWidth="1564.0">
+                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="346.0" prefWidth="36.0" />
+                        <VBox prefHeight="346.0" prefWidth="258.0">
+                           <children>
+                              <ImageView fitHeight="258.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/Math_Fact_Fluency.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label prefHeight="74.0" prefWidth="214.0" text="Math_Fact_Fluency" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="346.0" prefWidth="54.0" />
+                        <VBox prefHeight="346.0" prefWidth="282.0">
+                           <children>
+                              <ImageView fitHeight="268.0" fitWidth="215.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/Math_Tools.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" prefHeight="58.0" prefWidth="205.0" text="Math_Tools" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="346.0" prefWidth="53.0" />
+                        <VBox prefHeight="346.0" prefWidth="274.0">
+                           <children>
+                              <ImageView fitHeight="268.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/Awesome_Math.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" prefHeight="51.0" prefWidth="208.0" text="Awesome_Math" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="346.0" prefWidth="56.0" />
+                        <VBox prefHeight="346.0" prefWidth="296.0">
+                           <children>
+                              <ImageView fitHeight="277.0" fitWidth="211.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/Key_Java.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="179.0" text="Key_Java" />
+                           </children>
+                        </VBox>
+                        <Separator orientation="VERTICAL" prefHeight="346.0" prefWidth="45.0" />
+                        <VBox prefHeight="346.0" prefWidth="300.0">
+                           <children>
+                              <ImageView fitHeight="283.0" fitWidth="219.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../assets/Ngon_ngu_Java.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Label alignment="CENTER" prefHeight="35.0" prefWidth="179.0" text="ngon_ngu_Java" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="907.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerReading">
+   <top>
+      <AnchorPane prefHeight="83.0" prefWidth="907.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="CENTER" layoutX="14.0" layoutY="20.0" prefHeight="35.0" prefWidth="269.0" text="Giá sách" />
+            <Button fx:id="Back" layoutX="792.0" layoutY="12.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="   Sách đang mượn" />
+            <ScrollPane prefHeight="293.0" prefWidth="907.0">
+               <content>
+                  <HBox prefHeight="272.0" prefWidth="1345.0">
+                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="272.0" prefWidth="25.0" />
+                        <VBox prefHeight="272.0" prefWidth="217.0" />
+                        <Separator orientation="VERTICAL" prefHeight="272.0" prefWidth="44.0" />
+                        <VBox prefHeight="272.0" prefWidth="233.0" />
+                        <Separator orientation="VERTICAL" prefHeight="272.0" prefWidth="41.0" />
+                        <VBox prefHeight="272.0" prefWidth="220.0" />
+                        <Separator orientation="VERTICAL" prefHeight="272.0" prefWidth="51.0" />
+                        <VBox prefHeight="272.0" prefWidth="237.0" />
+                        <Separator orientation="VERTICAL" prefHeight="272.0" prefWidth="31.0" />
+                        <VBox prefHeight="272.0" prefWidth="242.0" />
+                     </children>
+                  </HBox>
+               </content>
+            </ScrollPane>
+            <Label prefHeight="35.0" prefWidth="175.0" text="   Sách mua" />
+            <ScrollPane prefHeight="243.0" prefWidth="907.0">
+               <content>
+                  <HBox prefHeight="246.0" prefWidth="1437.0">
+                     <children>
+                        <Separator orientation="VERTICAL" prefHeight="246.0" prefWidth="24.0" />
+                        <VBox prefHeight="246.0" prefWidth="222.0" />
+                        <Separator orientation="VERTICAL" prefHeight="246.0" prefWidth="40.0" />
+                        <VBox prefHeight="246.0" prefWidth="242.0" />
+                        <Separator orientation="VERTICAL" prefHeight="246.0" prefWidth="29.0" />
+                        <VBox prefHeight="246.0" prefWidth="247.0" />
+                        <Separator orientation="VERTICAL" prefHeight="246.0" prefWidth="32.0" />
+                        <VBox prefHeight="246.0" prefWidth="260.0" />
+                        <Separator orientation="VERTICAL" prefHeight="246.0" prefWidth="37.0" />
+                        <VBox prefHeight="246.0" prefWidth="268.0" />
+                     </children>
+                  </HBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
