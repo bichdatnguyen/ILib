@@ -3,6 +3,7 @@ package org.example.ilib.Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -11,12 +12,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.example.ilib.Processor.Book;
 
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class ControllerMenu {
+public class ControllerMenu implements Initializable {
     @FXML
     private MenuItem signOut;
 
@@ -30,6 +37,9 @@ public class ControllerMenu {
     private Label Categories;
     @FXML
     private Label reading;
+    @FXML
+    private HBox recentlyAddHbox;
+    private List<Book>recentlyBooks = new ArrayList<>();
 
 
 
@@ -100,5 +110,27 @@ public class ControllerMenu {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Book_list bl = new Book_list(Book_list.RECECNTLYADDED_BOOK);
+        recentlyBooks = bl.bookList;
+        try {
+            System.out.println(recentlyBooks.size() );
+            for (int i = 0; i < recentlyBooks.size() ; i++ ) {
 
+                FXMLLoader fx = new FXMLLoader();
+                fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
+                HBox cardbox = (HBox) fx.load();
+                ControllerBook controllerBook = (ControllerBook) fx.getController();
+                controllerBook.setBook(recentlyBooks.get(i));
+                recentlyAddHbox.getChildren().add(cardbox);
+
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 }

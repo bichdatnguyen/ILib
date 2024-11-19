@@ -40,7 +40,7 @@ public class ControllerCategories extends Book_list implements Initializable {
 
         try {
             System.out.println(bookList.size() );
-            for (int i = 0; i < 4 ; i++ ) {
+            for (int i = 0; i < 3 ; i++ ) {
 
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
@@ -51,7 +51,7 @@ public class ControllerCategories extends Book_list implements Initializable {
 
 
             }
-            for (int i = 4; i < 8 ; i++ ) {
+            for (int i = 4; i < 7 ; i++ ) {
 
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
@@ -62,7 +62,7 @@ public class ControllerCategories extends Book_list implements Initializable {
 
 
             }
-            for (int i = 8; i < 13 ; i++ ) {
+            for (int i = 7; i <9 ; i++ ) {
 
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
