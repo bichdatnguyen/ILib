@@ -66,24 +66,25 @@ public class ControllerRegister {
             alert.showAndWait();
             return;
         }
+
         DBConnection db = DBConnection.getInstance();
 
-        boolean check = db.checkDataExit(emailTextField.getText());
+        /*boolean check = db.checkDataExit(emailTextField.getText());
         if(check){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Confirmation");
             alert.setContentText("Tai khoan nay da co");
             alert.showAndWait();
             return;
-        }
+        }*/
 
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
         String fullName = nameTextField.getText();
         String phoneNumber = phoneTextField.getText();
         String identityNumber = CCCDtextField.getText();
-//        db.Initialize(email,password,fullName,phoneNumber,identityNumber);
-//        db.createAccount();
+        db.createAccount(email, password, fullName, phoneNumber, identityNumber);
+
         Stage stage = (Stage) CreateAccountButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Login.fxml"));
