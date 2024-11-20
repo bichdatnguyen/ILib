@@ -1,87 +1,193 @@
-DROP DATABASE IF EXISTS iLib;
-CREATE DATABASE iLib;
+-- MySQL Workbench Forward Engineering
 
-USE iLib;
--- Tạo bảng User trước
-CREATE TABLE User (
-                      email VARCHAR(50) UNIQUE NOT NULL,
-                      phoneNumber CHAR(100),
-                      fullName VARCHAR(500),
-                      identityNumber CHAR(120) UNIQUE,
-                      password VARCHAR(50),
-                      PRIMARY KEY (email)
-);
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- Tạo bảng Voucher sau
-CREATE TABLE Voucher (
-                         email VARCHAR(50) PRIMARY KEY UNIQUE NOT NULL,
-                         discount_percentage INT,
-                         end_discount_date DATE,
-                         CONSTRAINT User_Voucher_fk FOREIGN KEY (email) REFERENCES User(email) ON UPDATE CASCADE
-);
+-- -----------------------------------------------------
+-- Schema ILIB
+-- -----------------------------------------------------
 
-CREATE TABLE Category (
-                          publisher VARCHAR(20),
-                          genre VARCHAR(10),
-                          publishYear YEAR,
-                          email VARCHAR(50),
-                          PRIMARY KEY (genre)
+-- -----------------------------------------------------
+-- Schema ILIB
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `ILIB` DEFAULT CHARACTER SET utf8 ;
+USE `ILIB` ;
 
-);
-
-CREATE TABLE Books (
-                       bookID VARCHAR(20) auto_increment,
-                       bookName VARCHAR(50),
-                       bookPrice INTEGER,
-                       status VARCHAR(10),
-                       genre VARCHAR(10),
-                       PRIMARY KEY (bookID),
-                       constraint Books_Category_fk foreign key (genre) references Category(genre) on update  cascade
-);
-
-CREATE TABLE Rating (
-                        starRating tinyint,
-                        email VARCHAR(50),
-                        bookID VARCHAR(20),
-                        PRIMARY KEY (email, bookID),
-                        CONSTRAINT Rating_User_fk FOREIGN KEY (email) REFERENCES User (email) on update cascade ,
-                        CONSTRAINT Rating_Books_fk FOREIGN KEY (bookID) REFERENCES Books (bookID) on update cascade
-
-);
-
-CREATE TABLE Comment (
-                         email VARCHAR(50),
-                         bookID VARCHAR(20),
-                         comment TEXT,
-                         PRIMARY KEY (email, bookID),
-                         CONSTRAINT Comment_User_fk FOREIGN KEY (email) REFERENCES User (email) on update cascade ,
-                         CONSTRAINT Comment_Books_fk FOREIGN KEY (bookID) REFERENCES Books (bookID) on update cascade
-
-);
-
-CREATE TABLE Borrow (
-                        bookID VARCHAR(20),
-                        email VARCHAR(50),
-                        borrowDate DATETIME,
-                        borrowQuantity INT,
-                        PRIMARY KEY (bookID, email),
-                        CONSTRAINT Borrow_User_fk FOREIGN KEY (Email) REFERENCES User (Email) on update cascade ,
-                        CONSTRAINT Borrow_Books_fk FOREIGN KEY (bookID) REFERENCES Books (bookID) on update cascade
-);
-
-CREATE TABLE Buy (
-                     bookID VARCHAR(20),
-                     email VARCHAR(50),
-                     buyDate DATETIME,
-                     buyQuantity INT,
-                     PRIMARY KEY (bookID, email),
-                     CONSTRAINT Buy_User_fk FOREIGN KEY (Email) REFERENCES User (Email) on update cascade ,
-                     CONSTRAINT Buy_Books_fk FOREIGN KEY (bookID) REFERENCES Books (bookID) on update cascade
-);
+-- -----------------------------------------------------
+-- Table `ILIB`.`User`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`User` (
+`Email` VARCHAR(50) NOT NULL,
+`phoneNumber` CHAR(10) NULL,
+`fullName` VARCHAR(50) NULL,
+`password` VARCHAR(50) NULL,
+PRIMARY KEY (`Email`),
+UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE)
+    ENGINE = InnoDB;
 
 
-INSERT INTO User VALUES ('23021520@vnu.edu.vn', '0779985683', 'Dat',
-                         '000000000000', '12345678');
-INSERT INTO Voucher VALUES ('23021520@vnu.edu.vn', '100',
-                            '2024/11/02');
-SELECT * FROM user;
+-- -----------------------------------------------------
+-- Table `ILIB`.`Voucher`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`Voucher` (
+`Email` VARCHAR(50) NOT NULL,
+`discountPercentage` INT NULL,
+PRIMARY KEY (`Email`),
+UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
+CONSTRAINT `fk_Voucher_User`
+    FOREIGN KEY (`Email`)
+        REFERENCES `ILIB`.`User` (`Email`)
+        ON DELETE NO ACTION
+        ON UPDATE CASCADE)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ILIB`.`Books`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`Books` (
+`bookID` VARCHAR(50) NOT NULL,
+`title` VARCHAR(50) NULL,
+`authors` VARCHAR(50) NULL,
+`bookPrice` INT NULL,
+`Description` TEXT NULL,
+`quantityInStock` INT NULL,
+PRIMARY KEY (`bookID`),
+UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ILIB`.`Categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`Categories` (
+`Category` VARCHAR(50) NOT NULL,
+`bookID` VARCHAR(50) NOT NULL,
+PRIMARY KEY (`Category`, `bookID`),
+UNIQUE INDEX `Category_UNIQUE` (`Category` ASC) VISIBLE,
+UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE,
+CONSTRAINT `fk_Categories_Books`
+   FOREIGN KEY (`bookID`)
+       REFERENCES `ILIB`.`Books` (`bookID`)
+       ON DELETE NO ACTION
+       ON UPDATE CASCADE)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ILIB`.`Rating`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`Rating` (
+`Email` VARCHAR(50) NOT NULL,
+`bookID` VARCHAR(50) NOT NULL,
+`averageRating` TINYINT NULL,
+`Comment` TEXT NULL,
+`Time` DATETIME NULL,
+PRIMARY KEY (`Email`, `bookID`),
+UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE,
+UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
+CONSTRAINT `fk_Rating_User`
+   FOREIGN KEY (`Email`)
+       REFERENCES `ILIB`.`User` (`Email`)
+       ON DELETE NO ACTION
+       ON UPDATE CASCADE,
+CONSTRAINT `fk_Rating_Books`
+   FOREIGN KEY (`bookID`)
+       REFERENCES `ILIB`.`Books` (`bookID`)
+       ON DELETE NO ACTION
+       ON UPDATE CASCADE)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ILIB`.`Borrow`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`Borrow` (
+`bookID` VARCHAR(20) NOT NULL,
+`email` VARCHAR(50) NOT NULL,
+`borrowDate` DATETIME NULL,
+`quantity` INT NULL,
+PRIMARY KEY (`bookID`, `email`),
+UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE,
+UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+CONSTRAINT `fk_Borrow_Books`
+   FOREIGN KEY (`bookID`)
+       REFERENCES `ILIB`.`Books` (`bookID`)
+       ON DELETE NO ACTION
+       ON UPDATE CASCADE,
+CONSTRAINT `fk_Borrow_User`
+   FOREIGN KEY (`email`)
+       REFERENCES `ILIB`.`User` (`Email`)
+       ON DELETE NO ACTION
+       ON UPDATE NO ACTION)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ILIB`.`Buy`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`Buy` (
+`Email` VARCHAR(50) NOT NULL,
+`bookID` VARCHAR(50) NOT NULL,
+`buyDate` DATETIME NULL,
+`quantity` INT NULL,
+PRIMARY KEY (`Email`, `bookID`),
+UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE,
+UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
+CONSTRAINT `fk_Buy_Books`
+    FOREIGN KEY (`bookID`)
+        REFERENCES `ILIB`.`Books` (`bookID`)
+        ON DELETE NO ACTION
+        ON UPDATE CASCADE,
+CONSTRAINT `fk_Buy_User`
+    FOREIGN KEY (`Email`)
+        REFERENCES `ILIB`.`User` (`Email`)
+        ON DELETE NO ACTION
+        ON UPDATE CASCADE)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ILIB`.`History`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`History` (
+`Email` VARCHAR(50) NOT NULL,
+`bookID` VARCHAR(50) NOT NULL,
+`Time` DATETIME NOT NULL,
+PRIMARY KEY (`Email`, `bookID`),
+UNIQUE INDEX `Email_UNIQUE` (`Email` ASC) VISIBLE,
+UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE,
+CONSTRAINT `fk_History_User`
+    FOREIGN KEY (`Email`)
+        REFERENCES `ILIB`.`User` (`Email`)
+        ON DELETE NO ACTION
+        ON UPDATE CASCADE,
+CONSTRAINT `fk_History_Books`
+    FOREIGN KEY (`bookID`)
+        REFERENCES `ILIB`.`Books` (`bookID`)
+        ON DELETE NO ACTION
+        ON UPDATE CASCADE)
+    ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ILIB`.`Author`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ILIB`.`Author` (
+`bookID` VARCHAR(50) NOT NULL,
+`authorName` VARCHAR(50) NOT NULL,
+PRIMARY KEY (`bookID`, `authorName`),
+UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE,
+UNIQUE INDEX `authorName_UNIQUE` (`authorName` ASC) VISIBLE,
+CONSTRAINT `fk_Author_Books`
+   FOREIGN KEY (`bookID`)
+       REFERENCES `ILIB`.`Books` (`bookID`)
+       ON DELETE NO ACTION
+       ON UPDATE CASCADE)
+    ENGINE = InnoDB;
+
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
