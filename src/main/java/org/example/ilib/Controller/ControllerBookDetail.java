@@ -41,14 +41,14 @@ public class ControllerBookDetail {
         JsonObject item = items.get(0).getAsJsonObject();
         JsonObject volumeInfo = item.getAsJsonObject("volumeInfo");
 
-        //if(volumeInfo.has("imageLinks")) {
-        //    String thumbnailLink = volumeInfo.getAsJsonObject("imageLinks").get("smallThumbnail").getAsString();
-        //    //System.err.println("ThumbnailLink" + thumbnailLink);
-        //    thumbnail.setImage(new Image(thumbnailLink)); // thay lai = thumbnailLink
-        //} else {
-        //    // thay thế lại absolute path để chạy được
-        //    thumbnail.setImage(new Image("/org/assets/noImage.png"));
-        //}
+        if(volumeInfo.has("imageLinks")) {
+            String thumbnailLink = volumeInfo.getAsJsonObject("imageLinks").get("smallThumbnail").getAsString();
+            System.err.println("ThumbnailLink" + thumbnailLink);
+            thumbnail.setImage(new Image(thumbnailLink)); // thay lai = thumbnailLink
+        } else {
+            // thay thế lại absolute path để chạy được
+            thumbnail.setImage(new Image("D:\\GitHub\\Ilib\\Ilib\\src\\main\\resources\\org\\assets\\noImage.png"));
+        }
 
         if (volumeInfo.has("authors")) {
             JsonArray authorsArray = volumeInfo.getAsJsonArray("authors");
