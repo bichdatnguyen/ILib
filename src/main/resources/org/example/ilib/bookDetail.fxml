@@ -82,5 +82,6 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
       </ScrollPane>
+      <Button fx:id="Back" layoutX="8.0" layoutY="205.0" mnemonicParsing="false" onMouseClicked="#BacktoMenu" text="Back" />
    </children>
 </AnchorPane>
