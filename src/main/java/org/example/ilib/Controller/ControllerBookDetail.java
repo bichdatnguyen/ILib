@@ -15,6 +15,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class ControllerBookDetail {
+    @FXML
+    private Button BackButton;
 
     @FXML
     private Text authorText;
@@ -27,8 +29,7 @@ public class ControllerBookDetail {
 
     @FXML
     private ImageView thumbnail;
-    @FXML
-    private Button Back;
+
 
 
     public void setAuthorText(String author) {
@@ -47,9 +48,20 @@ public class ControllerBookDetail {
         thumbnail.setImage(image);
     }
 
-    public void setInformation() throws IOException {
-        GoogleBooksAPI gg = new GoogleBooksAPI("Potter");
+    public static JsonArray bookDetails = new JsonArray();
+
+    public void Back(MouseEvent event) throws IOException {
+        Stage stage = (Stage)BackButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+    }
+
+    public void setInformation(String searchText) throws IOException {
+        GoogleBooksAPI gg = new GoogleBooksAPI(searchText);
         JsonArray items = gg.getInformation();
+        //JsonArray items = null;
 
         if (items == null || items.isEmpty()) {
             System.err.println("No items found in the API response.");
@@ -64,10 +76,11 @@ public class ControllerBookDetail {
 
         if(volumeInfo.has("imageLinks")) {
             String thumbnailLink = volumeInfo.getAsJsonObject("imageLinks").get("smallThumbnail").getAsString();
-            thumbnail.setImage(new Image(thumbnailLink));
+            System.err.println("ThumbnailLink" + thumbnailLink);
+            thumbnail.setImage(new Image(thumbnailLink)); // thay lai = thumbnailLink
         } else {
             // thay thế lại absolute path để chạy được
-            thumbnail.setImage(new Image("/org/assets/noImage.png"));
+            thumbnail.setImage(new Image("D:\\GitHub\\Ilib\\Ilib\\src\\main\\resources\\org\\assets\\noImage.png"));
         }
 
         if (volumeInfo.has("authors")) {
@@ -102,14 +115,6 @@ public class ControllerBookDetail {
         }
     }
 
-    @FXML
-    void BacktoMenu(MouseEvent event) throws IOException {
-        Stage stage = (Stage) Back.getScene().getWindow();
-        FXMLLoader fx = new FXMLLoader();
-        fx.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
-        Scene scene = new Scene(fx.load());
-        stage.setScene(scene);
 
-    }
 
 }

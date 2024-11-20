@@ -16,12 +16,14 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Book;
 
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static org.example.ilib.Controller.ControllerBookDetail.bookDetails;
+//import static org.example.ilib.Controller.ControllerBookDetail.getBookDetails;
 
 public class ControllerMenu implements Initializable {
     @FXML
@@ -35,10 +37,13 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     private Label Categories;
+
     @FXML
     private Label reading;
+
     @FXML
     private HBox recentlyAddHbox;
+
     @FXML
     private MenuItem Cart;
     private List<Book>recentlyBooks = new ArrayList<>();
@@ -76,15 +81,23 @@ public class ControllerMenu implements Initializable {
             String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
             if (!searchText.isEmpty()) { // Đảm bảo không để trống
                 GoogleBooksAPI api = new GoogleBooksAPI(searchText);
-                if (api.getInformation() != null) { // Kiểm tra thông tin trả về từ API
+                bookDetails = api.getInformation();
+                if (bookDetails != null && !bookDetails.isEmpty()) { // Kiểm tra thông tin trả về từ API
                     // Lấy stage hiện tại
-                    Stage stage = (Stage) search.getScene().getWindow();
+
 
                     // Load giao diện chi tiết sách
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("/org/example/ilib/bookDetail.fxml"));
-                    Scene scene = new Scene(loader.load());
+                    Parent root = loader.load();
+
+                    ControllerBookDetail controllerBookDetail = loader.getController();
+                    controllerBookDetail.setInformation(searchText);
+
+                    Stage stage = (Stage) search.getScene().getWindow();
+                    Scene scene = new Scene(root);
                     stage.setScene(scene);
+                    stage.show();
                 } else {
                     System.err.println("Không tìm thấy thông tin sách từ API.");
                 }
@@ -93,7 +106,6 @@ public class ControllerMenu implements Initializable {
             }
         }
     }
-
 
     public void topBookMenu(MouseEvent event) throws IOException {
         Stage stage = (Stage) topBooks.getScene().getWindow();
@@ -136,10 +148,7 @@ public class ControllerMenu implements Initializable {
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(recentlyBooks.get(i));
                 recentlyAddHbox.getChildren().add(cardbox);
-
-
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
