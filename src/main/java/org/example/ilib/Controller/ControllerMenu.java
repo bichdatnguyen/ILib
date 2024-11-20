@@ -136,10 +136,10 @@ public class ControllerMenu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Book_list bl = new Book_list(Book_list.RECECNTLYADDED_BOOK);
+        Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
         recentlyBooks = bl.bookList;
         try {
-            System.out.println(recentlyBooks.size() );
+
             for (int i = 0; i < recentlyBooks.size() ; i++ ) {
 
                 FXMLLoader fx = new FXMLLoader();

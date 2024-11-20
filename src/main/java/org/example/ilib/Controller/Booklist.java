@@ -6,7 +6,7 @@ import org.example.ilib.Processor.Book;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book_list {
+public class Booklist {
     public static final int TOP_BOOK = 1;
     public static final int CATEGORIES_BOOK = 2;
     public static final int RECECNTLYADDED_BOOK = 3;
@@ -14,7 +14,7 @@ public class Book_list {
 
     protected List<Book> bookList = new ArrayList<Book>();
 
-    protected Book_list(int Phan_loai) {
+    protected Booklist(int Phan_loai) {
         if (Phan_loai == TOP_BOOK) {
             bookList = addTopBookList();
 
