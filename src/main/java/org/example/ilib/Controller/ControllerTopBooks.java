@@ -31,7 +31,7 @@ public class ControllerTopBooks extends Book_list implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            System.out.println(bookList.size() );
+            //System.out.println(bookList.size() );
             for (int i = 0; i < 5 ; i++ ) {
 
                 FXMLLoader fx = new FXMLLoader();
@@ -40,8 +40,6 @@ public class ControllerTopBooks extends Book_list implements Initializable {
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 top_book_hbox.getChildren().add(cardbox);
-
-
             }
             for (int i = 5; i < 9 ; i++ ) {
 
@@ -51,21 +49,13 @@ public class ControllerTopBooks extends Book_list implements Initializable {
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 hbox_top_book2.getChildren().add(cardbox);
-
-
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
-
     public void BackToMenu(MouseEvent e) throws IOException {
-
         Stage stage = (Stage) Back.getScene().getWindow();
         FXMLLoader newStage = new FXMLLoader();
         newStage.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));

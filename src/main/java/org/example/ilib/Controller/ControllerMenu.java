@@ -46,9 +46,8 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     private MenuItem Cart;
+
     private List<Book>recentlyBooks = new ArrayList<>();
-
-
 
     /**
      * signOutMenu handle MouseEvent event.
@@ -83,9 +82,6 @@ public class ControllerMenu implements Initializable {
                 GoogleBooksAPI api = new GoogleBooksAPI(searchText);
                 bookDetails = api.getInformation();
                 if (bookDetails != null && !bookDetails.isEmpty()) { // Kiểm tra thông tin trả về từ API
-                    // Lấy stage hiện tại
-
-
                     // Load giao diện chi tiết sách
                     FXMLLoader loader = new FXMLLoader();
                     loader.setLocation(getClass().getResource("/org/example/ilib/bookDetail.fxml"));
@@ -93,7 +89,7 @@ public class ControllerMenu implements Initializable {
 
                     ControllerBookDetail controllerBookDetail = loader.getController();
                     controllerBookDetail.setInformation(searchText);
-
+                    // Lấy stage hiện tại
                     Stage stage = (Stage) search.getScene().getWindow();
                     Scene scene = new Scene(root);
                     stage.setScene(scene);
@@ -132,16 +128,13 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Book_list bl = new Book_list(Book_list.RECECNTLYADDED_BOOK);
         recentlyBooks = bl.bookList;
         try {
-            System.out.println(recentlyBooks.size() );
+            //System.out.println(recentlyBooks.size() );
             for (int i = 0; i < recentlyBooks.size() ; i++ ) {
-
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
@@ -152,6 +145,5 @@ public class ControllerMenu implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }

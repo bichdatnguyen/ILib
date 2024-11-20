@@ -37,48 +37,34 @@ public class ControllerCategories extends Book_list implements Initializable {
 
 
     public void initialize(URL location, ResourceBundle resources) {
-
         try {
-            System.out.println(bookList.size() );
+            //System.out.println(bookList.size() );
             for (int i = 0; i < 3 ; i++ ) {
-
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 sach_moi_hbox.getChildren().add(cardbox);
-
-
             }
             for (int i = 4; i < 7 ; i++ ) {
-
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 tai_lieu_hbox.getChildren().add(cardbox);
-
-
             }
             for (int i = 7; i <9 ; i++ ) {
-
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 tai_lieu_2_hbox.getChildren().add(cardbox);
-
-
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }
