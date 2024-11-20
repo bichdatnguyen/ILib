@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 
 import static java.lang.System.getenv;
 
-public class Book_API {
+public class BookAPI {
     public static void main(String[] args) {
         try {
             String query = "Learn_C++_in_24_Hours"; // Từ khóa tìm kiếm

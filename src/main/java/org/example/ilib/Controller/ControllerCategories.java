@@ -1,6 +1,5 @@
 package org.example.ilib.Controller;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,18 +13,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerCategories extends Book_list implements Initializable {
+public class ControllerCategories extends Booklist implements Initializable {
     @FXML
     private Button Back;
     @FXML
-    private HBox newBookHbox;
+    private HBox sach_moi_hbox;
     @FXML
-    private HBox DocumentHbox;
+    private HBox tai_lieu_hbox;
     @FXML
-    private HBox anOtherDocumentHbox;
+    private HBox tai_lieu_2_hbox;
 
     public ControllerCategories() {
-        super(Book_list.CATEGORIES_BOOK);
+        super(Booklist.CATEGORIES_BOOK);
     }
     public void BackToMenu(MouseEvent event)throws IOException {
         Stage stage = (Stage) Back.getScene().getWindow();
@@ -37,34 +36,48 @@ public class ControllerCategories extends Book_list implements Initializable {
 
 
     public void initialize(URL location, ResourceBundle resources) {
+
         try {
-            //System.out.println(bookList.size() );
+
             for (int i = 0; i < 3 ; i++ ) {
+
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
-                newBookHbox.getChildren().add(cardbox);
+                sach_moi_hbox.getChildren().add(cardbox);
+
+
             }
             for (int i = 4; i < 7 ; i++ ) {
+
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
-                DocumentHbox.getChildren().add(cardbox);
+                tai_lieu_hbox.getChildren().add(cardbox);
+
+
             }
             for (int i = 7; i <9 ; i++ ) {
+
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
-                anOtherDocumentHbox.getChildren().add(cardbox);
+                tai_lieu_2_hbox.getChildren().add(cardbox);
+
+
             }
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
     }
 }

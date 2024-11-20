@@ -85,4 +85,3 @@ INSERT INTO User VALUES ('23021520@vnu.edu.vn', '0779985683', 'Dat',
 INSERT INTO Voucher VALUES ('23021520@vnu.edu.vn', '100',
                             '2024/11/02');
 SELECT * FROM user;
-insert into  books values()
