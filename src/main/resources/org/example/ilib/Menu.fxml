@@ -33,7 +33,7 @@
             <MenuButton alignment="CENTER" layoutX="764.0" layoutY="28.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="134.0" text="User">
               <items>
                 <MenuItem mnemonicParsing="false" text="Account" />
-                <MenuItem mnemonicParsing="false" text="Cast" />
+                <MenuItem fx:id="Cart" mnemonicParsing="false" onAction="#MoveToCart" text="Cart" />
                   <MenuItem fx:id="signOut" mnemonicParsing="false" onAction="#signOutMenu" text="signOut" />
               </items>
                <font>

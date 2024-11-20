@@ -17,7 +17,7 @@ public class Book_list {
     protected Book_list(int Phan_loai) {
         if (Phan_loai == TOP_BOOK) {
             bookList = addTopBookList();
-            System.out.println(bookList.size());
+
         }
         else if (Phan_loai == CATEGORIES_BOOK) {
             bookList = CategoriesBookList();

@@ -39,6 +39,8 @@ public class ControllerMenu implements Initializable {
     private Label reading;
     @FXML
     private HBox recentlyAddHbox;
+    @FXML
+    private MenuItem Cart;
     private List<Book>recentlyBooks = new ArrayList<>();
 
 
@@ -58,6 +60,15 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
         String searchText = search.getText();
         System.out.println(searchText);
+    }
+
+    @FXML
+    void MoveToCart(ActionEvent event)throws IOException{
+        Stage stage = (Stage) Cart.getParentPopup().getOwnerWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Cart.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
     public void handleSearch(KeyEvent keyEvent) throws IOException {
@@ -108,6 +119,7 @@ public class ControllerMenu implements Initializable {
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
     }
+
 
 
     @Override

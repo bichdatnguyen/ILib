@@ -23,6 +23,22 @@ public class ControllerBookDetail {
     @FXML
     private ImageView thumbnail;
 
+    public void setAuthorText(String author) {
+        authorText.setText(author);
+    }
+
+    public void setDescriptionText(String description) {
+        descriptionText.setText(description);
+    }
+
+    public void setTitleText(String title) {
+        titleText.setText(title);
+    }
+
+    public void setThumbnail(Image image) {
+        thumbnail.setImage(image);
+    }
+
     public void setInformation() throws IOException {
         GoogleBooksAPI gg = new GoogleBooksAPI("Potter");
         JsonArray items = gg.getInformation();

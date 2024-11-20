@@ -6,16 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="979.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="979.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerCart">
    <children>
       <Label layoutX="38.0" layoutY="41.0" prefHeight="106.0" prefWidth="206.0" text="Giỏ hàng" />
       <Label layoutX="684.0" layoutY="441.0" text="Tổng tiền" />
-      <Label layoutX="716.0" layoutY="523.0" text="Money" />
+      <Label fx:id="totalMoney" layoutX="716.0" layoutY="523.0" text="Money" />
       <ScrollPane layoutX="3.0" layoutY="197.0" prefHeight="200.0" prefWidth="972.0">
          <content>
             <HBox prefHeight="205.0" prefWidth="1377.0" />
          </content>
       </ScrollPane>
-      <Button layoutX="841.0" layoutY="22.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="Back" layoutX="841.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
+      <Button fx:id="removingBook" layoutX="58.0" layoutY="459.0" mnemonicParsing="false" onMouseClicked="#deleteBook" text="Xoá khỏi giỏ hàng" />
    </children>
 </AnchorPane>
