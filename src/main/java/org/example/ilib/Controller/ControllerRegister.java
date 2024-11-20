@@ -20,8 +20,6 @@ public class ControllerRegister {
     @FXML
     private Button CreateAccountButton;
     @FXML
-    TextField CCCDtextField;
-    @FXML
     TextField emailTextField;
     @FXML
     TextField passwordTextField;
@@ -34,13 +32,7 @@ public class ControllerRegister {
 
     @FXML
     void CreateAccount(MouseEvent event) throws IOException, SQLException {
-        if(!(CCCDtextField.getText().matches("\\d+")) && CCCDtextField.getText().length() != 12){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Please enter a valid CCD number");
-            alert.showAndWait();
-            return;
-        } else if(!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
+        if(!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Please enter a valid email address");
@@ -52,7 +44,6 @@ public class ControllerRegister {
             alert.setContentText("Please enter a valid password");
             alert.showAndWait();
             return;
-
         } else if(!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -89,8 +80,7 @@ public class ControllerRegister {
         String password = passwordTextField.getText();
         String fullName = nameTextField.getText();
         String phoneNumber = phoneTextField.getText();
-        String identityNumber = CCCDtextField.getText();
-        db.createAccount(email, password, fullName, phoneNumber, identityNumber);
+        db.createAccount(email, phoneNumber, fullName, password);
 
         Stage stage = (Stage) CreateAccountButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();

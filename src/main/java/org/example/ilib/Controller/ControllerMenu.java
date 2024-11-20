@@ -80,8 +80,8 @@ public class ControllerMenu implements Initializable {
         if (keyEvent.getCode() == KeyCode.ENTER) { // Kiểm tra mã phím ENTER
             String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
             if (!searchText.isEmpty()) { // Đảm bảo không để trống
-                GoogleBooksAPI api = new GoogleBooksAPI(searchText);
-                bookDetails = api.getInformation();
+                GoogleBooksAPI api = new GoogleBooksAPI();
+                bookDetails = api.getInformation(searchText);
                 if (bookDetails != null && !bookDetails.isEmpty()) { // Kiểm tra thông tin trả về từ API
                     // Lấy stage hiện tại
 

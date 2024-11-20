@@ -59,8 +59,8 @@ public class ControllerBookDetail {
     }
 
     public void setInformation(String searchText) throws IOException {
-        GoogleBooksAPI gg = new GoogleBooksAPI(searchText);
-        JsonArray items = gg.getInformation();
+        GoogleBooksAPI gg = new GoogleBooksAPI();
+        JsonArray items = gg.getInformation(searchText);
         //JsonArray items = null;
 
         if (items == null || items.isEmpty()) {

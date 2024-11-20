@@ -27,14 +27,14 @@ public class DBConnection {
         return instance;
     }
 
-    public void createAccount(String email, String password,
-                              String fullName, String phoneNumber, String identityNumber) throws SQLException {
+    public void createAccount(String email, String phoneNumber, String fullName,
+                              String password) throws SQLException {
         Statement stmt = connection.createStatement();
-        stmt.executeUpdate("INSERT INTO user (email, password, fullName, phoneNumber, identityNumber) "
-                + "VALUES ('" + email + "','" + password + "','"
-                + fullName + "','" + phoneNumber + "','" + identityNumber + "')");
-        stmt.executeUpdate("INSERT INTO Voucher (email, discount_percentage, end_discount_date) " +
-                "VALUES ('" + email + "', 50, '2024-11-02')");
+        stmt.executeUpdate("INSERT INTO user (Email, phoneNumber, fullName, password) "
+                + "VALUES ('" + email + "','" + phoneNumber + "','"
+                + fullName + "','" + password + "')");
+        stmt.executeUpdate("INSERT INTO Voucher (Email, discountPercentage) " +
+                "VALUES ('" + email + "', 50)");
         ResultSet rs = stmt.executeQuery("SELECT * FROM user");
     }
 
