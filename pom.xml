@@ -128,6 +128,20 @@
             <version>1.4.11</version>
         </dependency>
 
+        <!-- Logback Core -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.4.11</version> <!-- Phiên bản mới nhất -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>21.0.0</version>
+        </dependency>
+
+
         <!-- Testing Dependencies -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -141,10 +155,69 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- QR-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.5.2</version>
+        </dependency>
+
+        <!-- Spring Boot Starter Web, bao gồm Spring MVC, RestController, và các tính năng cần thiết -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.7.5</version> <!-- Specify a stable version -->
+        </dependency>
+
+
+            <!-- Spring Boot Starter Test -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>2.7.5</version> <!-- Thêm phiên bản nếu cần -->
+                <scope>test</scope> <!-- Đảm bảo scope là test -->
+            </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+
     </dependencies>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.5</version> <!-- Choose the appropriate version -->
+        <relativePath/> <!-- Lookup parent from repository -->
+    </parent>
+
+
+    <repositories>
+
+        <repository>
+            <id>stripe-repo</id>
+            <url>https://maven.pkg.github.com/stripe/stripe-java</url>
+        </repository>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+        </repository>
+    </repositories>
+
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -154,6 +227,7 @@
                     <target>21</target>
                     <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
+
             </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
