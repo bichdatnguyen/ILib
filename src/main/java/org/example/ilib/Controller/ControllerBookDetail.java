@@ -3,13 +3,20 @@ package org.example.ilib.Controller;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ControllerBookDetail {
+    @FXML
+    private Button BackButton;
 
     @FXML
     private Text authorText;
@@ -24,6 +31,14 @@ public class ControllerBookDetail {
     private ImageView thumbnail;
 
     public static JsonArray bookDetails = new JsonArray();
+
+    public void Back(MouseEvent event) throws IOException {
+        Stage stage = (Stage)BackButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
+    }
 
     public void setInformation(String searchText) throws IOException {
         GoogleBooksAPI gg = new GoogleBooksAPI(searchText);
