@@ -18,11 +18,11 @@ public class ControllerCategories extends Book_list implements Initializable {
     @FXML
     private Button Back;
     @FXML
-    private HBox sach_moi_hbox;
+    private HBox newBookHbox;
     @FXML
-    private HBox tai_lieu_hbox;
+    private HBox DocumentHbox;
     @FXML
-    private HBox tai_lieu_2_hbox;
+    private HBox anOtherDocumentHbox;
 
     public ControllerCategories() {
         super(Book_list.CATEGORIES_BOOK);
@@ -45,7 +45,7 @@ public class ControllerCategories extends Book_list implements Initializable {
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
-                sach_moi_hbox.getChildren().add(cardbox);
+                newBookHbox.getChildren().add(cardbox);
             }
             for (int i = 4; i < 7 ; i++ ) {
                 FXMLLoader fx = new FXMLLoader();
@@ -53,7 +53,7 @@ public class ControllerCategories extends Book_list implements Initializable {
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
-                tai_lieu_hbox.getChildren().add(cardbox);
+                DocumentHbox.getChildren().add(cardbox);
             }
             for (int i = 7; i <9 ; i++ ) {
                 FXMLLoader fx = new FXMLLoader();
@@ -61,7 +61,7 @@ public class ControllerCategories extends Book_list implements Initializable {
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
-                tai_lieu_2_hbox.getChildren().add(cardbox);
+                anOtherDocumentHbox.getChildren().add(cardbox);
             }
         } catch (IOException e) {
             e.printStackTrace();

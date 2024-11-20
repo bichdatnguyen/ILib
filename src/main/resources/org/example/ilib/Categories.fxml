@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="782.0" prefWidth="1161.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerCategories">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="782.0" prefWidth="1161.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerCategories">
    <top>
       <AnchorPane prefHeight="88.0" prefWidth="881.0" BorderPane.alignment="CENTER">
          <children>
@@ -24,19 +26,19 @@
             <Label prefHeight="35.0" prefWidth="265.0" text="    Sách mới " textFill="#5726d1" />
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <HBox fx:id="sach_moi_hbox" prefHeight="205.0" prefWidth="1373.0" />
+                  <HBox fx:id="newBookHbox" prefHeight="205.0" prefWidth="1373.0" />
                </content>
             </ScrollPane>
             <Label prefHeight="35.0" prefWidth="243.0" text="   Tài liệu mượn nhiều " textFill="#a91abc" />
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <HBox fx:id="tai_lieu_hbox" prefHeight="189.0" prefWidth="1564.0" />
+                  <HBox fx:id="DocumentHbox" prefHeight="189.0" prefWidth="1564.0" />
                </content>
             </ScrollPane>
             <Label prefHeight="35.0" prefWidth="230.0" text="  Tài liệu liên quan" textFill="#b21313" />
             <ScrollPane prefHeight="200.0" prefWidth="200.0">
                <content>
-                  <HBox fx:id="tai_lieu_2_hbox" prefHeight="199.0" prefWidth="1585.0" />
+                  <HBox fx:id="anOtherDocumentHbox" prefHeight="199.0" prefWidth="1585.0" />
                </content>
             </ScrollPane>
          </children>
