@@ -1,30 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="title" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerLoginAndRegister">
+<AnchorPane id="title" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerLoginAndRegister">
    <children>
-      <Button id="LoginButton" fx:id="LoginButton" layoutX="103.0" layoutY="371.0" mnemonicParsing="false" onMouseClicked="#Login" prefHeight="100.0" prefWidth="360.0" text="Đăng nhập">
+      <Button id="LoginButton" fx:id="LoginButton" layoutX="47.0" layoutY="259.0" mnemonicParsing="false" onMouseClicked="#Login" prefHeight="100.0" prefWidth="360.0" text="Đăng nhập">
          <font>
             <Font size="40.0" />
          </font>
       </Button>
-      <Button id="RegisterButton" fx:id="RegisterButton" layoutX="535.0" layoutY="371.0" mnemonicParsing="false" onMouseClicked="#Register" prefHeight="100.0" prefWidth="360.0" text="Đăng ký">
+      <Button id="RegisterButton" fx:id="RegisterButton" layoutX="48.0" layoutY="399.0" mnemonicParsing="false" onMouseClicked="#Register" prefHeight="100.0" prefWidth="360.0" text="Đăng ký">
          <font>
             <Font size="40.0" />
          </font>
       </Button>
-      <Label id="titleLabel" layoutX="425.0" layoutY="43.0" prefHeight="183.0" prefWidth="191.0" text="iLib" textFill="#4a8c44">
+      <Label id="titleLabel" alignment="CENTER" layoutX="132.0" layoutY="39.0" prefHeight="183.0" prefWidth="191.0" text="iLib" textFill="#4a8c44">
          <font>
             <Font size="96.0" />
          </font>
       </Label>
-      <Button layoutX="457.0" layoutY="522.0" mnemonicParsing="false" onMouseClicked="#Exit" prefHeight="46.0" prefWidth="93.0" text="Exit">
+      <Button layoutX="791.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#Exit" prefHeight="46.0" prefWidth="93.0" text="Exit">
          <font>
             <Font size="22.0" />
          </font></Button>
+      <ImageView fitHeight="396.0" fitWidth="408.0" layoutX="480.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../assets/thu_vien.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

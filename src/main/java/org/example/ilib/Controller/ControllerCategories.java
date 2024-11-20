@@ -1,6 +1,5 @@
 package org.example.ilib.Controller;
 
-import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ControllerCategories extends Book_list implements Initializable {
+public class ControllerCategories extends Booklist implements Initializable {
     @FXML
     private Button Back;
     @FXML
@@ -25,7 +24,7 @@ public class ControllerCategories extends Book_list implements Initializable {
     private HBox tai_lieu_2_hbox;
 
     public ControllerCategories() {
-        super(Book_list.CATEGORIES_BOOK);
+        super(Booklist.CATEGORIES_BOOK);
     }
     public void BackToMenu(MouseEvent event)throws IOException {
         Stage stage = (Stage) Back.getScene().getWindow();
@@ -39,7 +38,7 @@ public class ControllerCategories extends Book_list implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            System.out.println(bookList.size() );
+
             for (int i = 0; i < 3 ; i++ ) {
 
                 FXMLLoader fx = new FXMLLoader();

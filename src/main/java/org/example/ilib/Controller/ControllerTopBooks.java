@@ -13,7 +13,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class ControllerTopBooks extends Book_list implements Initializable {
+public class ControllerTopBooks extends Booklist implements Initializable {
 
     @FXML
     private Button Back;
@@ -23,7 +23,7 @@ public class ControllerTopBooks extends Book_list implements Initializable {
     private HBox hbox_top_book2;
 
     public ControllerTopBooks() {
-        super(Book_list.TOP_BOOK);
+        super(Booklist.TOP_BOOK);
     }
 
 
@@ -31,7 +31,7 @@ public class ControllerTopBooks extends Book_list implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            System.out.println(bookList.size() );
+
             for (int i = 0; i < 5 ; i++ ) {
 
                 FXMLLoader fx = new FXMLLoader();
