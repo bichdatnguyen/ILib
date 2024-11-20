@@ -23,9 +23,12 @@ public class ControllerBookDetail {
     @FXML
     private ImageView thumbnail;
 
-    public void setInformation() throws IOException {
-        GoogleBooksAPI gg = new GoogleBooksAPI("Potter");
+    public static JsonArray bookDetails = new JsonArray();
+
+    public void setInformation(String searchText) throws IOException {
+        GoogleBooksAPI gg = new GoogleBooksAPI(searchText);
         JsonArray items = gg.getInformation();
+        //JsonArray items = null;
 
         if (items == null || items.isEmpty()) {
             System.err.println("No items found in the API response.");
@@ -38,13 +41,14 @@ public class ControllerBookDetail {
         JsonObject item = items.get(0).getAsJsonObject();
         JsonObject volumeInfo = item.getAsJsonObject("volumeInfo");
 
-        if(volumeInfo.has("imageLinks")) {
-            String thumbnailLink = volumeInfo.getAsJsonObject("imageLinks").get("smallThumbnail").getAsString();
-            thumbnail.setImage(new Image(thumbnailLink));
-        } else {
-            // thay thế lại absolute path để chạy được
-            thumbnail.setImage(new Image("/org/assets/noImage.png"));
-        }
+        //if(volumeInfo.has("imageLinks")) {
+        //    String thumbnailLink = volumeInfo.getAsJsonObject("imageLinks").get("smallThumbnail").getAsString();
+        //    //System.err.println("ThumbnailLink" + thumbnailLink);
+        //    thumbnail.setImage(new Image(thumbnailLink)); // thay lai = thumbnailLink
+        //} else {
+        //    // thay thế lại absolute path để chạy được
+        //    thumbnail.setImage(new Image("/org/assets/noImage.png"));
+        //}
 
         if (volumeInfo.has("authors")) {
             JsonArray authorsArray = volumeInfo.getAsJsonArray("authors");
