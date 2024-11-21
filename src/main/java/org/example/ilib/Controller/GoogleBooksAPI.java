@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import static java.lang.System.getenv;
 
 public class GoogleBooksAPI {
+    private static final String apiKey = getenv("APIKey");
 
     public JsonArray checkConnectionAndGetBooks(String urlString) throws IOException {
         URL url = new URL(urlString);
@@ -45,19 +46,17 @@ public class GoogleBooksAPI {
         }
     }
 
-    public JsonArray getInformation(String query) throws IOException {
-        String apiKey = getenv("APIKey");
-
+    public JsonArray getInformation(String query, int maxresult) throws IOException {
         String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
         String urlString = "https://www.googleapis.com/books/v1/volumes?q="
-                + encodedQuery + "&maxResults=4&key=" + apiKey;
+                + encodedQuery + "&maxResults=" + maxresult + "&key=" + apiKey;
         return checkConnectionAndGetBooks(urlString);
     }
 
-    public JsonArray getBooksBySubject(String subject) throws IOException {
+    public JsonArray getBooksBySubject(String subject, int maxresult) throws IOException {
         String encodedQuery = URLEncoder.encode(subject, StandardCharsets.UTF_8);
         String urlString = "https://www.googleapis.com/books/v1/volumes?q=subject:"
-                + encodedQuery;
+                + encodedQuery + "&maxResults=" + maxresult + "&key=" + apiKey;
 
         return checkConnectionAndGetBooks(urlString);
     }

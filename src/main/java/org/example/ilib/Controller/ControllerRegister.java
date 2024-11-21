@@ -81,6 +81,7 @@ public class ControllerRegister {
         String fullName = nameTextField.getText();
         String phoneNumber = phoneTextField.getText();
         db.createAccount(email, phoneNumber, fullName, password);
+        db.createVoucher(email, 50);
 
         Stage stage = (Stage) CreateAccountButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();

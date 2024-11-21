@@ -1,6 +1,7 @@
 package org.example.ilib.Controller;
 
 import java.sql.*;
+import java.util.List;
 
 import static java.lang.System.getenv;
 
@@ -29,15 +30,22 @@ public class DBConnection {
 
     public void createAccount(String email, String phoneNumber, String fullName,
                               String password) throws SQLException {
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate("INSERT INTO user (Email, phoneNumber, fullName, password) "
-                + "VALUES ('" + email + "','" + phoneNumber + "','"
-                + fullName + "','" + password + "')");
-        stmt.executeUpdate("INSERT INTO Voucher (Email, discountPercentage) " +
-                "VALUES ('" + email + "', 50)");
-        ResultSet rs = stmt.executeQuery("SELECT * FROM user");
+        String sql = "INSERT INTO user (email, phoneNumber, fullName, password) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, email);
+        stmt.setString(2, phoneNumber);
+        stmt.setString(3, fullName);
+        stmt.setString(4, password);
+        stmt.executeUpdate();
     }
 
+    public void createVoucher(String email, int discountPercentage) throws SQLException {
+        String sql = "INSERT INTO Voucher (Email, discountPercentage) VALUES (?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, email);
+        stmt.setInt(2, discountPercentage);
+        stmt.executeUpdate();
+    }
 
     public boolean checkDataExit(String email_)  {
         String query = "SELECT COUNT(*) FROM User WHERE email = ?";
@@ -80,5 +88,28 @@ public class DBConnection {
             System.err.println("Lỗi khi kiểm tra dữ liệu: " + e.getMessage());
         }
         return false;
+    }
+
+    public void addAuthor(String bookID, List<String> authors) throws SQLException {
+        for (String author : authors) {
+            String sql = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, bookID);
+            stmt.setString(2, author);
+            stmt.executeUpdate();
+        }
+    }
+
+    public void addBook(String bookID, String title, String authors, int bookPrice,
+                        String description, String quantityInStock) throws SQLException {
+        String sql = "INSERT INTO books (bookID, title, authors, bookPrice, description, quantityInStock) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, bookID);
+        stmt.setString(2, title);
+        stmt.setString(3, authors);
+        stmt.setInt(4, bookPrice);
+        stmt.setString(5, description);
+        stmt.setString(6, quantityInStock);
+        stmt.executeUpdate();
     }
 }

@@ -87,7 +87,7 @@ public class ControllerMenu implements Initializable {
             String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
             if (!searchText.isEmpty()) { // Đảm bảo không để trống
                 GoogleBooksAPI api = new GoogleBooksAPI();
-                JsonArray bookDetails = api.getInformation(searchText);
+                JsonArray bookDetails = api.getInformation(searchText, 4);
 
                 if (bookDetails != null && !bookDetails.isEmpty()) { // Kiểm tra thông tin trả về từ API
 
@@ -120,18 +120,18 @@ public class ControllerMenu implements Initializable {
                             }
                             author = authorsBuilder.toString();
                         } else {
-                           author = "No authors";
+                            author = "No authors";
                         }
 
                         if (volumeInfo.has("title")) {
-                           title = volumeInfo.get("title").getAsString();
+                            title = volumeInfo.get("title").getAsString();
                         } else {
-                           title=  "No title available.";
+                            title=  "No title available.";
                         }
-                      Book bk = new Book(title,thumbnail,author);
-                     controllerSearchingBook.addBook(bk);
+                        Book bk = new Book(title,thumbnail,author);
+                        controllerSearchingBook.addBook(bk);
                     }
-                  controllerSearchingBook.show();
+                    controllerSearchingBook.show();
                     Scene scene1 = new Scene(root);
                     stage.setScene(scene1);
 
