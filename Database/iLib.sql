@@ -187,7 +187,8 @@ CONSTRAINT `fk_Author_Books`
        ON UPDATE CASCADE)
     ENGINE = InnoDB;
 
-
+insert into User values ('23021524@vnu.edu.vn','0914435450','Vu Dat','123456');
+select * from User;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

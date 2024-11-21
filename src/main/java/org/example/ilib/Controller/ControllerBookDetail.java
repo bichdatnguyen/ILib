@@ -30,7 +30,11 @@ public class ControllerBookDetail {
     @FXML
     private ImageView thumbnail;
 
+    private Scene Forwardsceen;
 
+    public void saveForwardScene(Scene scene) {
+        this.Forwardsceen = scene;
+    }
 
     public void setAuthorText(String author) {
         authorText.setText(author);
@@ -52,9 +56,8 @@ public class ControllerBookDetail {
 
     public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage)BackButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
-        Scene scene = new Scene(loader.load());
+
+        Scene scene = Forwardsceen;
         stage.setScene(scene);
     }
 

@@ -55,6 +55,7 @@ public class ControllerMenu implements Initializable {
 
 
 
+
     /**
      * signOutMenu handle MouseEvent event.
      * this method will switch the scene to the login and register screen.
