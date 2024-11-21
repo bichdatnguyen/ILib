@@ -48,8 +48,8 @@ CONSTRAINT `fk_Voucher_User`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ILIB`.`Books` (
 `bookID` VARCHAR(50) NOT NULL,
-`title` VARCHAR(50) NULL,
-`authors` VARCHAR(50) NULL,
+`title` TEXT NULL,
+`authors` TEXT NULL,
 `bookPrice` INT NULL,
 `Description` TEXT NULL,
 `quantityInStock` INT NULL,
@@ -65,8 +65,6 @@ CREATE TABLE IF NOT EXISTS `ILIB`.`Categories` (
 `Category` VARCHAR(50) NOT NULL,
 `bookID` VARCHAR(50) NOT NULL,
 PRIMARY KEY (`Category`, `bookID`),
-UNIQUE INDEX `Category_UNIQUE` (`Category` ASC) VISIBLE,
-UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE,
 CONSTRAINT `fk_Categories_Books`
    FOREIGN KEY (`bookID`)
        REFERENCES `ILIB`.`Books` (`bookID`)
@@ -178,8 +176,6 @@ CREATE TABLE IF NOT EXISTS `ILIB`.`Author` (
 `bookID` VARCHAR(50) NOT NULL,
 `authorName` VARCHAR(50) NOT NULL,
 PRIMARY KEY (`bookID`, `authorName`),
-UNIQUE INDEX `bookID_UNIQUE` (`bookID` ASC) VISIBLE,
-UNIQUE INDEX `authorName_UNIQUE` (`authorName` ASC) VISIBLE,
 CONSTRAINT `fk_Author_Books`
    FOREIGN KEY (`bookID`)
        REFERENCES `ILIB`.`Books` (`bookID`)
@@ -187,8 +183,9 @@ CONSTRAINT `fk_Author_Books`
        ON UPDATE CASCADE)
     ENGINE = InnoDB;
 
-insert into User values ('23021524@vnu.edu.vn','0914435450','Vu Dat','123456');
-select * from User;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+insert into User values ('23021524@vnu.edu.vn','0914435450','Vu Dat','123456');
+select * from User;

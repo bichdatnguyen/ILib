@@ -90,18 +90,63 @@ public class DBConnection {
         return false;
     }
 
-    public void addAuthor(String bookID, List<String> authors) throws SQLException {
-        for (String author : authors) {
-            String sql = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, bookID);
-            stmt.setString(2, author);
-            stmt.executeUpdate();
+    public boolean bookExist(String bookID) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM books WHERE bookID = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, bookID);
+
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;
+        } else {
+            return false;
         }
     }
 
+    public boolean bookAndAuthorExist(String bookID, String author) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM author WHERE bookID = ? AND authorName = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, bookID);
+        stmt.setString(2, author);
+
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean bookAndCategoryExist(String category, String bookID) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM categories WHERE bookID = ? AND Category = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, bookID);
+        stmt.setString(2, category);
+
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt(1) > 0;
+        } else {
+            return false;
+        }
+    }
+
+    public void addAuthor(String bookID, String author) throws SQLException {
+        if (bookAndAuthorExist(bookID, author)) {
+            return;
+        }
+        String sql = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, bookID);
+        stmt.setString(2, author);
+        stmt.executeUpdate();
+    }
+
     public void addBook(String bookID, String title, String authors, int bookPrice,
-                        String description, String quantityInStock) throws SQLException {
+                        String description, int quantityInStock) throws SQLException {
+        if (bookExist(bookID)) {
+            return;
+        }
         String sql = "INSERT INTO books (bookID, title, authors, bookPrice, description, quantityInStock) VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setString(1, bookID);
@@ -109,7 +154,18 @@ public class DBConnection {
         stmt.setString(3, authors);
         stmt.setInt(4, bookPrice);
         stmt.setString(5, description);
-        stmt.setString(6, quantityInStock);
+        stmt.setInt(6, quantityInStock);
+        stmt.executeUpdate();
+    }
+
+    public void addCategories(String category, String bookID) throws SQLException {
+        if (bookAndCategoryExist(category, bookID)) {
+            return;
+        }
+        String sql = "INSERT INTO categories (category, bookID) VALUES (?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, category);
+        stmt.setString(2, bookID);
         stmt.executeUpdate();
     }
 }
