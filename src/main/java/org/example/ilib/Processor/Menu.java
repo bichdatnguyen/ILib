@@ -1,10 +1,14 @@
 package org.example.ilib.Processor;
 
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import org.example.ilib.Controller.ControllerMenu;
 
 import java.io.IOException;
 
@@ -31,4 +35,13 @@ public class Menu extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    @Override
+    public void stop() {
+        // Tắt ExecutorService khi ứng dụng đóng
+        ControllerMenu.shutdownExecutorService();
+        System.out.println("Ứng dụng đã đóng và ExecutorService đã tắt.");
+        System.exit(0);
+        Platform.exit();
+    }
+
 }

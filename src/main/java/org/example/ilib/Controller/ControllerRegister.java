@@ -33,48 +33,24 @@ public class ControllerRegister {
     @FXML
     void CreateAccount(MouseEvent event) throws IOException, SQLException {
         if(!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Please enter a valid email address");
-            alert.showAndWait();
-            return;
-        } else if(!passwordTextField.getText().matches("[0-9a-zA-Z]+")){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Please enter a valid password");
-            alert.showAndWait();
-            return;
-        } else if(!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Please enter a valid name");
-            alert.showAndWait();
-            return;
-        } else if(!phoneTextField.getText().matches("[0-9]+")){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Please enter a valid phone number");
-            alert.showAndWait();
-            return;
+            showErrAndEx.showAlert("Email không hợp lệ");
+        }  if(!passwordTextField.getText().matches("[0-9a-zA-Z]+")){
+            showErrAndEx.showAlert("Password không hợp lệ");
+        }  if(!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")){
+            showErrAndEx.showAlert("Tên không hợp lệ");
+        }  if(!phoneTextField.getText().matches("[0-9]+")){
+          showErrAndEx.showAlert("Số điện thoại không hợp lệ");
         }
 
         DBConnection db = DBConnection.getInstance();
 
         boolean check = db.checkDataExit(emailTextField.getText(),passwordTextField.getText());
         if(check) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Confirmation");
-            alert.setContentText("Tài khoản này đã có");
-            alert.showAndWait();
-            return;
+           showErrAndEx.showAlert("Tài khoản hiện đã có");
         }
         boolean check2 = db.checkDataExit(emailTextField.getText());
         if(check2){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Email này đã tồn tại");
-            alert.showAndWait();
-            return;
+           showErrAndEx.showAlert("Email này da tồn tại");
         }
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
