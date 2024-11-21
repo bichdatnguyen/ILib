@@ -24,15 +24,22 @@ public class ControllerBook  {
     private Label author;
 
 
+    private Image loadImage(String path) {
+        if (path.startsWith("http://") || path.startsWith("https://")) {
+            return new Image(path, true);
+        } else {
+            return new Image(getClass().getResourceAsStream(path));
+        }
 
+    }
 
     void setBook(Book book) {
-        Image image1  = new Image(getClass().getResourceAsStream(book.getImage()));
+        Image image1 = loadImage(book.getImage());
         author.setText(book.getAuthor());
         title.setText(book.getTitle());
         image.setImage(image1);
-
     }
+
     @FXML
     void gotoBookDetail(MouseEvent event) throws IOException {
         Stage stage = (Stage) image.getScene().getWindow();

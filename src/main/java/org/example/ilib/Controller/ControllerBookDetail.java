@@ -48,7 +48,7 @@ public class ControllerBookDetail {
         thumbnail.setImage(image);
     }
 
-    public static JsonArray bookDetails = new JsonArray();
+
 
     public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage)BackButton.getScene().getWindow();
@@ -80,7 +80,7 @@ public class ControllerBookDetail {
             thumbnail.setImage(new Image(thumbnailLink)); // thay lai = thumbnailLink
         } else {
             // thay thế lại absolute path để chạy được
-            thumbnail.setImage(new Image("D:\\GitHub\\Ilib\\Ilib\\src\\main\\resources\\org\\assets\\noImage.png"));
+            thumbnail.setImage(new Image("/org/assets/noImage.png"));
         }
 
         if (volumeInfo.has("authors")) {

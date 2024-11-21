@@ -39,6 +39,7 @@ module org.example.ilib {
     requires org.slf4j;
     requires ch.qos.logback.classic;
     requires mysql.connector.j;
+    requires org.json;
 
 
     exports org.example.ilib.Controller;

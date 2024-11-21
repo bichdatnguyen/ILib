@@ -16,7 +16,7 @@ import static java.lang.System.getenv;
 public class BookAPI {
     public static void main(String[] args) {
         try {
-            String query = "Learn_C++_in_24_Hours"; // Từ khóa tìm kiếm
+            String query = "C"; // Từ khóa tìm kiếm
             String apiKey = getenv("APIKey");
 
             String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);

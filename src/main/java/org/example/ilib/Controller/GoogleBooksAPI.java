@@ -50,7 +50,7 @@ public class GoogleBooksAPI {
 
         String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
         String urlString = "https://www.googleapis.com/books/v1/volumes?q="
-                + encodedQuery + "&maxResults=1&key=" + apiKey;
+                + encodedQuery + "&maxResults=4&key=" + apiKey;
         return checkConnectionAndGetBooks(urlString);
     }
 

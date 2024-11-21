@@ -1,29 +1,34 @@
 package org.example.ilib.Controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Book;
-
+import org.json.JSONObject;
+import org.json.JSONArray;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static org.example.ilib.Controller.ControllerBookDetail.bookDetails;
-//import static org.example.ilib.Controller.ControllerBookDetail.getBookDetails;
+
 
 public class ControllerMenu implements Initializable {
     @FXML
@@ -81,28 +86,61 @@ public class ControllerMenu implements Initializable {
             String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
             if (!searchText.isEmpty()) { // Đảm bảo không để trống
                 GoogleBooksAPI api = new GoogleBooksAPI();
-                bookDetails = api.getInformation(searchText);
+                JsonArray bookDetails = api.getInformation(searchText);
+
                 if (bookDetails != null && !bookDetails.isEmpty()) { // Kiểm tra thông tin trả về từ API
-                    // Lấy stage hiện tại
-
-
-                    // Load giao diện chi tiết sách
-                    FXMLLoader loader = new FXMLLoader();
-                    loader.setLocation(getClass().getResource("/org/example/ilib/bookDetail.fxml"));
-                    Parent root = loader.load();
-
-                    ControllerBookDetail controllerBookDetail = loader.getController();
-                    controllerBookDetail.setInformation(searchText);
 
                     Stage stage = (Stage) search.getScene().getWindow();
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();
+                    FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/org/example/ilib/SearchingBook.fxml"));
+                    Parent root = fxmlLoader1.load();
+                    ControllerSearchingBook controllerSearchingBook = fxmlLoader1.getController();
+
+                    for (int i = 0; i < bookDetails.size(); i++) {
+                        JsonObject item = bookDetails.get(i).getAsJsonObject();
+                        JsonObject volumeInfo = item.getAsJsonObject("volumeInfo");
+                        String title, author, thumbnail;
+
+                        if(volumeInfo.has("imageLinks")) {
+                            String thumbnailLink = volumeInfo.getAsJsonObject("imageLinks").get("smallThumbnail").getAsString();
+                            thumbnail = thumbnailLink;
+
+                        } else {
+                            thumbnail ="/org/assets/noImage.png";
+                        }
+
+                        if (volumeInfo.has("authors")) {
+                            JsonArray authorsArray = volumeInfo.getAsJsonArray("authors");
+                            StringBuilder authorsBuilder = new StringBuilder();
+                            for (int j = 0; j < authorsArray.size(); j++) {
+                                authorsBuilder.append(authorsArray.get(j).getAsString());
+                                if (j < authorsArray.size() - 1) {
+                                    authorsBuilder.append(", ");
+                                }
+                            }
+                            author = authorsBuilder.toString();
+                        } else {
+                           author = "No authors";
+                        }
+
+                        if (volumeInfo.has("title")) {
+                           title = volumeInfo.get("title").getAsString();
+                        } else {
+                           title=  "No title available.";
+                        }
+                      Book bk = new Book(title,thumbnail,author);
+                     controllerSearchingBook.addBook(bk);
+                    }
+                  controllerSearchingBook.show();
+                    Scene scene1 = new Scene(root);
+                    stage.setScene(scene1);
+
+
+
                 } else {
-                    System.err.println("Không tìm thấy thông tin sách từ API.");
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setContentText("Không tìm thấy sách phù hợp");
+                    alert.showAndWait();
                 }
-            } else {
-                System.err.println("Hãy nhập nội dung tìm kiếm.");
             }
         }
     }
