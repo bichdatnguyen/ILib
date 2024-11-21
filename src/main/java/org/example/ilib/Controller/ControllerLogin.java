@@ -34,12 +34,7 @@ public class ControllerLogin {
         DBConnection db = DBConnection.getInstance();
 
          if(!db.checkDataExit(emailText.getText(), passwordText.getText())) {
-             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-             alert.setTitle("Error");
-             alert.setHeaderText(null);
-             alert.setContentText("Email không đúng hoặc mật khẩu bị sai");
-             alert.show();
-            return;
+            showErrAndEx.showAlert("Email hoặc mật khẩu kong đúng");
          }
 
 

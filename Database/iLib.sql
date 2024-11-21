@@ -11,6 +11,8 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema ILIB
 -- -----------------------------------------------------
+
+Drop database if exists ILIB;
 CREATE SCHEMA IF NOT EXISTS `ILIB` DEFAULT CHARACTER SET utf8 ;
 USE `ILIB` ;
 
@@ -187,8 +189,8 @@ CONSTRAINT `fk_Author_Books`
        ON UPDATE CASCADE)
     ENGINE = InnoDB;
 
-insert into User values ('23021524@vnu.edu.vn','0914435450','Vu Dat','123456');
-select * from User;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+insert into User values ('23021524@vnu.edu.vn','0914435450','Vu Dat','123456');
+select * from User;
