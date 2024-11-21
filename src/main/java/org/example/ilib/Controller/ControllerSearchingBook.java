@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -21,32 +22,19 @@ import java.util.ResourceBundle;
 
 public class ControllerSearchingBook  {
 
-
-    @FXML
-    private HBox book2;
-
-    @FXML
-    private HBox book1;
-
-    @FXML
-    private HBox book4;
-
-    @FXML
-    private HBox book3;
-
-    @FXML
-    private HBox book6;
-
-    @FXML
-    private HBox book5;
-
     @FXML
     private Button Back;
     @FXML
     private GridPane gridPaneBook;
+    @FXML
+    private Label searchLabel;
+
 
     private List<Book> booksearching = new ArrayList();
 
+    public void setLabel(String label){
+        searchLabel.setText(label);
+    }
     public void addBook(Book book) {
        booksearching.add(book);
 

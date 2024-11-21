@@ -6,28 +6,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="915.0" prefWidth="1176.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerSearchingBook">
+<AnchorPane prefHeight="707.0" prefWidth="1003.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerSearchingBook">
    <children>
-      <Button fx:id="Back" layoutX="1021.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
-      <Label alignment="CENTER" layoutX="14.0" layoutY="30.0" prefHeight="35.0" prefWidth="373.0" text="Hiển thị thông tin sách" />
-      <GridPane fx:id="gridPaneBook" layoutX="7.0" layoutY="102.0" prefHeight="806.0" prefWidth="1160.0">
+      <Button fx:id="Back" layoutX="913.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
+      <Label alignment="CENTER" layoutY="22.0" prefHeight="35.0" prefWidth="373.0" text="Hiển thị thông tin sách" />
+      <GridPane fx:id="gridPaneBook" layoutY="132.0" prefHeight="590.0" prefWidth="1003.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="280.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="389.0" minHeight="10.0" prefHeight="265.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="381.0" minHeight="10.0" prefHeight="241.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="366.0" minHeight="10.0" prefHeight="338.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="389.0" minHeight="10.0" prefHeight="345.0" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <HBox fx:id="book1" prefHeight="100.0" prefWidth="200.0" />
-            <HBox fx:id="book2" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <HBox fx:id="book3" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1" />
-            <HBox fx:id="book4" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <HBox fx:id="book5" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2" />
-            <HBox fx:id="book6" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-         </children>
       </GridPane>
+      <Label alignment="CENTER" layoutX="52.0" layoutY="65.0" prefHeight="35.0" prefWidth="104.0" text="Từ khoá" />
+      <Label fx:id="searchLabel" alignment="CENTER" layoutX="177.0" layoutY="65.0" prefHeight="35.0" prefWidth="170.0" text="search" />
    </children>
 </AnchorPane>

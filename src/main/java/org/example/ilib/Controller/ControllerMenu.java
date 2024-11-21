@@ -95,7 +95,7 @@ public class ControllerMenu implements Initializable {
                     FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/org/example/ilib/SearchingBook.fxml"));
                     Parent root = fxmlLoader1.load();
                     ControllerSearchingBook controllerSearchingBook = fxmlLoader1.getController();
-
+                    controllerSearchingBook.setLabel(searchText);
                     for (int i = 0; i < bookDetails.size(); i++) {
                         JsonObject item = bookDetails.get(i).getAsJsonObject();
                         JsonObject volumeInfo = item.getAsJsonObject("volumeInfo");
