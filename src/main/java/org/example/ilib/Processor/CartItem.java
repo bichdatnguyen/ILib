@@ -1,7 +1,7 @@
 package org.example.ilib.Processor;
 
 public class CartItem {
-    private int id;
+    private String id;
     private String name;
     private int volume;
     private int money;
@@ -11,7 +11,7 @@ public class CartItem {
     public CartItem(){
 
     }
-    public CartItem(int id ,String name, int volume, int money, String status, String voucher) {
+    public CartItem(String id ,String name, int volume, int money, String status, String voucher) {
         this.id = id;
         this.name = name;
         this.volume = volume;
@@ -20,10 +20,10 @@ public class CartItem {
         this.voucher = voucher;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getName() {

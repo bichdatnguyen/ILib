@@ -14,7 +14,8 @@ import static java.lang.System.getenv;
 public class DBConnection {
     private static DBConnection instance;
     private Connection connection;
-    private String url = "jdbc:mysql://localhost:3306/ilib";
+    private final String url = "jdbc:mysql://localhost:3306/ilib?autoReconnect=true&useSSL=false";
+
     private String userName = getenv("userName");
     private String userPassword = getenv("userPassword");
 

@@ -151,20 +151,19 @@ public class ControllerBookDetail {
         }
     }
 
-    public void addBookToCart(String email, int bookId, int quantity, int status) throws SQLException {
-        String queryCheck = "SELECT volume, status FROM Cart WHERE email = ? AND bookId = ?";
-        String queryInsert = "INSERT INTO Cart (email, bookId, volume, status) VALUES (?, ?, ?, ?)";
-        String queryUpdate = "UPDATE Cart SET volume =  ?, status = ? WHERE email = ? AND bookId = ?";
+    public void addBookToCart(String email, String bookId, int quantity, int status) throws SQLException {
+        String queryCheck = "SELECT quantity, type FROM cart WHERE email = ? AND bookId = ?";
+        String queryInsert = "INSERT INTO cart (bookID, email, date, quantity,type) VALUES (?, ?, ?, ?,?)";
         DBConnection dbConnection = DBConnection.getInstance();
         try (Connection connection = dbConnection.getConnection()) {
             // Kiểm tra nếu sách đã có trong giỏ hàng
             try (PreparedStatement stmtCheck = connection.prepareStatement(queryCheck)) {
-                stmtCheck.setString(1, email);
-                stmtCheck.setInt(2, bookId);
+                stmtCheck.setString(1, bookId);
+                stmtCheck.setString(2, email);
                 ResultSet rs = stmtCheck.executeQuery();
                 String statusBook = (status == Borrow) ? "BORROW" :"BUY";
                 if (rs.next()) {
-                    String currentStatus = rs.getString("status");
+                    String currentStatus = rs.getString("type");
                     // Kiểm tra nếu trạng thái khác, có thể xử lý logic tùy ý
 
                     // Nếu sách đã có, cập nhật số lượng và trạng thái
@@ -172,20 +171,22 @@ public class ControllerBookDetail {
                         showErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
                     } else {
                         try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
-                            stmtInsert.setString(1, email);
-                            stmtInsert.setInt(2, bookId);
-                            stmtInsert.setInt(3, quantity);
-                            stmtInsert.setString(4, statusBook);
+                            stmtInsert.setString(1, bookId);
+                            stmtInsert.setString(2, email);
+                            stmtInsert.setString(3, "null");
+                            stmtInsert.setInt(4, quantity);
+                            stmtInsert.setString(5, statusBook);
                             stmtInsert.executeUpdate();
                         }
                     }
                 } else {
                     // Nếu sách chưa có, thêm mới
                     try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
-                        stmtInsert.setString(1, email);
-                        stmtInsert.setInt(2, bookId);
-                        stmtInsert.setInt(3, quantity);
-                        stmtInsert.setString(4, statusBook);
+                        stmtInsert.setString(1, bookId);
+                        stmtInsert.setString(2, email);
+                        stmtInsert.setString(3, "2024-01-01");
+                        stmtInsert.setInt(4, quantity);
+                        stmtInsert.setString(5, statusBook);
                         stmtInsert.executeUpdate();
                     }
                 }
@@ -204,17 +205,19 @@ public class ControllerBookDetail {
             }
             if(status == 0) {
                 showErrAndEx.showAlert("Vui lòng kiểm tra trang thái");
+                return;
             }
             int quantity = Integer.parseInt(VolumeTextField.getText());
             if(quantity > 0){
               //int bookId = Integer.parseInt(Bookid.getText());
-              int bookId = 0;
+              String bookId = "12";
               try{
-                  addBookToCart(email,bookId,quantity,status);
+                  addBookToCart(email,bookId,4,status);
+                  showErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
               } catch (SQLException e) {
                   e.printStackTrace();
               }
-              showErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
+
             }
     }
     @FXML

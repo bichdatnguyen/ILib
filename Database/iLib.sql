@@ -18,6 +18,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema ilib
 -- -----------------------------------------------------
+DROP DATABASE IF EXISTS ilib;
 CREATE SCHEMA IF NOT EXISTS `ilib` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `ilib` ;
 
@@ -93,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `ilib`.`payment` (
 CREATE TABLE IF NOT EXISTS `ilib`.`cart` (
                                              `bookID` VARCHAR(20) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
-    `date` DATETIME NOT NULL,
+    `date` DATE ,
     `quantity` INT NOT NULL,
     `type` VARCHAR(10) NULL DEFAULT NULL,
     PRIMARY KEY (`bookID`, `email`),
@@ -189,3 +190,8 @@ CREATE TABLE IF NOT EXISTS `ilib`.`voucher` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+select * from books;
+insert into user values ('23021524@vnu.edu.vn','1234567890','Vu Dat','123456');
+insert into books values ('12','Name',12,12);
+select * from cart;
+select * from books;

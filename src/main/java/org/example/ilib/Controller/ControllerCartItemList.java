@@ -228,13 +228,13 @@ public class ControllerCartItemList implements Initializable {
 
     public List<CartItem> getCartsByEmail(String email) throws SQLException {
         // Câu lệnh SQL sử dụng INNER JOIN để lấy thông tin từ cả bảng Payment và Book
-        String query = "SELECT Payment.*, Book.name, Book.price " +
-                "FROM Payment " +
-                "INNER JOIN Book ON Payment.idBook = Book.id " +
-                "WHERE Payment.email = ?";
+        String query = "SELECT cart.*, books.title, books.bookPrice " +
+                "FROM cart " +
+                "INNER JOIN books ON cart.bookID = books.bookID " +
+                "WHERE cart.email = ?";
         List<CartItem> cartItems = new ArrayList<>();
-        DBConnection db = DBConnection.getInstance();
-        try (Connection conn = db.getConnection() ; // Kết nối tới cơ sở dữ liệu
+
+        try (Connection conn = DBConnection.getInstance().getConnection() ; // Kết nối tới cơ sở dữ liệu
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             // Set giá trị tham số cho câu lệnh (email)
@@ -246,7 +246,7 @@ public class ControllerCartItemList implements Initializable {
             // Xử lý kết quả trả về
             while (resultSet.next()) {
                 // Lấy dữ liệu từ bảng Payment
-                int id = resultSet.getInt("bookID");
+                String id = resultSet.getString("bookID");
                 String paymentEmail = resultSet.getString("email");
                 int volume = resultSet.getInt("quantity");
                 String type = resultSet.getString("type");
@@ -264,28 +264,29 @@ public class ControllerCartItemList implements Initializable {
         return cartItems;
     }
 
-    public void removeBookFromCart(String email, int bookId) throws SQLException{
-        String queryDelete = "DELETE FROM Cart WHERE email = ? AND bookId = ?";
-        DBConnection dbConnection = DBConnection.getInstance();
+    public void removeBookFromCart(String email, String bookId) throws SQLException{
+        String queryDelete = "DELETE FROM cart WHERE email = ? AND bookID = ?";
 
-        try (Connection connection = dbConnection.getConnection() ;
+
+        try (Connection connection = DBConnection.getInstance().getConnection() ;
              PreparedStatement stmt = connection.prepareStatement(queryDelete)) {
+            System.out.println("Xoa thanh cong");
             stmt.setString(1, email);
-            stmt.setInt(2, bookId);
+            stmt.setString(2, bookId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void updateBookQuantityInCart(String email, int bookId, int newQuantity) throws SQLException {
-        String queryUpdate = "UPDATE Cart SET volume = ? WHERE email = ? AND bookId = ?";
-        DBConnection dbConnection = DBConnection.getInstance();
-        try (Connection connection = dbConnection.getConnection() ;
+    public void updateBookQuantityInCart(String email, String bookId, int newQuantity) throws SQLException {
+        String queryUpdate = "UPDATE cart SET quantity = ? WHERE email = ? AND bookID = ?";
+
+        try (Connection connection = DBConnection.getInstance().getConnection() ;
              PreparedStatement stmt = connection.prepareStatement(queryUpdate)) {
             stmt.setInt(1, newQuantity);
             stmt.setString(2, email);
-            stmt.setInt(3, bookId);
+            stmt.setString(3, bookId);
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
