@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 import static java.lang.System.getenv;
 
-public class GoogleBooksAPI {
+public class GoogleBooksAPI { 
     private static final String apiKey = getenv("APIKey");
 
     public JsonArray checkConnectionAndGetBooks(String urlString) throws IOException {

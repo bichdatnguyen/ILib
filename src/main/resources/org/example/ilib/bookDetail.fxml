@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBookDetail">
+<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBookDetail">
    <children>
-      <ImageView fx:id="thumbnail" fitHeight="155.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../assets/noImage.png" />
-         </image>
-      </ImageView>
-      <GridPane layoutX="202.0" prefHeight="198.0" prefWidth="710.0">
+      <GridPane layoutX="170.0" layoutY="8.0" prefHeight="412.0" prefWidth="690.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="390.0" minWidth="10.0" prefWidth="94.0000244140625" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="706.8000030517578" minWidth="10.0" prefWidth="617.1999755859375" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="390.0" minWidth="10.0" prefWidth="100.00000228881837" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="812.8" minWidth="10.0" prefWidth="591.1999977111816" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="90.20000305175782" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="70.40000610351561" minHeight="8.599996948242179" prefHeight="40.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="115.39998779296874" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="207.40001220703127" minHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="106.19998779296873" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="106.19998779296873" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label prefHeight="46.0" prefWidth="93.0" text="Tiêu đề:">
@@ -51,38 +44,55 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="655.1999754905701" GridPane.columnIndex="1">
+            <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="700.0" GridPane.columnIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
-            <Text fx:id="authorText" layoutX="96.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="655.1999754905701" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Text fx:id="authorText" layoutX="96.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="700.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
-            <Text fx:id="descriptionText" layoutX="96.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="655.1999754905701" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Text fx:id="descriptionText" layoutX="96.0" layoutY="118.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="700.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
-            <Label layoutX="10.0" layoutY="118.0" text="Đánh giá " GridPane.rowIndex="3">
+            <Label layoutX="10.0" layoutY="118.0" text="Đánh giá: " GridPane.rowIndex="3">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Text fx:id="titleText1" layoutX="104.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="655.1999754905701" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Text fx:id="titleText1" layoutX="104.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="700.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
+            <Label prefHeight="30.0" prefWidth="102.0" text="Số lượng:" GridPane.rowIndex="4">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Text fx:id="titleText11" layoutX="104.0" layoutY="272.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="700.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <HBox prefHeight="43.0" prefWidth="796.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="60.0" text="Mượn" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="60.0" text="Mua " />
+               </children>
+            </HBox>
          </children>
       </GridPane>
-      <ScrollPane layoutX="14.0" layoutY="312.0" prefHeight="272.0" prefWidth="934.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
-      <Button fx:id="BackButton" layoutX="14.0" layoutY="243.0" mnemonicParsing="false" onMouseClicked="#Back" text="Back" />
+      <Button fx:id="BackButton" layoutX="888.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#Back" text="Back" />
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <ImageView fx:id="thumbnail" fitHeight="173.0" fitWidth="170.0" pickOnBounds="true" preserveRatio="true">
+            </ImageView>
+            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Xem đánh giá " />
+         </children></VBox>
    </children>
 </AnchorPane>
