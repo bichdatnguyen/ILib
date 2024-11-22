@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -9,17 +10,27 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="594.0" prefWidth="979.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerCart">
    <children>
-      <Label layoutX="38.0" layoutY="41.0" prefHeight="106.0" prefWidth="206.0" text="Giỏ hàng" />
-      <Label layoutX="684.0" layoutY="441.0" text="Tổng tiền" />
-      <Label fx:id="totalMoney" layoutX="716.0" layoutY="523.0" text="Money" />
-      <ScrollPane layoutX="3.0" layoutY="197.0" prefHeight="200.0" prefWidth="972.0">
-         <content>
-            <HBox prefHeight="205.0" prefWidth="1377.0" />
-         </content>
-      </ScrollPane>
+      <Label alignment="CENTER" layoutX="18.0" layoutY="20.0" prefHeight="94.0" prefWidth="107.0" text="Giỏ hàng">
+         <font>
+            <Font size="26.0" />
+         </font></Label>
+      <Label fx:id="totalMoney" alignment="CENTER" layoutX="716.0" layoutY="191.0" prefHeight="51.0" prefWidth="200.0" text="Money" />
       <Button fx:id="Back" layoutX="841.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
-      <Button fx:id="removingBook" layoutX="18.0" layoutY="416.0" mnemonicParsing="false" onMouseClicked="#deleteBook" text="Xoá khỏi giỏ hàng" />
-      <Button fx:id="BuyQR" layoutX="27.0" layoutY="498.0" mnemonicParsing="false" onMouseClicked="#BuyQRclick" text="Thanh toán QR" />
-      <ImageView fx:id="QRview" fitHeight="150.0" fitWidth="166.0" layoutX="276.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="deleteBook" layoutX="12.0" layoutY="405.0" mnemonicParsing="false" onMouseClicked="#deleteBook" text="Xoá khỏi giỏ hàng" />
+      <Button fx:id="BuyQR" layoutX="716.0" layoutY="265.0" mnemonicParsing="false" onMouseClicked="#BuyQRclick" text="Thanh toán QR" />
+      <Button layoutX="716.0" layoutY="120.0" mnemonicParsing="false" onMouseClicked="#totalMoney" prefHeight="51.0" prefWidth="200.0" text="Tổng tiền" />
+      <TableView fx:id="CartTable" layoutX="11.0" layoutY="120.0" prefHeight="261.0" prefWidth="651.0">
+        <columns>
+          <TableColumn fx:id="NameCol" prefWidth="161.0" text="Tên sách" />
+          <TableColumn fx:id="VolumeCol" prefWidth="130.0" text="Số Lượng" />
+            <TableColumn fx:id="MoneyCol" minWidth="3.0" prefWidth="121.0" text="Số tiền" />
+            <TableColumn fx:id="StatusCol" prefWidth="133.0" text="Trạng Thái" />
+            <TableColumn fx:id="VoucherCol" prefWidth="104.0" text="Voucher" />
+        </columns>
+      </TableView>
+      <ImageView fx:id="QRCode" fitHeight="181.0" fitWidth="200.0" layoutX="716.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="add" layoutX="14.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#addVoume" prefHeight="51.0" prefWidth="92.0" text="Thêm" />
+      <Button fx:id="substract" layoutX="257.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#substractVoume" prefHeight="51.0" prefWidth="92.0" text="Bớt" />
+      <TextField fx:id="VouluneText" alignment="CENTER" layoutX="114.0" layoutY="480.0" prefHeight="51.0" prefWidth="134.0" promptText="Số lượng" />
    </children>
 </AnchorPane>
