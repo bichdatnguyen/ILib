@@ -153,7 +153,6 @@ CREATE TABLE IF NOT EXISTS `ilib`.`history` (
 CREATE TABLE IF NOT EXISTS `ilib`.`rating` (
                                                `Email` VARCHAR(50) NOT NULL,
     `bookID` VARCHAR(50) NOT NULL,
-    `averageRating` TINYINT NULL DEFAULT NULL,
     `Comment` TEXT NULL DEFAULT NULL,
     `Time` DATETIME NULL DEFAULT NULL,
     PRIMARY KEY (`Email`, `bookID`),

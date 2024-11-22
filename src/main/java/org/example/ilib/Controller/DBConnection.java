@@ -142,19 +142,16 @@ public class DBConnection {
         stmt.executeUpdate();
     }
 
-    public void addBook(String bookID, String title, String authors, int bookPrice,
-                        String description, int quantityInStock) throws SQLException {
+    public void addBook(String bookID, String title, int bookPrice, int quantityInStock) throws SQLException {
         if (bookExist(bookID)) {
             return;
         }
-        String sql = "INSERT INTO books (bookID, title, authors, bookPrice, description, quantityInStock) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO books (bookID, title, bookPrice, quantityInStock) VALUES (?, ?, ?, ?)";
         PreparedStatement stmt = connection.prepareStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, title);
-        stmt.setString(3, authors);
-        stmt.setInt(4, bookPrice);
-        stmt.setString(5, description);
-        stmt.setInt(6, quantityInStock);
+        stmt.setInt(3, bookPrice);
+        stmt.setInt(4, quantityInStock);
         stmt.executeUpdate();
     }
 
