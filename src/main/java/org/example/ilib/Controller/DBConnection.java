@@ -1,7 +1,12 @@
 package org.example.ilib.Controller;
 
+import javafx.collections.ObservableList;
+import org.example.ilib.Processor.CartItem;
+
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import static java.lang.System.getenv;
 
@@ -16,7 +21,9 @@ public class DBConnection {
     private DBConnection() throws SQLException {
         this.connection = DriverManager.getConnection(url, userName, userPassword);
     }
-
+    public Connection getConnection() {
+        return connection;
+    }
     public static DBConnection getInstance() throws SQLException {
         if (instance == null) {
             synchronized (DBConnection.class) {
@@ -168,4 +175,6 @@ public class DBConnection {
         stmt.setString(2, bookID);
         stmt.executeUpdate();
     }
+
+
 }

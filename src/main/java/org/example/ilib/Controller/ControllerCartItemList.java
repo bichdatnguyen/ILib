@@ -1,10 +1,8 @@
 package org.example.ilib.Controller;
 
 import com.google.zxing.WriterException;
-import com.stripe.model.Account;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,14 +13,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.example.ilib.Processor.Cart;
+import org.example.ilib.Processor.CartItem;
 import org.example.ilib.Processor.QRCodeAuto;
+import org.sqlite.core.DB;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class ControllerCart implements Initializable {
+public class ControllerCartItemList implements Initializable {
     @FXML
     private Button add;
 
@@ -46,29 +48,32 @@ public class ControllerCart implements Initializable {
     private Button substract;
 
     @FXML
-    private TableView<Cart> CartTable;
+    private TableView<CartItem> CartTable;
     @FXML
-    private TableColumn<Cart, String> StatusCol;
+    private TableColumn<CartItem, String> StatusCol;
     @FXML
-    private TableColumn<Cart, String> NameCol;
+    private TableColumn<CartItem, String> NameCol;
 
     @FXML
-    private TableColumn<Cart, String> VoucherCol;
+    private TableColumn<CartItem, String> VoucherCol;
     @FXML
-    private TableColumn<Cart, Integer> MoneyCol;
+    private TableColumn<CartItem, Integer> MoneyCol;
     @FXML
-    private TableColumn<Cart, Integer> VolumeCol;
+    private TableColumn<CartItem, Integer> VolumeCol;
     @FXML
     private TextField VoulumeText;
     private boolean isTotalCalculated = false;
 
-    private ObservableList<Cart> CartList;
+    private ObservableList<CartItem> CartList;
     private static final int ADDVOLUME = 1;
     private static final int SUBSTRACTVOLUME = 2;
     private static int totalMonet =0;
+    private static String email ="23021524@vnu.edu.vn";
 
-
-
+    public void setCartList(List<CartItem> CartList) {
+        // Chuyển List thành ObservableList
+        this.CartList = FXCollections.observableArrayList(CartList);
+    }
 
 
     @FXML
@@ -91,6 +96,12 @@ public class ControllerCart implements Initializable {
 
         if (alert.getResult() == ButtonType.OK) {
             if(CartTable.getSelectionModel().getSelectedItem() != null) {
+                CartItem cartItem = CartTable.getSelectionModel().getSelectedItem();
+                try {
+                    removeBookFromCart(email,cartItem.getId());
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 CartList.remove(CartTable.getSelectionModel().getSelectedItem());
                 isTotalCalculated = false;
             } else {
@@ -149,16 +160,24 @@ public class ControllerCart implements Initializable {
                 if (volNum > 0) {
                     if (CartTable.getSelectionModel().getSelectedItem() != null) {
                         int currVol = CartTable.getSelectionModel().getSelectedItem().getVolume();
+                        CartItem cartItem = CartTable.getSelectionModel().getSelectedItem();
+                        int total = 0;
                         if(status == ADDVOLUME){
-                            int total = currVol  + volNum;
+                             total = currVol  + volNum;
                             CartTable.getSelectionModel().getSelectedItem().setVolume(total);
+
                         } else if(status == SUBSTRACTVOLUME){
                             if(volNum >= currVol){
                                 CartTable.getSelectionModel().getSelectedItem().setVolume(0);
                             } else {
-                                int total = currVol - volNum;
+                                total = currVol - volNum;
                                 CartTable.getSelectionModel().getSelectedItem().setVolume(total);
                             }
+                        }
+                        try {
+                            updateBookQuantityInCart(email,cartItem.getId(),total);
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
                         }
                         CartTable.refresh();
                         System.out.println(CartTable.getSelectionModel().getSelectedItem().getVolume());
@@ -191,14 +210,12 @@ public class ControllerCart implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
        try{
-           CartList = FXCollections.observableArrayList(
-                   new Cart("Jav",12,120,"Mua","Discount 20%")
-           );
-           NameCol.setCellValueFactory(new PropertyValueFactory<Cart,String>("name"));
-           VolumeCol.setCellValueFactory(new PropertyValueFactory<Cart, Integer>("volume"));
-           MoneyCol.setCellValueFactory(new PropertyValueFactory<Cart, Integer>("money"));
-           StatusCol.setCellValueFactory(new PropertyValueFactory<Cart, String>("status"));
-           VoucherCol.setCellValueFactory(new PropertyValueFactory<Cart, String>("voucher"));
+           setCartList(getCartsByEmail(email));
+           NameCol.setCellValueFactory(new PropertyValueFactory<CartItem,String>("name"));
+           VolumeCol.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("volume"));
+           MoneyCol.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("money"));
+           StatusCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("status"));
+           VoucherCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("voucher"));
             CartTable.setItems(CartList);
 
        } catch(Exception e){
@@ -206,4 +223,74 @@ public class ControllerCart implements Initializable {
        }
 
     }
+
+
+
+    public List<CartItem> getCartsByEmail(String email) throws SQLException {
+        // Câu lệnh SQL sử dụng INNER JOIN để lấy thông tin từ cả bảng Payment và Book
+        String query = "SELECT Payment.*, Book.name, Book.price " +
+                "FROM Payment " +
+                "INNER JOIN Book ON Payment.idBook = Book.id " +
+                "WHERE Payment.email = ?";
+        List<CartItem> cartItems = new ArrayList<>();
+        DBConnection db = DBConnection.getInstance();
+        try (Connection conn = db.getConnection() ; // Kết nối tới cơ sở dữ liệu
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Set giá trị tham số cho câu lệnh (email)
+            stmt.setString(1, email);
+
+            // Thực thi câu lệnh và lấy kết quả
+            ResultSet resultSet = stmt.executeQuery();
+
+            // Xử lý kết quả trả về
+            while (resultSet.next()) {
+                // Lấy dữ liệu từ bảng Payment
+                int id = resultSet.getInt("bookID");
+                String paymentEmail = resultSet.getString("email");
+                int volume = resultSet.getInt("quantity");
+                String type = resultSet.getString("type");
+
+                // Lấy dữ liệu từ bảng Book
+                String bookName = resultSet.getString("title");
+                int bookPrice = resultSet.getInt("bookPrice");
+                CartItem cartItem = new CartItem(id,bookName,volume,bookPrice,type,"null");
+                cartItems.add(cartItem);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cartItems;
+    }
+
+    public void removeBookFromCart(String email, int bookId) throws SQLException{
+        String queryDelete = "DELETE FROM Cart WHERE email = ? AND bookId = ?";
+        DBConnection dbConnection = DBConnection.getInstance();
+
+        try (Connection connection = dbConnection.getConnection() ;
+             PreparedStatement stmt = connection.prepareStatement(queryDelete)) {
+            stmt.setString(1, email);
+            stmt.setInt(2, bookId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateBookQuantityInCart(String email, int bookId, int newQuantity) throws SQLException {
+        String queryUpdate = "UPDATE Cart SET volume = ? WHERE email = ? AND bookId = ?";
+        DBConnection dbConnection = DBConnection.getInstance();
+        try (Connection connection = dbConnection.getConnection() ;
+             PreparedStatement stmt = connection.prepareStatement(queryUpdate)) {
+            stmt.setInt(1, newQuantity);
+            stmt.setString(2, email);
+            stmt.setInt(3, bookId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

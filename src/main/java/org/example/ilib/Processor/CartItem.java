@@ -1,16 +1,18 @@
 package org.example.ilib.Processor;
 
-public class Cart {
+public class CartItem {
+    private int id;
     private String name;
     private int volume;
     private int money;
     private String status;
     private String voucher;
 
-    public Cart(){
+    public CartItem(){
 
     }
-    public Cart(String name, int volume, int money, String status, String voucher) {
+    public CartItem(int id ,String name, int volume, int money, String status, String voucher) {
+        this.id = id;
         this.name = name;
         this.volume = volume;
         this.money = money;
@@ -18,6 +20,12 @@ public class Cart {
         this.voucher = voucher;
     }
 
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }

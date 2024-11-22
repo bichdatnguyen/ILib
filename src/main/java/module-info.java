@@ -34,9 +34,7 @@ module org.example.ilib {
     requires spring.webmvc;  // Nếu sử dụng Spring MVC
     requires stripe.java;
 
-    requires java.logging;
     opens org.example.ilib to javafx.fxml;
-    requires org.slf4j;
     requires ch.qos.logback.classic;
     requires mysql.connector.j;
     requires org.json;
@@ -44,8 +42,8 @@ module org.example.ilib {
 
     requires javafx.swing;
     requires spark.core;
-    requires java.base;
     requires org.eclipse.jetty.util;
+    requires org.xerial.sqlitejdbc;
 
 
     exports org.example.ilib.Controller;

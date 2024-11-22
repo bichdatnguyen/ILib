@@ -5,7 +5,7 @@ import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,22 +13,55 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ControllerBookDetail {
+
+    @FXML
+    private ToggleGroup Group;
+
+    @FXML
+    private ImageView thumbnail;
+
+    @FXML
+    private Text titleText1;
+
     @FXML
     private Button BackButton;
 
     @FXML
-    private Text authorText;
+    private Text descriptionText;
+
 
     @FXML
-    private Text descriptionText;
+    private Text titleText11;
+
+    @FXML
+    private Button addCartButton;
+
+    @FXML
+    private TextField VolumeTextField;
 
     @FXML
     private Text titleText;
 
     @FXML
-    private ImageView thumbnail;
+    private Button judgeButton;
+
+    @FXML
+    private Text authorText;
+    @FXML
+    private Text idText;
+    @FXML
+    private Label Bookid;
+
+    private static final int Buy = 2;
+    private static final int Borrow = 1;
+    private static  int status = 0;
+    private String email = "23021524@vnu.edu.vn";
 
     private Scene Forwardsceen;
 
@@ -116,6 +149,82 @@ public class ControllerBookDetail {
         } else {
             titleText.setText("No title available.");
         }
+    }
+
+    public void addBookToCart(String email, int bookId, int quantity, int status) throws SQLException {
+        String queryCheck = "SELECT volume, status FROM Cart WHERE email = ? AND bookId = ?";
+        String queryInsert = "INSERT INTO Cart (email, bookId, volume, status) VALUES (?, ?, ?, ?)";
+        String queryUpdate = "UPDATE Cart SET volume =  ?, status = ? WHERE email = ? AND bookId = ?";
+        DBConnection dbConnection = DBConnection.getInstance();
+        try (Connection connection = dbConnection.getConnection()) {
+            // Kiểm tra nếu sách đã có trong giỏ hàng
+            try (PreparedStatement stmtCheck = connection.prepareStatement(queryCheck)) {
+                stmtCheck.setString(1, email);
+                stmtCheck.setInt(2, bookId);
+                ResultSet rs = stmtCheck.executeQuery();
+                String statusBook = (status == Borrow) ? "BORROW" :"BUY";
+                if (rs.next()) {
+                    String currentStatus = rs.getString("status");
+                    // Kiểm tra nếu trạng thái khác, có thể xử lý logic tùy ý
+
+                    // Nếu sách đã có, cập nhật số lượng và trạng thái
+                    if(currentStatus.equals(statusBook)) {
+                        showErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
+                    } else {
+                        try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
+                            stmtInsert.setString(1, email);
+                            stmtInsert.setInt(2, bookId);
+                            stmtInsert.setInt(3, quantity);
+                            stmtInsert.setString(4, statusBook);
+                            stmtInsert.executeUpdate();
+                        }
+                    }
+                } else {
+                    // Nếu sách chưa có, thêm mới
+                    try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
+                        stmtInsert.setString(1, email);
+                        stmtInsert.setInt(2, bookId);
+                        stmtInsert.setInt(3, quantity);
+                        stmtInsert.setString(4, statusBook);
+                        stmtInsert.executeUpdate();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void addCart(MouseEvent event) {
+            String num = VolumeTextField.getText().trim();
+            if (num.isEmpty()) {
+                showErrAndEx.showAlert("Vui lòng nhập số lượng!");
+                return;
+            }
+            if(status == 0) {
+                showErrAndEx.showAlert("Vui lòng kiểm tra trang thái");
+            }
+            int quantity = Integer.parseInt(VolumeTextField.getText());
+            if(quantity > 0){
+              //int bookId = Integer.parseInt(Bookid.getText());
+              int bookId = 0;
+              try{
+                  addBookToCart(email,bookId,quantity,status);
+              } catch (SQLException e) {
+                  e.printStackTrace();
+              }
+              showErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
+            }
+    }
+    @FXML
+    void BorrowClick(MouseEvent event) {
+            status = Borrow;
+    }
+
+    @FXML
+    void PurchaseClick(MouseEvent event) {
+        status = Buy;
     }
 
 
