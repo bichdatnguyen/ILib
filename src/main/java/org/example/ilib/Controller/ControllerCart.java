@@ -75,7 +75,15 @@ public class ControllerCart implements Initializable {
 
     @FXML
     void deleteBook(MouseEvent event) {
-        CartList.remove(CartTable.getSelectionModel().getSelectedItem());
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setContentText("Bạn có muốn xoá mục này không ?");
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK) {
+            CartList.remove(CartTable.getSelectionModel().getSelectedItem());
+        }
+       // CartList.remove(CartTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
