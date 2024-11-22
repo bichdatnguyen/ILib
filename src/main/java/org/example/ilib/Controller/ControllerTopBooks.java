@@ -26,7 +26,6 @@ public class ControllerTopBooks extends Booklist implements Initializable {
         super(Booklist.TOP_BOOK);
     }
 
-// cout << "oneline"
 
     public void initialize(URL location, ResourceBundle resources) {
 
