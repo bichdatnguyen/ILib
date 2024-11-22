@@ -11,6 +11,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema ILIB
 -- -----------------------------------------------------
+Drop database if exists ILIB;
 CREATE SCHEMA IF NOT EXISTS `ILIB` DEFAULT CHARACTER SET utf8 ;
 USE `ILIB` ;
 
