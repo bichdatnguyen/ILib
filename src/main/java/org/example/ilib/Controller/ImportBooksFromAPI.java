@@ -41,18 +41,6 @@ public class ImportBooksFromAPI {
         return authors;
     }
 
-    public static String getAuthorInfo(List<String> authors) {
-        StringBuilder authorInfo = new StringBuilder();
-        for (int i = 0; i < authors.size(); i++) {
-            String author = authors.get(i);
-            authorInfo.append(author);
-            if (i < authors.size() - 1) {
-                authorInfo.append(", ");
-            }
-        }
-        return authorInfo.toString();
-    }
-
     public static int getBookPrice(JsonObject saleInfo) {
         return saleInfo.getAsJsonObject("listPrice").get("amount").getAsInt();
     }
@@ -80,11 +68,9 @@ public class ImportBooksFromAPI {
                     JsonObject volumeInfo = item.getAsJsonObject().get("volumeInfo").getAsJsonObject();
                     String title = getTitle(volumeInfo);
                     List<String> authors = getAuthors(volumeInfo);
-                    String authorInfo = getAuthorInfo(authors);
-                    String description = getDescription(volumeInfo);
                     int bookPrice = getBookPrice(saleInfo);
 
-                    db.addBook(bookID, title, authorInfo, bookPrice, description, 50);
+                    db.addBook(bookID, title, bookPrice, 50);
                     for (String author : authors) {
                         db.addAuthor(bookID, author);
                     }
