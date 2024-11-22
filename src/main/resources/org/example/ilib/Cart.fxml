@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
@@ -17,6 +18,8 @@
          </content>
       </ScrollPane>
       <Button fx:id="Back" layoutX="841.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
-      <Button fx:id="removingBook" layoutX="58.0" layoutY="459.0" mnemonicParsing="false" onMouseClicked="#deleteBook" text="Xoá khỏi giỏ hàng" />
+      <Button fx:id="removingBook" layoutX="18.0" layoutY="416.0" mnemonicParsing="false" onMouseClicked="#deleteBook" text="Xoá khỏi giỏ hàng" />
+      <Button fx:id="BuyQR" layoutX="27.0" layoutY="498.0" mnemonicParsing="false" onMouseClicked="#BuyQRclick" text="Thanh toán QR" />
+      <ImageView fx:id="QRview" fitHeight="150.0" fitWidth="166.0" layoutX="276.0" layoutY="430.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

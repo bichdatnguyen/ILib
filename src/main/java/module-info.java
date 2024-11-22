@@ -14,7 +14,33 @@ module org.example.ilib {
     requires com.google.gson;
     requires java.desktop;
 
+//    opens org.example.ilib to javafx.fxml;
+//
+//    exports org.example.ilib.Controller;
+//    opens org.example.ilib.Controller to javafx.fxml;
+//    exports org.example.ilib.Processor;
+//    opens org.example.ilib.Processor to javafx.fxml;
+
+
+
+
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
+
+    requires spring.boot;
+    requires spring.boot.autoconfigure;
+    requires spring.context;
+    requires spring.web;
+    requires spring.webmvc;  // Nếu sử dụng Spring MVC
+    requires stripe.java;
+
+    requires java.logging;
     opens org.example.ilib to javafx.fxml;
+    requires org.slf4j;
+    requires ch.qos.logback.classic;
+    requires mysql.connector.j;
+    requires org.json;
+
 
     exports org.example.ilib.Controller;
     opens org.example.ilib.Controller to javafx.fxml;
@@ -22,8 +48,7 @@ module org.example.ilib {
     opens org.example.ilib.Processor to javafx.fxml;
 
 
-    requires org.slf4j;
-    requires ch.qos.logback.classic;
+
 
 
 

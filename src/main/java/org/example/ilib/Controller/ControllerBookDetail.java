@@ -30,7 +30,11 @@ public class ControllerBookDetail {
     @FXML
     private ImageView thumbnail;
 
+    private Scene Forwardsceen;
 
+    public void saveForwardScene(Scene scene) {
+        this.Forwardsceen = scene;
+    }
 
     public void setAuthorText(String author) {
         authorText.setText(author);
@@ -48,19 +52,18 @@ public class ControllerBookDetail {
         thumbnail.setImage(image);
     }
 
-    public static JsonArray bookDetails = new JsonArray();
+
 
     public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage)BackButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
-        Scene scene = new Scene(loader.load());
+
+        Scene scene = Forwardsceen;
         stage.setScene(scene);
     }
 
     public void setInformation(String searchText) throws IOException {
-        GoogleBooksAPI gg = new GoogleBooksAPI(searchText);
-        JsonArray items = gg.getInformation();
+        GoogleBooksAPI gg = new GoogleBooksAPI();
+        JsonArray items = gg.getInformation(searchText, 4);
         //JsonArray items = null;
 
         if (items == null || items.isEmpty()) {
@@ -80,7 +83,7 @@ public class ControllerBookDetail {
             thumbnail.setImage(new Image(thumbnailLink)); // thay lai = thumbnailLink
         } else {
             // thay thế lại absolute path để chạy được
-            thumbnail.setImage(new Image("D:\\GitHub\\Ilib\\Ilib\\src\\main\\resources\\org\\assets\\noImage.png"));
+            thumbnail.setImage(new Image("/org/assets/noImage.png"));
         }
 
         if (volumeInfo.has("authors")) {

@@ -15,19 +15,9 @@ import java.nio.charset.StandardCharsets;
 import static java.lang.System.getenv;
 
 public class GoogleBooksAPI {
+    private static final String apiKey = getenv("APIKey");
 
-    private String query;
-
-    GoogleBooksAPI(String query) {
-        this.query = query;
-    }
-
-    public JsonArray getInformation() throws IOException {
-        String apiKey = getenv("APIKey");
-
-        String encodedQuery = URLEncoder.encode(this.query, StandardCharsets.UTF_8);
-        String urlString = "https://www.googleapis.com/books/v1/volumes?q="
-                + encodedQuery + "&maxResults=1&key=" + apiKey;
+    public JsonArray checkConnectionAndGetBooks(String urlString) throws IOException {
         URL url = new URL(urlString);
 
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -54,5 +44,20 @@ public class GoogleBooksAPI {
             System.out.println("No books found.");
             return null;
         }
+    }
+
+    public JsonArray getInformation(String query, int maxresult) throws IOException {
+        String encodedQuery = URLEncoder.encode(query, StandardCharsets.UTF_8);
+        String urlString = "https://www.googleapis.com/books/v1/volumes?q="
+                + encodedQuery + "&maxResults=" + maxresult + "&key=" + apiKey;
+        return checkConnectionAndGetBooks(urlString);
+    }
+
+    public JsonArray getBooksBySubject(String subject, int maxresult) throws IOException {
+        String encodedQuery = URLEncoder.encode(subject, StandardCharsets.UTF_8);
+        String urlString = "https://www.googleapis.com/books/v1/volumes?q=subject:"
+                + encodedQuery + "&maxResults=" + maxresult + "&key=" + apiKey;
+
+        return checkConnectionAndGetBooks(urlString);
     }
 }

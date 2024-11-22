@@ -16,6 +16,7 @@ import java.sql.SQLException;
 public class ControllerLogin {
     @FXML
     private Button LoginSuccessButton;
+
     @FXML
     private TextField emailText;
     @FXML
@@ -33,18 +34,16 @@ public class ControllerLogin {
         DBConnection db = DBConnection.getInstance();
 
          if(!db.checkDataExit(emailText.getText(), passwordText.getText())) {
-             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-             alert.setTitle("Error");
-             alert.setHeaderText(null);
-             alert.setContentText("Email không đúng hoặc mật khẩu bị sai");
-             alert.show();
-             return;
+            showErrAndEx.showAlert("Email hoặc mật khẩu kong đúng");
          }
+
+
         Stage stage = (Stage) LoginSuccessButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
+
     }
 
     /**

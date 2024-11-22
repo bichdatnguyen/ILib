@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -20,6 +21,12 @@ public class ControllerCart {
 
     @FXML
     private Button removingBook;
+    @FXML
+    private ImageView QRview;
+
+    @FXML
+    private Button BuyQR;
+
 
     @FXML
     void BackToMenu(MouseEvent event) throws IOException {
@@ -32,6 +39,11 @@ public class ControllerCart {
 
     @FXML
     void deleteBook(ActionEvent event) {
+
+    }
+
+    @FXML
+    void BuyQRclick(ActionEvent event) {
 
     }
 }

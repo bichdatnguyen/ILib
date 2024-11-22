@@ -25,27 +25,35 @@ public class ControllerBook  {
 
 
 
+    private Image loadImage(String path) {
+        if (path.startsWith("http://") || path.startsWith("https://")) {
+            return new Image(path, true);
+        } else {
+            return new Image(getClass().getResourceAsStream(path));
+        }
+
+    }
 
     void setBook(Book book) {
-        Image image1  = new Image(getClass().getResourceAsStream(book.getImage()));
+        Image image1 = loadImage(book.getImage());
         author.setText(book.getAuthor());
         title.setText(book.getTitle());
         image.setImage(image1);
-
     }
+
     @FXML
     void gotoBookDetail(MouseEvent event) throws IOException {
         Stage stage = (Stage) image.getScene().getWindow();
 
-
         FXMLLoader fx = new FXMLLoader(getClass().getResource("/org/example/ilib/bookDetail.fxml"));
         Parent root = fx.load();
         ControllerBookDetail controllerBookDetail = fx.getController();
+        controllerBookDetail.saveForwardScene(image.getScene());
         controllerBookDetail.setAuthorText(author.getText());
         controllerBookDetail.setTitleText(title.getText());
         controllerBookDetail.setThumbnail(image.getImage());
-
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
     }
 
 
