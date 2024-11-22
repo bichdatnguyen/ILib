@@ -13,19 +13,19 @@ import java.io.IOException;
 public class QRCodeAuto {
 
     public static String taoQrCode(String path) throws IOException, WriterException {
-        String data = path; // URL hoặc thông tin giao dịch
+        String data = path; // Dữ liệu bạn muốn mã hóa trong QR Code
         int size = 300;
 
-        // Đường dẫn tới thư mục org/assets trong thư mục gốc của dự án
-        String resourcePath = "org" + File.separator + "assets";
+        // Đường dẫn đến thư mục chứa ảnh
+        String resourcePath = "src/main/resources/org/assets";
         File directory = new File(resourcePath);
 
-        // Kiểm tra và tạo thư mục nếu chưa tồn tại
+        // Kiểm tra nếu thư mục chưa tồn tại thì tạo mới
         if (!directory.exists()) {
             directory.mkdirs(); // Tạo thư mục nếu chưa tồn tại
         }
 
-        // Lưu file mã QR
+        // Lưu file mã QR vào thư mục
         File outputFile = new File(directory, "qrcode.png");
         BitMatrix bitMatrix = new QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, size, size);
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_RGB);
@@ -36,10 +36,9 @@ public class QRCodeAuto {
             }
         }
 
-        // Ghi file mã QR vào thư mục đã chỉ định
         ImageIO.write(image, "png", outputFile);
 
-        // Trả về đường dẫn với định dạng "org/assets/qrcode.png"
-        return "/org/assets/qrcode.png";
+        return "file:" + outputFile.getAbsolutePath(); // Trả về đường dẫn đầy đủ
     }
+
 }

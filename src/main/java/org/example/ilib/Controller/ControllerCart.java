@@ -105,19 +105,22 @@ public class ControllerCart implements Initializable {
 
     @FXML
     void BuyQRclick(MouseEvent event) {
-        if(!isTotalCalculated){
-            showErrAndEx.showAlert("Vui lòng nhấn tổng tiền đề thanh toán");
-        } else if(totalMonet == 0){
+        if (!isTotalCalculated) {
+            showErrAndEx.showAlert("Vui lòng nhấn tổng tiền để thanh toán");
+        } else if (totalMonet == 0) {
             showErrAndEx.showAlert("Số tiền thanh toán không hợp lệ");
-        } else{
-            try {QRCode.setImage(new Image(getClass().getResourceAsStream(QRCodeAuto.taoQrCode("Thanh toán thành công"))));}
-            catch (IOException e){
-                e.printStackTrace();
-            } catch (WriterException e){
+        } else {
+            try {
+                String path = "The amount paid is: " + String.valueOf(totalMonet) + " USD \n Have a nice day!";
+                // Tạo mã QR và lấy đường dẫn
+                String qrImagePath = QRCodeAuto.taoQrCode(path);
+
+                // Đặt hình ảnh QR vào ImageView
+                QRCode.setImage(new Image(qrImagePath));
+            } catch (IOException | WriterException e) {
                 e.printStackTrace();
             }
         }
-
     }
 
     @FXML
