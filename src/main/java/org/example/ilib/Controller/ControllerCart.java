@@ -1,5 +1,6 @@
 package org.example.ilib.Controller;
 
+import com.google.zxing.WriterException;
 import com.stripe.model.Account;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Cart;
+import org.example.ilib.Processor.QRCodeAuto;
 
 import java.io.IOException;
 import java.net.URL;
@@ -108,7 +110,12 @@ public class ControllerCart implements Initializable {
         } else if(totalMonet == 0){
             showErrAndEx.showAlert("Số tiền thanh toán không hợp lệ");
         } else{
-            QRCode.setImage(new Image(getClass().getResourceAsStream("/org/assets/qrcode.png")));
+            try {QRCode.setImage(new Image(getClass().getResourceAsStream(QRCodeAuto.taoQrCode("Thanh toán thành công"))));}
+            catch (IOException e){
+                e.printStackTrace();
+            } catch (WriterException e){
+                e.printStackTrace();
+            }
         }
 
     }

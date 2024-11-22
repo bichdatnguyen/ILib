@@ -45,6 +45,7 @@ module org.example.ilib {
     requires javafx.swing;
     requires spark.core;
     requires java.base;
+    requires org.eclipse.jetty.util;
 
 
     exports org.example.ilib.Controller;
