@@ -18,19 +18,19 @@
       <Button fx:id="Back" layoutX="841.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
       <Button fx:id="deleteBook" layoutX="12.0" layoutY="405.0" mnemonicParsing="false" onMouseClicked="#deleteBook" text="Xoá khỏi giỏ hàng" />
       <Button fx:id="BuyQR" layoutX="716.0" layoutY="265.0" mnemonicParsing="false" onMouseClicked="#BuyQRclick" text="Thanh toán QR" />
-      <Button layoutX="716.0" layoutY="120.0" mnemonicParsing="false" onMouseClicked="#totalMoney" prefHeight="51.0" prefWidth="200.0" text="Tổng tiền" />
+      <Button layoutX="716.0" layoutY="120.0" mnemonicParsing="false" onMouseClicked="#totalMoneyClick" prefHeight="51.0" prefWidth="200.0" text="Tổng tiền" />
       <TableView fx:id="CartTable" layoutX="11.0" layoutY="120.0" prefHeight="261.0" prefWidth="651.0">
         <columns>
           <TableColumn fx:id="NameCol" prefWidth="161.0" text="Tên sách" />
           <TableColumn fx:id="VolumeCol" prefWidth="130.0" text="Số Lượng" />
-            <TableColumn fx:id="MoneyCol" minWidth="3.0" prefWidth="121.0" text="Số tiền" />
+            <TableColumn fx:id="MoneyCol" minWidth="3.0" prefWidth="121.0" text="Số tiền trên 1 sản phẩm" />
             <TableColumn fx:id="StatusCol" prefWidth="133.0" text="Trạng Thái" />
             <TableColumn fx:id="VoucherCol" prefWidth="104.0" text="Voucher" />
         </columns>
       </TableView>
       <ImageView fx:id="QRCode" fitHeight="181.0" fitWidth="200.0" layoutX="716.0" layoutY="359.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="add" layoutX="14.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#addVoume" prefHeight="51.0" prefWidth="92.0" text="Thêm" />
-      <Button fx:id="substract" layoutX="257.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#substractVoume" prefHeight="51.0" prefWidth="92.0" text="Bớt" />
-      <TextField fx:id="VouluneText" alignment="CENTER" layoutX="114.0" layoutY="480.0" prefHeight="51.0" prefWidth="134.0" promptText="Số lượng" />
+      <Button fx:id="add" layoutX="14.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#addVolume" prefHeight="51.0" prefWidth="92.0" text="Thêm" />
+      <Button fx:id="substract" layoutX="257.0" layoutY="480.0" mnemonicParsing="false" onMouseClicked="#substractVolume" prefHeight="51.0" prefWidth="92.0" text="Bớt" />
+      <TextField fx:id="VoulumeText" alignment="CENTER" layoutX="114.0" layoutY="480.0" prefHeight="51.0" prefWidth="134.0" promptText="Số lượng" />
    </children>
 </AnchorPane>

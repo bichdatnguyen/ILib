@@ -34,7 +34,8 @@ public class ControllerLogin {
         DBConnection db = DBConnection.getInstance();
 
          if(!db.checkDataExit(emailText.getText(), passwordText.getText())) {
-            showErrAndEx.showAlert("Email hoặc mật khẩu kong đúng");
+            showErrAndEx.showAlert("Email hoặc mật khẩu không đúng");
+            return;
          }
 
 

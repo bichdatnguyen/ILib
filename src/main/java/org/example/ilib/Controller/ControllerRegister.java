@@ -34,12 +34,19 @@ public class ControllerRegister {
     void CreateAccount(MouseEvent event) throws IOException, SQLException {
         if(!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
             showErrAndEx.showAlert("Email không hợp lệ");
-        }  if(!passwordTextField.getText().matches("[0-9a-zA-Z]+")){
-            showErrAndEx.showAlert("Password không hợp lệ");
-        }  if(!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")){
+            return;
+        }
+        if(!phoneTextField.getText().matches("[0-9]+")){
+            showErrAndEx.showAlert("Số điện thoại không hợp lệ");
+            return;
+        }
+        if(!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")){
             showErrAndEx.showAlert("Tên không hợp lệ");
-        }  if(!phoneTextField.getText().matches("[0-9]+")){
-          showErrAndEx.showAlert("Số điện thoại không hợp lệ");
+            return;
+        }
+        if(!passwordTextField.getText().matches("[0-9a-zA-Z]+")){
+            showErrAndEx.showAlert("Password không hợp lệ");
+            return;
         }
 
         DBConnection db = DBConnection.getInstance();
@@ -47,10 +54,12 @@ public class ControllerRegister {
         boolean check = db.checkDataExit(emailTextField.getText(),passwordTextField.getText());
         if(check) {
            showErrAndEx.showAlert("Tài khoản hiện đã có");
+           return;
         }
         boolean check2 = db.checkDataExit(emailTextField.getText());
         if(check2){
            showErrAndEx.showAlert("Email này da tồn tại");
+           return;
         }
         String email = emailTextField.getText();
         String password = passwordTextField.getText();

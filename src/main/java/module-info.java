@@ -42,6 +42,11 @@ module org.example.ilib {
     requires org.json;
 
 
+    requires javafx.swing;
+    requires spark.core;
+    requires java.base;
+
+
     exports org.example.ilib.Controller;
     opens org.example.ilib.Controller to javafx.fxml;
     exports org.example.ilib.Processor;

@@ -7,6 +7,9 @@ public class Cart {
     private String status;
     private String voucher;
 
+    public Cart(){
+
+    }
     public Cart(String name, int volume, int money, String status, String voucher) {
         this.name = name;
         this.volume = volume;
@@ -35,5 +38,22 @@ public class Cart {
         return voucher;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setVolume(int volume) {
+        this.volume = volume;
+    }
+    public void setMoney(int money) {
+        this.money = money;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setVoucher(String voucher) {
+        this.voucher = voucher;
+    }
 
 }

@@ -55,13 +55,10 @@ public class ControllerLoginAndRegister {
      */
     public void Exit(MouseEvent event) {
         // Tạo thông báo xác nhận thoát
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit Confirmation");
-        alert.setHeaderText("Are you sure you want to exit?");
-        alert.setContentText("Press OK to exit, or Cancel to stay.");
+        Alert alert = showErrAndEx.showAlert("Bạn có muốn thoát ra không");
 
         // Hiển thị thông báo và chờ người dùng chọn
-        if (alert.showAndWait().get() == ButtonType.OK) {
+        if (alert.getResult() == ButtonType.OK) {
             // Người dùng xác nhận thoát, đóng cửa sổ
             Platform.exit();
             System.exit(0);

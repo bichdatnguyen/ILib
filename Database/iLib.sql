@@ -190,3 +190,4 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 insert into User values ('23021524@vnu.edu.vn','0914435450','Vu Dat','123456');
 select * from User;
+select * from books;

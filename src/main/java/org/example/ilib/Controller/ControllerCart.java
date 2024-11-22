@@ -57,8 +57,13 @@ public class ControllerCart implements Initializable {
     @FXML
     private TableColumn<Cart, Integer> VolumeCol;
     @FXML
-    private TextField VouluneText;
+    private TextField VoulumeText;
+    private boolean isTotalCalculated = false;
+
     private ObservableList<Cart> CartList;
+    private static final int ADDVOLUME = 1;
+    private static final int SUBSTRACTVOLUME = 2;
+    private static int totalMonet =0;
 
 
 
@@ -75,35 +80,102 @@ public class ControllerCart implements Initializable {
 
     @FXML
     void deleteBook(MouseEvent event) {
-
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setContentText("Bạn có muốn xoá mục này không ?");
-        alert.showAndWait();
-        if (alert.getResult() == ButtonType.OK) {
-            CartList.remove(CartTable.getSelectionModel().getSelectedItem());
+        if(CartList.isEmpty()) {
+            showErrAndEx.showAlert("Giỏ hàng hiện tại đang trống");
+            return;
         }
+
+        Alert alert = showErrAndEx.showAlert("Bạn có muốn xóa đi không");
+
+        if (alert.getResult() == ButtonType.OK) {
+            if(CartTable.getSelectionModel().getSelectedItem() != null) {
+                CartList.remove(CartTable.getSelectionModel().getSelectedItem());
+                isTotalCalculated = false;
+            } else {
+                showErrAndEx.showAlert("Bạn chưa chọn hàng cần xóa");
+            }
+        } else{
+            CartTable.getSelectionModel().clearSelection();
+        }
+
        // CartList.remove(CartTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
     void BuyQRclick(MouseEvent event) {
-        QRCode.setImage(new Image(getClass().getResourceAsStream("/org/assets/qrcode.png")));
-    }
-
-    @FXML
-    void totalMoney(MouseEvent event) {
-
-    }
-
-    @FXML
-    void addVoume(ActionEvent event) {
+        if(!isTotalCalculated){
+            showErrAndEx.showAlert("Vui lòng nhấn tổng tiền đề thanh toán");
+        } else if(totalMonet == 0){
+            showErrAndEx.showAlert("Số tiền thanh toán không hợp lệ");
+        } else{
+            QRCode.setImage(new Image(getClass().getResourceAsStream("/org/assets/qrcode.png")));
+        }
 
     }
 
     @FXML
-    void substractVoume(ActionEvent event) {
+    void totalMoneyClick(MouseEvent event) {
+        totalMonet = 0;
+            for(int i = 0 ; i < CartList.size(); i++) {
+                int vol = CartList.get(i).getVolume();
+                int money = CartList.get(i).getMoney();
+                totalMonet +=  money*vol;
+            }
+            isTotalCalculated = true;
+        totalMoney.setText(String.valueOf(totalMonet));
+    }
 
+    private void setVolume(int status){
+        if (VoulumeText != null) {
+            String vol = VoulumeText.getText().trim(); // Loại bỏ khoảng trắng thừa
+            if (vol.isEmpty()) {
+                showErrAndEx.showAlert("Vui lòng nhập số lượng!");
+                return;
+            }
+
+            try {
+                int volNum = Integer.parseInt(vol); // Kiểm tra và chuyển đổi chuỗi thành số nguyên
+                System.out.println(volNum);
+                if (volNum > 0) {
+                    if (CartTable.getSelectionModel().getSelectedItem() != null) {
+                        int currVol = CartTable.getSelectionModel().getSelectedItem().getVolume();
+                        if(status == ADDVOLUME){
+                            int total = currVol  + volNum;
+                            CartTable.getSelectionModel().getSelectedItem().setVolume(total);
+                        } else if(status == SUBSTRACTVOLUME){
+                            if(volNum >= currVol){
+                                CartTable.getSelectionModel().getSelectedItem().setVolume(0);
+                            } else {
+                                int total = currVol - volNum;
+                                CartTable.getSelectionModel().getSelectedItem().setVolume(total);
+                            }
+                        }
+                        CartTable.refresh();
+                        System.out.println(CartTable.getSelectionModel().getSelectedItem().getVolume());
+                    } else {
+                        showErrAndEx.showAlert("Vui lòng chọn một mục trong bảng!");
+                    }
+                } else {
+                    showErrAndEx.showAlert("Số lượng phải lớn hơn 0!");
+                }
+            } catch (NumberFormatException e) {
+                showErrAndEx.showAlert("Vui lòng nhập một số hợp lệ!");
+            }
+        } else {
+            showErrAndEx.showAlert("Vui lòng nhập số lượng!");
+        }
+
+    }
+    @FXML
+    void addVolume(MouseEvent event) {
+        setVolume(ADDVOLUME);
+        isTotalCalculated = false;
+    }
+
+    @FXML
+    void substractVolume(MouseEvent event) {
+        setVolume(SUBSTRACTVOLUME);
+        isTotalCalculated = false;
     }
 
     @Override
