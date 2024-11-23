@@ -45,7 +45,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="183.0" prefHeight="2.0" prefWidth="95.0" text="Mô tả:" GridPane.rowIndex="2">
+            <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="183.0" prefHeight="188.0" prefWidth="94.0" text="Mô tả:" GridPane.rowIndex="2">
                <font>
                   <Font size="20.0" />
                </font>

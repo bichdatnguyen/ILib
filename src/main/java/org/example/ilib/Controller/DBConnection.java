@@ -201,6 +201,21 @@ public class DBConnection {
         }
     }
 
+    public List<String> getTopBooks(int number) throws SQLException {
+        String sql = "SELECT bookID FROM books LIMIT ?";
+        PreparedStatement stmt = createStatement(sql);
+        stmt.setInt(1, number);
+
+        ResultSet rs = stmt.executeQuery();
+        List<String> ids = new ArrayList<>();
+
+        while (rs.next()) {
+            String bookID = rs.getString(1);
+            ids.add(rs.getString(1));
+        }
+        return ids;
+    }
+
     public List<String> getRecentlyBooks(int number) throws SQLException {
         String sql = "SELECT bookID FROM books ORDER BY bookID DESC LIMIT ?";
         PreparedStatement stmt = createStatement(sql);
