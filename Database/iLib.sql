@@ -71,20 +71,16 @@ CREATE TABLE IF NOT EXISTS `ilib`.`user` (
 DROP TABLE IF EXISTS `ilib`.`payment`;
 
 CREATE TABLE IF NOT EXISTS `ilib`.`payment` (
-    `bookID` VARCHAR(50) NOT NULL,
-    `email` VARCHAR(50) NOT NULL,
-    `date` DATE NULL DEFAULT NULL,
-    `quantity` INT NULL DEFAULT NULL,
-    `type` VARCHAR(10) NULL,
-    INDEX `fk_Buy_User_idx` (`email` ASC) VISIBLE,
-    CONSTRAINT `fk_Payment_Books`
-        FOREIGN KEY (`bookID`)
-            REFERENCES `ilib`.`books` (`bookID`)
-            ON UPDATE CASCADE,
-    CONSTRAINT `fk_Payment_User`
-        FOREIGN KEY (`email`)
-            REFERENCES `ilib`.`user` (`Email`)
-            ON UPDATE CASCADE
+        `paymentID` INT NOT NULL AUTO_INCREMENT, -- Khóa chính tự tăng
+        `bookID` VARCHAR(50) NOT NULL,
+        `email` VARCHAR(50) NOT NULL,
+        `date` DATE NOT NULL , -- Thời gian chính xác
+        `quantity` INT NULL DEFAULT NULL,
+        `type` VARCHAR(10) NULL,
+        PRIMARY KEY (`paymentID`), -- Đặt khóa chính là paymentID
+        INDEX `idx_email_date` (`email`, `date`), -- Chỉ mục để tối ưu hóa truy vấn
+        CONSTRAINT `fk_Payment_Books` FOREIGN KEY (`bookID`) REFERENCES `ilib`.`books` (`bookID`) ON UPDATE CASCADE,
+        CONSTRAINT `fk_Payment_User` FOREIGN KEY (`email`) REFERENCES `ilib`.`user` (`Email`) ON UPDATE CASCADE
 )
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb3;
