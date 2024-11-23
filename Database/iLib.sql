@@ -68,26 +68,26 @@ CREATE TABLE IF NOT EXISTS `ilib`.`user` (
 -- -----------------------------------------------------
 -- Table `ilib`.`payment`
 -- -----------------------------------------------------
+DROP TABLE IF EXISTS `ilib`.`payment`;
+
 CREATE TABLE IF NOT EXISTS `ilib`.`payment` (
-                                                `bookID` VARCHAR(50) NOT NULL,
+    `bookID` VARCHAR(50) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
     `date` DATE NULL DEFAULT NULL,
     `quantity` INT NULL DEFAULT NULL,
     `type` VARCHAR(10) NULL,
-    UNIQUE INDEX `Email_UNIQUE` (`bookID` ASC) VISIBLE,
     INDEX `fk_Buy_User_idx` (`email` ASC) VISIBLE,
     CONSTRAINT `fk_Payment_Books`
-    FOREIGN KEY (`bookID`)
-    REFERENCES `ilib`.`books` (`bookID`)
-    ON UPDATE CASCADE,
+        FOREIGN KEY (`bookID`)
+            REFERENCES `ilib`.`books` (`bookID`)
+            ON UPDATE CASCADE,
     CONSTRAINT `fk_Payment_User`
-    FOREIGN KEY (`email`)
-    REFERENCES `ilib`.`user` (`Email`)
-    ON UPDATE CASCADE)
+        FOREIGN KEY (`email`)
+            REFERENCES `ilib`.`user` (`Email`)
+            ON UPDATE CASCADE
+)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb3;
-
-
 -- -----------------------------------------------------
 -- Table `ilib`.`cart`
 -- -----------------------------------------------------
@@ -195,5 +195,7 @@ insert into user values ('23021524@vnu.edu.vn','1234567890','Vu Dat','123456');
 insert into books values ('12','Name',12,12);
 select * from cart;
 delete from cart where email = '23021524@vnu.edu.vn' and bookID = '12';
+delete from payment where email = '23021524@vnu.edu.vn' and bookID = '12';
 select * from books;
 select * from payment;
+describe payment;
