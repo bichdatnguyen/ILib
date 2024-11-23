@@ -8,6 +8,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,28 +59,62 @@ public class ImportBooksFromAPI {
         GoogleBooksAPI gg = new GoogleBooksAPI();
         DBConnection db = DBConnection.getInstance();
 
-        for (String subject : subjects) {
-            JsonArray items = gg.getBooksBySubject(subject, 40);
+        // Chuẩn bị batch để thêm sách, tác giả và danh mục
+        String insertBookQuery = "INSERT INTO books (bookID, title, bookPrice, quantityInStock) VALUES (?, ?, ?, ?)";
+        String insertAuthorQuery = "INSERT INTO authors (bookID, authorName) VALUES (?, ?)";
+        String insertCategoryQuery = "INSERT INTO categories (categoryName, bookID) VALUES (?, ?)";
 
-            for (JsonElement item : items) {
-                JsonObject saleInfo = item.getAsJsonObject().get("saleInfo").getAsJsonObject();
-                String saleability = saleInfo.get("saleability").getAsString();
-                if (saleability.equals("FOR_SALE")) {
+        try (Connection connection = db.getConnection();
+             PreparedStatement bookStmt = connection.prepareStatement(insertBookQuery);
+             PreparedStatement authorStmt = connection.prepareStatement(insertAuthorQuery);
+             PreparedStatement categoryStmt = connection.prepareStatement(insertCategoryQuery)) {
+
+            // Bắt đầu xử lý API
+            for (String subject : subjects) {
+                JsonArray items = gg.getBooksBySubject(subject, 40);
+
+                for (JsonElement item : items) {
+                    JsonObject saleInfo = item.getAsJsonObject().get("saleInfo").getAsJsonObject();
+                    String saleability = saleInfo.get("saleability").getAsString();
+                    if (!saleability.equals("FOR_SALE")) {
+                        continue; // Bỏ qua sách không có giá
+                    }
+
                     String bookID = getID(item);
                     JsonObject volumeInfo = item.getAsJsonObject().get("volumeInfo").getAsJsonObject();
                     String title = getTitle(volumeInfo);
                     List<String> authors = getAuthors(volumeInfo);
                     int bookPrice = getBookPrice(saleInfo);
 
-                    db.addBook(bookID, title, bookPrice, 50);
+                    // Thêm sách vào batch
+                    bookStmt.setString(1, bookID);
+                    bookStmt.setString(2, title);
+                    bookStmt.setInt(3, bookPrice);
+                    bookStmt.setInt(4, 50); // Số lượng mặc định
+                    bookStmt.addBatch();
+
+                    // Thêm tác giả vào batch
                     for (String author : authors) {
-                        db.addAuthor(bookID, author);
+                        authorStmt.setString(1, bookID);
+                        authorStmt.setString(2, author);
+                        authorStmt.addBatch();
                     }
-                    db.addCategories(subject, bookID);
-                } else {
-                    continue;
+
+                    // Thêm danh mục vào batch
+                    categoryStmt.setString(1, subject);
+                    categoryStmt.setString(2, bookID);
+                    categoryStmt.addBatch();
                 }
             }
+
+            // Thực thi batch
+            bookStmt.executeBatch();
+            authorStmt.executeBatch();
+            categoryStmt.executeBatch();
+            System.out.println("Thêm sách từ API thành công!");
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+
 }

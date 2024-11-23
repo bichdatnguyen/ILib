@@ -192,6 +192,7 @@ insert into books values ('12','Name',12,12);
 select * from cart;
 delete from cart where email = '23021524@vnu.edu.vn' and bookID = '12';
 delete from payment where email = '23021524@vnu.edu.vn' and bookID = '12';
+
 select * from books;
 select * from payment;
 describe payment;
