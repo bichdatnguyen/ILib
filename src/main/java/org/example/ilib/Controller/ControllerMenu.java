@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -57,10 +58,6 @@ public class ControllerMenu implements Initializable {
     private List<Book>recentlyBooks = new ArrayList<>();
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
-
-
-
-
     /**
      * signOutMenu handle MouseEvent event.
      * this method will switch the scene to the login and register screen.
@@ -89,45 +86,6 @@ public class ControllerMenu implements Initializable {
         Scene scene = new Scene(root);
         shutdownExecutorService();
         stage.setScene(scene);
-    }
-
-    public void searching(String searchText)throws IOException {
-        executorService.submit(() -> {
-            try {
-                GoogleBooksAPI api = new GoogleBooksAPI();
-                JsonArray bookDetails = api.getInformation(searchText, 4);
-
-                if (bookDetails != null && !bookDetails.isEmpty()) {
-                    Platform.runLater(() -> {
-                        try {
-                            Stage stage = (Stage) search.getScene().getWindow();
-                            FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/org/example/ilib/SearchingBook.fxml"));
-                            Parent root = fxmlLoader1.load();
-                            ControllerSearchingBook controllerSearchingBook = fxmlLoader1.getController();
-                            controllerSearchingBook.setLabel(searchText);
-
-                            for (JsonElement book : bookDetails) {
-                                JsonObject item = book.getAsJsonObject();
-                                String id = item.get("id").getAsString();
-
-                                Book bk = api.getBooksByID(id);
-                                controllerSearchingBook.addBook(bk);
-                            }
-                            controllerSearchingBook.show();
-                            Scene scene1 = new Scene(root);
-                            stage.setScene(scene1);
-
-                        } catch (IOException e) {
-                            showErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
-                        }
-                    });
-                } else {
-                    Platform.runLater(() -> showErrAndEx.showAlert("Không tìm thấy sách phù hợp"));
-                }
-            } catch (Exception e) {
-                Platform.runLater(() -> showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API."));
-            }
-        });
     }
 
     public void handleSearch(KeyEvent keyEvent) {
@@ -181,7 +139,6 @@ public class ControllerMenu implements Initializable {
     }
 
     public void topBookMenu(MouseEvent event) throws IOException {
-
         Stage stage = (Stage) topBooks.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/TopBooks.fxml"));
@@ -192,7 +149,6 @@ public class ControllerMenu implements Initializable {
     }
 
     public void categoriesMenu(MouseEvent e) throws IOException {
-
         Stage stage = (Stage) Categories.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/Categories.fxml"));
@@ -202,7 +158,6 @@ public class ControllerMenu implements Initializable {
     }
 
     public void readingMenu(MouseEvent e) throws IOException {
-
         Stage stage = (Stage) reading.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/Reading.fxml"));
@@ -222,13 +177,16 @@ public class ControllerMenu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
-        recentlyBooks = bl.bookList;
+        Booklist bl = null;
         try {
+            bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
+        } catch (SQLException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        recentlyBooks = bl.bookList;
 
+        try {
             for (int i = 0; i < recentlyBooks.size() ; i++ ) {
-
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
@@ -239,7 +197,5 @@ public class ControllerMenu implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }

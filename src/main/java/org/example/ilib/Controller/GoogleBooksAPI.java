@@ -129,10 +129,10 @@ public class GoogleBooksAPI {
     public static String getDescription(JsonObject volumeInfo) {
         if (volumeInfo.has("description")) {
             String description = volumeInfo.get("description").getAsString();
-            if (description.length() <= 150) {
+            if (description.length() <= 450) {
                 return description;
             }
-            return description.substring(0, 147) + "...";
+            return description.substring(0, 447) + "...";
         } else {
             return "N/A";
         }

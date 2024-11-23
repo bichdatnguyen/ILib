@@ -23,6 +23,7 @@ public class DBConnection {
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
     }
+
     private DBConnection() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(url);
@@ -45,10 +46,14 @@ public class DBConnection {
         return instance;
     }
 
+    public static PreparedStatement createStatement(String sql) throws SQLException {
+        return DBConnection.getInstance().getConnection().prepareStatement(sql);
+    }
+
     public void createAccount(String email, String phoneNumber, String fullName,
                               String password) throws SQLException {
         String sql = "INSERT INTO user (email, phoneNumber, fullName, password) VALUES (?, ?, ?, ?)";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, email);
         stmt.setString(2, phoneNumber);
         stmt.setString(3, fullName);
@@ -58,7 +63,7 @@ public class DBConnection {
 
     public void createVoucher(String email, int discountPercentage) throws SQLException {
         String sql = "INSERT INTO Voucher (Email, discountPercentage) VALUES (?, ?)";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, email);
         stmt.setInt(2, discountPercentage);
         stmt.executeUpdate();
@@ -109,7 +114,7 @@ public class DBConnection {
 
     public boolean bookExist(String bookID) throws SQLException {
         String sql = "SELECT COUNT(*) FROM books WHERE bookID = ?";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
 
         ResultSet rs = stmt.executeQuery();
@@ -122,7 +127,7 @@ public class DBConnection {
 
     public boolean bookAndAuthorExist(String bookID, String author) throws SQLException {
         String sql = "SELECT COUNT(*) FROM author WHERE bookID = ? AND authorName = ?";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, author);
 
@@ -136,7 +141,7 @@ public class DBConnection {
 
     public boolean bookAndCategoryExist(String category, String bookID) throws SQLException {
         String sql = "SELECT COUNT(*) FROM categories WHERE bookID = ? AND Category = ?";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, category);
 
@@ -153,7 +158,7 @@ public class DBConnection {
             return;
         }
         String sql = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, author);
         stmt.executeUpdate();
@@ -164,7 +169,7 @@ public class DBConnection {
             return;
         }
         String sql = "INSERT INTO books (bookID, title, bookPrice, quantityInStock) VALUES (?, ?, ?, ?)";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, title);
         stmt.setInt(3, bookPrice);
@@ -177,7 +182,7 @@ public class DBConnection {
             return;
         }
         String sql = "INSERT INTO categories (category, bookID) VALUES (?, ?)";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, category);
         stmt.setString(2, bookID);
         stmt.executeUpdate();
@@ -185,7 +190,7 @@ public class DBConnection {
 
     public int getQuantity(String bookID) throws SQLException {
         String sql = "SELECT quantityInStock FROM books WHERE bookID = ?";
-        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
@@ -194,5 +199,20 @@ public class DBConnection {
         } else {
             return 0;
         }
+    }
+
+    public List<String> getRecentlyBooks(int number) throws SQLException {
+        String sql = "SELECT bookID FROM books ORDER BY bookID DESC LIMIT ?";
+        PreparedStatement stmt = createStatement(sql);
+        stmt.setInt(1, number);
+
+        ResultSet rs = stmt.executeQuery();
+        List<String> ids = new ArrayList<>();
+
+        while (rs.next()) {
+            String bookID = rs.getString(1);
+            ids.add(bookID);
+        }
+        return ids;
     }
 }

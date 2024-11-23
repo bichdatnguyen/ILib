@@ -35,6 +35,7 @@ public class Menu extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
     @Override
     public void stop() {
         // Tắt ExecutorService khi ứng dụng đóng

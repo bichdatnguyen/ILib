@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ControllerCategories extends Booklist implements Initializable {
@@ -23,9 +24,10 @@ public class ControllerCategories extends Booklist implements Initializable {
     @FXML
     private HBox tai_lieu_2_hbox;
 
-    public ControllerCategories() {
+    public ControllerCategories() throws SQLException, IOException {
         super(Booklist.CATEGORIES_BOOK);
     }
+
     public void BackToMenu(MouseEvent event)throws IOException {
         Stage stage = (Stage) Back.getScene().getWindow();
         FXMLLoader fx = new FXMLLoader();
