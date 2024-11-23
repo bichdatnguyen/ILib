@@ -128,6 +128,12 @@ public class ControllerCartItemList implements Initializable {
 
                 // Đặt hình ảnh QR vào ImageView
                 QRCode.setImage(new Image(qrImagePath));
+                try{
+                    savePayments(email,CartList.stream().toList());
+                    removeBookFromCart(email,"is not null");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             } catch (IOException | WriterException e) {
                 e.printStackTrace();
             }
@@ -265,15 +271,21 @@ public class ControllerCartItemList implements Initializable {
     }
 
     public void removeBookFromCart(String email, String bookId) throws SQLException{
-        String queryDelete = "DELETE FROM cart WHERE email = ? AND bookID = ?";
+        String queryDelete;
+        if ("is not null".equals(bookId)) { // Kiểm tra điều kiện xóa tất cả
+            queryDelete = "DELETE FROM cart WHERE email = ?";
+        } else {
+            queryDelete = "DELETE FROM cart WHERE email = ? AND bookID = ?";
+        }
 
-
-        try (Connection connection = DBConnection.getInstance().getConnection() ;
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(queryDelete)) {
-            System.out.println("Xoa thanh cong");
             stmt.setString(1, email);
-            stmt.setString(2, bookId);
+            if (!"is not null".equals(bookId)) {
+                stmt.setString(2, bookId);
+            }
             stmt.executeUpdate();
+            System.out.println("Xóa thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -288,6 +300,27 @@ public class ControllerCartItemList implements Initializable {
             stmt.setString(2, email);
             stmt.setString(3, bookId);
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void savePayments(String email, List<CartItem> cartItems) throws SQLException {
+        String query = "INSERT INTO payment (bookID, email, date, quantity, type) VALUES (?, ?, CURRENT_DATE, ?, ?)";
+
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            for (CartItem item : cartItems) {
+                stmt.setString(1, item.getId()); // bookID
+                stmt.setString(2, email);       // email
+                stmt.setInt(3, item.getVolume()); // quantity
+                stmt.setString(4, item.getStatus());        //status : mua hay mượn
+                stmt.addBatch();               // Thêm vào batch
+            }
+            stmt.executeBatch(); //
+            System.out.println("Thanh toán thành công");
         } catch (SQLException e) {
             e.printStackTrace();
         }

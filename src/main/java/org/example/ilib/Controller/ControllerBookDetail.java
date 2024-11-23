@@ -153,7 +153,7 @@ public class ControllerBookDetail {
 
     public void addBookToCart(String email, String bookId, int quantity, int status) throws SQLException {
         String queryCheck = "SELECT quantity, type FROM cart WHERE email = ? AND bookId = ?";
-        String queryInsert = "INSERT INTO cart (bookID, email, date, quantity,type) VALUES (?, ?, ?, ?,?)";
+        String queryInsert = "INSERT INTO cart (bookID, email, date, quantity,type) VALUES (?, ?, CURRENT_DATE, ?,?)";
         DBConnection dbConnection = DBConnection.getInstance();
         try (Connection connection = dbConnection.getConnection()) {
             // Kiểm tra nếu sách đã có trong giỏ hàng
@@ -173,9 +173,9 @@ public class ControllerBookDetail {
                         try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
                             stmtInsert.setString(1, bookId);
                             stmtInsert.setString(2, email);
-                            stmtInsert.setString(3, "null");
-                            stmtInsert.setInt(4, quantity);
-                            stmtInsert.setString(5, statusBook);
+
+                            stmtInsert.setInt(3, quantity);
+                            stmtInsert.setString(4, statusBook);
                             stmtInsert.executeUpdate();
                         }
                     }
@@ -184,9 +184,8 @@ public class ControllerBookDetail {
                     try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
                         stmtInsert.setString(1, bookId);
                         stmtInsert.setString(2, email);
-                        stmtInsert.setString(3, "2024-01-01");
-                        stmtInsert.setInt(4, quantity);
-                        stmtInsert.setString(5, statusBook);
+                        stmtInsert.setInt(3, quantity);
+                        stmtInsert.setString(4, statusBook);
                         stmtInsert.executeUpdate();
                     }
                 }
@@ -212,7 +211,8 @@ public class ControllerBookDetail {
               //int bookId = Integer.parseInt(Bookid.getText());
               String bookId = "12";
               try{
-                  addBookToCart(email,bookId,4,status);
+                  System.out.println(quantity);
+                  addBookToCart(email,bookId,quantity,status);
                   showErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
               } catch (SQLException e) {
                   e.printStackTrace();

@@ -44,6 +44,7 @@ module org.example.ilib {
     requires spark.core;
     requires org.eclipse.jetty.util;
     requires org.xerial.sqlitejdbc;
+    requires com.zaxxer.hikari;
 
 
     exports org.example.ilib.Controller;

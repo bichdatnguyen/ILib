@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `ilib`.`user` (
 CREATE TABLE IF NOT EXISTS `ilib`.`payment` (
                                                 `bookID` VARCHAR(50) NOT NULL,
     `email` VARCHAR(50) NOT NULL,
-    `date` DATETIME NULL DEFAULT NULL,
+    `date` DATE NULL DEFAULT NULL,
     `quantity` INT NULL DEFAULT NULL,
     `type` VARCHAR(10) NULL,
     UNIQUE INDEX `Email_UNIQUE` (`bookID` ASC) VISIBLE,
@@ -194,4 +194,6 @@ select * from books;
 insert into user values ('23021524@vnu.edu.vn','1234567890','Vu Dat','123456');
 insert into books values ('12','Name',12,12);
 select * from cart;
+delete from cart where email = '23021524@vnu.edu.vn' and bookID = '12';
 select * from books;
+select * from payment;

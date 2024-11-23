@@ -1,5 +1,7 @@
 package org.example.ilib.Controller;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import javafx.collections.ObservableList;
 import org.example.ilib.Processor.CartItem;
 
@@ -13,17 +15,24 @@ import static java.lang.System.getenv;
 // Singleton design pattern
 public class DBConnection {
     private static DBConnection instance;
-    private Connection connection;
+    private HikariDataSource dataSource;
     private final String url = "jdbc:mysql://localhost:3306/ilib?autoReconnect=true&useSSL=false";
+    private final String userName = System.getenv("userName");
+    private final String userPassword = System.getenv("userPassword");
 
-    private String userName = getenv("userName");
-    private String userPassword = getenv("userPassword");
-
-    private DBConnection() throws SQLException {
-        this.connection = DriverManager.getConnection(url, userName, userPassword);
+    public Connection getConnection() throws SQLException {
+        return dataSource.getConnection();
     }
-    public Connection getConnection() {
-        return connection;
+    private DBConnection() {
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl(url);
+        config.setUsername(userName);
+        config.setPassword(userPassword);
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+        dataSource = new HikariDataSource(config);
     }
     public static DBConnection getInstance() throws SQLException {
         if (instance == null) {
@@ -39,7 +48,7 @@ public class DBConnection {
     public void createAccount(String email, String phoneNumber, String fullName,
                               String password) throws SQLException {
         String sql = "INSERT INTO user (email, phoneNumber, fullName, password) VALUES (?, ?, ?, ?)";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
         stmt.setString(1, email);
         stmt.setString(2, phoneNumber);
         stmt.setString(3, fullName);
@@ -49,7 +58,7 @@ public class DBConnection {
 
     public void createVoucher(String email, int discountPercentage) throws SQLException {
         String sql = "INSERT INTO Voucher (Email, discountPercentage) VALUES (?, ?)";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
         stmt.setString(1, email);
         stmt.setInt(2, discountPercentage);
         stmt.executeUpdate();
@@ -100,7 +109,7 @@ public class DBConnection {
 
     public boolean bookExist(String bookID) throws SQLException {
         String sql = "SELECT COUNT(*) FROM books WHERE bookID = ?";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
         stmt.setString(1, bookID);
 
         ResultSet rs = stmt.executeQuery();
@@ -113,7 +122,7 @@ public class DBConnection {
 
     public boolean bookAndAuthorExist(String bookID, String author) throws SQLException {
         String sql = "SELECT COUNT(*) FROM author WHERE bookID = ? AND authorName = ?";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, author);
 
@@ -127,7 +136,7 @@ public class DBConnection {
 
     public boolean bookAndCategoryExist(String category, String bookID) throws SQLException {
         String sql = "SELECT COUNT(*) FROM categories WHERE bookID = ? AND Category = ?";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, category);
 
@@ -144,7 +153,7 @@ public class DBConnection {
             return;
         }
         String sql = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, author);
         stmt.executeUpdate();
@@ -155,7 +164,7 @@ public class DBConnection {
             return;
         }
         String sql = "INSERT INTO books (bookID, title, bookPrice, quantityInStock) VALUES (?, ?, ?, ?)";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, title);
         stmt.setInt(3, bookPrice);
@@ -168,7 +177,7 @@ public class DBConnection {
             return;
         }
         String sql = "INSERT INTO categories (category, bookID) VALUES (?, ?)";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
         stmt.setString(1, category);
         stmt.setString(2, bookID);
         stmt.executeUpdate();
