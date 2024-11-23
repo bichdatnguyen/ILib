@@ -55,6 +55,8 @@ public class ControllerBookDetail {
 
     @FXML
     private Text titleText;
+    @FXML
+
     private Book book;
 
     private static final int Buy = 2;
@@ -145,9 +147,15 @@ public class ControllerBookDetail {
                 return;
             }
             int quantity = Integer.parseInt(VolumeTextField.getText());
+            int volBook = Integer.parseInt(quantityText.getText().trim());
+
+         if( quantity > volBook){
+             showErrAndEx.showAlert("Vượt quá số lượng có sẵn");
+             return;
+         }
             if(quantity > 0){
               //int bookId = Integer.parseInt(Bookid.getText());
-              String bookId = "12";
+              String bookId = idText.getText();
               try{
                   System.out.println(quantity);
                   addBookToCart(email,bookId,quantity,status);
