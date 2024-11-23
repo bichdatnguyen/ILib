@@ -16,7 +16,7 @@ import static java.lang.System.getenv;
 public class DBConnection {
     private static DBConnection instance;
     private HikariDataSource dataSource;
-    private final String url = "jdbc:mysql://localhost:3306/ilib";
+    private final String url = "jdbc:mysql://localhost:3306/ilib?autoReconnect=true&useSSL=false";
     private final String userName = System.getenv("userName");
     private final String userPassword = System.getenv("userPassword");
 
