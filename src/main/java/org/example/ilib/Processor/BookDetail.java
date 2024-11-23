@@ -23,8 +23,5 @@ public class BookDetail extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-//        ControllerBookDetail controller = loader.getController();
-//        controller.setInformation();
     }
 }

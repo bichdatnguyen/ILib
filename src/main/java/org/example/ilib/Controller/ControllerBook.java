@@ -13,17 +13,18 @@ import javafx.stage.Stage;
 import org.example.ilib.Processor.Book;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class ControllerBook  {
+
     @FXML
     private ImageView image;
     @FXML
     private Label title;
     @FXML
     private Label author;
-
-
+    private String id;
 
     private Image loadImage(String path) {
         if (path.startsWith("http://") || path.startsWith("https://")) {
@@ -35,31 +36,24 @@ public class ControllerBook  {
     }
 
     void setBook(Book book) {
-        Image image1 = loadImage(book.getImage());
+        Image img = loadImage(book.getImage());
         author.setText(book.getAuthor());
         title.setText(book.getTitle());
-        image.setImage(image1);
+        image.setImage(img);
+        id = book.getId();
     }
 
     @FXML
-    void gotoBookDetail(MouseEvent event) throws IOException {
+    void gotoBookDetail(MouseEvent event) throws IOException, SQLException {
         Stage stage = (Stage) image.getScene().getWindow();
 
         FXMLLoader fx = new FXMLLoader(getClass().getResource("/org/example/ilib/bookDetail.fxml"));
         Parent root = fx.load();
         ControllerBookDetail controllerBookDetail = fx.getController();
         controllerBookDetail.saveForwardScene(image.getScene());
-        controllerBookDetail.setAuthorText(author.getText());
-        controllerBookDetail.setTitleText(title.getText());
-        controllerBookDetail.setThumbnail(image.getImage());
+        controllerBookDetail.setBook(id);
+        controllerBookDetail.showInformation();
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
-
-
-
-
-
-
-
 }

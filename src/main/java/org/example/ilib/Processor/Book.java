@@ -1,12 +1,24 @@
 package org.example.ilib.Processor;
-import javafx.scene.image.Image;
+import org.example.ilib.Controller.DBConnection;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Book {
         private String id;
         private String title;
         private String author;
-        private int price;
         private String image;
+        private String description;
+
+        public Book(String image, String title, String author, String description, String id) {
+                this.image = image;
+                this.title = title;
+                this.author = author;
+                this.description = description;
+                this.id = id;
+        }
 
         public Book(String title, String image, String author) {
                 this.title = title;
@@ -14,11 +26,9 @@ public class Book {
                 this.author = author;
         }
 
-        public Book(String id, String title, String author, int price) {
-                this.id = id;
-                this.title = title;
-                this.author = author;
-                this.price = price;
+        public int getQuantity() throws SQLException {
+                DBConnection db = DBConnection.getInstance();
+                return db.getQuantity(this.id);
         }
 
         public void setTitle(String title) {
@@ -27,10 +37,6 @@ public class Book {
 
         public String getTitle() {
                 return title;
-        }
-
-        public void setAuthor(String author) {
-                this.author = author;
         }
 
         public String getAuthor() {
@@ -49,7 +55,7 @@ public class Book {
                 return id;
         }
 
-        public int getPrice() {
-                return price;
+        public String getDescription() {
+                return description;
         }
 }

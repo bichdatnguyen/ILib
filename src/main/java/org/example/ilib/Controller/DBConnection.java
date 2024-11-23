@@ -183,5 +183,16 @@ public class DBConnection {
         stmt.executeUpdate();
     }
 
-
+    public int getQuantity(String bookID) throws SQLException {
+        String sql = "SELECT quantityInStock FROM books WHERE bookID = ?";
+        PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        stmt.setString(1, bookID);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            int quantity = rs.getInt(1);
+            return quantity;
+        } else {
+            return 0;
+        }
+    }
 }

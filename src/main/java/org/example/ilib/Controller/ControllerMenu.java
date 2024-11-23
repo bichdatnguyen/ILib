@@ -1,6 +1,7 @@
 package org.example.ilib.Controller;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -90,6 +91,45 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
+    public void searching(String searchText)throws IOException {
+        executorService.submit(() -> {
+            try {
+                GoogleBooksAPI api = new GoogleBooksAPI();
+                JsonArray bookDetails = api.getInformation(searchText, 4);
+
+                if (bookDetails != null && !bookDetails.isEmpty()) {
+                    Platform.runLater(() -> {
+                        try {
+                            Stage stage = (Stage) search.getScene().getWindow();
+                            FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/org/example/ilib/SearchingBook.fxml"));
+                            Parent root = fxmlLoader1.load();
+                            ControllerSearchingBook controllerSearchingBook = fxmlLoader1.getController();
+                            controllerSearchingBook.setLabel(searchText);
+
+                            for (JsonElement book : bookDetails) {
+                                JsonObject item = book.getAsJsonObject();
+                                String id = item.get("id").getAsString();
+
+                                Book bk = api.getBooksByID(id);
+                                controllerSearchingBook.addBook(bk);
+                            }
+                            controllerSearchingBook.show();
+                            Scene scene1 = new Scene(root);
+                            stage.setScene(scene1);
+
+                        } catch (IOException e) {
+                            showErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
+                        }
+                    });
+                } else {
+                    Platform.runLater(() -> showErrAndEx.showAlert("Không tìm thấy sách phù hợp"));
+                }
+            } catch (Exception e) {
+                Platform.runLater(() -> showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API."));
+            }
+        });
+    }
+
     public void handleSearch(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER) {
             String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
@@ -114,38 +154,11 @@ public class ControllerMenu implements Initializable {
                                     ControllerSearchingBook controllerSearchingBook = fxmlLoader1.getController();
                                     controllerSearchingBook.setLabel(searchText);
 
-                                    for (int i = 0; i < bookDetails.size(); i++) {
-                                        JsonObject item = bookDetails.get(i).getAsJsonObject();
-                                        JsonObject volumeInfo = item.getAsJsonObject("volumeInfo");
-                                        String title, author, thumbnail;
+                                    for (JsonElement book : bookDetails) {
+                                        JsonObject item = book.getAsJsonObject();
+                                        String id = item.get("id").getAsString();
 
-                                        if (volumeInfo.has("imageLinks")) {
-                                            thumbnail = volumeInfo.getAsJsonObject("imageLinks").get("smallThumbnail").getAsString();
-                                        } else {
-                                            thumbnail = "/org/assets/noImage.png";
-                                        }
-
-                                        if (volumeInfo.has("authors")) {
-                                            JsonArray authorsArray = volumeInfo.getAsJsonArray("authors");
-                                            StringBuilder authorsBuilder = new StringBuilder();
-                                            for (int j = 0; j < authorsArray.size(); j++) {
-                                                authorsBuilder.append(authorsArray.get(j).getAsString());
-                                                if (j < authorsArray.size() - 1) {
-                                                    authorsBuilder.append(", ");
-                                                }
-                                            }
-                                            author = authorsBuilder.toString();
-                                        } else {
-                                            author = "No authors";
-                                        }
-
-                                        if (volumeInfo.has("title")) {
-                                            title = volumeInfo.get("title").getAsString();
-                                        } else {
-                                            title = "No title available.";
-                                        }
-
-                                        Book bk = new Book(title, thumbnail, author);
+                                        Book bk = api.getBooksByID(id);
                                         controllerSearchingBook.addBook(bk);
                                     }
                                     controllerSearchingBook.show();

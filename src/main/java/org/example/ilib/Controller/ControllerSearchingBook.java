@@ -35,10 +35,11 @@ public class ControllerSearchingBook  {
     public void setLabel(String label){
         searchLabel.setText(label);
     }
+
     public void addBook(Book book) {
        booksearching.add(book);
-
     }
+
     @FXML
     void BackToMenu(MouseEvent event) throws IOException {
             Stage stage = (Stage) Back.getScene().getWindow();
@@ -50,7 +51,8 @@ public class ControllerSearchingBook  {
     void show(){
         try
         {
-            int column =0 , row =0;
+            int column = 0;
+            int row = 0;
 
            for (Book book : booksearching) {
                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/book.fxml"));
@@ -63,7 +65,7 @@ public class ControllerSearchingBook  {
                    column = 0;
                    row++;
                }
-               gridPaneBook.add(hbox,column++,row);
+               gridPaneBook.add(hbox, column++, row);
 
            }
         } catch (Exception e){

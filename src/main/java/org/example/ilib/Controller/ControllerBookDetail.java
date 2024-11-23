@@ -11,52 +11,51 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.ilib.Processor.Book;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ControllerBookDetail {
-
-    @FXML
-    private ToggleGroup Group;
-
-    @FXML
-    private ImageView thumbnail;
-
-    @FXML
-    private Text titleText1;
 
     @FXML
     private Button BackButton;
 
     @FXML
-    private Text descriptionText;
-
-
-    @FXML
-    private Text titleText11;
-
-    @FXML
-    private Button addCartButton;
+    private ToggleGroup Group;
 
     @FXML
     private TextField VolumeTextField;
 
     @FXML
-    private Text titleText;
+    private Button addCartButton;
+
+    @FXML
+    private Text authorText;
+
+    @FXML
+    private Text descriptionText;
+
+    @FXML
+    private Text idText;
 
     @FXML
     private Button judgeButton;
 
     @FXML
-    private Text authorText;
+    private Text quantityText;
+
     @FXML
-    private Text idText;
+    private ImageView thumbnail;
+
     @FXML
-    private Label Bookid;
+    private Text titleText;
+    private Book book;
 
     private static final int Buy = 2;
     private static final int Borrow = 1;
@@ -69,86 +68,25 @@ public class ControllerBookDetail {
         this.Forwardsceen = scene;
     }
 
-    public void setAuthorText(String author) {
-        authorText.setText(author);
+    public void setBook(String id) throws IOException {
+        GoogleBooksAPI gg = new GoogleBooksAPI();
+        book = gg.getBooksByID(id);
     }
 
-    public void setDescriptionText(String description) {
-        descriptionText.setText(description);
+    public void showInformation() throws SQLException {
+        thumbnail.setImage(new Image(book.getImage()));
+        titleText.setText(book.getTitle());
+        authorText.setText(book.getAuthor());
+        descriptionText.setText(book.getDescription());
+        idText.setText(book.getId());
+        quantityText.setText(String.valueOf(book.getQuantity()));
     }
-
-    public void setTitleText(String title) {
-        titleText.setText(title);
-    }
-
-    public void setThumbnail(Image image) {
-        thumbnail.setImage(image);
-    }
-
-
 
     public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage)BackButton.getScene().getWindow();
 
         Scene scene = Forwardsceen;
         stage.setScene(scene);
-    }
-
-    public void setInformation(String searchText) throws IOException {
-        GoogleBooksAPI gg = new GoogleBooksAPI();
-        JsonArray items = gg.getInformation(searchText, 4);
-        //JsonArray items = null;
-
-        if (items == null || items.isEmpty()) {
-            System.err.println("No items found in the API response.");
-            authorText.setText("No author");
-            descriptionText.setText("No description available.");
-            titleText.setText("No title available.");
-            return;
-        }
-
-        JsonObject item = items.get(0).getAsJsonObject();
-        JsonObject volumeInfo = item.getAsJsonObject("volumeInfo");
-
-        if(volumeInfo.has("imageLinks")) {
-            String thumbnailLink = volumeInfo.getAsJsonObject("imageLinks").get("smallThumbnail").getAsString();
-            System.err.println("ThumbnailLink" + thumbnailLink);
-            thumbnail.setImage(new Image(thumbnailLink)); // thay lai = thumbnailLink
-        } else {
-            // thay thế lại absolute path để chạy được
-            thumbnail.setImage(new Image("/org/assets/noImage.png"));
-        }
-
-        if (volumeInfo.has("authors")) {
-            JsonArray authorsArray = volumeInfo.getAsJsonArray("authors");
-            StringBuilder authorsBuilder = new StringBuilder();
-            for (int j = 0; j < authorsArray.size(); j++) {
-                authorsBuilder.append(authorsArray.get(j).getAsString());
-                if (j < authorsArray.size() - 1) {
-                    authorsBuilder.append(", ");
-                }
-            }
-            authorText.setText(authorsBuilder.toString());
-        } else {
-            authorText.setText("No author");
-        }
-
-        if (volumeInfo.has("description")) {
-            String description = volumeInfo.get("description").getAsString();
-            if (description.length() <= 120) {
-                descriptionText.setText(volumeInfo.get("description").getAsString());
-            } else {
-                descriptionText.setText(description.substring(0, 119) + "...");
-            }
-        } else {
-            descriptionText.setText("No description available.");
-        }
-
-        if (volumeInfo.has("title")) {
-            titleText.setText(volumeInfo.get("title").getAsString());
-        } else {
-            titleText.setText("No title available.");
-        }
     }
 
     public void addBookToCart(String email, String bookId, int quantity, int status) throws SQLException {
