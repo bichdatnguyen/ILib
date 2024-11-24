@@ -29,27 +29,21 @@ public class CartItem {
     public String getName() {
         return name;
     }
-
     public int getVolume() {
         return volume;
     }
-
     public int getMoney() {
         return money;
     }
-
     public String getStatus() {
         return status;
     }
-
     public String getVoucher() {
         return voucher;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public void setVolume(int volume) {
         this.volume = volume;
     }
@@ -59,9 +53,7 @@ public class CartItem {
     public void setStatus(String status) {
         this.status = status;
     }
-
     public void setVoucher(String voucher) {
         this.voucher = voucher;
     }
-
 }

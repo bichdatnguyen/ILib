@@ -34,7 +34,6 @@ public class ControllerCartItemList implements Initializable {
     @FXML
     private ImageView QRCode;
 
-
     @FXML
     private Label totalMoney;
 
@@ -53,7 +52,6 @@ public class ControllerCartItemList implements Initializable {
     private TableColumn<CartItem, String> StatusCol;
     @FXML
     private TableColumn<CartItem, String> NameCol;
-
     @FXML
     private TableColumn<CartItem, String> VoucherCol;
     @FXML
@@ -75,10 +73,9 @@ public class ControllerCartItemList implements Initializable {
         this.CartList = FXCollections.observableArrayList(CartList);
     }
 
-
     @FXML
     void BackToMenu(MouseEvent event) throws IOException {
-            Stage stage = (Stage) Back.getScene().getWindow();
+        Stage stage = (Stage) Back.getScene().getWindow();
         FXMLLoader fx = new FXMLLoader();
         fx.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
         Scene scene = new Scene(fx.load());

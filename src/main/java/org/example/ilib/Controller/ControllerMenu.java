@@ -53,13 +53,23 @@ public class ControllerMenu implements Initializable {
     private HBox recentlyAddHbox;
 
     @FXML
+    private MenuItem Account;
+
+    @FXML
     private MenuItem Cart;
+
     private List<Book>recentlyBooks = new ArrayList<>();
+
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
-
-
-
+    public void accountSwitchScene(ActionEvent event) throws IOException {
+        Stage stage = (Stage) Account.getParentPopup().getOwnerWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Account.fxml"));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        shutdownExecutorService();
+        stage.setScene(scene);
+    }
 
     /**
      * signOutMenu handle MouseEvent event.
@@ -82,7 +92,6 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     void MoveToCart(ActionEvent event)throws IOException{
-
         Stage stage = (Stage) Cart.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Cart.fxml"));
         Parent root = fxmlLoader.load();
@@ -181,7 +190,6 @@ public class ControllerMenu implements Initializable {
     }
 
     public void topBookMenu(MouseEvent event) throws IOException {
-
         Stage stage = (Stage) topBooks.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/TopBooks.fxml"));

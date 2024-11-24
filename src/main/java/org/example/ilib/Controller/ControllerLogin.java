@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.example.ilib.Processor.Account;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ public class ControllerLogin {
 
     @FXML
     private TextField emailText;
+
     @FXML
     private TextField passwordText;
 
@@ -32,12 +34,16 @@ public class ControllerLogin {
     void loginSuccess(MouseEvent event) throws IOException, SQLException {
 
         DBConnection db = DBConnection.getInstance();
-
-         if(!db.checkDataExit(emailText.getText(), passwordText.getText())) {
+        String email = emailText.getText();
+        String password = passwordText.getText();
+         if(!db.checkDataExit(email, password)) {
             showErrAndEx.showAlert("Email hoặc mật khẩu không đúng");
             return;
+         } else {
+             //initialize user properties
+             Account.getInstance().setEmail(email);
+             Account.getInstance().setPassword(password);
          }
-
 
         Stage stage = (Stage) LoginSuccessButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
