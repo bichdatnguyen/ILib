@@ -52,12 +52,13 @@ public class DBConnection {
 
     public void createAccount(String email, String phoneNumber, String fullName,
                               String password) throws SQLException {
-        String sql = "INSERT INTO user (email, phoneNumber, fullName, password) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO user (email, phoneNumber, fullName, password, avatarPath) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, email);
         stmt.setString(2, phoneNumber);
         stmt.setString(3, fullName);
         stmt.setString(4, password);
+        stmt.setString(5, null);
         stmt.executeUpdate();
     }
 
@@ -164,16 +165,20 @@ public class DBConnection {
         stmt.executeUpdate();
     }
 
-    public void addBook(String bookID, String title, int bookPrice, int quantityInStock) throws SQLException {
+    public void addBook(String bookID, String title, int bookPrice, int quantityInStock,
+                        String addDate, int averageRating) throws SQLException {
         if (bookExist(bookID)) {
             return;
         }
-        String sql = "INSERT INTO books (bookID, title, bookPrice, quantityInStock) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO books (bookID, title, bookPrice, quantityInStock, addDate, averageRating) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
         stmt.setString(2, title);
         stmt.setInt(3, bookPrice);
         stmt.setInt(4, quantityInStock);
+        stmt.setString(5, addDate);
+        stmt.setInt(6, averageRating);
         stmt.executeUpdate();
     }
 
