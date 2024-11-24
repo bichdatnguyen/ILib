@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `ilib`.`books` (
   `bookPrice` INT NULL DEFAULT NULL,
   `quantityInStock` INT NULL DEFAULT NULL,
   `addDate` DATETIME NULL,
-  `averageRating` INT NULL,
+  `averageRating` DOUBLE NULL,
   PRIMARY KEY (`bookID`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb3;

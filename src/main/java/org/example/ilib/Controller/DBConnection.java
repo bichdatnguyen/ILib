@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import org.example.ilib.Processor.CartItem;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -51,14 +52,14 @@ public class DBConnection {
     }
 
     public void createAccount(String email, String phoneNumber, String fullName,
-                              String password) throws SQLException {
+                              String password, String avatarPath) throws SQLException {
         String sql = "INSERT INTO user (email, phoneNumber, fullName, password, avatarPath) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, email);
         stmt.setString(2, phoneNumber);
         stmt.setString(3, fullName);
         stmt.setString(4, password);
-        stmt.setString(5, null);
+        stmt.setString(5, avatarPath);
         stmt.executeUpdate();
     }
 
@@ -114,7 +115,7 @@ public class DBConnection {
     }
 
     public boolean bookExist(String bookID) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM books WHERE bookID = ?";
+        String sql = "SELECT EXISTS(SELECT 1 FROM books WHERE bookID = ?)";
         PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
 
@@ -166,7 +167,7 @@ public class DBConnection {
     }
 
     public void addBook(String bookID, String title, int bookPrice, int quantityInStock,
-                        String addDate, int averageRating) throws SQLException {
+                        Date addDate, int averageRating) throws SQLException {
         if (bookExist(bookID)) {
             return;
         }
@@ -177,7 +178,7 @@ public class DBConnection {
         stmt.setString(2, title);
         stmt.setInt(3, bookPrice);
         stmt.setInt(4, quantityInStock);
-        stmt.setString(5, addDate);
+        stmt.setDate(5, addDate);
         stmt.setInt(6, averageRating);
         stmt.executeUpdate();
     }
@@ -207,7 +208,7 @@ public class DBConnection {
     }
 
     public List<String> getTopBooks(int number) throws SQLException {
-        String sql = "SELECT bookID FROM books LIMIT ?";
+        String sql = "SELECT bookID FROM books ORDER BY averageRating DESC LIMIT ?";
         PreparedStatement stmt = createStatement(sql);
         stmt.setInt(1, number);
 
@@ -222,7 +223,7 @@ public class DBConnection {
     }
 
     public List<String> getRecentlyBooks(int number) throws SQLException {
-        String sql = "SELECT bookID FROM books ORDER BY bookID DESC LIMIT ?";
+        String sql = "SELECT bookID FROM books ORDER BY addDate DESC LIMIT ?";
         PreparedStatement stmt = createStatement(sql);
         stmt.setInt(1, number);
 

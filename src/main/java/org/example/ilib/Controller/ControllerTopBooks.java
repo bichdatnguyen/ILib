@@ -27,11 +27,9 @@ public class ControllerTopBooks extends Booklist implements Initializable {
         super(Booklist.TOP_BOOK);
     }
 
-
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-
             for (int i = 0; i < 5 ; i++ ) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));

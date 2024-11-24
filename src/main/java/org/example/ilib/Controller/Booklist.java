@@ -37,7 +37,7 @@ public class Booklist {
         DBConnection db = DBConnection.getInstance();
         GoogleBooksAPI gg = new GoogleBooksAPI();
 
-        List<String> ids = db.getRecentlyBooks(9);
+        List<String> ids = db.getTopBooks(9);
 
         for (String id : ids) {
             TopBookList.add(gg.getBooksByID(id));
