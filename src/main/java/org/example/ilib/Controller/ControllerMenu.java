@@ -228,19 +228,13 @@ public class ControllerMenu implements Initializable {
         }
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
             Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
             recentlyBooks = bl.bookList;
-
-
-
                 try {
-
                     for (int i = 0; i < recentlyBooks.size() ; i++ ) {
-
                         FXMLLoader fx = new FXMLLoader();
                         fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                         HBox cardbox = (HBox) fx.load();
@@ -255,7 +249,5 @@ public class ControllerMenu implements Initializable {
         catch(Exception e){
             e.printStackTrace();
         }
-
-
     }
 }
