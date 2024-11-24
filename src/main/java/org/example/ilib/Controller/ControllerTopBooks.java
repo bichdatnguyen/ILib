@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 
@@ -22,7 +23,7 @@ public class ControllerTopBooks extends Booklist implements Initializable {
     @FXML
     private HBox hbox_top_book2;
 
-    public ControllerTopBooks() {
+    public ControllerTopBooks() throws SQLException, IOException {
         super(Booklist.TOP_BOOK);
     }
 
@@ -32,26 +33,21 @@ public class ControllerTopBooks extends Booklist implements Initializable {
         try {
 
             for (int i = 0; i < 5 ; i++ ) {
-
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 top_book_hbox.getChildren().add(cardbox);
-
-
             }
-            for (int i = 5; i < 9 ; i++ ) {
 
+            for (int i = 5; i < 9 ; i++ ) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 hbox_top_book2.getChildren().add(cardbox);
-
-
             }
 
 
