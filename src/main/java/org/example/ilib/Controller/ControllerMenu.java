@@ -26,6 +26,7 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -230,21 +231,28 @@ public class ControllerMenu implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try{
+            Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
+            recentlyBooks = bl.bookList;
 
-        Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
-        recentlyBooks = bl.bookList;
-        try {
 
-            for (int i = 0; i < recentlyBooks.size() ; i++ ) {
 
-                FXMLLoader fx = new FXMLLoader();
-                fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
-                HBox cardbox = (HBox) fx.load();
-                ControllerBook controllerBook = (ControllerBook) fx.getController();
-                controllerBook.setBook(recentlyBooks.get(i));
-                recentlyAddHbox.getChildren().add(cardbox);
-            }
-        } catch (IOException e) {
+                try {
+
+                    for (int i = 0; i < recentlyBooks.size() ; i++ ) {
+
+                        FXMLLoader fx = new FXMLLoader();
+                        fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
+                        HBox cardbox = (HBox) fx.load();
+                        ControllerBook controllerBook = (ControllerBook) fx.getController();
+                        controllerBook.setBook(recentlyBooks.get(i));
+                        recentlyAddHbox.getChildren().add(cardbox);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
 
