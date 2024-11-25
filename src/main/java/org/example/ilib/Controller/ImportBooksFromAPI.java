@@ -43,7 +43,11 @@ public class ImportBooksFromAPI {
     }
 
     public static int getBookPrice(JsonObject saleInfo) {
-        return saleInfo.getAsJsonObject("listPrice").get("amount").getAsInt();
+        if (saleInfo.has("listPrice")) {
+            return saleInfo.getAsJsonObject("listPrice").get("amount").getAsInt();
+        } else {
+            return 0;
+        }
     }
 
     public static String getDescription(JsonObject volumeInfo) {
@@ -70,9 +74,9 @@ public class ImportBooksFromAPI {
     public static List<String> getCategory(JsonObject volumeInfo) {
         List<String> categories = new ArrayList<>();
         if (volumeInfo.has("categories")) {
-            JsonArray authorsArray = volumeInfo.getAsJsonArray("categories");
-            for (int j = 0; j < authorsArray.size(); j++) {
-                categories.add(authorsArray.get(j).getAsString());
+            JsonArray categoryArray = volumeInfo.getAsJsonArray("categories");
+            for (int j = 0; j < categoryArray.size(); j++) {
+                categories.add(categoryArray.get(j).getAsString());
             }
         }
         return categories;
@@ -106,6 +110,10 @@ public class ImportBooksFromAPI {
                     }
 
                     String bookID = getID(item);
+                    // Thêm sách vào batch
+                    if (db.bookExist(bookID)) {
+                        continue;
+                    }
                     JsonObject volumeInfo = item.getAsJsonObject().get("volumeInfo").getAsJsonObject();
                     String title = getTitle(volumeInfo);
                     List<String> authors = getAuthors(volumeInfo);
@@ -114,7 +122,6 @@ public class ImportBooksFromAPI {
                     double averageRating = getAverageRating(volumeInfo);
                     List<String> categories = getCategory(volumeInfo);
 
-                    // Thêm sách vào batch
                     bookStmt.setString(1, bookID);
                     bookStmt.setString(2, title);
                     bookStmt.setInt(3, bookPrice);
@@ -132,7 +139,7 @@ public class ImportBooksFromAPI {
 
                     // Thêm danh mục vào batch
                     for (String category : categories) {
-                        categoryStmt.setString(1, subject);
+                        categoryStmt.setString(1, category);
                         categoryStmt.setString(2, bookID);
                         categoryStmt.addBatch();
                     }

@@ -1,5 +1,6 @@
 package org.example.ilib.Controller;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Book;
 
+import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,7 +30,8 @@ public class ControllerSearchingBook  {
     private GridPane gridPaneBook;
     @FXML
     private Label searchLabel;
-
+    @FXML
+    private HBox pageBox;
 
     private List<Book> booksearching = new ArrayList();
 
@@ -48,13 +51,34 @@ public class ControllerSearchingBook  {
             stage.setScene(scene);
     }
 
-    void show(){
-        try
-        {
+    public Button createPageButton(String page) {
+        Button button = new Button(page);
+        button.setOnMouseClicked(event -> {
+            showSearchResult(Integer.parseInt(page));
+        });
+        return button;
+    }
+
+    public void showNumberOfPages(int pages) {
+        pageBox.getChildren().clear();
+        for (int i = 1; i <= pages; i++) {
+            Button button = createPageButton(String.valueOf(i));
+            pageBox.getChildren().add(button);
+        }
+    }
+
+    void showSearchResult(int page){
+        gridPaneBook.getChildren().clear();
+        try {
             int column = 0;
             int row = 0;
+            // page 1: index tu 0 den 3
+            // page 2: index tu 4 den 7
+            // page 3: index tu 8 den 11
+            // page i: index tu 4 * i - 4 den 4 * i - 1
 
-           for (Book book : booksearching) {
+           for (int i = 4 * page - 4; i < 4 * page; i++) {
+               Book book = booksearching.get(i);
                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/book.fxml"));
 
                HBox hbox = (HBox) fxmlLoader.load();
@@ -66,13 +90,10 @@ public class ControllerSearchingBook  {
                    row++;
                }
                gridPaneBook.add(hbox, column++, row);
-
            }
         } catch (Exception e){
             e.printStackTrace();
         }
 
     }
-
-
 }
