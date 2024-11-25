@@ -27,14 +27,14 @@
                <image>
                   <Image url="@../../assets/search-2907.png" />
                </image></ImageView>
-            <ImageView fitHeight="63.0" fitWidth="61.0" layoutX="694.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id= "avatarUser" fitHeight="63.0" fitWidth="61.0" layoutX="694.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../assets/user-3296.png" />
                </image>
             </ImageView>
             <MenuButton alignment="CENTER" layoutX="764.0" layoutY="28.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="134.0" text="User">
               <items>
-                <MenuItem mnemonicParsing="false" fx:id="Account" text="Account" onAction="#accountSwitchScene" />
+                <MenuItem mnemonicParsing="false" fx:id="account" text="Account" onAction="#accountSwitchScene" />
                 <MenuItem fx:id="Cart" mnemonicParsing="false" onAction="#MoveToCart" text="Cart" />
                   <MenuItem fx:id="signOut" mnemonicParsing="false" onAction="#signOutMenu" text="signOut" />
               </items>

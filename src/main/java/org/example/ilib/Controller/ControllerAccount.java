@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,6 +12,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -20,16 +22,16 @@ import java.sql.SQLException;
 
 public class ControllerAccount {
     @FXML
-    private TextField fullName;
+    public Label phone;
 
     @FXML
-    private TextField email;
+    public Label password;
 
     @FXML
-    private TextField phone;
+    public Label email;
 
     @FXML
-    private TextField address;
+    public Label fullName;
 
     @FXML
     private Button backButton;
@@ -40,24 +42,40 @@ public class ControllerAccount {
     @FXML
     public void initialize() {
         if(Account.getInstance().getAvatarPath() == null) {
-            Account.getInstance().setAvatarPath(getAvatarPathFromDatabase());
+            setPropertiesFromDatabase();
         }
-        loadAvatar();
-        //phone.setText(Account.getInstance().getPhone());
-        //email.setText(Account.getInstance().getEmail());
-        //fullName.setText(Account.getInstance().getFullName());
-
+        loadProperties();
     }
 
-    public void loadAvatar() {
+    public void loadProperties() {
         String avatarPath = Account.getInstance().getAvatarPath();
+        String phoneNumber = Account.getInstance().getPhone();
+        String fullname = Account.getInstance().getFullName();
+        String emailTemp = Account.getInstance().getEmail();
         if (avatarPath == null) {
-            // Hiển thị avatar từ đường dẫn lưu trong cơ sở dữ liệu
-            Image avatarImage = new Image("D:/GitHub/Ilib/Ilib/src/main/resources/org/assets/user-3296.png");
+            Image avatarImage = new Image("D:/GitHub/Ilib/ilib/src/main/resources/org/assets/user-3296.png");
             avatar.setImage(avatarImage);
         } else {
             Image avatarImage = new Image(avatarPath);
             avatar.setImage(avatarImage);
+        }
+
+        if (phoneNumber != null) {
+            phone.setText(phoneNumber);
+        } else {
+            System.out.println("phone number is null");
+        }
+
+        if (fullname != null) {
+            fullName.setText(fullname);
+        } else {
+            System.out.println("fullname is null");
+        }
+
+        if (emailTemp != null) {
+            email.setText(emailTemp);
+        } else {
+            System.out.println("email is null");
         }
     }
 
@@ -105,9 +123,8 @@ public class ControllerAccount {
         }
     }
 
-    private String getAvatarPathFromDatabase() {
-        String avatarPath = null;
-        String query = "SELECT avatarPath FROM user WHERE email = ? and password = ?";
+    private void setPropertiesFromDatabase() {
+        String query = "SELECT avatarPath, phoneNumber, fullName FROM user WHERE email = ? and password = ?";
 
         try {
             PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
@@ -115,12 +132,13 @@ public class ControllerAccount {
             stmt.setString(2, Account.getInstance().getPassword());
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
-                avatarPath = resultSet.getString("avatarPath");
+                Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
+                Account.getInstance().setPhone(resultSet.getString("phoneNumber"));
+                Account.getInstance().setFullName(resultSet.getString("fullName"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return avatarPath;
     }
 }
 
