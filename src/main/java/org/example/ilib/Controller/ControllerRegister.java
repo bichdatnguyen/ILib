@@ -65,7 +65,7 @@ public class ControllerRegister {
         String password = passwordTextField.getText();
         String fullName = nameTextField.getText();
         String phoneNumber = phoneTextField.getText();
-        db.createAccount(email, phoneNumber, fullName, password);
+        db.createAccount(email, phoneNumber, fullName, password, null);
         db.createVoucher(email, 50);
 
         Stage stage = (Stage) CreateAccountButton.getScene().getWindow();

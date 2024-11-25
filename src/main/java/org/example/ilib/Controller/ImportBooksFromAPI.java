@@ -8,9 +8,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +54,27 @@ public class ImportBooksFromAPI {
         }
     }
 
+    public static Timestamp getDate() {
+        LocalDateTime now = LocalDateTime.now();
+        return Timestamp.valueOf(now);
+    }
+
+    public static double getAverageRating(JsonObject volumeInfo) {
+        if (volumeInfo.has("averageRating")) {
+            return volumeInfo.get("averageRating").getAsDouble();
+        } else {
+            return 0.0;
+        }
+    }
+
     public static void main(String[] args) throws SQLException, IOException {
         GoogleBooksAPI gg = new GoogleBooksAPI();
         DBConnection db = DBConnection.getInstance();
 
         // Chuẩn bị batch để thêm sách, tác giả và danh mục
-        String insertBookQuery = "INSERT INTO books (bookID, title, bookPrice, quantityInStock) VALUES (?, ?, ?, ?)";
+        String insertBookQuery = "INSERT INTO books "
+                + "(bookID, title, bookPrice, quantityInStock, addDate, averageRating) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
         String insertAuthorQuery = "INSERT INTO authors (bookID, authorName) VALUES (?, ?)";
         String insertCategoryQuery = "INSERT INTO categories (categoryName, bookID) VALUES (?, ?)";
 
@@ -85,12 +99,16 @@ public class ImportBooksFromAPI {
                     String title = getTitle(volumeInfo);
                     List<String> authors = getAuthors(volumeInfo);
                     int bookPrice = getBookPrice(saleInfo);
+                    Timestamp addDate = getDate();
+                    double averageRating = getAverageRating(volumeInfo);
 
                     // Thêm sách vào batch
                     bookStmt.setString(1, bookID);
                     bookStmt.setString(2, title);
                     bookStmt.setInt(3, bookPrice);
                     bookStmt.setInt(4, 50); // Số lượng mặc định
+                    bookStmt.setTimestamp(5, addDate);
+                    bookStmt.setDouble(6, averageRating);
                     bookStmt.addBatch();
 
                     // Thêm tác giả vào batch
