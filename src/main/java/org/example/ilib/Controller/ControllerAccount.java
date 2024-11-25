@@ -41,7 +41,7 @@ public class ControllerAccount {
 
     @FXML
     public void initialize() {
-        if(Account.getInstance().getAvatarPath() == null) {
+        if(Account.getInstance().getPhone() == null) {
             setPropertiesFromDatabase();
         }
         loadProperties();
@@ -124,17 +124,20 @@ public class ControllerAccount {
     }
 
     private void setPropertiesFromDatabase() {
-        String query = "SELECT avatarPath, phoneNumber, fullName FROM user WHERE email = ? and password = ?";
-
-        try {
-            PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
+        String query = "SELECT avatarPath,phoneNumber,fullName FROM user WHERE email = ? and password = ?";
+        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query)) {
             stmt.setString(1, Account.getInstance().getEmail());
             stmt.setString(2, Account.getInstance().getPassword());
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
+                System.out.println(Account.getInstance().getAvatarPath());
+
                 Account.getInstance().setPhone(resultSet.getString("phoneNumber"));
+                System.out.println(Account.getInstance().getPhone());
+
                 Account.getInstance().setFullName(resultSet.getString("fullName"));
+                System.out.println(Account.getInstance().getFullName());
             }
         } catch (SQLException e) {
             e.printStackTrace();

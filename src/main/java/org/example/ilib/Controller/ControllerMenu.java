@@ -218,7 +218,9 @@ public class ControllerMenu implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
             loadProperties();
-            avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
+            if (Account.getInstance().getAvatarPath() != null) {
+                avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
+            }
             Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
             recentlyBooks = bl.bookList;
                 try {
