@@ -32,7 +32,6 @@ public class ControllerLogin {
      */
     @FXML
     void loginSuccess(MouseEvent event) throws IOException, SQLException {
-
         DBConnection db = DBConnection.getInstance();
         String email = emailText.getText();
         String password = passwordText.getText();

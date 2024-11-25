@@ -16,16 +16,17 @@
       </Text>
       <Label layoutX="67.0" layoutY="233.0" prefHeight="17.0" prefWidth="126.0" text="Email:" />
       <Label layoutX="67.0" layoutY="283.0" prefHeight="17.0" prefWidth="126.0" text="password:" />
-      <Label layoutX="67.0" layoutY="331.0" prefHeight="17.0" prefWidth="126.0" text="Phone number:" />
+      <Label layoutX="67.0" layoutY="333.0" prefHeight="17.0" prefWidth="126.0" text="Phone number:" />
       <Button id="backButton" fx:id="backButton" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#Back" text="&lt;-">
       </Button>
-      <ImageView fx:id="avatar" fitHeight="67.0" fitWidth="73.0" layoutX="262.0" layoutY="79.0" onMouseClicked="#setAvatar" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="phone" layoutX="172.0" layoutY="331.0" prefHeight="18.0" prefWidth="293.0" text="phone" />
+      <ImageView fx:id="avatar" fitHeight="67.0" fitWidth="73.0" layoutX="262.0" layoutY="79.0" onMouseClicked="#setAvatar" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="265.0" />
+      <Label fx:id="phone" layoutX="172.0" layoutY="333.0" prefHeight="18.0" prefWidth="293.0" text="phone" />
       <Label fx:id="password" layoutX="172.0" layoutY="283.0" prefHeight="18.0" prefWidth="299.0" text="password" />
       <Label fx:id="email" layoutX="172.0" layoutY="233.0" prefHeight="18.0" prefWidth="307.0" text="email" />
       <Label fx:id="fullName" alignment="CENTER" layoutX="204.0" layoutY="146.0" prefHeight="18.0" prefWidth="190.0" text="fullName">
          <font>
             <Font size="22.0" />
          </font></Label>
+      <Text fx:id="updateAccount" onMouseClicked="#updateAccount" layoutX="235.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cập nhật thông tin" textAlignment="CENTER" wrappingWidth="126.0" />
    </children>
 </AnchorPane>

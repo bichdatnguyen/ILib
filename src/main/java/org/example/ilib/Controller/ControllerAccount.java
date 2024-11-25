@@ -2,18 +2,19 @@ package org.example.ilib.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -34,6 +35,9 @@ public class ControllerAccount {
     public Label fullName;
 
     @FXML
+    public Text updateAccount;
+
+    @FXML
     private Button backButton;
 
     @FXML
@@ -41,7 +45,7 @@ public class ControllerAccount {
 
     @FXML
     public void initialize() {
-        if(Account.getInstance().getPhone() == null) {
+        if (Account.getInstance().getPhone() == null) {
             setPropertiesFromDatabase();
         }
         loadProperties();
@@ -77,6 +81,17 @@ public class ControllerAccount {
         } else {
             System.out.println("email is null");
         }
+
+        if (password != null) {
+            int size = Account.getInstance().getPassword().length();
+            String p = new String();
+            for (int i = 0; i < size; i++) {
+                p += "*";
+            }
+            password.setText(p);
+        } else {
+            System.out.println("password is null");
+        }
     }
 
     public void Back(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
@@ -96,7 +111,7 @@ public class ControllerAccount {
         );
         File selectedFile = fileChooser.showOpenDialog(avatar.getScene().getWindow());
 
-        if(selectedFile!=null) {
+        if (selectedFile != null) {
             try {
                 Image avatarView = new Image(selectedFile.toURI().toString());
                 avatar.setImage(avatarView);
@@ -131,17 +146,20 @@ public class ControllerAccount {
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
-                System.out.println(Account.getInstance().getAvatarPath());
-
                 Account.getInstance().setPhone(resultSet.getString("phoneNumber"));
-                System.out.println(Account.getInstance().getPhone());
-
                 Account.getInstance().setFullName(resultSet.getString("fullName"));
-                System.out.println(Account.getInstance().getFullName());
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateAccount(MouseEvent mouseEvent) throws IOException{
+        Stage stage = (Stage)updateAccount.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/org/example/ilib/updateAccount.fxml"));
+        Scene scene = new Scene(loader.load());
+        stage.setScene(scene);
     }
 }
 

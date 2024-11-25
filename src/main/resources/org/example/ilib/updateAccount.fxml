@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerUpdateAccount">
+   <children>
+      <Button fx:id="backButton" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#backToAccountScene" text="Back" />
+      <Text layoutX="78.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cập nhật thông tin" wrappingWidth="202.80343627929688">
+         <font>
+            <Font name="System Italic" size="23.0" />
+         </font>
+      </Text>
+      <Label layoutX="41.0" layoutY="72.0" prefHeight="17.0" prefWidth="151.0" text="Email:" />
+      <Label layoutX="41.0" layoutY="122.0" prefHeight="17.0" prefWidth="151.0" text="Số điện thoại:" />
+      <Label layoutX="41.0" layoutY="172.0" prefHeight="17.0" prefWidth="151.0" text="Tên người dùng:" />
+      <Label layoutX="41.0" layoutY="222.0" prefHeight="17.0" prefWidth="116.0" text="Mật khẩu cũ: " />
+      <Label layoutX="41.0" layoutY="272.0" prefHeight="17.0" prefWidth="89.0" text="Mật khẩu mới:" />
+      <Label layoutX="41.0" layoutY="322.0" prefHeight="17.0" prefWidth="168.0" text="Nhập lại mật khẩu mới:" />
+      <TextField fx:id="emailBox" layoutX="180.0" layoutY="68.0" prefHeight="25.0" prefWidth="343.0" text="emailBox" />
+      <TextField fx:id="phoneNumberBox" layoutX="180.0" layoutY="115.0" prefHeight="25.0" prefWidth="343.0" text="Số điện thoại" />
+      <TextField fx:id="userNameBox" layoutX="180.0" layoutY="168.0" prefHeight="25.0" prefWidth="343.0" text="Tên người dùng" />
+      <TextField fx:id="oldPassWordBox" layoutX="180.0" layoutY="218.0" prefHeight="25.0" prefWidth="343.0" promptText="nhập mật khẩu cũ" />
+      <TextField fx:id="newPassWordBox" layoutX="180.0" layoutY="268.0" prefHeight="25.0" prefWidth="343.0" promptText="Nhập mật khẩu mới" />
+      <TextField fx:id="acceptedPassword" layoutX="180.0" layoutY="318.0" prefHeight="25.0" prefWidth="343.0" promptText="Xác nhận mật khẩu mới" />
+      <Button fx:id="commitButton" layoutX="434.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#commited" prefHeight="25.0" prefWidth="89.0" text="xác nhận" />
+      <Text fx:id="commentText" layoutX="41.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="375.47003173828125" />
+   </children>
+</AnchorPane>
