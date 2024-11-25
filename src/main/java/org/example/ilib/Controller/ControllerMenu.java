@@ -15,17 +15,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.Book;
 import org.json.JSONObject;
 import org.json.JSONArray;
+
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,9 @@ import java.util.concurrent.Executors;
 
 
 public class ControllerMenu implements Initializable {
+    @FXML
+    public ImageView avatarUser;
+
     @FXML
     private MenuItem signOut;
 
@@ -54,7 +62,7 @@ public class ControllerMenu implements Initializable {
     private HBox recentlyAddHbox;
 
     @FXML
-    private MenuItem Account;
+    private MenuItem account;
 
     @FXML
     private MenuItem Cart;
@@ -67,7 +75,7 @@ public class ControllerMenu implements Initializable {
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
     public void accountSwitchScene(ActionEvent event) throws IOException {
-        Stage stage = (Stage) Account.getParentPopup().getOwnerWindow();
+        Stage stage = (Stage) account.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Account.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -83,7 +91,6 @@ public class ControllerMenu implements Initializable {
      * @throws IOException in case that FXML can not be used
      */
     public void signOutMenu(ActionEvent actionEvent) throws IOException {
-
         Stage stage = (Stage) signOut.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));
         Parent root = fxmlLoader.load();
@@ -92,6 +99,21 @@ public class ControllerMenu implements Initializable {
         String searchText = search.getText();
         shutdownExecutorService();
         System.out.println(searchText);
+    }
+
+    private void loadProperties() {
+        String query = "SELECT avatarPath FROM user WHERE email = ? and password = ?";
+        try {
+            PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
+            stmt.setString(1, Account.getInstance().getEmail());
+            stmt.setString(2, Account.getInstance().getPassword());
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -195,6 +217,8 @@ public class ControllerMenu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
+            loadProperties();
+            avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
             Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
             recentlyBooks = bl.bookList;
                 try {

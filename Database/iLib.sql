@@ -238,3 +238,4 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 select * from books;
 
 INSERT INTO user VALUES('bichdat05@gmail.com', '0903432271', 'Nguyen Van A', '88888888', null);
+INSERT INTO user VALUES('hungnta0k55@gmail.com', '0903432271', 'Nguyen The Hung', 'hhhhhhhh', null);
