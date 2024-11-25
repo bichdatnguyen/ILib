@@ -52,14 +52,16 @@ public class DBConnection {
     }
 
     public void createAccount(String email, String phoneNumber, String fullName,
-                              String password, String avatarPath) throws SQLException {
-        String sql = "INSERT INTO user (email, phoneNumber, fullName, password, avatarPath) VALUES (?, ?, ?, ?, ?)";
+                              String password, String avatarPath, String role) throws SQLException {
+        String sql = "INSERT INTO user (email, phoneNumber, fullName, password, avatarPath, role) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, email);
         stmt.setString(2, phoneNumber);
         stmt.setString(3, fullName);
         stmt.setString(4, password);
         stmt.setString(5, avatarPath);
+        stmt.setString(6, role);
         stmt.executeUpdate();
     }
 
@@ -115,48 +117,41 @@ public class DBConnection {
     }
 
     public boolean bookExist(String bookID) throws SQLException {
-        String sql = "SELECT EXISTS(SELECT 1 FROM books WHERE bookID = ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, bookID);
-
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1) > 0;
-        } else {
-            return false;
+        String sql = "SELECT EXISTS (SELECT 1 FROM books WHERE bookID = ?)";
+        try (PreparedStatement stmt = createStatement(sql)) {
+            stmt.setString(1, bookID);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
         }
     }
 
-    public boolean bookAndAuthorExist(String bookID, String author) throws SQLException {
+    public boolean authorPrimaryKeyExist(String bookID, String author) throws SQLException {
         String sql = "SELECT COUNT(*) FROM author WHERE bookID = ? AND authorName = ?";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, bookID);
-        stmt.setString(2, author);
 
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1) > 0;
-        } else {
-            return false;
+        try (PreparedStatement stmt = createStatement(sql)) {
+            stmt.setString(1, bookID);
+            stmt.setString(2, author);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
         }
     }
 
-    public boolean bookAndCategoryExist(String category, String bookID) throws SQLException {
+    public boolean categoryPrimaryKeyExist(String category, String bookID) throws SQLException {
         String sql = "SELECT COUNT(*) FROM categories WHERE bookID = ? AND Category = ?";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, bookID);
-        stmt.setString(2, category);
 
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            return rs.getInt(1) > 0;
-        } else {
-            return false;
+        try (PreparedStatement stmt = createStatement(sql)) {
+            stmt.setString(1, bookID);
+            stmt.setString(2, category);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
         }
     }
 
     public void addAuthor(String bookID, String author) throws SQLException {
-        if (bookAndAuthorExist(bookID, author)) {
+        if (authorPrimaryKeyExist(bookID, author)) {
             return;
         }
         String sql = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
@@ -167,7 +162,7 @@ public class DBConnection {
     }
 
     public void addBook(String bookID, String title, int bookPrice, int quantityInStock,
-                        Date addDate, int averageRating) throws SQLException {
+                        Timestamp addDate, double averageRating) throws SQLException {
         if (bookExist(bookID)) {
             return;
         }
@@ -178,13 +173,13 @@ public class DBConnection {
         stmt.setString(2, title);
         stmt.setInt(3, bookPrice);
         stmt.setInt(4, quantityInStock);
-        stmt.setDate(5, addDate);
-        stmt.setInt(6, averageRating);
+        stmt.setTimestamp(5, addDate);
+        stmt.setDouble(6, averageRating);
         stmt.executeUpdate();
     }
 
     public void addCategories(String category, String bookID) throws SQLException {
-        if (bookAndCategoryExist(category, bookID)) {
+        if (categoryPrimaryKeyExist(category, bookID)) {
             return;
         }
         String sql = "INSERT INTO categories (category, bookID) VALUES (?, ?)";

@@ -55,14 +55,15 @@ CREATE TABLE IF NOT EXISTS `ilib`.`author` (
 -- Table `ilib`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ilib`.`user` (
- `Email` VARCHAR(50) NOT NULL,
- `phoneNumber` CHAR(10) NULL DEFAULT NULL,
- `fullName` VARCHAR(50) NULL DEFAULT NULL,
- `password` VARCHAR(50) NULL DEFAULT NULL,
- `avatarPath` VARCHAR(255) NULL,
- PRIMARY KEY (`Email`))
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8mb3;
+     `Email` VARCHAR(50) NOT NULL,
+     `phoneNumber` CHAR(10) NULL DEFAULT NULL,
+     `fullName` VARCHAR(50) NULL DEFAULT NULL,
+     `password` VARCHAR(50) NULL DEFAULT NULL,
+     `avatarPath` VARCHAR(255) NULL,
+     `role` VARCHAR(10) NOT NULL,
+     PRIMARY KEY (`Email`)
+) ENGINE = InnoDB
+  DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
@@ -234,3 +235,6 @@ CREATE TABLE IF NOT EXISTS `ilib`.`shelf` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+select * from books;
+
+INSERT INTO user VALUES('bichdat05@gmail.com', '0903432271', 'Nguyen Van A', '88888888', null);

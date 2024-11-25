@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -27,21 +26,15 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import org.example.ilib.Processor.Account;
 
 
 public class ControllerMenu implements Initializable {
-    @FXML
-    public ImageView avatarUser;
-
     @FXML
     private MenuItem signOut;
 
@@ -61,17 +54,20 @@ public class ControllerMenu implements Initializable {
     private HBox recentlyAddHbox;
 
     @FXML
-    private MenuItem account;
+    private MenuItem Account;
 
     @FXML
     private MenuItem Cart;
 
-    private List<Book> recentlyBooks = new ArrayList<>();
+    @FXML
+    private MenuItem Admin;
+
+    private List<Book>recentlyBooks = new ArrayList<>();
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
     public void accountSwitchScene(ActionEvent event) throws IOException {
-        Stage stage = (Stage) account.getParentPopup().getOwnerWindow();
+        Stage stage = (Stage) Account.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Account.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
@@ -87,6 +83,7 @@ public class ControllerMenu implements Initializable {
      * @throws IOException in case that FXML can not be used
      */
     public void signOutMenu(ActionEvent actionEvent) throws IOException {
+
         Stage stage = (Stage) signOut.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));
         Parent root = fxmlLoader.load();
@@ -105,45 +102,6 @@ public class ControllerMenu implements Initializable {
         Scene scene = new Scene(root);
         shutdownExecutorService();
         stage.setScene(scene);
-    }
-
-    public void searching(String searchText)throws IOException {
-        executorService.submit(() -> {
-            try {
-                GoogleBooksAPI api = new GoogleBooksAPI();
-                JsonArray bookDetails = api.getInformation(searchText, 4);
-
-                if (bookDetails != null && !bookDetails.isEmpty()) {
-                    Platform.runLater(() -> {
-                        try {
-                            Stage stage = (Stage) search.getScene().getWindow();
-                            FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/org/example/ilib/SearchingBook.fxml"));
-                            Parent root = fxmlLoader1.load();
-                            ControllerSearchingBook controllerSearchingBook = fxmlLoader1.getController();
-                            controllerSearchingBook.setLabel(searchText);
-
-                            for (JsonElement book : bookDetails) {
-                                JsonObject item = book.getAsJsonObject();
-                                String id = item.get("id").getAsString();
-
-                                Book bk = api.getBooksByID(id);
-                                controllerSearchingBook.addBook(bk);
-                            }
-                            controllerSearchingBook.show();
-                            Scene scene1 = new Scene(root);
-                            stage.setScene(scene1);
-
-                        } catch (IOException e) {
-                            showErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
-                        }
-                    });
-                } else {
-                    Platform.runLater(() -> showErrAndEx.showAlert("Không tìm thấy sách phù hợp"));
-                }
-            } catch (Exception e) {
-                Platform.runLater(() -> showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API."));
-            }
-        });
     }
 
     public void handleSearch(KeyEvent keyEvent) {
@@ -234,27 +192,9 @@ public class ControllerMenu implements Initializable {
         }
     }
 
-    private void loadProperties() {
-        String query = "SELECT avatarPath FROM user WHERE email = ? and password = ?";
-
-        try {
-            PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
-            stmt.setString(1, Account.getInstance().getEmail());
-            stmt.setString(2, Account.getInstance().getPassword());
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
-            loadProperties();
-            avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
             Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
             recentlyBooks = bl.bookList;
                 try {

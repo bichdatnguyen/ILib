@@ -3,13 +3,16 @@ package org.example.ilib.Processor;
 import javafx.scene.input.MouseEvent;
 
 public class Account {
+    // Trong account co 2 role: "user" va "admin"
     private String email;
     private String password;
     private String fullName;
     private String phone;
     private String avatarPath;
     private static Account instance;
-    private Account() {}
+
+    protected Account() {}
+
     public static Account getInstance() {
         if (instance == null) {
             instance = new Account();

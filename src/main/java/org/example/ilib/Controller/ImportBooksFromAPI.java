@@ -67,6 +67,17 @@ public class ImportBooksFromAPI {
         }
     }
 
+    public static List<String> getCategory(JsonObject volumeInfo) {
+        List<String> categories = new ArrayList<>();
+        if (volumeInfo.has("categories")) {
+            JsonArray authorsArray = volumeInfo.getAsJsonArray("categories");
+            for (int j = 0; j < authorsArray.size(); j++) {
+                categories.add(authorsArray.get(j).getAsString());
+            }
+        }
+        return categories;
+    }
+
     public static void main(String[] args) throws SQLException, IOException {
         GoogleBooksAPI gg = new GoogleBooksAPI();
         DBConnection db = DBConnection.getInstance();
@@ -75,8 +86,8 @@ public class ImportBooksFromAPI {
         String insertBookQuery = "INSERT INTO books "
                 + "(bookID, title, bookPrice, quantityInStock, addDate, averageRating) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
-        String insertAuthorQuery = "INSERT INTO authors (bookID, authorName) VALUES (?, ?)";
-        String insertCategoryQuery = "INSERT INTO categories (categoryName, bookID) VALUES (?, ?)";
+        String insertAuthorQuery = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
+        String insertCategoryQuery = "INSERT INTO categories (Category, bookID) VALUES (?, ?)";
 
         try (Connection connection = db.getConnection();
              PreparedStatement bookStmt = connection.prepareStatement(insertBookQuery);
@@ -85,7 +96,7 @@ public class ImportBooksFromAPI {
 
             // Bắt đầu xử lý API
             for (String subject : subjects) {
-                JsonArray items = gg.getBooksBySubject(subject, 40);
+                JsonArray items = gg.getBooksBySubject(subject, 20);
 
                 for (JsonElement item : items) {
                     JsonObject saleInfo = item.getAsJsonObject().get("saleInfo").getAsJsonObject();
@@ -101,6 +112,7 @@ public class ImportBooksFromAPI {
                     int bookPrice = getBookPrice(saleInfo);
                     Timestamp addDate = getDate();
                     double averageRating = getAverageRating(volumeInfo);
+                    List<String> categories = getCategory(volumeInfo);
 
                     // Thêm sách vào batch
                     bookStmt.setString(1, bookID);
@@ -119,16 +131,28 @@ public class ImportBooksFromAPI {
                     }
 
                     // Thêm danh mục vào batch
-                    categoryStmt.setString(1, subject);
-                    categoryStmt.setString(2, bookID);
-                    categoryStmt.addBatch();
+                    for (String category : categories) {
+                        categoryStmt.setString(1, subject);
+                        categoryStmt.setString(2, bookID);
+                        categoryStmt.addBatch();
+                    }
                 }
             }
 
-            // Thực thi batch
-            bookStmt.executeBatch();
-            authorStmt.executeBatch();
-            categoryStmt.executeBatch();
+            try {
+                // Thực hiện thêm sách
+                bookStmt.executeBatch();
+
+                // Thực hiện thêm tác giả
+                authorStmt.executeBatch();
+
+                // Thực hiện thêm danh mục
+                categoryStmt.executeBatch();
+
+                System.out.println("Thêm sách, tác giả và danh mục thành công!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             System.out.println("Thêm sách từ API thành công!");
         } catch (SQLException e) {
             e.printStackTrace();
