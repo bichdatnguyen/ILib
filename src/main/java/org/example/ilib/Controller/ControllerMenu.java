@@ -158,7 +158,7 @@ public class ControllerMenu implements Initializable {
                                         controllerSearchingBook.addBook(bk);
                                     }
                                     controllerSearchingBook.showSearchResult(1);
-                                    controllerSearchingBook.showNumberOfPages(bookDetails.size() / 4);
+                                    controllerSearchingBook.showNumberOfPages((bookDetails.size() - 1) / 4 + 1);
                                     Scene scene1 = new Scene(root);
                                     stage.setScene(scene1);
 
@@ -188,7 +188,6 @@ public class ControllerMenu implements Initializable {
     }
 
     public void categoriesMenu(MouseEvent e) throws IOException {
-
         Stage stage = (Stage) Categories.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/Categories.fxml"));
@@ -236,8 +235,7 @@ public class ControllerMenu implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-        }
-        catch(Exception e){
+        } catch(Exception e){
             e.printStackTrace();
         }
     }

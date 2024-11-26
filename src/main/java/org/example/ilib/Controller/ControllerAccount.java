@@ -57,7 +57,7 @@ public class ControllerAccount {
         String fullname = Account.getInstance().getFullName();
         String emailTemp = Account.getInstance().getEmail();
         if (avatarPath == null) {
-            Image avatarImage = new Image("D:/GitHub/Ilib/ilib/src/main/resources/org/assets/user-3296.png");
+            Image avatarImage = new Image("E:/java/iLib/ILib/src/main/resources/org/assets/user-3296.png");
             avatar.setImage(avatarImage);
         } else {
             Image avatarImage = new Image(avatarPath);

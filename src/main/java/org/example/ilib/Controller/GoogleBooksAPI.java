@@ -72,9 +72,7 @@ public class GoogleBooksAPI {
             in.close();
             conn.disconnect();
 
-            JsonObject jsonResponse = JsonParser.parseString(content.toString()).getAsJsonObject();
-
-            return jsonResponse;
+            return JsonParser.parseString(content.toString()).getAsJsonObject();
         } else {
             System.out.println("No books found.");
             return null;

@@ -100,7 +100,7 @@ public class ImportBooksFromAPI {
 
             // Bắt đầu xử lý API
             for (String subject : subjects) {
-                JsonArray items = gg.getBooksBySubject(subject, 20);
+                JsonArray items = gg.getBooksBySubject(subject, 10);
 
                 for (JsonElement item : items) {
                     JsonObject saleInfo = item.getAsJsonObject().get("saleInfo").getAsJsonObject();

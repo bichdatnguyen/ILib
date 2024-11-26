@@ -17,7 +17,8 @@ import static java.lang.System.getenv;
 public class DBConnection {
     private static DBConnection instance;
     private HikariDataSource dataSource;
-    private final String url = "jdbc:mysql://localhost:3306/ilib?autoReconnect=true&useSSL=false";
+    private final String url
+            = "jdbc:mysql://localhost:3306/ilib?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true";
     private final String userName = System.getenv("userName");
     private final String userPassword = System.getenv("userPassword");
 
@@ -33,6 +34,12 @@ public class DBConnection {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+        config.setMaximumPoolSize(20); // Tăng giới hạn kết nối tối đa
+        config.setMinimumIdle(5); // Duy trì tối thiểu 5 kết nối
+        config.setIdleTimeout(60000); // Đóng kết nối nhàn rỗi sau 60 giây
+        config.setMaxLifetime(1800000); // Giới hạn tuổi thọ kết nối (30 phút)
+        config.setConnectionTimeout(30000); // Timeout khi đợi kết nối (30 giây)
+
 
         dataSource = new HikariDataSource(config);
     }
@@ -118,13 +125,15 @@ public class DBConnection {
 
     public boolean bookExist(String bookID) throws SQLException {
         String sql = "SELECT EXISTS (SELECT 1 FROM books WHERE bookID = ?)";
-        try (PreparedStatement stmt = createStatement(sql)) {
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, bookID);
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next() && rs.getInt(1) > 0;
             }
         }
     }
+
 
     public boolean authorPrimaryKeyExist(String bookID, String author) throws SQLException {
         String sql = "SELECT COUNT(*) FROM author WHERE bookID = ? AND authorName = ?";
@@ -211,7 +220,22 @@ public class DBConnection {
         List<String> ids = new ArrayList<>();
 
         while (rs.next()) {
-            String bookID = rs.getString(1);
+            ids.add(rs.getString(1));
+        }
+        return ids;
+    }
+
+    public List<String> getTopCategories(String category) throws SQLException {
+        String sql = "SELECT bookID FROM categories NATURAL JOIN books " +
+                "WHERE category = ? ORDER BY averageRating DESC";
+        PreparedStatement stmt = createStatement(sql);
+
+        stmt.setString(1, category);
+
+        ResultSet rs = stmt.executeQuery();
+        List<String> ids = new ArrayList<>();
+
+        while (rs.next()) {
             ids.add(rs.getString(1));
         }
         return ids;
@@ -230,5 +254,19 @@ public class DBConnection {
             ids.add(bookID);
         }
         return ids;
+    }
+
+    public List<String> getAllSubjectFromDB() throws SQLException {
+        String sql = "SELECT DISTINCT Category FROM categories ORDER BY Category ASC";
+        PreparedStatement stmt = createStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+
+        List<String> subjects = new ArrayList<>();
+
+        while (rs.next()) {
+            String category = rs.getString(1);
+            subjects.add(category);
+        }
+        return subjects;
     }
 }
