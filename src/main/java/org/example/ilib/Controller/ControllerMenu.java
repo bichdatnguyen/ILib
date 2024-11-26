@@ -132,14 +132,14 @@ public class ControllerMenu implements Initializable {
             if (!searchText.isEmpty()) {
                 if (executorService.isShutdown()) {
                     // Nếu đã tắt, khởi tạo lại ExecutorService
-                    executorService = Executors.newFixedThreadPool(4);
+                    executorService = Executors.newFixedThreadPool(8);
                     System.out.println("ExecutorService restart");
                 }
 
                 executorService.submit(() -> {
                     try {
                         GoogleBooksAPI api = new GoogleBooksAPI();
-                        JsonArray bookDetails = api.getInformation(searchText, 4);
+                        JsonArray bookDetails = api.getInformation(searchText, 40);
 
                         if (bookDetails != null && !bookDetails.isEmpty()) {
                             Platform.runLater(() -> {
@@ -157,7 +157,8 @@ public class ControllerMenu implements Initializable {
                                         Book bk = api.getBooksByID(id);
                                         controllerSearchingBook.addBook(bk);
                                     }
-                                    controllerSearchingBook.show();
+                                    controllerSearchingBook.showSearchResult(1);
+                                    controllerSearchingBook.showNumberOfPages(bookDetails.size() / 4);
                                     Scene scene1 = new Scene(root);
                                     stage.setScene(scene1);
 
