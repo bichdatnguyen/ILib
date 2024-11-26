@@ -81,10 +81,28 @@ public class ControllerUpdateAccount {
         updateAccount.getInstance().setNewPassword(newPassWordBox.getText());
         updateAccount.getInstance().setNewPhoneNumber(phoneNumberBox.getText());
         if (checkingOldPassword()) {
-            if (checkingNewPassword()) {
+            if (newPassWordBox.getText().equals("")) {
                 updatePropertiesInDatabase();
                 commentText.setText("Cập nhật thông tin thành công!");
                 commentText.setStyle("-fx-fill: green;");
+                return;
+            }
+            if (checkingNewPassword()) {
+                String e = updateAccount.getInstance().getNewEmail();
+                String p = updateAccount.getInstance().getNewPassword();
+                try {
+                    if (!DBConnection.getInstance().checkDataExit(e,p)) {
+                        updatePropertiesInDatabase();
+                        Account.getInstance().setEmail(e);
+                        Account.getInstance().setPassword(p);
+                        commentText.setText("Cập nhật thông tin thành công!");
+                        commentText.setStyle("-fx-fill: green;");
+                    } else {
+                        System.out.println("Tai khoan da ton tai");
+                    }
+                } catch (SQLException t) {
+                    System.out.println(t.getMessage());
+                }
             } else {
                 commentText.setText("Mật khẩu mới không khớp.");
                 commentText.setStyle("-fx-fill: red;");

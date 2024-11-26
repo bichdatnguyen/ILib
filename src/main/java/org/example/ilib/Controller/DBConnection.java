@@ -94,7 +94,6 @@ public class DBConnection {
         return false;
     }
 
-
     public boolean checkDataExit(String email_, String password_) {
         String query = "SELECT COUNT(*) FROM User WHERE email = ? AND password = ?";
 

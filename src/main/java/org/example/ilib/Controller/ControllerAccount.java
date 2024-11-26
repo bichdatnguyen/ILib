@@ -43,11 +43,11 @@ public class ControllerAccount {
     @FXML
     private ImageView avatar;
 
+    private static ControllerAccount controller;
+
     @FXML
     public void initialize() {
-        if (Account.getInstance().getPhone() == null) {
-            setPropertiesFromDatabase();
-        }
+        setPropertiesFromDatabase();
         loadProperties();
     }
 
