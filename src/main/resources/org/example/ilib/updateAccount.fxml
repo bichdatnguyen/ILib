@@ -21,12 +21,12 @@
       <Label layoutX="41.0" layoutY="222.0" prefHeight="17.0" prefWidth="116.0" text="Mật khẩu cũ: " />
       <Label layoutX="41.0" layoutY="272.0" prefHeight="17.0" prefWidth="89.0" text="Mật khẩu mới:" />
       <Label layoutX="41.0" layoutY="322.0" prefHeight="17.0" prefWidth="168.0" text="Nhập lại mật khẩu mới:" />
-      <TextField fx:id="emailBox" layoutX="180.0" layoutY="68.0" prefHeight="25.0" prefWidth="343.0" text="emailBox" />
-      <TextField fx:id="phoneNumberBox" layoutX="180.0" layoutY="115.0" prefHeight="25.0" prefWidth="343.0" text="Số điện thoại" />
-      <TextField fx:id="userNameBox" layoutX="180.0" layoutY="168.0" prefHeight="25.0" prefWidth="343.0" text="Tên người dùng" />
-      <TextField fx:id="oldPassWordBox" layoutX="180.0" layoutY="218.0" prefHeight="25.0" prefWidth="343.0" promptText="nhập mật khẩu cũ" />
-      <TextField fx:id="newPassWordBox" layoutX="180.0" layoutY="268.0" prefHeight="25.0" prefWidth="343.0" promptText="Nhập mật khẩu mới" />
-      <TextField fx:id="acceptedPassword" layoutX="180.0" layoutY="318.0" prefHeight="25.0" prefWidth="343.0" promptText="Xác nhận mật khẩu mới" />
+      <TextField fx:id="emailBox" onMouseEntered="#emailAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="68.0" prefHeight="25.0" prefWidth="343.0" text="emailBox" />
+      <TextField fx:id="phoneNumberBox" onMouseEntered="#phoneAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="115.0" prefHeight="25.0" prefWidth="343.0" text="Số điện thoại" />
+      <TextField fx:id="userNameBox" onMouseEntered="#userNameAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="168.0" prefHeight="25.0" prefWidth="343.0" text="Tên người dùng" />
+      <TextField fx:id="oldPassWordBox" onMouseEntered="#oldPasswordAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="218.0" prefHeight="25.0" prefWidth="343.0" promptText="nhập mật khẩu cũ" />
+      <TextField fx:id="newPassWordBox" onMouseEntered="#changingPasswordAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="268.0" prefHeight="25.0" prefWidth="343.0" promptText="Nhập mật khẩu mới" />
+      <TextField fx:id="acceptedPassword" onMouseEntered="#acceptedPasswordAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="318.0" prefHeight="25.0" prefWidth="343.0" promptText="Xác nhận mật khẩu mới" />
       <Button fx:id="commitButton" layoutX="434.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#commited" prefHeight="25.0" prefWidth="89.0" text="xác nhận" />
       <Text fx:id="commentText" layoutX="41.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="375.47003173828125" />
    </children>

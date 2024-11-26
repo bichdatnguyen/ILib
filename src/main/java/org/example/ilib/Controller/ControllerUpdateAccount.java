@@ -50,10 +50,15 @@ public class ControllerUpdateAccount {
         return newPassWordBox.getText().equals(updateAccount.getInstance().getAcceptedPassword());
     }
 
-    private void updatePropertiesInDatabase() {
-        String nEmail = updateAccount.getInstance().getNewEmail();
+    private void updatePropertiesInDatabase(String newE, String newP) {
+        //String nEmail = updateAccount.getInstance().getNewEmail();
+        String nEmail = newE;
+
         String nPhoneNumber = updateAccount.getInstance().getNewPhoneNumber();
-        String nPassword = updateAccount.getInstance().getNewPassword();
+
+        //String nPassword = updateAccount.getInstance().getNewPassword();
+        String nPassword = newP;
+
         String nFullname = updateAccount.getInstance().getNewName();
         String updateQuery = "UPDATE user SET Email = ?, "
                 + "phoneNumber=?, fullName=?, password=? "
@@ -81,24 +86,40 @@ public class ControllerUpdateAccount {
         updateAccount.getInstance().setNewPassword(newPassWordBox.getText());
         updateAccount.getInstance().setNewPhoneNumber(phoneNumberBox.getText());
         if (checkingOldPassword()) {
+            // case user did not change his/her password
             if (newPassWordBox.getText().equals("")) {
-                updatePropertiesInDatabase();
+                String e = updateAccount.getInstance().getNewEmail();
+                String p = Account.getInstance().getPassword();
+                if (!e.equals(Account.getInstance().getEmail())) {
+                    try {
+                        if (DBConnection.getInstance().checkDataExit(e,p)) {
+                            commentText.setText("Email và password đã có trong cơ sở dữ liệu!");
+                            commentText.setStyle("-fx-fill: red;");
+                            return;
+                        }
+                    } catch (SQLException eN) {
+                        eN.printStackTrace();
+                    }
+                }
+                updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(),Account.getInstance().getPassword());
                 commentText.setText("Cập nhật thông tin thành công!");
                 commentText.setStyle("-fx-fill: green;");
                 return;
             }
+            // case user changed his/her password
             if (checkingNewPassword()) {
                 String e = updateAccount.getInstance().getNewEmail();
                 String p = updateAccount.getInstance().getNewPassword();
                 try {
                     if (!DBConnection.getInstance().checkDataExit(e,p)) {
-                        updatePropertiesInDatabase();
+                        updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(),updateAccount.getInstance().getNewPassword());
                         Account.getInstance().setEmail(e);
                         Account.getInstance().setPassword(p);
                         commentText.setText("Cập nhật thông tin thành công!");
                         commentText.setStyle("-fx-fill: green;");
                     } else {
-                        System.out.println("Tai khoan da ton tai");
+                        commentText.setText("Email và password đã có trong cơ sở dữ liệu!");
+                        commentText.setStyle("-fx-fill: red;");
                     }
                 } catch (SQLException t) {
                     System.out.println(t.getMessage());
@@ -111,5 +132,39 @@ public class ControllerUpdateAccount {
             commentText.setText("Mật khẩu cũ không khớp?");
             commentText.setStyle("-fx-fill: red;");
         }
+    }
+
+    public void changingPasswordAlert(MouseEvent mouseEvent) {
+        commentText.setText("Bạn muốn đổi mật khẩu?");
+        commentText.setStyle("-fx-fill: blue;");
+    }
+
+    public void setCommentHidden(MouseEvent mouseEvent) {
+        commentText.setText("");
+    }
+
+    public void acceptedPasswordAlert(MouseEvent mouseEvent) {
+        commentText.setText("Nhập lại mật khẩu nếu như bạn đã điền vào ô trên.");
+        commentText.setStyle("-fx-fill: blue;");
+    }
+
+    public void oldPasswordAlert(MouseEvent mouseEvent) {
+        commentText.setText("Nhập mật khẩu hiện tại để xác nhận các thay đổi (bắt buộc).");
+        commentText.setStyle("-fx-fill: blue;");
+    }
+
+    public void userNameAlert(MouseEvent mouseEvent) {
+        commentText.setText("Nhập liệu để thay đổi họ và tên.");
+        commentText.setStyle("-fx-fill: blue;");
+    }
+
+    public void phoneAlert(MouseEvent mouseEvent) {
+        commentText.setText("Nhập liệu để thay đổi số điện thoại.");
+        commentText.setStyle("-fx-fill: blue;");
+    }
+
+    public void emailAlert(MouseEvent mouseEvent) {
+        commentText.setText("Nhâp liệu để thay đổi email.");
+        commentText.setStyle("-fx-fill: blue;");
     }
 }
