@@ -30,7 +30,7 @@ public class ControllerTopBooks extends Booklist implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            for (int i = 0; i < 5 ; i++ ) {
+            for (int i = 0; i < Math.min(bookList.size(), 5) ; i++ ) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
@@ -39,7 +39,10 @@ public class ControllerTopBooks extends Booklist implements Initializable {
                 top_book_hbox.getChildren().add(cardbox);
             }
 
-            for (int i = 5; i < 9 ; i++ ) {
+            if (bookList.size() < 6) {
+                return;
+            }
+            for (int i = 5; i < Math.min(bookList.size(), 9) ; i++ ) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
@@ -47,13 +50,9 @@ public class ControllerTopBooks extends Booklist implements Initializable {
                 controllerBook.setBook(bookList.get(i));
                 hbox_top_book2.getChildren().add(cardbox);
             }
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
 

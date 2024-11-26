@@ -72,10 +72,6 @@ public class ControllerSearchingBook  {
         try {
             int column = 0;
             int row = 0;
-            // page 1: index tu 0 den 3
-            // page 2: index tu 4 den 7
-            // page 3: index tu 8 den 11
-            // page i: index tu 4 * i - 4 den 4 * i - 1
 
            for (int i = 4 * page - 4; i < 4 * page; i++) {
                Book book = booksearching.get(i);

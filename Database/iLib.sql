@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `ilib`.`shelf` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-select * from books;
+SHOW VARIABLES LIKE 'max_connections';
+SET GLOBAL max_connections = 500;
 
-INSERT INTO user VALUES('bichdat05@gmail.com', '0903432271', 'Nguyen Van A', '88888888', null);
-INSERT INTO user VALUES('hungnta0k55@gmail.com', '0903432271', 'Nguyen The Hung', 'hhhhhhhh', null);
+select * from books;
