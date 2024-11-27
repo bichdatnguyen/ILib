@@ -72,7 +72,10 @@ public class ControllerBookDetail extends ControllerBook {
         thumbnail.setImage(new Image(book.getImage()));
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthor());
-        descriptionText.setText(book.getDescription().substring(0, 250));
+        String description = book.getDescription();
+        if (description.length() <250) {
+            descriptionText.setText(description);
+        } else{descriptionText.setText(book.getDescription().substring(0, 250));}
         idText.setText(book.getID());
         quantityText.setText(String.valueOf(book.getQuantity()));
     }
@@ -89,41 +92,47 @@ public class ControllerBookDetail extends ControllerBook {
         System.out.println(email);
         String queryCheck = "SELECT quantity, type FROM cart WHERE email = ? AND bookId = ?";
         String queryInsert = "INSERT INTO cart (bookID, email, date, quantity,type) VALUES (?, ?, CURRENT_DATE, ?,?)";
-        DBConnection dbConnection = DBConnection.getInstance();
-        try (Connection connection = dbConnection.getConnection()) {
+
+        try (Connection connection =DBConnection.getInstance().getConnection()) {
             // Kiểm tra nếu sách đã có trong giỏ hàng
-            try (PreparedStatement stmtCheck = connection.prepareStatement(queryCheck)) {
+            try (PreparedStatement stmtCheck = connection.prepareStatement(queryCheck);
+               ) {
                 stmtCheck.setString(1, bookId);
                 stmtCheck.setString(2, email);
-                ResultSet rs = stmtCheck.executeQuery();
-                String statusBook = (status == Borrow) ? "BORROW" :"BUY";
-                if (rs.next()) {
-                    String currentStatus = rs.getString("type");
-                    // Kiểm tra nếu trạng thái khác, có thể xử lý logic tùy ý
 
-                    // Nếu sách đã có, cập nhật số lượng và trạng thái
-                    if(currentStatus.equals(statusBook)) {
-                        showErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
+                String statusBook = (status == Borrow) ? "BORROW" :"BUY";
+                try(  ResultSet rs = stmtCheck.executeQuery()){
+                    if (rs.next()) {
+                        String currentStatus = rs.getString("type");
+                        // Kiểm tra nếu trạng thái khác, có thể xử lý logic tùy ý
+
+                        // Nếu sách đã có, cập nhật số lượng và trạng thái
+                        if(currentStatus.equals(statusBook)) {
+                            showErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
+                        } else {
+                            try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
+                                stmtInsert.setString(1, bookId);
+                                stmtInsert.setString(2, email);
+
+                                stmtInsert.setInt(3, quantity);
+                                stmtInsert.setString(4, statusBook);
+                                stmtInsert.executeUpdate();
+                            }
+                        }
                     } else {
+                        // Nếu sách chưa có, thêm mới
                         try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
                             stmtInsert.setString(1, bookId);
                             stmtInsert.setString(2, email);
-
                             stmtInsert.setInt(3, quantity);
                             stmtInsert.setString(4, statusBook);
                             stmtInsert.executeUpdate();
                         }
                     }
-                } else {
-                    // Nếu sách chưa có, thêm mới
-                    try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
-                        stmtInsert.setString(1, bookId);
-                        stmtInsert.setString(2, email);
-                        stmtInsert.setInt(3, quantity);
-                        stmtInsert.setString(4, statusBook);
-                        stmtInsert.executeUpdate();
-                    }
                 }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         } catch (SQLException e) {
             e.printStackTrace();

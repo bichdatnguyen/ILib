@@ -239,27 +239,29 @@ public class ControllerCartItemList implements Initializable {
         List<CartItem> cartItems = new ArrayList<>();
 
         try (Connection conn = DBConnection.getInstance().getConnection() ; // Kết nối tới cơ sở dữ liệu
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query);
+           ) {
 
             // Set giá trị tham số cho câu lệnh (email)
             stmt.setString(1, email);
-
-            // Thực thi câu lệnh và lấy kết quả
-            ResultSet resultSet = stmt.executeQuery();
-
             // Xử lý kết quả trả về
-            while (resultSet.next()) {
-                // Lấy dữ liệu từ bảng Payment
-                String id = resultSet.getString("bookID");
-                int volume = resultSet.getInt("quantity");
-                String type = resultSet.getString("type");
+            try(  ResultSet resultSet = stmt.executeQuery()){
+                while (resultSet.next()) {
+                    // Lấy dữ liệu từ bảng Payment
+                    String id = resultSet.getString("bookID");
+                    int volume = resultSet.getInt("quantity");
+                    String type = resultSet.getString("type");
 
-                // Lấy dữ liệu từ bảng Book
-                String bookName = resultSet.getString("title");
-                int bookPrice = resultSet.getInt("bookPrice");
-                CartItem cartItem = new CartItem(id,bookName,volume,bookPrice,type,"null");
-                cartItems.add(cartItem);
+                    // Lấy dữ liệu từ bảng Book
+                    String bookName = resultSet.getString("title");
+                    int bookPrice = resultSet.getInt("bookPrice");
+                    CartItem cartItem = new CartItem(id,bookName,volume,bookPrice,type,"null");
+                    cartItems.add(cartItem);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -102,24 +102,26 @@ public class ControllerTransactionHistory implements Initializable {
             stmt.setString(1, email);
 
             // Thực thi câu lệnh và lấy kết quả
-            ResultSet resultSet = stmt.executeQuery();
+          try(  ResultSet resultSet = stmt.executeQuery()){
+              // Xử lý kết quả trả về
+              while (resultSet.next()) {
+                  // Lấy dữ liệu từ bảng Payment
+                  String paymentID = resultSet.getString("paymentID");
+                  String bookID = resultSet.getString("bookID");
+                  String bookName = resultSet.getString("title");
+                  Timestamp dateTime = resultSet.getTimestamp("date");
+                  DateTime date = new DateTime(dateTime);
+                  Integer quantity = resultSet.getInt("quantity");
+                  // Lấy dữ liệu từ bảng Book
+                  String type = resultSet.getString("type");
+                  Integer priceEach = resultSet.getInt("priceEach");
 
-            // Xử lý kết quả trả về
-            while (resultSet.next()) {
-                // Lấy dữ liệu từ bảng Payment
-                String paymentID = resultSet.getString("paymentID");
-                String bookID = resultSet.getString("bookID");
-                String bookName = resultSet.getString("title");
-                Timestamp dateTime = resultSet.getTimestamp("date");
-                DateTime date = new DateTime(dateTime);
-                Integer quantity = resultSet.getInt("quantity");
-                // Lấy dữ liệu từ bảng Book
-                String type = resultSet.getString("type");
-                Integer priceEach = resultSet.getInt("priceEach");
-
-                Transaction transaction = new Transaction(paymentID,bookID,email,date,quantity,type,bookName,priceEach);
-                TransactionList.add(transaction);
-            }
+                  Transaction transaction = new Transaction(paymentID,bookID,email,date,quantity,type,bookName,priceEach);
+                  TransactionList.add(transaction);
+              }
+          } catch (SQLException e){
+              e.printStackTrace();
+          }
 
         } catch (SQLException e) {
             e.printStackTrace();

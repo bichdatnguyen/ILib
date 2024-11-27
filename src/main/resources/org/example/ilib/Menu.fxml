@@ -37,7 +37,7 @@
                   <Image url="@../../assets/user-3296.png" />
                </image>
             </ImageView>
-            <MenuButton alignment="CENTER" layoutX="764.0" layoutY="30.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="134.0" text="User">
+            <MenuButton fx:id="UserButton" alignment="CENTER" layoutX="764.0" layoutY="30.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="134.0" text="User">
               <items>
                 <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountSwitchScene" text="Account" />
                 <MenuItem fx:id="Cart" mnemonicParsing="false" onAction="#MoveToCart" text="Cart" />

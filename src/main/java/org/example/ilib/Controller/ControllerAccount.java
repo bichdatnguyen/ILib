@@ -129,29 +129,32 @@ public class ControllerAccount {
 
     private void updateAvatarInDatabase(String avatarPath) {
         String updateQuery = "UPDATE user SET avatarPath = ? where Email = ? and password = ?";
-        try {
-            //DBConnection conn = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)
-            PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery);
+        try( PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)) {
             stmt.setString(1, avatarPath);
             stmt.setString(2, Account.getInstance().getEmail());
             stmt.setString(3, Account.getInstance().getPassword());
             stmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     private void setPropertiesFromDatabase() {
         String query = "SELECT avatarPath,phoneNumber,fullName FROM user WHERE email = ? and password = ?";
-        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query)) {
+        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
+             ) {
             stmt.setString(1, Account.getInstance().getEmail());
             stmt.setString(2, Account.getInstance().getPassword());
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
-                Account.getInstance().setPhone(resultSet.getString("phoneNumber"));
-                Account.getInstance().setFullName(resultSet.getString("fullName"));
+            try(ResultSet resultSet = stmt.executeQuery()){
+                if (resultSet.next()) {
+                    Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
+                    Account.getInstance().setPhone(resultSet.getString("phoneNumber"));
+                    Account.getInstance().setFullName(resultSet.getString("fullName"));
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

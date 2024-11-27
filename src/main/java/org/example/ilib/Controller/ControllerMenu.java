@@ -107,11 +107,12 @@ public class ControllerMenu implements Initializable {
 
     private void loadProperties() {
         String query = "SELECT avatarPath FROM user WHERE email = ? and password = ?";
-        try {
-            PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
+        try( PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
+             ResultSet resultSet = stmt.executeQuery()) {
+
             stmt.setString(1, Account.getInstance().getEmail());
             stmt.setString(2, Account.getInstance().getPassword());
-            ResultSet resultSet = stmt.executeQuery();
+
             if (resultSet.next()) {
                 Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
             }
@@ -238,7 +239,7 @@ public class ControllerMenu implements Initializable {
                     HBox cardbox = (HBox) fx.load();
                     ControllerBook controllerBook = (ControllerBook) fx.getController();
                     controllerBook.setBook(recentlyBooks.get(i));
-                    controllerBook.showBook(recentlyBooks.get(i));
+                     controllerBook.showBook(recentlyBooks.get(i));
                     recentlyAddHbox.getChildren().add(cardbox);
                 }
             } catch (IOException e) {

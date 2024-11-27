@@ -44,6 +44,10 @@ public class Booklist {
 
     private List<Book> addTopBookList() throws SQLException, IOException {
         DBConnection db = DBConnection.getInstance();
+        List<Book> recentlyBooks = db.getRecentlyBooks(9);
+        if (recentlyBooks == null || recentlyBooks.isEmpty()) {
+            System.out.println("Không có sách gần đây nào.");
+        }
         return db.getRecentlyBooks(5);
     }
 
