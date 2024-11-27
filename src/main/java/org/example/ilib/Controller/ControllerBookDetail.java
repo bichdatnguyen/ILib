@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.Book;
 
 import java.io.IOException;
@@ -62,7 +63,7 @@ public class ControllerBookDetail {
     private static final int Buy = 2;
     private static final int Borrow = 1;
     private static  int status = 0;
-    private String email = "23021524@vnu.edu.vn";
+    private String email = Account.getInstance().getEmail();
 
     private Scene Forwardsceen;
 
@@ -92,6 +93,8 @@ public class ControllerBookDetail {
     }
 
     public void addBookToCart(String email, String bookId, int quantity, int status) throws SQLException {
+
+        System.out.println(email);
         String queryCheck = "SELECT quantity, type FROM cart WHERE email = ? AND bookId = ?";
         String queryInsert = "INSERT INTO cart (bookID, email, date, quantity,type) VALUES (?, ?, CURRENT_DATE, ?,?)";
         DBConnection dbConnection = DBConnection.getInstance();

@@ -23,19 +23,19 @@ import java.sql.SQLException;
 
 public class ControllerAccount {
     @FXML
-    public Label phone;
+    private Label phone;
 
     @FXML
-    public Label password;
+    private  Label password;
 
     @FXML
-    public Label email;
+    private  Label email;
 
     @FXML
-    public Label fullName;
+    private Label fullName;
 
     @FXML
-    public Text updateAccount;
+    private Text updateAccount;
 
     @FXML
     private Button backButton;
@@ -43,7 +43,10 @@ public class ControllerAccount {
     @FXML
     private ImageView avatar;
 
-    private static ControllerAccount controller;
+    private static ControllerAccount instance;
+
+
+
 
     @FXML
     public void initialize() {

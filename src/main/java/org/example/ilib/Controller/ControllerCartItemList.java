@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.CartItem;
 import org.example.ilib.Processor.QRCodeAuto;
 import org.sqlite.core.DB;
@@ -66,7 +67,7 @@ public class ControllerCartItemList implements Initializable {
     private static final int ADDVOLUME = 1;
     private static final int SUBSTRACTVOLUME = 2;
     private static int totalMonet =0;
-    private static String email ="23021524@vnu.edu.vn";
+    private String email = Account.getInstance().getEmail();
 
     public void setCartList(List<CartItem> CartList) {
         // Chuyển List thành ObservableList
@@ -250,7 +251,6 @@ public class ControllerCartItemList implements Initializable {
             while (resultSet.next()) {
                 // Lấy dữ liệu từ bảng Payment
                 String id = resultSet.getString("bookID");
-                String paymentEmail = resultSet.getString("email");
                 int volume = resultSet.getInt("quantity");
                 String type = resultSet.getString("type");
 

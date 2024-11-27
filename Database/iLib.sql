@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `ilib`.`cart` (
      `bookID` VARCHAR(20) NOT NULL,
      `date` DATE NULL DEFAULT NULL,
      `quantity` INT NOT NULL,
-     `type` VARCHAR(10) NULL DEFAULT NULL,
-     PRIMARY KEY (`email`, `bookID`),
+     `type` VARCHAR(10) NOT NULL,
+     PRIMARY KEY (`email`, `bookID`,type),
      INDEX `fk_cart_User` (`email` ASC) VISIBLE,
      CONSTRAINT `fk_cart_Books`
          FOREIGN KEY (`bookID`)
@@ -235,7 +235,11 @@ CREATE TABLE IF NOT EXISTS `ilib`.`shelf` (
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-SHOW VARIABLES LIKE 'max_connections';
+# SHOW VARIABLES LIKE 'max_connections';
 SET GLOBAL max_connections = 500;
 
+select * from user;
 select * from books;
+select * from cart;
+insert into user values ('ton@gmail.com','1234567890','Vu Dat','1234556',null,'user');
+select * from payment;

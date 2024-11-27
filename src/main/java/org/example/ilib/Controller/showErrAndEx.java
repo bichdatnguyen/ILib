@@ -1,6 +1,7 @@
 package org.example.ilib.Controller;
 
 import javafx.scene.control.Alert;
+import javafx.scene.image.Image;
 
 public class showErrAndEx {
     public static Alert showAlert(String message) {
@@ -9,4 +10,5 @@ public class showErrAndEx {
         alert.showAndWait();
         return alert;
     }
+
 }

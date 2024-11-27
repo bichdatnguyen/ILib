@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="552.0" prefWidth="1046.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerTransactionHistory">
+   <children>
+      <TableView fx:id="TransactionTable" layoutX="-4.0" layoutY="75.0" prefHeight="476.0" prefWidth="1046.0">
+        <columns>
+          <TableColumn fx:id="paymentIDcol" prefWidth="185.0" text="PaymentID" />
+          <TableColumn fx:id="bookCol" minWidth="0.0" prefWidth="208.0" text="BookName" />
+            <TableColumn fx:id="dateCol" prefWidth="159.0" text="Date" />
+            <TableColumn fx:id="typeCol" prefWidth="166.0" text="Type" />
+            <TableColumn fx:id="quantityCol" prefWidth="159.0" text="Quantity" />
+            <TableColumn fx:id="priceEachCol" prefWidth="167.0" text="PriceEach" />
+        </columns>
+      </TableView>
+      <Button fx:id="Back" layoutX="942.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
+      <Label alignment="CENTER" layoutX="1.0" layoutY="7.0" prefHeight="65.0" prefWidth="305.0" text="Tra cứu lịch sử giao dịch" textFill="#24da49">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

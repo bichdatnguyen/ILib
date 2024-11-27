@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -14,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="780.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
    <top>
       <AnchorPane prefHeight="151.0" prefWidth="1028.0" BorderPane.alignment="CENTER">
          <children>
@@ -27,16 +32,17 @@
                <image>
                   <Image url="@../../assets/search-2907.png" />
                </image></ImageView>
-            <ImageView fx:id= "avatarUser" fitHeight="63.0" fitWidth="61.0" layoutX="694.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="avatarUser" fitHeight="63.0" fitWidth="61.0" layoutX="694.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../assets/user-3296.png" />
                </image>
             </ImageView>
             <MenuButton alignment="CENTER" layoutX="764.0" layoutY="28.0" mnemonicParsing="false" prefHeight="65.0" prefWidth="134.0" text="User">
               <items>
-                <MenuItem mnemonicParsing="false" fx:id="account" text="Account" onAction="#accountSwitchScene" />
+                <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountSwitchScene" text="Account" />
                 <MenuItem fx:id="Cart" mnemonicParsing="false" onAction="#MoveToCart" text="Cart" />
-                  <MenuItem fx:id="signOut" mnemonicParsing="false" onAction="#signOutMenu" text="signOut" />
+                  <MenuItem fx:id="signOut" mnemonicParsing="false" onAction="#signOutMenu" text="Signout" />
+                  <MenuItem fx:id="TransactionItem" mnemonicParsing="false" onAction="#gotoTransactionHistory" text="Transaction History" />
               </items>
                <font>
                   <Font size="26.0" />
