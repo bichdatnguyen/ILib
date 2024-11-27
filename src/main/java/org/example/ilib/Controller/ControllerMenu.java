@@ -23,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
+import org.example.ilib.Processor.AdminApp;
 import org.example.ilib.Processor.Book;
 import org.json.JSONObject;
 import org.json.JSONArray;
@@ -217,6 +218,7 @@ public class ControllerMenu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
+            AdminApp.getInstance().adminChecking();
             loadProperties();
             if (Account.getInstance().getAvatarPath() != null) {
                 avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
