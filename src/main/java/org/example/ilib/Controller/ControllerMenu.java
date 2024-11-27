@@ -70,6 +70,9 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     private MenuItem Admin;
+    @FXML
+    private MenuItem TransactionItem;
+
 
     private List<Book>recentlyBooks = new ArrayList<>();
 
@@ -238,6 +241,18 @@ public class ControllerMenu implements Initializable {
                     e.printStackTrace();
                 }
         } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void gotoTransactionHistory(ActionEvent event) {
+        try {
+            Stage stage = (Stage) TransactionItem.getParentPopup().getOwnerWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/TransactionHistory.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
