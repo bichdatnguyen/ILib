@@ -108,14 +108,18 @@ public class ControllerMenu implements Initializable {
     private void loadProperties() {
         String query = "SELECT avatarPath FROM user WHERE email = ? and password = ?";
         try( PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
-             ResultSet resultSet = stmt.executeQuery()) {
+            ) {
 
             stmt.setString(1, Account.getInstance().getEmail());
             stmt.setString(2, Account.getInstance().getPassword());
-
-            if (resultSet.next()) {
-                Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
+            try( ResultSet resultSet = stmt.executeQuery()){
+                if (resultSet.next()) {
+                    Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
