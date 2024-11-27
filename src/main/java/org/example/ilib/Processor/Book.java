@@ -11,6 +11,11 @@ public class Book {
         private String author;
         private String image;
         private String description;
+        private int quantity;
+
+        public Book(String id) {
+                this.id = id;
+        }
 
         public Book(String image, String title, String author, String description, String id) {
                 this.image = image;
@@ -18,6 +23,16 @@ public class Book {
                 this.author = author;
                 this.description = description;
                 this.id = id;
+        }
+
+        public Book(String image, String title, String author, String description,
+                    String id, int quantity) {
+                this.image = image;
+                this.title = title;
+                this.author = author;
+                this.description = description;
+                this.id = id;
+                this.quantity = quantity;
         }
 
         public Book(String title, String image, String author) {
@@ -51,7 +66,11 @@ public class Book {
                 return image;
         }
 
-        public String getId() {
+        public void setID(String id) {
+                this.id = id;
+        }
+
+        public String getID() {
                 return id;
         }
 

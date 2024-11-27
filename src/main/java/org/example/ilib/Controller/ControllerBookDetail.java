@@ -4,7 +4,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -16,16 +15,14 @@ import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.Book;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
-public class ControllerBookDetail implements Initializable {
+public class ControllerBookDetail extends ControllerBook {
 
     @FXML
     private Button BackButton;
@@ -59,13 +56,10 @@ public class ControllerBookDetail implements Initializable {
 
     @FXML
     private Text titleText;
-    @FXML
-
-    private Book book;
 
     private static final int Buy = 2;
     private static final int Borrow = 1;
-    private static  int status = 0;
+    private static int status = 0;
     private String email = Account.getInstance().getEmail();
 
     private Scene Forwardsceen;
@@ -74,22 +68,17 @@ public class ControllerBookDetail implements Initializable {
         this.Forwardsceen = scene;
     }
 
-    public void setBook(String id) throws IOException {
-        GoogleBooksAPI gg = new GoogleBooksAPI();
-        book = gg.getBooksByID(id);
-    }
-
-    public void showInformation() throws SQLException {
+    public void showInformation(Book book) throws SQLException {
         thumbnail.setImage(new Image(book.getImage()));
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthor());
-        descriptionText.setText(book.getDescription());
-        idText.setText(book.getId());
+        descriptionText.setText(book.getDescription().substring(0, 250));
+        idText.setText(book.getID());
         quantityText.setText(String.valueOf(book.getQuantity()));
     }
 
     public void Back(MouseEvent event) throws IOException {
-        Stage stage = (Stage)BackButton.getScene().getWindow();
+        Stage stage = (Stage) BackButton.getScene().getWindow();
 
         Scene scene = Forwardsceen;
         stage.setScene(scene);
@@ -183,9 +172,5 @@ public class ControllerBookDetail implements Initializable {
     }
 
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        ControllerBookDetail ctrlBookDetail = new ControllerBookDetail();
 
-    }
 }

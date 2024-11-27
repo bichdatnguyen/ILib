@@ -3,6 +3,7 @@ package org.example.ilib.Controller;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.collections.ObservableList;
+import org.example.ilib.Processor.Book;
 import org.example.ilib.Processor.CartItem;
 
 import java.sql.*;
@@ -133,70 +134,6 @@ public class DBConnection {
         }
     }
 
-
-    public boolean authorPrimaryKeyExist(String bookID, String author) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM author WHERE bookID = ? AND authorName = ?";
-
-        try (PreparedStatement stmt = createStatement(sql)) {
-            stmt.setString(1, bookID);
-            stmt.setString(2, author);
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
-            }
-        }
-    }
-
-    public boolean categoryPrimaryKeyExist(String category, String bookID) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM categories WHERE bookID = ? AND Category = ?";
-
-        try (PreparedStatement stmt = createStatement(sql)) {
-            stmt.setString(1, bookID);
-            stmt.setString(2, category);
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
-            }
-        }
-    }
-
-    public void addAuthor(String bookID, String author) throws SQLException {
-        if (authorPrimaryKeyExist(bookID, author)) {
-            return;
-        }
-        String sql = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, bookID);
-        stmt.setString(2, author);
-        stmt.executeUpdate();
-    }
-
-    public void addBook(String bookID, String title, int bookPrice, int quantityInStock,
-                        Timestamp addDate, double averageRating) throws SQLException {
-        if (bookExist(bookID)) {
-            return;
-        }
-        String sql = "INSERT INTO books (bookID, title, bookPrice, quantityInStock, addDate, averageRating) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, bookID);
-        stmt.setString(2, title);
-        stmt.setInt(3, bookPrice);
-        stmt.setInt(4, quantityInStock);
-        stmt.setTimestamp(5, addDate);
-        stmt.setDouble(6, averageRating);
-        stmt.executeUpdate();
-    }
-
-    public void addCategories(String category, String bookID) throws SQLException {
-        if (categoryPrimaryKeyExist(category, bookID)) {
-            return;
-        }
-        String sql = "INSERT INTO categories (category, bookID) VALUES (?, ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, category);
-        stmt.setString(2, bookID);
-        stmt.executeUpdate();
-    }
-
     public int getQuantity(String bookID) throws SQLException {
         String sql = "SELECT quantityInStock FROM books WHERE bookID = ?";
         PreparedStatement stmt = createStatement(sql);
@@ -240,19 +177,41 @@ public class DBConnection {
         return ids;
     }
 
-    public List<String> getRecentlyBooks(int number) throws SQLException {
-        String sql = "SELECT bookID FROM books ORDER BY addDate DESC LIMIT ?";
+    public String getAuthor(String bookID) throws SQLException {
+        String sql = "SELECT authorName FROM author WHERE bookID = ?";
+        PreparedStatement stmt = createStatement(sql);
+        stmt.setString(1, bookID);
+
+        ResultSet rs = stmt.executeQuery();
+        StringBuilder authors = new StringBuilder();
+        while (rs.next()) {
+            authors.append(rs.getString(1));
+        }
+        return authors.toString();
+    }
+
+    public List<Book> getRecentlyBooks(int number) throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM books ORDER BY addDate DESC LIMIT ?";
         PreparedStatement stmt = createStatement(sql);
         stmt.setInt(1, number);
 
         ResultSet rs = stmt.executeQuery();
-        List<String> ids = new ArrayList<>();
+        List<Book> books = new ArrayList<>();
 
-        while (rs.next()) {
+        while(rs.next()) {
             String bookID = rs.getString(1);
-            ids.add(bookID);
+            String thumbnail = rs.getString(2);
+            String description = rs.getString(3);
+            String title = rs.getString(4);
+            String authors = getAuthor(bookID);
+            int quantityInStock = rs.getInt(5);
+
+            Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+            books.add(book);
         }
-        return ids;
+
+        return books;
     }
 
     public List<String> getAllSubjectFromDB() throws SQLException {
