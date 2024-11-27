@@ -41,9 +41,8 @@ public class Book {
                 this.author = author;
         }
 
-        public int getQuantity() throws SQLException {
-                DBConnection db = DBConnection.getInstance();
-                return db.getQuantity(this.id);
+        public int getQuantity() {
+                return quantity;
         }
 
         public void setTitle(String title) {
@@ -76,5 +75,8 @@ public class Book {
 
         public String getDescription() {
                 return description;
+        }
+        public void setDescription(String description) {
+                this.description = description;
         }
 }

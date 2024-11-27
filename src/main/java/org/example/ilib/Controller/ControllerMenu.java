@@ -74,7 +74,7 @@ public class ControllerMenu implements Initializable {
     private MenuItem TransactionItem;
 
 
-    private List<Book>recentlyBooks = new ArrayList<>();
+
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
@@ -228,9 +228,10 @@ public class ControllerMenu implements Initializable {
             if (Account.getInstance().getAvatarPath() != null) {
                 avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
             }
-            DBConnection db = DBConnection.getInstance();
-            recentlyBooks = db.getRecentlyBooks(9);
+
+
             try {
+                List<Book> recentlyBooks = Booklist.getInstance().RecentlyBookList;
                 for (int i = 0; i < recentlyBooks.size(); i++) {
                     FXMLLoader fx = new FXMLLoader();
                     fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));

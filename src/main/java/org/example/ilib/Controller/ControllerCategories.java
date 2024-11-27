@@ -90,7 +90,7 @@ public class ControllerCategories implements Initializable {
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
-                controllerBook.showBook(books.get(i));
+                controllerBook.setBook(books.get(i));
 
                 if(column == 2) {
                     column = 0;
@@ -129,6 +129,7 @@ public class ControllerCategories implements Initializable {
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
+                controllerBook.setBook(books.get(i));
                 controllerBook.showBook(books.get(i));
 
                 if(column == 2) {

@@ -68,7 +68,7 @@ public class ControllerBookDetail extends ControllerBook {
         this.Forwardsceen = scene;
     }
 
-    public void showInformation(Book book) throws SQLException {
+    public void showInformation(Book book) {
         thumbnail.setImage(new Image(book.getImage()));
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthor());
