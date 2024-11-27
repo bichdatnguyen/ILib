@@ -27,6 +27,9 @@
          <font>
             <Font size="22.0" />
          </font></Label>
-      <Text fx:id="updateAccount" onMouseClicked="#updateAccount" layoutX="235.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cập nhật thông tin" textAlignment="CENTER" wrappingWidth="126.0" />
+      <Text fx:id="updateAccount" layoutX="235.0" layoutY="195.0" onMouseClicked="#updateAccount" strokeType="OUTSIDE" strokeWidth="0.0" text="Cập nhật thông tin" textAlignment="CENTER" wrappingWidth="126.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Text>
    </children>
 </AnchorPane>

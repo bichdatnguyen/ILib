@@ -2,24 +2,34 @@ package org.example.ilib.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.shape.Shape;
 
 public class ControllerAccount {
     @FXML
@@ -44,9 +54,6 @@ public class ControllerAccount {
     private ImageView avatar;
 
     private static ControllerAccount instance;
-
-
-
 
     @FXML
     public void initialize() {
@@ -113,10 +120,10 @@ public class ControllerAccount {
                 new FileChooser.ExtensionFilter("Tất cả tệp", "*.*")
         );
         File selectedFile = fileChooser.showOpenDialog(avatar.getScene().getWindow());
-
         if (selectedFile != null) {
             try {
                 Image avatarView = new Image(selectedFile.toURI().toString());
+                //update
                 avatar.setImage(avatarView);
                 String avatarP = selectedFile.getAbsolutePath();
                 updateAvatarInDatabase(avatarP);

@@ -21,6 +21,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.AdminApp;
@@ -72,7 +73,6 @@ public class ControllerMenu implements Initializable {
     private MenuItem Admin;
     @FXML
     private MenuItem TransactionItem;
-
 
     private List<Book>recentlyBooks = new ArrayList<>();
 
@@ -201,7 +201,6 @@ public class ControllerMenu implements Initializable {
     }
 
     public void readingMenu(MouseEvent e) throws IOException {
-
         Stage stage = (Stage) reading.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/Reading.fxml"));
@@ -225,6 +224,10 @@ public class ControllerMenu implements Initializable {
             loadProperties();
             if (Account.getInstance().getAvatarPath() != null) {
                 avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
+                Circle circle = new Circle(avatarUser.getFitWidth() / 4);
+                circle.setCenterX(avatarUser.getFitWidth() / 2);
+                circle.setCenterY(avatarUser.getFitHeight() / 2);
+                avatarUser.setClip(circle);
             }
             Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
             recentlyBooks = bl.bookList;
