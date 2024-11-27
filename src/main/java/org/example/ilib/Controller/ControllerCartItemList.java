@@ -220,7 +220,7 @@ public class ControllerCartItemList implements Initializable {
            MoneyCol.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("money"));
            StatusCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("status"));
            VoucherCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("voucher"));
-            CartTable.setItems(CartList);
+           CartTable.setItems(CartList);
 
        } catch(Exception e){
            e.printStackTrace();

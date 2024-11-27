@@ -26,7 +26,7 @@ public class ControllerTopBooks implements Initializable {
     private HBox top_book_hbox;
     @FXML
     private HBox hbox_top_book2;
-    private List<Book>bookList;
+    private List<Book> bookList;
 
     public ControllerTopBooks() throws SQLException, IOException {
        bookList = Booklist.getInstance().TopBookList;

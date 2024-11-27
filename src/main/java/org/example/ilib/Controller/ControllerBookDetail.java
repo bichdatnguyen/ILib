@@ -73,9 +73,11 @@ public class ControllerBookDetail extends ControllerBook {
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthor());
         String description = book.getDescription();
-        if (description.length() <250) {
+        if (description.length() < 250) {
             descriptionText.setText(description);
-        } else{descriptionText.setText(book.getDescription().substring(0, 250));}
+        } else {
+            descriptionText.setText(book.getDescription().substring(0, 250));
+        }
         idText.setText(book.getID());
         quantityText.setText(String.valueOf(book.getQuantity()));
     }

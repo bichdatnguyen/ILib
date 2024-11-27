@@ -35,14 +35,12 @@ public class DBConnection {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setConnectionTimeout(60000); // Tăng timeout lên 60 giây
-        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        config.setConnectionTestQuery("SELECT 1");
-        config.setIdleTimeout(8000);  // 1 minutes
-        config.setLeakDetectionThreshold(15000);// 15 seconds
-        config.setMaxLifetime(1800000);
-        config.setMaximumPoolSize(50);
-        config.setMinimumIdle(5);
+        config.setMaximumPoolSize(100);
+        config.setMinimumIdle(10);
+        config.setIdleTimeout(5000);
+        config.setMaxLifetime(240000);
+        config.setConnectionTimeout(30000);
+        config.setLeakDetectionThreshold(5000);
 
         dataSource = new HikariDataSource(config);
     }
@@ -58,10 +56,8 @@ public class DBConnection {
     }
 
     public static PreparedStatement createStatement(String sql) throws SQLException {
-        Connection connection = DBConnection.getInstance().getConnection();
-        return connection.prepareStatement(sql);
+        return DBConnection.getInstance().getConnection().prepareStatement(sql);
     }
-
 
     public void createAccount(String email, String phoneNumber, String fullName,
                               String password, String avatarPath, String role) throws SQLException {
@@ -113,7 +109,6 @@ public class DBConnection {
         return false;
     }
 
-
     public boolean checkDataExit(String email_, String password_) {
         String query = "SELECT COUNT(*) FROM User WHERE email = ? AND password = ?";
 
@@ -136,7 +131,6 @@ public class DBConnection {
         return false;
     }
 
-
     public boolean bookExist(String bookID) throws SQLException {
         String sql = "SELECT EXISTS (SELECT 1 FROM books WHERE bookID = ?)";
         try (Connection connection = DBConnection.getInstance().getConnection();
@@ -148,58 +142,68 @@ public class DBConnection {
         }
     }
 
-//    public int getQuantity(String bookID) throws SQLException {
-//        String sql = "SELECT quantityInStock FROM books WHERE bookID = ?";
-//        PreparedStatement stmt = createStatement(sql);
-//        stmt.setString(1, bookID);
-//        ResultSet rs = stmt.executeQuery();
-//        if (rs.next()) {
-//            int quantity = rs.getInt(1);
-//            return quantity;
-//        } else {
-//            return 0;
-//        }
-//    }
-
-    public List<String> getTopBooks(int number) throws SQLException {
-        String sql = "SELECT bookID FROM books ORDER BY averageRating DESC LIMIT ?";
-        try(PreparedStatement stmt = createStatement(sql);){
-            stmt.setInt(1, number);
-
-            List<String> ids = new ArrayList<>();
-            try(ResultSet rs = stmt.executeQuery()){
-                while (rs.next()) {
-                    ids.add(rs.getString(1));
-                }
-                return ids;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public int getQuantity(String bookID) throws SQLException {
+        String sql = "SELECT quantityInStock FROM books WHERE bookID = ?";
+        PreparedStatement stmt = createStatement(sql);
+        stmt.setString(1, bookID);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            int quantity = rs.getInt(1);
+            return quantity;
+        } else {
+            return 0;
         }
-        return null;
-
     }
 
-    public List<String> getTopCategories(String category) throws SQLException {
-        String sql = "SELECT bookID FROM categories NATURAL JOIN books " +
-                "WHERE category = ? ORDER BY averageRating DESC";
-        try(PreparedStatement stmt = createStatement(sql); ){
-            stmt.setString(1, category);
-
+    public List<Book> getTopBooks(int number) throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM books ORDER BY averageRating DESC LIMIT ?";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setInt(1, number);
+            List<Book> books = new ArrayList<>();
             try(ResultSet rs = stmt.executeQuery()){
-                List<String> ids = new ArrayList<>();
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
 
-                while (rs.next()) {
-                    ids.add(rs.getString(1));
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
                 }
-                return ids;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
+            return books;
         }
-        return null;
+    }
 
+    public List<Book> getTopCategories(String category) throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM books NATURAL JOIN categories WHERE category = ? " +
+                "ORDER BY averageRating DESC";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setString(1, category);
+            List<Book> books = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
+
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return books;
+        }
     }
 
     public String getAuthor(String bookID) throws SQLException {

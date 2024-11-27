@@ -34,21 +34,15 @@ public class Booklist {
             if(RecentlyBookList.isEmpty()){
                RecentlyBookList = addRecentlyBookList();
             }
-        } catch (SQLException e) {
+        } catch (SQLException | IOException e) {
            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
    }
 
 
     private List<Book> addTopBookList() throws SQLException, IOException {
         DBConnection db = DBConnection.getInstance();
-        List<Book> recentlyBooks = db.getRecentlyBooks(9);
-        if (recentlyBooks == null || recentlyBooks.isEmpty()) {
-            System.out.println("Không có sách gần đây nào.");
-        }
-        return db.getRecentlyBooks(5);
+        return db.getTopBooks(9);
     }
 
     protected List<Book> addRecentlyBookList() throws SQLException, IOException {

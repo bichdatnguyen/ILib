@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -16,9 +17,7 @@ import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ControllerCategories implements Initializable {
     @FXML
@@ -26,11 +25,11 @@ public class ControllerCategories implements Initializable {
     @FXML
     private GridPane gridPaneCategory;
     @FXML
-    private ChoiceBox<String> categoryChoice;
+    private ComboBox<String> categoryChoice;
     @FXML
     private HBox categoryPage;
     private static List<String> subjects;
-    private static List<Book> books;
+    private static Map<String, List<Book>> bookByCategory;
 
     public static void setSubjects(List<String> subjects) {
         ControllerCategories.subjects = subjects;
@@ -40,7 +39,7 @@ public class ControllerCategories implements Initializable {
         gridPaneCategory = new GridPane();
         DBConnection db = DBConnection.getInstance();
         setSubjects(db.getAllSubjectFromDB());
-        books = new ArrayList<>();
+        bookByCategory = new HashMap<>();
     }
 
     public void BackToMenu(MouseEvent event) throws IOException {
@@ -51,32 +50,32 @@ public class ControllerCategories implements Initializable {
         stage.setScene(scene);
     }
 
-    public Button createPageButton(String page) {
+    public Button createPageButton(String page, String category) {
         Button button = new Button(page);
-        button.setOnMouseClicked(_ -> showResult(Integer.parseInt(page)));
+        button.setOnMouseClicked(_ -> {
+            try {
+                showResult(Integer.parseInt(page), category);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
         return button;
     }
 
-    public void showNumberOfPages(int pages) {
+    public void showNumberOfPages(int pages, String category) {
         categoryPage.getChildren().clear();
         for (int i = 1; i <= pages; i++) {
-            Button button = createPageButton(String.valueOf(i));
+            Button button = createPageButton(String.valueOf(i), category);
             categoryPage.getChildren().add(button);
         }
     }
 
     public void setBooks(String category) throws SQLException, IOException {
         DBConnection db = DBConnection.getInstance();
-        GoogleBooksAPI gg = new GoogleBooksAPI();
-
-        List<String> ids = db.getTopCategories(category);
-
-        for (String id : ids) {
-            books.add(gg.getBooksByID(id));
-        }
+        bookByCategory.put(category, db.getTopCategories(category));
     }
 
-    public void showResult(int page) {
+    public void showResult(int page, String category) throws SQLException {
         if (gridPaneCategory != null) {
             gridPaneCategory.getChildren().clear();
         }
@@ -85,46 +84,8 @@ public class ControllerCategories implements Initializable {
             int column = 0;
             int row = 0;
 
-            for (int i = 4 * page - 4; i < Math.min(4 * page, 4); i++) {
-                FXMLLoader fx = new FXMLLoader();
-                fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
-                HBox cardbox = (HBox) fx.load();
-                ControllerBook controllerBook = (ControllerBook) fx.getController();
-                controllerBook.setBook(books.get(i));
-
-                if(column == 2) {
-                    column = 0;
-                    row++;
-                }
-                gridPaneCategory.add(cardbox, column++, row);
-                showNumberOfPages((books.size() - 1) / 4 + 1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void initialize(URL location, ResourceBundle resources) {
-
-        if (categoryChoice != null) {
-            categoryChoice.getItems().addAll(subjects);
-        }
-
-        if (gridPaneCategory != null) {
-            gridPaneCategory.getChildren().clear();
-        }
-
-        try {
-            setBooks("Philosophy");
-        } catch (SQLException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            int column = 0;
-            int row = 0;
-
-            for (int i = 0; i < Math.min(books.size(), 4); i++) {
+            List<Book> books = bookByCategory.get(category);
+            for (int i = 4 * page - 4; i < Math.min(4 * page, books.size()); i++) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
@@ -137,10 +98,33 @@ public class ControllerCategories implements Initializable {
                     row++;
                 }
                 gridPaneCategory.add(cardbox, column++, row);
-                showNumberOfPages((books.size() - 1) / 4 + 1);
+                showNumberOfPages((books.size() - 1) / 4 + 1, category);
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void initialize(URL location, ResourceBundle resources) {
+
+        if (categoryChoice != null) {
+            categoryChoice.getItems().addAll(subjects);
+            categoryChoice.valueProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue != null) {
+                    try {
+                        if (!bookByCategory.containsKey(newValue)) {
+                            setBooks(newValue);
+                        }
+                        showResult(1, newValue);
+                    } catch (SQLException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+        if (gridPaneCategory != null) {
+            gridPaneCategory.getChildren().clear();
         }
     }
 }
