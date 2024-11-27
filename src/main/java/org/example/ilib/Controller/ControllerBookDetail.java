@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerBookDetail {
+public class ControllerBookDetail extends ControllerBook {
 
     @FXML
     private Button BackButton;
@@ -56,13 +56,10 @@ public class ControllerBookDetail {
 
     @FXML
     private Text titleText;
-    @FXML
-
-    private Book book;
 
     private static final int Buy = 2;
     private static final int Borrow = 1;
-    private static  int status = 0;
+    private static int status = 0;
     private String email = Account.getInstance().getEmail();
 
     private Scene Forwardsceen;
@@ -71,22 +68,17 @@ public class ControllerBookDetail {
         this.Forwardsceen = scene;
     }
 
-    public void setBook(String id) throws IOException {
-        GoogleBooksAPI gg = new GoogleBooksAPI();
-        book = gg.getBooksByID(id);
-    }
-
-    public void showInformation() throws SQLException {
+    public void showInformation(Book book) throws SQLException {
         thumbnail.setImage(new Image(book.getImage()));
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthor());
-        descriptionText.setText(book.getDescription());
-        idText.setText(book.getId());
+        descriptionText.setText(book.getDescription().substring(0, 250));
+        idText.setText(book.getID());
         quantityText.setText(String.valueOf(book.getQuantity()));
     }
 
     public void Back(MouseEvent event) throws IOException {
-        Stage stage = (Stage)BackButton.getScene().getWindow();
+        Stage stage = (Stage) BackButton.getScene().getWindow();
 
         Scene scene = Forwardsceen;
         stage.setScene(scene);

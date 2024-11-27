@@ -22,8 +22,6 @@ public class Booklist {
     protected Booklist(int Phan_loai) throws SQLException, IOException {
         if (Phan_loai == TOP_BOOK) {
             bookList = addTopBookList();
-        } else if (Phan_loai == CATEGORIES_BOOK) {
-            bookList = CategoriesBookList("Philosophy");
         } else if (Phan_loai == RECECNTLYADDED_BOOK) {
             bookList = RecentlyAddedBookList();
         }
@@ -44,33 +42,9 @@ public class Booklist {
         return TopBookList;
     }
 
-    private List<Book> CategoriesBookList(String category) throws SQLException, IOException {
-        List<Book>CatebookList = new ArrayList<>();
-
-        DBConnection db = DBConnection.getInstance();
-        GoogleBooksAPI gg = new GoogleBooksAPI();
-
-        List<String> ids = db.getTopCategories(category);
-
-        for (String id : ids) {
-            CatebookList.add(gg.getBooksByID(id));
-        }
-
-        return CatebookList;
-    }
-
     protected List<Book> RecentlyAddedBookList() throws SQLException, IOException {
-        List<Book> RecentlyBookList = new ArrayList<>();
-
         DBConnection db = DBConnection.getInstance();
-        GoogleBooksAPI gg = new GoogleBooksAPI();
 
-        List<String> ids = db.getRecentlyBooks(9);
-
-        for (String id : ids) {
-            RecentlyBookList.add(gg.getBooksByID(id));
-        }
-
-        return RecentlyBookList;
+        return db.getRecentlyBooks(9);
     }
 }
