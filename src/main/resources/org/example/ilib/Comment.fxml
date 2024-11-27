@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="95.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerComment">
+   <children>
+      <ImageView fx:id="userView" fitHeight="93.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true" />
+      <Separator orientation="VERTICAL" prefHeight="219.0" prefWidth="36.0" />
+      <VBox prefHeight="95.0" prefWidth="435.0">
+         <children>
+            <Label fx:id="nameLabel" prefHeight="40.0" prefWidth="121.0" text="Name" />
+            <TextArea fx:id="commentText" editable="false" prefHeight="50.0" prefWidth="379.0" />
+         </children>
+      </VBox>
+      <MenuButton mnemonicParsing="false" prefHeight="95.0" prefWidth="65.0" text="⋮" textFill="#23b946">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Edit" />
+          <MenuItem mnemonicParsing="false" text="Remove" />
+        </items>
+         <font>
+            <Font size="27.0" />
+         </font>
+      </MenuButton>
+   </children>
+</HBox>

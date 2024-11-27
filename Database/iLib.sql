@@ -158,8 +158,8 @@ CREATE TABLE IF NOT EXISTS `ilib`.`rating` (
    `Email` VARCHAR(50) NOT NULL,
    `bookID` VARCHAR(50) NOT NULL,
    `Comment` TEXT NULL DEFAULT NULL,
-   `Time` DATETIME NULL DEFAULT NULL,
-   PRIMARY KEY (`Email`, `bookID`),
+   `Time` DATETIME NOT NULL ,
+   PRIMARY KEY (`Email`, `bookID`,time),
    CONSTRAINT `fk_Rating_Books`
        FOREIGN KEY (`bookID`)
            REFERENCES `ilib`.`books` (`bookID`)
@@ -243,3 +243,4 @@ select * from books;
 select * from cart;
 insert into user values ('ton@gmail.com','1234567890','Vu Dat','1234556',null,'user');
 select * from payment;
+select * from rating;

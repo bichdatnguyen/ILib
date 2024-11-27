@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,14 +16,16 @@ import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.Book;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class ControllerBookDetail {
+public class ControllerBookDetail implements Initializable {
 
     @FXML
     private Button BackButton;
@@ -180,5 +183,9 @@ public class ControllerBookDetail {
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ControllerBookDetail ctrlBookDetail = new ControllerBookDetail();
 
+    }
 }
