@@ -16,7 +16,7 @@ public class AdminApp {
         return instance;
     }
 
-    public boolean adminChecking() {
+    public void adminChecking() {
         //System.out.println("Admin checking works!");
         String query = "SELECT role FROM user WHERE email = ? and password = ?";
         try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query)) {
@@ -26,11 +26,9 @@ public class AdminApp {
             if (resultSet.next()) {
                 System.out.println(resultSet.getString("role"));
                 Account.getInstance().setRole(resultSet.getString("role"));
-                return resultSet.getString("role").equals("admin");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return false;
     }
 }

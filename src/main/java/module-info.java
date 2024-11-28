@@ -20,7 +20,7 @@ module org.example.ilib {
 //    opens org.example.ilib.Controller to javafx.fxml;
 //    exports org.example.ilib.Processor;
 //    opens org.example.ilib.Processor to javafx.fxml;
-
+//
 
 
 
@@ -51,11 +51,5 @@ module org.example.ilib {
     opens org.example.ilib.Controller to javafx.fxml;
     exports org.example.ilib.Processor;
     opens org.example.ilib.Processor to javafx.fxml;
-
-
-
-
-
-
 
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -7,63 +9,96 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1055.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <AnchorPane prefHeight="117.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
-   </top>
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerAdminMenu">
    <left>
-      <VBox prefHeight="563.0" prefWidth="241.0" BorderPane.alignment="CENTER">
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="269.0" prefWidth="243.0">
+            <AnchorPane prefHeight="130.0" prefWidth="261.0">
                <children>
-                  <Label layoutX="21.0" layoutY="14.0" text="Members" />
-                  <Button layoutX="14.0" layoutY="132.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="189.0" text="Edit Member" />
+                  <Label layoutX="101.0" layoutY="1.0" prefHeight="151.0" prefWidth="184.0" text="Admin" textFill="#16b575">
+                     <font>
+                        <Font name="Segoe UI Black" size="35.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="83.0" fitWidth="56.0" layoutX="14.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/management-9644.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane prefHeight="316.0" prefWidth="182.0" />
+            <Separator prefHeight="31.0" prefWidth="285.0" />
+            <HBox fx:id="searchhbox" onMouseClicked="#SearchHboxClick" onMouseEntered="#SearchHboxEnter" onMouseExited="#SearchHboxExit" prefHeight="88.0" prefWidth="261.0">
+               <children>
+                  <ImageView fitHeight="102.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/search-3076.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin></ImageView>
+                  <Label prefHeight="86.0" prefWidth="226.0" text="     Search">
+                     <font>
+                        <Font name="Segoe UI Black" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefHeight="22.0" prefWidth="285.0" />
+            <HBox fx:id="bookshbox" onMouseClicked="#BookHboxClick" onMouseEntered="#BookHboxEnter" onMouseExited="#BookHboxExit" prefHeight="88.0" prefWidth="261.0">
+               <children>
+                  <ImageView fitHeight="102.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/books-13500.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin></ImageView>
+                  <Label prefHeight="102.0" prefWidth="159.0" text="     Books">
+                     <font>
+                        <Font name="Segoe UI Black" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefHeight="28.0" prefWidth="285.0" />
+            <HBox fx:id="userhbox" onMouseClicked="#UserHboxClick" onMouseEntered="#UserHboxEnter" onMouseExited="#UserHboxExit" prefHeight="88.0" prefWidth="261.0">
+               <children>
+                  <ImageView fitHeight="102.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/manage-315.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin></ImageView>
+                  <Label prefHeight="102.0" prefWidth="159.0" text="      User">
+                     <font>
+                        <Font name="Segoe UI Black" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <Separator prefHeight="21.0" prefWidth="285.0" />
+            <HBox fx:id="exithbox" onMouseClicked="#ExitHboxClick" onMouseEntered="#ExitHboxEnter" onMouseExited="#ExitHboxExit" prefHeight="88.0" prefWidth="261.0">
+               <children>
+                  <ImageView fitHeight="102.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/exit-2860.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="10.0" top="10.0" />
+                     </HBox.margin></ImageView>
+                  <Label prefHeight="102.0" prefWidth="159.0" text="      Exit">
+                     <font>
+                        <Font name="Segoe UI Black" size="30.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
       </VBox>
    </left>
    <center>
-      <VBox prefHeight="563.0" prefWidth="792.0" BorderPane.alignment="CENTER">
-         <children>
-            <HBox prefHeight="305.0" prefWidth="790.0">
-               <children>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label text="Books" />
-                        <ImageView fitHeight="270.0" fitWidth="263.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <Label text="Members" />
-                        <ImageView fitHeight="270.0" fitWidth="254.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </VBox>
-                  <VBox prefHeight="305.0" prefWidth="264.0">
-                     <children>
-                        <Label text="Authors" />
-                        <ImageView fitHeight="270.0" fitWidth="292.0" pickOnBounds="true" preserveRatio="true" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox prefHeight="254.0" prefWidth="831.0">
-               <children>
-                  <ImageView fitHeight="265.0" fitWidth="423.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../assets/library.jpg" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="254.0" fitWidth="388.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../assets/ilib.jpg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
+      <AnchorPane fx:id="ShowScene" prefHeight="600.0" prefWidth="867.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>

@@ -38,7 +38,7 @@ public class QRCodeAuto {
 
         ImageIO.write(image, "png", outputFile);
 
-        return "file:" + outputFile.getAbsolutePath(); // Trả về đường dẫn đầy đủ
+        return "file:" + outputFile.getAbsolutePath();
     }
 
 }

@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
+import org.example.ilib.Processor.AdminApp;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -43,10 +44,23 @@ public class ControllerLogin {
              Account.getInstance().setEmail(email);
              Account.getInstance().setPassword(password);
          }
-
         Stage stage = (Stage) LoginSuccessButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
+        try{
+
+            if (Account.getInstance().getRole() == null) {
+                AdminApp.getInstance().adminChecking();
+                System.out.println("adminChecking happens");
+            }
+            if (Account.getInstance().getRole().equals("admin")) {
+                 loader.setLocation(getClass().getResource("/org/example/ilib/Admin.fxml"));
+            } else{
+                loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
+            }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
 

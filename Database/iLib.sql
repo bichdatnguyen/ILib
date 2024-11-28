@@ -249,3 +249,4 @@ select * from books;
 select * from cart;
 insert into user values ('ton@gmail.com','1234567890','Vu Dat','1234556',null,'user');
 select * from payment;
+insert into user values ('ton1@gmail.com','1234567890','Vu Dat','1234556',null,'admin');

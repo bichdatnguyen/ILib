@@ -236,10 +236,7 @@ public class ControllerMenu implements Initializable {
                 AdminApp.getInstance().adminChecking();
                 System.out.println("adminChecking happens");
             }
-            if (Account.getInstance().getRole().equals("admin")) {
-                UserButton.setText("Admin");
-                updateDB.setVisible(true);
-            } else {
+            else {
                 UserButton.setText("User");
             }
             loadProperties();
