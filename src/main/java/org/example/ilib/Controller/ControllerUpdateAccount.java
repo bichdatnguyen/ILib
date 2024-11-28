@@ -63,9 +63,9 @@ public class ControllerUpdateAccount {
         String updateQuery = "UPDATE user SET Email = ?, "
                 + "phoneNumber=?, fullName=?, password=? "
                 + "where Email = ? and password = ?";
-        try {
+        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)){
             //DBConnection conn = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)
-            PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery);
+
             stmt.setString(1, nEmail);
             stmt.setString(2, nPhoneNumber);
             stmt.setString(3, nFullname);

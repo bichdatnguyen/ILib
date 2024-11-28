@@ -79,8 +79,8 @@ public class ControllerSearchingBook  {
 
                HBox hbox = (HBox) fxmlLoader.load();
                ControllerBook controllerBook = (ControllerBook) fxmlLoader.getController();
-             //  System.out.println(book.getAuthor() + " " + book.getTitle()+ " "+ book.getImage());
                controllerBook.setBook(book);
+               controllerBook.showBook(book);
                if(column == 2){
                    column = 0;
                    row++;

@@ -21,7 +21,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.AdminApp;
@@ -74,7 +73,8 @@ public class ControllerMenu implements Initializable {
     @FXML
     private MenuItem TransactionItem;
 
-    private List<Book>recentlyBooks = new ArrayList<>();
+
+
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
@@ -107,14 +107,19 @@ public class ControllerMenu implements Initializable {
 
     private void loadProperties() {
         String query = "SELECT avatarPath FROM user WHERE email = ? and password = ?";
-        try {
-            PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
+        try( PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
+            ) {
+
             stmt.setString(1, Account.getInstance().getEmail());
             stmt.setString(2, Account.getInstance().getPassword());
-            ResultSet resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
+            try( ResultSet resultSet = stmt.executeQuery()){
+                if (resultSet.next()) {
+                    Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
+                }
+            } catch (SQLException e){
+                e.printStackTrace();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -143,7 +148,7 @@ public class ControllerMenu implements Initializable {
                 executorService.submit(() -> {
                     try {
                         GoogleBooksAPI api = new GoogleBooksAPI();
-                        JsonArray bookDetails = api.getInformation(searchText, 40);
+                        JsonArray bookDetails = api.getInformation(searchText, 5);
 
                         if (bookDetails != null && !bookDetails.isEmpty()) {
                             Platform.runLater(() -> {
@@ -168,6 +173,8 @@ public class ControllerMenu implements Initializable {
 
                                 } catch (IOException e) {
                                     showErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
+                                } catch (SQLException e) {
+                                    throw new RuntimeException(e);
                                 }
                             });
                         } else {
@@ -201,6 +208,7 @@ public class ControllerMenu implements Initializable {
     }
 
     public void readingMenu(MouseEvent e) throws IOException {
+
         Stage stage = (Stage) reading.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/Reading.fxml"));
@@ -224,25 +232,23 @@ public class ControllerMenu implements Initializable {
             loadProperties();
             if (Account.getInstance().getAvatarPath() != null) {
                 avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
-                Circle circle = new Circle(avatarUser.getFitWidth() / 4);
-                circle.setCenterX(avatarUser.getFitWidth() / 2);
-                circle.setCenterY(avatarUser.getFitHeight() / 2);
-                avatarUser.setClip(circle);
             }
-            Booklist bl = new Booklist(Booklist.RECECNTLYADDED_BOOK);
-            recentlyBooks = bl.bookList;
-                try {
-                    for (int i = 0; i < recentlyBooks.size() ; i++ ) {
-                        FXMLLoader fx = new FXMLLoader();
-                        fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
-                        HBox cardbox = (HBox) fx.load();
-                        ControllerBook controllerBook = (ControllerBook) fx.getController();
-                        controllerBook.setBook(recentlyBooks.get(i));
-                        recentlyAddHbox.getChildren().add(cardbox);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+
+
+            try {
+                List<Book> recentlyBooks = Booklist.getInstance().RecentlyBookList;
+                for (int i = 0; i < recentlyBooks.size(); i++) {
+                    FXMLLoader fx = new FXMLLoader();
+                    fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
+                    HBox cardbox = (HBox) fx.load();
+                    ControllerBook controllerBook = (ControllerBook) fx.getController();
+                    controllerBook.setBook(recentlyBooks.get(i));
+                     controllerBook.showBook(recentlyBooks.get(i));
+                    recentlyAddHbox.getChildren().add(cardbox);
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch(Exception e){
             e.printStackTrace();
         }

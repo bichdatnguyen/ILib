@@ -8,13 +8,17 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import org.example.ilib.Processor.Book;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
-public class ControllerTopBooks extends Booklist implements Initializable {
+public class ControllerTopBooks implements Initializable {
 
     @FXML
     private Button Back;
@@ -22,9 +26,10 @@ public class ControllerTopBooks extends Booklist implements Initializable {
     private HBox top_book_hbox;
     @FXML
     private HBox hbox_top_book2;
+    private List<Book> bookList;
 
     public ControllerTopBooks() throws SQLException, IOException {
-        super(Booklist.TOP_BOOK);
+       bookList = Booklist.getInstance().TopBookList;
     }
 
     public void initialize(URL location, ResourceBundle resources) {
@@ -36,6 +41,7 @@ public class ControllerTopBooks extends Booklist implements Initializable {
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
+                controllerBook.showBook(bookList.get(i));
                 top_book_hbox.getChildren().add(cardbox);
             }
 
@@ -47,7 +53,7 @@ public class ControllerTopBooks extends Booklist implements Initializable {
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
-                controllerBook.setBook(bookList.get(i));
+                controllerBook.showBook(bookList.get(i));
                 hbox_top_book2.getChildren().add(cardbox);
             }
         } catch (IOException e) {

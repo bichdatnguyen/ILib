@@ -12,12 +12,11 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ImportBooksFromAPI {
     private static String[] subjects
-            = {"Philosophy", "Psychology", "Sociology", "Mathematics", "Physics", "Chemistry",
-            "Biology", "Technology & Engineering", "Medicine", "Law", "Arts & Photography",
-            "Language Arts & Disciplines"};
+            = {"Philosophy", "Psychology", "Sociology", "Mathematics", "Physics"};
 
     public static String getID(JsonElement item) {
         return item.getAsJsonObject().get("id").getAsString();
@@ -43,10 +42,15 @@ public class ImportBooksFromAPI {
     }
 
     public static int getBookPrice(JsonObject saleInfo) {
+        String saleability = saleInfo.get("saleability").getAsString();
+        if (!saleability.equals("FOR_SALE")) {
+            return 10000;
+        }
+
         if (saleInfo.has("listPrice")) {
             return saleInfo.getAsJsonObject("listPrice").get("amount").getAsInt();
         } else {
-            return 0;
+            return 10000;
         }
     }
 
@@ -82,14 +86,24 @@ public class ImportBooksFromAPI {
         return categories;
     }
 
+    public static String getThumbnail(JsonObject volumeInfo) {
+        if (volumeInfo.has("imageLinks")) {
+            JsonObject imageLinks = volumeInfo.getAsJsonObject("imageLinks");
+            if (imageLinks.has("thumbnail")) {
+                return imageLinks.get("thumbnail").getAsString();
+            }
+        }
+        return "E:/java/iLib/ILib/src/main/resources/org/assets/noImage.png";
+    }
+
     public static void main(String[] args) throws SQLException, IOException {
         GoogleBooksAPI gg = new GoogleBooksAPI();
         DBConnection db = DBConnection.getInstance();
 
         // Chuẩn bị batch để thêm sách, tác giả và danh mục
         String insertBookQuery = "INSERT INTO books "
-                + "(bookID, title, bookPrice, quantityInStock, addDate, averageRating) "
-                + "VALUES (?, ?, ?, ?, ?, ?)";
+                + "(bookID, thumbnail, description, title, bookPrice, averageRating, quantityInStock, addDate) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         String insertAuthorQuery = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
         String insertCategoryQuery = "INSERT INTO categories (Category, bookID) VALUES (?, ?)";
 
@@ -100,34 +114,39 @@ public class ImportBooksFromAPI {
 
             // Bắt đầu xử lý API
             for (String subject : subjects) {
-                JsonArray items = gg.getBooksBySubject(subject, 10);
+                JsonArray items;
+                if (subject.equals("Philosophy")) {
+                    items = gg.getBooksBySubject(subject, 20);
+                } else {
+                    items = gg.getBooksBySubject(subject, 5);
+                }
 
                 for (JsonElement item : items) {
                     JsonObject saleInfo = item.getAsJsonObject().get("saleInfo").getAsJsonObject();
-                    String saleability = saleInfo.get("saleability").getAsString();
-                    if (!saleability.equals("FOR_SALE")) {
-                        continue; // Bỏ qua sách không có giá
-                    }
+                    int bookPrice = getBookPrice(saleInfo);
 
                     String bookID = getID(item);
                     // Thêm sách vào batch
-                    if (db.bookExist(bookID)) {
+                    if (db.bookExist(bookID) || bookID.equals("9GK_Fhz5RDUC") || bookID.equals("N4zH86WogYwC")) {
                         continue;
                     }
                     JsonObject volumeInfo = item.getAsJsonObject().get("volumeInfo").getAsJsonObject();
                     String title = getTitle(volumeInfo);
                     List<String> authors = getAuthors(volumeInfo);
-                    int bookPrice = getBookPrice(saleInfo);
                     Timestamp addDate = getDate();
                     double averageRating = getAverageRating(volumeInfo);
                     List<String> categories = getCategory(volumeInfo);
+                    String thumbnail = getThumbnail(volumeInfo);
+                    String description = getDescription(volumeInfo);
 
                     bookStmt.setString(1, bookID);
-                    bookStmt.setString(2, title);
-                    bookStmt.setInt(3, bookPrice);
-                    bookStmt.setInt(4, 50); // Số lượng mặc định
-                    bookStmt.setTimestamp(5, addDate);
+                    bookStmt.setString(2, thumbnail);
+                    bookStmt.setString(3, description);
+                    bookStmt.setString(4, title);
+                    bookStmt.setInt(5, bookPrice);
                     bookStmt.setDouble(6, averageRating);
+                    bookStmt.setInt(7, 50); // Số lượng mặc định
+                    bookStmt.setTimestamp(8, addDate);
                     bookStmt.addBatch();
 
                     // Thêm tác giả vào batch

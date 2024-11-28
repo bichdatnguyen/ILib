@@ -3,6 +3,7 @@ package org.example.ilib.Controller;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.collections.ObservableList;
+import org.example.ilib.Processor.Book;
 import org.example.ilib.Processor.CartItem;
 
 import java.sql.*;
@@ -34,12 +35,12 @@ public class DBConnection {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setMaximumPoolSize(20); // Tăng giới hạn kết nối tối đa
-        config.setMinimumIdle(5); // Duy trì tối thiểu 5 kết nối
-        config.setIdleTimeout(60000); // Đóng kết nối nhàn rỗi sau 60 giây
-        config.setMaxLifetime(1800000); // Giới hạn tuổi thọ kết nối (30 phút)
-        config.setConnectionTimeout(30000); // Timeout khi đợi kết nối (30 giây)
-
+        config.setMaximumPoolSize(100);
+        config.setMinimumIdle(10);
+        config.setIdleTimeout(5000);
+        config.setMaxLifetime(240000);
+        config.setConnectionTimeout(30000);
+        config.setLeakDetectionThreshold(5000);
 
         dataSource = new HikariDataSource(config);
     }
@@ -62,37 +63,44 @@ public class DBConnection {
                               String password, String avatarPath, String role) throws SQLException {
         String sql = "INSERT INTO user (email, phoneNumber, fullName, password, avatarPath, role) " +
                 "VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, email);
-        stmt.setString(2, phoneNumber);
-        stmt.setString(3, fullName);
-        stmt.setString(4, password);
-        stmt.setString(5, avatarPath);
-        stmt.setString(6, role);
-        stmt.executeUpdate();
+       try(PreparedStatement stmt = createStatement(sql)){
+           stmt.setString(1, email);
+           stmt.setString(2, phoneNumber);
+           stmt.setString(3, fullName);
+           stmt.setString(4, password);
+           stmt.setString(5, avatarPath);
+           stmt.setString(6, role);
+           stmt.executeUpdate();
+       } catch (SQLException e){
+           e.printStackTrace();
+       }
+
     }
 
     public void createVoucher(String email, int discountPercentage) throws SQLException {
         String sql = "INSERT INTO Voucher (Email, discountPercentage) VALUES (?, ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, email);
-        stmt.setInt(2, discountPercentage);
-        stmt.executeUpdate();
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setString(1, email);
+            stmt.setInt(2, discountPercentage);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean checkDataExit(String email_)  {
         String query = "SELECT COUNT(*) FROM User WHERE email = ?";
 
-        try (Connection connection1 = DriverManager.getConnection(url, userName, userPassword);
+        try (Connection connection1 = DBConnection.getInstance().getConnection();
              PreparedStatement preparedStatement = connection1.prepareStatement(query)) {
 
             preparedStatement.setString(1, email_); // Gán giá trị cho dấu ? trong câu lệnh SQL
-
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                int count = resultSet.getInt(1); // Lấy giá trị COUNT từ kết quả
-                return count > 0;
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {  // Thực hiện câu lệnh sau khi đã gán giá trị
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1); // Lấy giá trị COUNT từ kết quả
+                    return count > 0;
+                }
             }
 
         } catch (Exception e) {
@@ -104,16 +112,17 @@ public class DBConnection {
     public boolean checkDataExit(String email_, String password_) {
         String query = "SELECT COUNT(*) FROM User WHERE email = ? AND password = ?";
 
-        try (Connection connection1 = DriverManager.getConnection(url, userName, userPassword);
+        try (Connection connection1 = DBConnection.getInstance().getConnection();
              PreparedStatement preparedStatement = connection1.prepareStatement(query)) {
 
-            preparedStatement.setString(1, email_); // Gán giá trị cho dấu ? trong câu lệnh SQL
+            preparedStatement.setString(1, email_);  // Gán giá trị cho dấu ? trong câu lệnh SQL
             preparedStatement.setString(2, password_);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
-                int count = resultSet.getInt(1); // Lấy giá trị COUNT từ kết quả
-                return count > 0;
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {  // Thực hiện câu lệnh SQL sau khi đã gán giá trị
+                if (resultSet.next()) {
+                    int count = resultSet.getInt(1);  // Lấy giá trị COUNT từ kết quả
+                    return count > 0;
+                }
             }
 
         } catch (Exception e) {
@@ -133,70 +142,6 @@ public class DBConnection {
         }
     }
 
-
-    public boolean authorPrimaryKeyExist(String bookID, String author) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM author WHERE bookID = ? AND authorName = ?";
-
-        try (PreparedStatement stmt = createStatement(sql)) {
-            stmt.setString(1, bookID);
-            stmt.setString(2, author);
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
-            }
-        }
-    }
-
-    public boolean categoryPrimaryKeyExist(String category, String bookID) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM categories WHERE bookID = ? AND Category = ?";
-
-        try (PreparedStatement stmt = createStatement(sql)) {
-            stmt.setString(1, bookID);
-            stmt.setString(2, category);
-            try (ResultSet rs = stmt.executeQuery()) {
-                return rs.next() && rs.getInt(1) > 0;
-            }
-        }
-    }
-
-    public void addAuthor(String bookID, String author) throws SQLException {
-        if (authorPrimaryKeyExist(bookID, author)) {
-            return;
-        }
-        String sql = "INSERT INTO author (bookID, authorName) VALUES (?, ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, bookID);
-        stmt.setString(2, author);
-        stmt.executeUpdate();
-    }
-
-    public void addBook(String bookID, String title, int bookPrice, int quantityInStock,
-                        Timestamp addDate, double averageRating) throws SQLException {
-        if (bookExist(bookID)) {
-            return;
-        }
-        String sql = "INSERT INTO books (bookID, title, bookPrice, quantityInStock, addDate, averageRating) " +
-                "VALUES (?, ?, ?, ?, ?, ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, bookID);
-        stmt.setString(2, title);
-        stmt.setInt(3, bookPrice);
-        stmt.setInt(4, quantityInStock);
-        stmt.setTimestamp(5, addDate);
-        stmt.setDouble(6, averageRating);
-        stmt.executeUpdate();
-    }
-
-    public void addCategories(String category, String bookID) throws SQLException {
-        if (categoryPrimaryKeyExist(category, bookID)) {
-            return;
-        }
-        String sql = "INSERT INTO categories (category, bookID) VALUES (?, ?)";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, category);
-        stmt.setString(2, bookID);
-        stmt.executeUpdate();
-    }
-
     public int getQuantity(String bookID) throws SQLException {
         String sql = "SELECT quantityInStock FROM books WHERE bookID = ?";
         PreparedStatement stmt = createStatement(sql);
@@ -210,62 +155,115 @@ public class DBConnection {
         }
     }
 
-    public List<String> getTopBooks(int number) throws SQLException {
-        String sql = "SELECT bookID FROM books ORDER BY averageRating DESC LIMIT ?";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setInt(1, number);
+    public List<Book> getTopBooks(int number) throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM books ORDER BY averageRating DESC LIMIT ?";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setInt(1, number);
+            List<Book> books = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
 
-        ResultSet rs = stmt.executeQuery();
-        List<String> ids = new ArrayList<>();
-
-        while (rs.next()) {
-            ids.add(rs.getString(1));
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return books;
         }
-        return ids;
     }
 
-    public List<String> getTopCategories(String category) throws SQLException {
-        String sql = "SELECT bookID FROM categories NATURAL JOIN books " +
-                "WHERE category = ? ORDER BY averageRating DESC";
-        PreparedStatement stmt = createStatement(sql);
+    public List<Book> getTopCategories(String category) throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM books NATURAL JOIN categories WHERE category = ? " +
+                "ORDER BY averageRating DESC";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setString(1, category);
+            List<Book> books = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()) {
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
 
-        stmt.setString(1, category);
-
-        ResultSet rs = stmt.executeQuery();
-        List<String> ids = new ArrayList<>();
-
-        while (rs.next()) {
-            ids.add(rs.getString(1));
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return books;
         }
-        return ids;
     }
 
-    public List<String> getRecentlyBooks(int number) throws SQLException {
-        String sql = "SELECT bookID FROM books ORDER BY addDate DESC LIMIT ?";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setInt(1, number);
+    public String getAuthor(String bookID) throws SQLException {
+        String sql = "SELECT authorName FROM author WHERE bookID = ?";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setString(1, bookID);
+            try(ResultSet rs = stmt.executeQuery()){
+                StringBuilder authors = new StringBuilder();
+                while (rs.next()) {
+                    authors.append(rs.getString(1));
+                }
+                return authors.toString();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
 
-        ResultSet rs = stmt.executeQuery();
-        List<String> ids = new ArrayList<>();
-
-        while (rs.next()) {
-            String bookID = rs.getString(1);
-            ids.add(bookID);
         }
-        return ids;
+        return null;
+    }
+
+    public List<Book> getRecentlyBooks(int number) throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM books ORDER BY addDate DESC LIMIT ?";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setInt(1, number);
+            List<Book> books = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
+
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return books;
+        }
     }
 
     public List<String> getAllSubjectFromDB() throws SQLException {
         String sql = "SELECT DISTINCT Category FROM categories ORDER BY Category ASC";
-        PreparedStatement stmt = createStatement(sql);
-        ResultSet rs = stmt.executeQuery();
+        try(PreparedStatement stmt = createStatement(sql);  ){
+            List<String> subjects = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()){
+                while (rs.next()) {
+                    String category = rs.getString(1);
+                    subjects.add(category);
+                }
+                return subjects;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-        List<String> subjects = new ArrayList<>();
-
-        while (rs.next()) {
-            String category = rs.getString(1);
-            subjects.add(category);
         }
-        return subjects;
+        return null;
     }
 }

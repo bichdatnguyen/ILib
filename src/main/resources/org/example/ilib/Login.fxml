@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerLogin">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerLogin">
     <children>
         <Label id="Login" layoutX="183.0" layoutY="-11.0" prefHeight="261.0" prefWidth="595.0" text="Login" textFill="#44813c">
             <font>
@@ -50,6 +50,6 @@
                 </Button>
             </children>
         </GridPane>
-        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#backToMenu" text="Back to Menu" />
+        <Button mnemonicParsing="false" onMouseClicked="#backToMenu" text="Back" />
     </children>
 </AnchorPane>

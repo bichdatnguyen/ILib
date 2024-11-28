@@ -15,6 +15,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,7 +145,7 @@ public class GoogleBooksAPI {
         }
     }
 
-    public Book getBooksByID(String id) throws IOException {
+    public Book getBooksByID(String id) throws IOException, SQLException {
         String urlString = "https://www.googleapis.com/books/v1/volumes/"
                 + id + "?key=" + apiKey;
 
@@ -155,6 +156,7 @@ public class GoogleBooksAPI {
         String title = getTitle(volumeInfo);
         String author = getAuthors(getAuthorInList(volumeInfo));
         String description = getDescription(volumeInfo);
-        return new Book(image, title, author, description, id);
+        // sua sau
+        return new Book(image, title, author, description, id, 0);
     }
 }

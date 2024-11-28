@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerBookDetail {
+public class ControllerBookDetail extends ControllerBook {
 
     @FXML
     private Button BackButton;
@@ -56,13 +56,10 @@ public class ControllerBookDetail {
 
     @FXML
     private Text titleText;
-    @FXML
-
-    private Book book;
 
     private static final int Buy = 2;
     private static final int Borrow = 1;
-    private static  int status = 0;
+    private static int status = 0;
     private String email = Account.getInstance().getEmail();
 
     private Scene Forwardsceen;
@@ -71,22 +68,22 @@ public class ControllerBookDetail {
         this.Forwardsceen = scene;
     }
 
-    public void setBook(String id) throws IOException {
-        GoogleBooksAPI gg = new GoogleBooksAPI();
-        book = gg.getBooksByID(id);
-    }
-
-    public void showInformation() throws SQLException {
+    public void showInformation(Book book) {
         thumbnail.setImage(new Image(book.getImage()));
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthor());
-        descriptionText.setText(book.getDescription());
-        idText.setText(book.getId());
+        String description = book.getDescription();
+        if (description.length() < 250) {
+            descriptionText.setText(description);
+        } else {
+            descriptionText.setText(book.getDescription().substring(0, 250));
+        }
+        idText.setText(book.getID());
         quantityText.setText(String.valueOf(book.getQuantity()));
     }
 
     public void Back(MouseEvent event) throws IOException {
-        Stage stage = (Stage)BackButton.getScene().getWindow();
+        Stage stage = (Stage) BackButton.getScene().getWindow();
 
         Scene scene = Forwardsceen;
         stage.setScene(scene);
@@ -97,41 +94,47 @@ public class ControllerBookDetail {
         System.out.println(email);
         String queryCheck = "SELECT quantity, type FROM cart WHERE email = ? AND bookId = ?";
         String queryInsert = "INSERT INTO cart (bookID, email, date, quantity,type) VALUES (?, ?, CURRENT_DATE, ?,?)";
-        DBConnection dbConnection = DBConnection.getInstance();
-        try (Connection connection = dbConnection.getConnection()) {
+
+        try (Connection connection =DBConnection.getInstance().getConnection()) {
             // Kiểm tra nếu sách đã có trong giỏ hàng
-            try (PreparedStatement stmtCheck = connection.prepareStatement(queryCheck)) {
+            try (PreparedStatement stmtCheck = connection.prepareStatement(queryCheck);
+               ) {
                 stmtCheck.setString(1, bookId);
                 stmtCheck.setString(2, email);
-                ResultSet rs = stmtCheck.executeQuery();
-                String statusBook = (status == Borrow) ? "BORROW" :"BUY";
-                if (rs.next()) {
-                    String currentStatus = rs.getString("type");
-                    // Kiểm tra nếu trạng thái khác, có thể xử lý logic tùy ý
 
-                    // Nếu sách đã có, cập nhật số lượng và trạng thái
-                    if(currentStatus.equals(statusBook)) {
-                        showErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
+                String statusBook = (status == Borrow) ? "BORROW" :"BUY";
+                try(  ResultSet rs = stmtCheck.executeQuery()){
+                    if (rs.next()) {
+                        String currentStatus = rs.getString("type");
+                        // Kiểm tra nếu trạng thái khác, có thể xử lý logic tùy ý
+
+                        // Nếu sách đã có, cập nhật số lượng và trạng thái
+                        if(currentStatus.equals(statusBook)) {
+                            showErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
+                        } else {
+                            try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
+                                stmtInsert.setString(1, bookId);
+                                stmtInsert.setString(2, email);
+
+                                stmtInsert.setInt(3, quantity);
+                                stmtInsert.setString(4, statusBook);
+                                stmtInsert.executeUpdate();
+                            }
+                        }
                     } else {
+                        // Nếu sách chưa có, thêm mới
                         try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
                             stmtInsert.setString(1, bookId);
                             stmtInsert.setString(2, email);
-
                             stmtInsert.setInt(3, quantity);
                             stmtInsert.setString(4, statusBook);
                             stmtInsert.executeUpdate();
                         }
                     }
-                } else {
-                    // Nếu sách chưa có, thêm mới
-                    try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
-                        stmtInsert.setString(1, bookId);
-                        stmtInsert.setString(2, email);
-                        stmtInsert.setInt(3, quantity);
-                        stmtInsert.setString(4, statusBook);
-                        stmtInsert.executeUpdate();
-                    }
                 }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         } catch (SQLException e) {
             e.printStackTrace();
