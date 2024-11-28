@@ -43,6 +43,7 @@ public class ControllerCategories implements Initializable {
     }
 
     public void BackToMenu(MouseEvent event) throws IOException {
+        //bookByCategory.clear();
         Stage stage = (Stage) Back.getScene().getWindow();
         FXMLLoader fx = new FXMLLoader();
         fx.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));

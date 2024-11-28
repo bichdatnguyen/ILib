@@ -3,6 +3,7 @@ package org.example.ilib.Controller;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.collections.ObservableList;
+import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.Book;
 import org.example.ilib.Processor.CartItem;
 
@@ -74,7 +75,6 @@ public class DBConnection {
        } catch (SQLException e){
            e.printStackTrace();
        }
-
     }
 
     public void createVoucher(String email, int discountPercentage) throws SQLException {
@@ -265,5 +265,83 @@ public class DBConnection {
 
         }
         return null;
+    }
+
+    public boolean existInShelf(String bookID) throws SQLException {
+        String sql = "SELECT EXISTS (SELECT 1 FROM shelf WHERE bookID = ?)";
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, bookID);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() && rs.getInt(1) > 0;
+            }
+        }
+    }
+
+    public void saveBookToShelf(String bookID) throws SQLException {
+        String sql = "INSERT INTO shelf (Email, bookID) VALUES (?, ?)";
+        try(PreparedStatement stmt = createStatement(sql)) {
+            stmt.setString(1, Account.getInstance().getEmail());
+            stmt.setString(2, bookID);
+            stmt.executeUpdate();
+        }
+    }
+
+    public void deleteBookFromShelf(String bookID) throws SQLException {
+        String sql = "DELETE FROM shelf WHERE bookID = ?";
+        try(PreparedStatement stmt = createStatement(sql)) {
+            stmt.setString(1, bookID);
+            stmt.executeUpdate();
+        }
+    }
+
+    public List<Book> allBorrowBooks() throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM borrow NATURAL JOIN books WHERE Email = ?";
+        try(PreparedStatement stmt = createStatement(sql)) {;
+            stmt.setString(1, Account.getInstance().getEmail());
+            List<Book> books = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
+
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return books;
+        }
+    }
+
+    public List<Book> allBookInShelf() throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM shelf NATURAL JOIN books WHERE Email = ?";
+        try(PreparedStatement stmt = createStatement(sql)) {;
+            stmt.setString(1, Account.getInstance().getEmail());
+            List<Book> books = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
+
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return books;
+        }
     }
 }

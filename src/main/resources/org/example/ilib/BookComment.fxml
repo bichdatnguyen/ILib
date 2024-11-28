@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.BookComment">
+   <children>
+      <TextArea layoutX="32.0" layoutY="435.0" prefHeight="82.0" prefWidth="900.0" />
+      <Button layoutX="856.0" layoutY="542.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="65.0" text="Đăng">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <ScrollPane layoutX="32.0" layoutY="42.0" prefHeight="365.0" prefWidth="900.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+        </content>
+      </ScrollPane>
+      <Button fx:id="backToBook" layoutX="40.0" layoutY="542.0" mnemonicParsing="false" text="Back">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

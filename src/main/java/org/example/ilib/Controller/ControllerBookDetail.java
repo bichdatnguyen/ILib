@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
@@ -57,6 +58,12 @@ public class ControllerBookDetail extends ControllerBook {
     @FXML
     private Text titleText;
 
+    @FXML
+    private Button moveToCmt;
+
+    @FXML
+    private HBox optionInBook;
+
     private static final int Buy = 2;
     private static final int Borrow = 1;
     private static int status = 0;
@@ -88,6 +95,8 @@ public class ControllerBookDetail extends ControllerBook {
         Scene scene = Forwardsceen;
         stage.setScene(scene);
     }
+
+
 
     public void addBookToCart(String email, String bookId, int quantity, int status) throws SQLException {
 
@@ -183,5 +192,45 @@ public class ControllerBookDetail extends ControllerBook {
     }
 
 
+    public void setOptionInBook(Book book) throws SQLException {
+        if (book.getQuantity() == 0) {
+            return;
+        } else {
+            DBConnection db = DBConnection.getInstance();
 
+            Button moveToCmt = new Button("Bình luận");
+            Button saveToShelf = new Button("Lưu");
+            Button deleteBookInShelf = new Button("Xóa");
+            optionInBook.getChildren().addAll(moveToCmt, saveToShelf, deleteBookInShelf);
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            saveToShelf.setOnMouseClicked(_ -> {
+                try {
+                    if (!db.existInShelf(book.getID())) {
+                        db.saveBookToShelf(book.getID());
+                        alert.setContentText("Sách lưu thành công!");
+                    } else {
+                        alert.setContentText("Sách đã được lưu");
+                    }
+                    alert.show();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+
+            deleteBookInShelf.setOnMouseClicked(_ -> {
+                try {
+                    if (db.existInShelf(book.getID())) {
+                        db.deleteBookFromShelf(book.getID());
+                        alert.setContentText("Xóa thành công");
+                    } else {
+                        alert.setContentText("Sách không tồn tại trong giá");
+                    }
+                    alert.show();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+    }
 }

@@ -1,26 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerReading">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="922.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerReading">
    <children>
-      <Label alignment="CENTER" layoutX="14.0" layoutY="10.0" prefHeight="70.0" prefWidth="171.0" text="Giá sách">
+      <Label alignment="CENTER" prefHeight="70.0" prefWidth="171.0" text="Giá sách" textFill="#3ec75b">
          <font>
             <Font size="32.0" />
          </font>
       </Label>
       <Button fx:id="Back" layoutX="817.0" layoutY="20.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
-      <Button layoutX="18.0" layoutY="600.0" mnemonicParsing="false" text="Trả sách" />
-      <TableView layoutX="150.0" layoutY="149.0" prefHeight="395.0" prefWidth="700.0">
-        <columns>
-          <TableColumn prefWidth="214.0" text="Tên sách" />
-          <TableColumn prefWidth="238.0" text="Trạng thái" />
-        </columns>
-      </TableView>
+      <Label layoutX="24.0" layoutY="79.0" text="Sách đang mượn">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="14.0" layoutY="106.0" prefHeight="240.0" prefWidth="890.0">
+         <content>
+            <HBox fx:id="borrowBooks" prefHeight="215.0" prefWidth="964.0" />
+         </content>
+      </ScrollPane>
+      <Label layoutX="24.0" layoutY="368.0" prefHeight="18.0" prefWidth="92.0" text="Sách đã lưu">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ScrollPane layoutX="14.0" layoutY="395.0" prefHeight="258.0" prefWidth="890.0">
+         <content>
+            <HBox fx:id="saveBooks" prefHeight="215.0" prefWidth="944.0" />
+         </content>
+      </ScrollPane>
+      <HBox prefHeight="100.0" prefWidth="200.0" />
    </children>
 </AnchorPane>
