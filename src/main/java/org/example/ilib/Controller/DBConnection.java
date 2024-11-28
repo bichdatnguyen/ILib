@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.Book;
 import org.example.ilib.Processor.CartItem;
+import org.example.ilib.Processor.Comment;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -342,6 +343,43 @@ public class DBConnection {
                 e.printStackTrace();
             }
             return books;
+        }
+    }
+
+    public void saveCmt(String email, String bookID, String cmt, Timestamp now) {
+        String sql = "INSERT INTO rating (Email, bookID, Comment, Time) " +
+                "VALUES (?, ?, ?, ?)";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setString(1, email);
+            stmt.setString(2, bookID);
+            stmt.setString(3, cmt);
+            stmt.setTimestamp(4, now);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Comment> allBookCmt(String bookID) throws SQLException {
+        String sql = "SELECT Email, Comment, Time FROM rating WHERE bookID = ?";
+
+        try(PreparedStatement stmt = createStatement(sql)) {;
+            stmt.setString(1, bookID);
+            List<Comment> comments = new ArrayList<>();
+
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()) {
+                    String email = rs.getString(1);
+                    String cmt = rs.getString(2);
+                    Timestamp time = rs.getTimestamp(3);
+
+                    Comment comment = new Comment(email, cmt, time);
+                    comments.add(comment);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return comments;
         }
     }
 }

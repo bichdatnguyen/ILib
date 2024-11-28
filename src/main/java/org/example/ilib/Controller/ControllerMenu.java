@@ -254,7 +254,7 @@ public class ControllerMenu implements Initializable {
                     HBox cardbox = (HBox) fx.load();
                     ControllerBook controllerBook = (ControllerBook) fx.getController();
                     controllerBook.setBook(recentlyBooks.get(i));
-                     controllerBook.showBook(recentlyBooks.get(i));
+                    controllerBook.showBook(recentlyBooks.get(i));
                     recentlyAddHbox.getChildren().add(cardbox);
                 }
             } catch (IOException e) {

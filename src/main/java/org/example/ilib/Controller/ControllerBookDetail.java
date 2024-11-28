@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -14,6 +15,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.Book;
+import org.example.ilib.Processor.Comment;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -59,9 +61,6 @@ public class ControllerBookDetail extends ControllerBook {
     private Text titleText;
 
     @FXML
-    private Button moveToCmt;
-
-    @FXML
     private HBox optionInBook;
 
     private static final int Buy = 2;
@@ -95,8 +94,6 @@ public class ControllerBookDetail extends ControllerBook {
         Scene scene = Forwardsceen;
         stage.setScene(scene);
     }
-
-
 
     public void addBookToCart(String email, String bookId, int quantity, int status) throws SQLException {
 
@@ -191,7 +188,6 @@ public class ControllerBookDetail extends ControllerBook {
         status = Buy;
     }
 
-
     public void setOptionInBook(Book book) throws SQLException {
         if (book.getQuantity() == 0) {
             return;
@@ -202,6 +198,24 @@ public class ControllerBookDetail extends ControllerBook {
             Button saveToShelf = new Button("Lưu");
             Button deleteBookInShelf = new Button("Xóa");
             optionInBook.getChildren().addAll(moveToCmt, saveToShelf, deleteBookInShelf);
+
+            moveToCmt.setOnMouseClicked(_ -> {
+                Stage stage = (Stage) moveToCmt.getScene().getWindow();
+
+                FXMLLoader fx = new FXMLLoader(getClass().getResource("/org/example/ilib/BookComment.fxml"));
+                Parent root = null;
+                try {
+                    root = fx.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                ControllerBookComment controllerBkCmt = fx.getController();
+                controllerBkCmt.setBookID(book.getID());
+                controllerBkCmt.saveFowardScene(moveToCmt.getScene());
+                controllerBkCmt.showAllCmtInBook();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+            });
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             saveToShelf.setOnMouseClicked(_ -> {

@@ -1,27 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="100.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Comment">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerComment">
    <children>
-      <VBox prefHeight="200.0" prefWidth="800.0">
-         <children>
-            <Label fx:id="emailCmt" alignment="TOP_LEFT" prefHeight="23.0" prefWidth="79.0" text="Label">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="cmtContent" alignment="TOP_LEFT" prefHeight="153.0" prefWidth="799.0" text="Label">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label fx:id="timeCmt" prefHeight="18.0" prefWidth="196.0" text="Label" />
-         </children>
-      </VBox>
+      <Label fx:id="emailCmt" prefHeight="27.0" prefWidth="300.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="cmt" prefHeight="18.0" prefWidth="905.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="timeCmt" prefHeight="22.0" prefWidth="300.0" />
    </children>
-</AnchorPane>
+</VBox>
