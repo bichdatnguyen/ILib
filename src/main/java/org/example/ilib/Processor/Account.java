@@ -9,6 +9,7 @@ public class Account {
     private String fullName;
     private String phone;
     private String avatarPath;
+    private String role;
     private static Account instance;
 
     protected Account() {}
@@ -18,6 +19,13 @@ public class Account {
             instance = new Account();
         }
         return instance;
+    }
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {

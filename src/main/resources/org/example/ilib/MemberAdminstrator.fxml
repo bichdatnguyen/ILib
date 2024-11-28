@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="642.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.MemberAdminstrator">
+<AnchorPane prefHeight="642.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMemberAdminstrator">
    <children>
-      <TableView layoutX="277.0" layoutY="86.0" prefHeight="555.0" prefWidth="648.0">
+      <TableView fx:id="tableView" layoutX="277.0" layoutY="86.0" prefHeight="555.0" prefWidth="648.0">
         <columns>
-          <TableColumn prefWidth="155.0" text="email" />
-          <TableColumn prefWidth="97.0" text="name" />
-            <TableColumn prefWidth="185.0" text="Phone" />
-            <TableColumn prefWidth="189.0" text="password" />
+          <TableColumn fx:id="emailC" prefWidth="155.0" text="email" />
+          <TableColumn fx:id="nameC" prefWidth="97.0" text="name" />
+            <TableColumn fx:id="phoneC" prefWidth="185.0" text="Phone" />
+            <TableColumn fx:id="passwordC" prefWidth="208.6666259765625" text="password" />
         </columns>
       </TableView>
       <VBox layoutX="14.0" layoutY="150.0" prefHeight="267.0" prefWidth="252.0">
@@ -46,9 +49,9 @@
          </children>
       </VBox>
       <Button layoutX="14.0" layoutY="445.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="104.0" text="Add" />
-      <Button layoutX="16.0" layoutY="509.0" mnemonicParsing="false" text="Delete" />
+      <Button layoutX="16.0" layoutY="509.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="104.0" text="Delete" />
       <Button layoutX="14.0" layoutY="579.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="104.0" text="Edit" />
       <TextField layoutX="8.0" layoutY="86.0" prefHeight="51.0" prefWidth="260.0" promptText="SearchInformation" />
-      <Button layoutX="832.0" layoutY="25.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="backButton" onMouseClicked="#backClicked" layoutX="832.0" layoutY="25.0" mnemonicParsing="false" text="Back" />
    </children>
 </AnchorPane>

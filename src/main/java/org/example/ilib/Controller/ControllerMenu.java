@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -45,6 +42,12 @@ public class ControllerMenu implements Initializable {
     public ImageView avatarUser;
 
     @FXML
+    public MenuButton UserButton;
+    
+    @FXML
+    public MenuItem updateDB;
+
+    @FXML
     private MenuItem signOut;
 
     @FXML
@@ -70,11 +73,9 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     private MenuItem Admin;
+
     @FXML
     private MenuItem TransactionItem;
-
-
-
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
@@ -95,6 +96,9 @@ public class ControllerMenu implements Initializable {
      * @throws IOException in case that FXML can not be used
      */
     public void signOutMenu(ActionEvent actionEvent) throws IOException {
+        //change user abilities
+        Account.getInstance().setRole(null);
+
         Stage stage = (Stage) signOut.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));
         Parent root = fxmlLoader.load();
@@ -228,13 +232,20 @@ public class ControllerMenu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
-            AdminApp.getInstance().adminChecking();
+            if (Account.getInstance().getRole() == null) {
+                AdminApp.getInstance().adminChecking();
+                System.out.println("adminChecking happens");
+            }
+            if (Account.getInstance().getRole().equals("admin")) {
+                UserButton.setText("Admin");
+                updateDB.setVisible(true);
+            } else {
+                UserButton.setText("User");
+            }
             loadProperties();
             if (Account.getInstance().getAvatarPath() != null) {
                 avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
             }
-
-
             try {
                 List<Book> recentlyBooks = Booklist.getInstance().RecentlyBookList;
                 for (int i = 0; i < recentlyBooks.size(); i++) {
@@ -259,6 +270,17 @@ public class ControllerMenu implements Initializable {
         try {
             Stage stage = (Stage) TransactionItem.getParentPopup().getOwnerWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/TransactionHistory.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void gotoAdvanceSetting(ActionEvent actionEvent) {
+        try {
+            Stage stage = (Stage) updateDB.getParentPopup().getOwnerWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MemberAdminstrator.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
         } catch(IOException e){

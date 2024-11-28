@@ -25,7 +25,8 @@ public class AdminApp {
             ResultSet resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 System.out.println(resultSet.getString("role"));
-                 return resultSet.getString("role").equals("admin");
+                Account.getInstance().setRole(resultSet.getString("role"));
+                return resultSet.getString("role").equals("admin");
             }
         } catch (SQLException e) {
             e.printStackTrace();
