@@ -84,7 +84,7 @@ public class ControllerBookDetail extends ControllerBook {
         } else {
             descriptionText.setText(book.getDescription().substring(0, 250));
         }
-        idText.setText(book.getID());
+        idText.setText(book.getId());
         quantityText.setText(String.valueOf(book.getQuantity()));
     }
 
@@ -210,7 +210,7 @@ public class ControllerBookDetail extends ControllerBook {
                     throw new RuntimeException(e);
                 }
                 ControllerBookComment controllerBkCmt = fx.getController();
-                controllerBkCmt.setBookID(book.getID());
+                controllerBkCmt.setBookID(book.getId());
                 controllerBkCmt.saveFowardScene(moveToCmt.getScene());
                 controllerBkCmt.showAllCmtInBook();
                 Scene scene = new Scene(root);
@@ -220,8 +220,8 @@ public class ControllerBookDetail extends ControllerBook {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             saveToShelf.setOnMouseClicked(_ -> {
                 try {
-                    if (!db.existInShelf(book.getID())) {
-                        db.saveBookToShelf(book.getID());
+                    if (!db.existInShelf(book.getId())) {
+                        db.saveBookToShelf(book.getId());
                         alert.setContentText("Sách lưu thành công!");
                     } else {
                         alert.setContentText("Sách đã được lưu");
@@ -234,8 +234,8 @@ public class ControllerBookDetail extends ControllerBook {
 
             deleteBookInShelf.setOnMouseClicked(_ -> {
                 try {
-                    if (db.existInShelf(book.getID())) {
-                        db.deleteBookFromShelf(book.getID());
+                    if (db.existInShelf(book.getId())) {
+                        db.deleteBookFromShelf(book.getId());
                         alert.setContentText("Xóa thành công");
                     } else {
                         alert.setContentText("Sách không tồn tại trong giá");

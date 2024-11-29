@@ -1,0 +1,186 @@
+package org.example.ilib.Controller;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import org.example.ilib.Processor.Book;
+import org.example.ilib.Processor.CartItem;
+
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class ControllerBookAdmin implements Initializable {
+
+    @FXML
+    private Button EditButton;
+
+    @FXML
+    private TextField searchText;
+
+    @FXML
+    private Button DeleteButton;
+
+    @FXML
+    private Button AddButton;
+    @FXML
+    private TableView<Book> BookTable;
+    @FXML
+    private TableColumn<Book, String> authorCol;
+    @FXML
+    private TableColumn<Book, String> titleCol;
+    @FXML
+    private TableColumn<Book, Integer> quanityCol;
+
+    @FXML
+    private TableColumn<Book, String> bookIDCol;
+
+    @FXML
+    private TableColumn<Book, Integer> priceCol;
+    private ObservableList<Book> BookList;
+
+    @FXML
+    private VBox searchVbox;
+    @FXML
+    private ScrollPane searchScroll;
+
+
+    @FXML
+    void AddButtonClick(MouseEvent event) {
+
+    }
+
+
+    @FXML
+    void EditButtonClick(MouseEvent event) {
+
+    }
+
+    @FXML
+    void DeleteButtonClick(MouseEvent event) {
+
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try{
+            getBooksfromDB();
+            bookIDCol.setCellValueFactory(new PropertyValueFactory<Book,String>("id"));
+            titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
+            authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
+            priceCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("price"));
+            quanityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
+            BookTable.setItems(BookList);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void getBooksfromDB(){
+        String query = "select *, authorName from books natural join author";
+        List<Book> books = new ArrayList<>();
+        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)){
+                try(ResultSet rs = stmt.executeQuery()){
+                    while(rs.next()){
+                        String bookID = rs.getString("bookID");
+                        String title = rs.getString("title");
+                        String author = rs.getString("authorName");
+                        int quantity = rs.getInt("quantityInStock");
+                        int price = rs.getInt("bookPrice");
+                        Book book = new Book(bookID, title, author, quantity, price);
+                        books.add(book);
+                    }
+                    this.BookList = FXCollections.observableArrayList(books);
+                }
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void searchInfofromDB(String search) {
+        String query = "SELECT title FROM books natural join author WHERE title LIKE ? OR bookID LIKE ? OR description LIKE ? OR authorName LIKE ?";
+        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            String queryPattern = "%" + search + "%";
+            preparedStatement.setString(1, queryPattern);
+            preparedStatement.setString(2, queryPattern);
+            preparedStatement.setString(3, queryPattern);
+            preparedStatement.setString(4, queryPattern);
+            try(ResultSet resultSet = preparedStatement.executeQuery()){
+                while(resultSet.next()){
+                    String title = resultSet.getString("title");
+                    Text text = new Text(title);
+                    text.setOnMouseClicked(mouseEvent -> {
+                        searchText.clear();
+                        searchText.setText(text.getText());
+                    });
+                    text.setOnMouseEntered(mouseEvent -> {
+                        text.setFill(javafx.scene.paint.Color.BLUE);
+                    });
+                    text.setOnMouseExited(mouseEvent -> {
+                        text.setFill(javafx.scene.paint.Color.BLACK);
+                    });
+                    searchVbox.getChildren().add(text);
+                }
+                if (!searchVbox.getChildren().isEmpty()) {
+                    searchScroll.setVisible(true);
+                } else {
+                    searchScroll.setVisible(false);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }  catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void searchKeyBoard(KeyEvent event) {
+        if(!searchText.getText().equals("")){
+            searchVbox.getChildren().clear();
+            searchInfofromDB(searchText.getText());
+        } else{
+            searchScroll.setVisible(false);
+        }
+    }
+    @FXML
+    public void searchEnter(KeyEvent event) {
+        if(!searchText.getText().equals("")){
+            FilteredList<Book> filteredBooks = new FilteredList<>(BookList, b -> true);
+            BookTable.setItems(filteredBooks); searchText.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredBooks.setPredicate(book -> {
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    } else if (book.getAuthor().toLowerCase().contains(lowerCaseFilter)) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+        }
+    }
+
+}

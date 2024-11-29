@@ -246,6 +246,7 @@ SET GLOBAL max_connections = 500;
 
 select * from user;
 select * from books;
+select * from author;
 select * from cart;
 insert into user values ('ton@gmail.com','1234567890','Vu Dat','1234556',null,'user');
 select * from payment;

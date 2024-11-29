@@ -1,7 +1,5 @@
 package org.example.ilib.Controller;
 
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -46,7 +44,7 @@ public class ControllerAdminMenu implements Initializable {
     @FXML
     void MenuHboxClick(MouseEvent event) {
         try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MenuAdmin.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AdminStatistic.fxml"));
             AnchorPane memberEditPane = fxmlLoader.load();
             ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
             ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
@@ -130,7 +128,7 @@ public class ControllerAdminMenu implements Initializable {
         userhbox.setStyle("-fx-background-color: transparent");
         exithbox.setStyle("-fx-background-color: transparent");
        try{
-           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MenuAdmin.fxml"));
+           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AdminStatistic.fxml"));
            AnchorPane memberEditPane = fxmlLoader.load();
            ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
            ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới

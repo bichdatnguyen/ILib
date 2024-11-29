@@ -34,7 +34,7 @@
             </HBox>
             <HBox prefHeight="295.0" prefWidth="900.0">
                <children>
-                  <BarChart prefHeight="367.0" prefWidth="508.0">
+                  <BarChart fx:id="UserChart" prefHeight="289.0" prefWidth="420.0" title="UserChart">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -42,7 +42,7 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </BarChart>
-                  <PieChart prefHeight="388.0" prefWidth="395.0" />
+                  <PieChart fx:id="BookChart" prefHeight="388.0" prefWidth="395.0" title="BookChart" />
                </children>
             </HBox>
             <HBox prefHeight="88.0" prefWidth="900.0" />
