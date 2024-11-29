@@ -76,6 +76,12 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     private MenuItem TransactionItem;
+    @FXML
+    private HBox TopBookHbox;
+    @FXML
+    private HBox CategoriesHbox;
+    @FXML
+    private HBox ReadingHbox;
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
@@ -232,9 +238,16 @@ public class ControllerMenu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
+            TopBookHbox.setStyle("-fx-background-color: transparent");
+            CategoriesHbox.setStyle("-fx-background-color: transparent");
+            ReadingHbox.setStyle("-fx-background-color: transparent");
             if (Account.getInstance().getRole() == null) {
                 AdminApp.getInstance().adminChecking();
                 System.out.println("adminChecking happens");
+            }
+            if(Account.getInstance().getRole().equals("admin")){
+                UserButton.setText("Admin");
+                Admin.setVisible(true);
             }
             else {
                 UserButton.setText("User");
@@ -273,15 +286,40 @@ public class ControllerMenu implements Initializable {
             e.printStackTrace();
         }
     }
-
+    @FXML
     public void gotoAdvanceSetting(ActionEvent actionEvent) {
         try {
-            Stage stage = (Stage) updateDB.getParentPopup().getOwnerWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MemberAdminstrator.fxml"));
+            Stage stage = (Stage) Admin.getParentPopup().getOwnerWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Admin.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
         } catch(IOException e){
             e.printStackTrace();
         }
     }
+    @FXML
+    public void TopBookHboxEnter(MouseEvent event) {
+        TopBookHbox.setStyle("-fx-background-color: green");
+    }
+    @FXML
+    public void TopBookHboxExit(MouseEvent event) {
+        TopBookHbox.setStyle("-fx-background-color: transparent");
+    }
+    @FXML
+    public void CategoriesHboxEnter(MouseEvent event) {
+        CategoriesHbox.setStyle("-fx-background-color: green");
+    }
+    @FXML
+    public void CategoriesHboxExit(MouseEvent event) {
+        CategoriesHbox.setStyle("-fx-background-color: transparent");
+    }
+    @FXML
+    public void ReadingHboxEnter(MouseEvent event) {
+        ReadingHbox.setStyle("-fx-background-color: green");
+    }
+    @FXML
+    public void ReadingHboxExit(MouseEvent event) {
+       ReadingHbox.setStyle("-fx-background-color: transparent");
+    }
+
 }

@@ -24,6 +24,9 @@ public class ControllerBook  {
     private Label title;
     @FXML
     private Label author;
+    @FXML
+    private HBox BookHbox;
+
 
     private Book book;
 
@@ -64,4 +67,14 @@ public class ControllerBook  {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
+
+    @FXML
+    public void BookHboxEnter(MouseEvent event) {
+        BookHbox.setStyle("-fx-background-color: yellow");
+    }
+    @FXML
+    public void BookHboxExit(MouseEvent event) {
+        BookHbox.setStyle("-fx-background-color: transparent");
+    }
+
 }

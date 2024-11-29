@@ -11,13 +11,13 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerAdminMenu">
    <left>
-      <VBox BorderPane.alignment="CENTER">
+      <VBox prefHeight="600.0" prefWidth="265.0" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane prefHeight="130.0" prefWidth="261.0">
                <children>
-                  <Label layoutX="101.0" layoutY="1.0" prefHeight="151.0" prefWidth="184.0" text="Admin" textFill="#16b575">
+                  <Label fx:id="AdminLabel" layoutX="78.0" layoutY="23.0" prefHeight="107.0" prefWidth="200.0" text=" Admin" textFill="#49b217">
                      <font>
-                        <Font name="Segoe UI Black" size="35.0" />
+                        <Font name="Segoe UI Black" size="49.0" />
                      </font>
                   </Label>
                   <ImageView fitHeight="83.0" fitWidth="56.0" layoutX="14.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
@@ -28,7 +28,7 @@
                </children>
             </AnchorPane>
             <Separator prefHeight="31.0" prefWidth="285.0" />
-            <HBox fx:id="searchhbox" onMouseClicked="#SearchHboxClick" onMouseEntered="#SearchHboxEnter" onMouseExited="#SearchHboxExit" prefHeight="88.0" prefWidth="261.0">
+            <HBox fx:id="menuhbox" onMouseClicked="#MenuHboxClick" onMouseEntered="#MenuHboxEnter" onMouseExited="#MenuHboxExit" prefHeight="88.0" prefWidth="261.0">
                <children>
                   <ImageView fitHeight="102.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -37,7 +37,7 @@
                      <HBox.margin>
                         <Insets left="10.0" top="10.0" />
                      </HBox.margin></ImageView>
-                  <Label prefHeight="86.0" prefWidth="226.0" text="     Search">
+                  <Label prefHeight="86.0" prefWidth="226.0" text="     Menu">
                      <font>
                         <Font name="Segoe UI Black" size="30.0" />
                      </font>

@@ -46,21 +46,7 @@ public class ControllerLogin {
          }
         Stage stage = (Stage) LoginSuccessButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
-        try{
-
-            if (Account.getInstance().getRole() == null) {
-                AdminApp.getInstance().adminChecking();
-                System.out.println("adminChecking happens");
-            }
-            if (Account.getInstance().getRole().equals("admin")) {
-                 loader.setLocation(getClass().getResource("/org/example/ilib/Admin.fxml"));
-            } else{
-                loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
-            }
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-
+        loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
 
