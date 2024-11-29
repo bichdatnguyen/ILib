@@ -6,12 +6,8 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="88.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerComment">
    <children>
-      <Label fx:id="emailCmt" prefHeight="27.0" prefWidth="300.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Label fx:id="cmt" prefHeight="18.0" prefWidth="905.0">
+      <Label fx:id="emailCmt" prefHeight="22.0" prefWidth="300.0" />
+      <Label fx:id="cmt" prefHeight="34.0" prefWidth="900.0">
          <font>
             <Font size="20.0" />
          </font>
