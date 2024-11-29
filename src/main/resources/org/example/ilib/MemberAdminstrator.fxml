@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -15,9 +16,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="641.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMemberAdminstrator">
+<AnchorPane prefHeight="600.0" prefWidth="872.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMemberAdminstrator">
    <children>
-      <TableView fx:id="tableView" layoutX="277.0" layoutY="48.0" prefHeight="593.0" prefWidth="598.0">
+      <TableView fx:id="tableView" layoutY="28.0" prefHeight="571.0" prefWidth="590.0">
         <columns>
           <TableColumn fx:id="emailC" prefWidth="155.0" text="Email" />
           <TableColumn fx:id="nameC" prefWidth="97.0" text="Name" />
@@ -25,6 +26,70 @@
             <TableColumn fx:id="passwordC" prefWidth="164.0" text="Password" />
         </columns>
       </TableView>
-      <TextField layoutX="10.0" layoutY="48.0" prefHeight="51.0" prefWidth="260.0" promptText="SearchInformation" />
+      <TextField layoutX="598.0" layoutY="28.0" prefHeight="51.0" prefWidth="260.0" promptText="SearchInformation" />
+      <VBox layoutX="598.0" layoutY="340.0" prefHeight="252.0" prefWidth="189.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="110.0" text="Add" textFill="#2cab25">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/green-add-button-12023.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="110.0" text="Edit" textFill="#882ebf">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/pencil-2317.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <HBox prefHeight="53.0" prefWidth="260.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="110.0" text="Delete" textFill="#d3401b">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="25.0" />
+                     </font>
+                  </Button>
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/trash-can-10417.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -22,7 +23,7 @@ public class ControllerAdminMenu implements Initializable {
     @FXML
     public AnchorPane ShowScene;
     @FXML
-    private HBox searchhbox;
+    private HBox menuhbox;
     @FXML
     private HBox exithbox;
 
@@ -31,18 +32,28 @@ public class ControllerAdminMenu implements Initializable {
 
     @FXML
     private HBox bookshbox;
+    @FXML
+    private Label AdminLabel;
 
     @FXML
-    void SearchHboxEnter(MouseEvent event) {
-        searchhbox.setStyle("-fx-background-color: green");
+    void MenuHboxEnter(MouseEvent event) {
+        menuhbox.setStyle("-fx-background-color: green");
     }
     @FXML
-    void SearchHboxExit(MouseEvent event) {
-        searchhbox.setStyle("-fx-background-color: #fff");
+    void MenuHboxExit(MouseEvent event) {
+        menuhbox.setStyle("-fx-background-color: transparent");
     }
     @FXML
-    void SearchHboxClick(MouseEvent event) {
+    void MenuHboxClick(MouseEvent event) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MenuAdmin.fxml"));
+            AnchorPane memberEditPane = fxmlLoader.load();
+            ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
+            ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
 
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -51,7 +62,7 @@ public class ControllerAdminMenu implements Initializable {
     }
     @FXML
     void BookHboxExit(MouseEvent event) {
-        bookshbox.setStyle("-fx-background-color: #fff");
+        bookshbox.setStyle("-fx-background-color: transparent");
     }
     @FXML
     void BookHboxClick(MouseEvent event) {
@@ -72,11 +83,19 @@ public class ControllerAdminMenu implements Initializable {
     }
     @FXML
     void UserHboxExit(MouseEvent event) {
-        userhbox.setStyle("-fx-background-color: #fff");
+        userhbox.setStyle("-fx-background-color: transparent");
     }
     @FXML
     void UserHboxClick(MouseEvent event) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MemberAdminstrator.fxml"));
+            AnchorPane memberEditPane = fxmlLoader.load();
+            ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
+            ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
 
+        } catch(IOException e){
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -85,21 +104,33 @@ public class ControllerAdminMenu implements Initializable {
     }
     @FXML
     void ExitHboxExit(MouseEvent event) {
-        exithbox.setStyle("-fx-background-color: #fff");
+        exithbox.setStyle("-fx-background-color: transparent");
     }
     @FXML
     void ExitHboxClick(MouseEvent event) {
         Alert alert = showErrAndEx.showAlert("Bạn có muốn thoát ra không");
         if(alert.getResult() == ButtonType.OK){
-            System.exit(0);
-            Platform.exit();
+           try{
+               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Menu.fxml"));
+               Stage stage = (Stage) ShowScene.getScene().getWindow();
+               Scene scene = new Scene(fxmlLoader.load());
+               stage.setScene(scene);
+               stage.show();
+           } catch(IOException e){
+               e.printStackTrace();
+           }
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+       // AdminLabel.setStyle("-fx-background-color: black");
+        menuhbox.setStyle("-fx-background-color: transparent");
+        bookshbox.setStyle("-fx-background-color: transparent");
+        userhbox.setStyle("-fx-background-color: transparent");
+        exithbox.setStyle("-fx-background-color: transparent");
        try{
-           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MemberAdminstrator.fxml"));
+           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MenuAdmin.fxml"));
            AnchorPane memberEditPane = fxmlLoader.load();
            ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
            ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
