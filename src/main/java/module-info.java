@@ -1,6 +1,4 @@
 module org.example.ilib {
-    requires javafx.controls;
-    requires javafx.fxml;
     requires javafx.web;
     requires org.controlsfx.controls;
 
@@ -12,7 +10,6 @@ module org.example.ilib {
     requires google.oauth.client.java6;
     requires com.google.api.client.extensions.jetty.auth;
     requires com.google.gson;
-    requires java.desktop;
 
 //    opens org.example.ilib to javafx.fxml;
 //
@@ -45,6 +42,9 @@ module org.example.ilib {
     requires org.eclipse.jetty.util;
     requires org.xerial.sqlitejdbc;
     requires com.zaxxer.hikari;
+    requires org.apache.logging.log4j;
+    requires java.net.http;
+    requires javafx.fxml;
 
 
     exports org.example.ilib.Controller;
