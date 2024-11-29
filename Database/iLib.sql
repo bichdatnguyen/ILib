@@ -186,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `ilib`.`rating` (
    `bookID` VARCHAR(50) NOT NULL,
    `Comment` TEXT NULL DEFAULT NULL,
    `Time` DATETIME NOT NULL,
-   PRIMARY KEY (`Email`, `bookID`, `Time`),
+   PRIMARY KEY (`Email`, `bookID`, `Time`),borrow
    INDEX `fk_Rating_Books` (`bookID` ASC) VISIBLE,
    CONSTRAINT `fk_Rating_Books`
        FOREIGN KEY (`bookID`)

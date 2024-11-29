@@ -3,31 +3,62 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerUpdateAccount">
    <children>
-      <Button fx:id="backButton" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#backToAccountScene" text="Back" />
+      <ImageView fitHeight="400.0" fitWidth="600.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../assets/backgroundUA.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="backButton" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#backToAccountScene" text="Back">
+         <font>
+            <Font name="Candara Bold" size="12.0" />
+         </font></Button>
       <Text layoutX="78.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cập nhật thông tin" wrappingWidth="202.80343627929688">
          <font>
-            <Font name="System Italic" size="23.0" />
+            <Font name="Candara Bold Italic" size="23.0" />
          </font>
       </Text>
-      <Label layoutX="41.0" layoutY="72.0" prefHeight="17.0" prefWidth="151.0" text="Email:" />
-      <Label layoutX="41.0" layoutY="122.0" prefHeight="17.0" prefWidth="151.0" text="Số điện thoại:" />
-      <Label layoutX="41.0" layoutY="172.0" prefHeight="17.0" prefWidth="151.0" text="Tên người dùng:" />
-      <Label layoutX="41.0" layoutY="222.0" prefHeight="17.0" prefWidth="116.0" text="Mật khẩu cũ: " />
-      <Label layoutX="41.0" layoutY="272.0" prefHeight="17.0" prefWidth="89.0" text="Mật khẩu mới:" />
-      <Label layoutX="41.0" layoutY="322.0" prefHeight="17.0" prefWidth="168.0" text="Nhập lại mật khẩu mới:" />
-      <TextField fx:id="emailBox" onMouseEntered="#emailAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="68.0" prefHeight="25.0" prefWidth="343.0" text="emailBox" />
-      <TextField fx:id="phoneNumberBox" onMouseEntered="#phoneAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="115.0" prefHeight="25.0" prefWidth="343.0" text="Số điện thoại" />
-      <TextField fx:id="userNameBox" onMouseEntered="#userNameAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="168.0" prefHeight="25.0" prefWidth="343.0" text="Tên người dùng" />
-      <TextField fx:id="oldPassWordBox" onMouseEntered="#oldPasswordAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="218.0" prefHeight="25.0" prefWidth="343.0" promptText="nhập mật khẩu cũ" />
-      <TextField fx:id="newPassWordBox" onMouseEntered="#changingPasswordAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="268.0" prefHeight="25.0" prefWidth="343.0" promptText="Nhập mật khẩu mới" />
-      <TextField fx:id="acceptedPassword" onMouseEntered="#acceptedPasswordAlert" onMouseExited="#setCommentHidden" layoutX="180.0" layoutY="318.0" prefHeight="25.0" prefWidth="343.0" promptText="Xác nhận mật khẩu mới" />
-      <Button fx:id="commitButton" layoutX="434.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#commited" prefHeight="25.0" prefWidth="89.0" text="xác nhận" />
+      <Label layoutX="41.0" layoutY="72.0" prefHeight="17.0" prefWidth="151.0" text="Email:">
+         <font>
+            <Font name="Candara Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="41.0" layoutY="122.0" prefHeight="17.0" prefWidth="151.0" text="Số điện thoại:">
+         <font>
+            <Font name="Candara Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="41.0" layoutY="172.0" prefHeight="17.0" prefWidth="151.0" text="Tên người dùng:">
+         <font>
+            <Font name="Candara Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="41.0" layoutY="222.0" prefHeight="17.0" prefWidth="116.0" text="Mật khẩu cũ: ">
+         <font>
+            <Font name="Candara Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="41.0" layoutY="272.0" prefHeight="17.0" prefWidth="89.0" text="Mật khẩu mới:">
+         <font>
+            <Font name="Candara Bold" size="12.0" />
+         </font></Label>
+      <Label layoutX="41.0" layoutY="322.0" prefHeight="17.0" prefWidth="168.0" text="Nhập lại mật khẩu mới:">
+         <font>
+            <Font name="Candara Bold" size="12.0" />
+         </font></Label>
+      <TextField fx:id="emailBox" layoutX="180.0" layoutY="68.0" onMouseEntered="#emailAlert" onMouseExited="#setCommentHidden" prefHeight="25.0" prefWidth="343.0" text="emailBox" />
+      <TextField fx:id="phoneNumberBox" layoutX="180.0" layoutY="115.0" onMouseEntered="#phoneAlert" onMouseExited="#setCommentHidden" prefHeight="25.0" prefWidth="343.0" text="Số điện thoại" />
+      <TextField fx:id="userNameBox" layoutX="180.0" layoutY="168.0" onMouseEntered="#userNameAlert" onMouseExited="#setCommentHidden" prefHeight="25.0" prefWidth="343.0" text="Tên người dùng" />
+      <TextField fx:id="oldPassWordBox" layoutX="180.0" layoutY="218.0" onMouseEntered="#oldPasswordAlert" onMouseExited="#setCommentHidden" prefHeight="25.0" prefWidth="343.0" promptText="nhập mật khẩu cũ" />
+      <TextField fx:id="newPassWordBox" layoutX="180.0" layoutY="268.0" onMouseEntered="#changingPasswordAlert" onMouseExited="#setCommentHidden" prefHeight="25.0" prefWidth="343.0" promptText="Nhập mật khẩu mới" />
+      <TextField fx:id="acceptedPassword" layoutX="180.0" layoutY="318.0" onMouseEntered="#acceptedPasswordAlert" onMouseExited="#setCommentHidden" prefHeight="25.0" prefWidth="343.0" promptText="Xác nhận mật khẩu mới" />
+      <Button fx:id="commitButton" layoutX="434.0" layoutY="360.0" mnemonicParsing="false" onMouseClicked="#commited" prefHeight="25.0" prefWidth="89.0" text="xác nhận">
+         <font>
+            <Font name="Candara Bold" size="12.0" />
+         </font></Button>
       <Text fx:id="commentText" layoutX="41.0" layoutY="377.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="375.47003173828125" />
    </children>
 </AnchorPane>

@@ -33,6 +33,12 @@ import javafx.scene.shape.Shape;
 
 public class ControllerAccount {
     @FXML
+    public ImageView background;
+
+    @FXML
+    public ImageView tinyField;
+
+    @FXML
     private Label phone;
 
     @FXML
@@ -66,6 +72,9 @@ public class ControllerAccount {
         String phoneNumber = Account.getInstance().getPhone();
         String fullname = Account.getInstance().getFullName();
         String emailTemp = Account.getInstance().getEmail();
+        background.setImage(new Image(getClass().getResourceAsStream("/org/assets/Background.png")));
+        tinyField.setImage(new Image(getClass().getResourceAsStream("/org/assets/tinyField.png")));
+
         if (avatarPath == null) {
             Image avatarImage = new Image(getClass().getResourceAsStream("/org/assets/user-3296.png"));
             avatar.setImage(avatarImage);
@@ -112,7 +121,8 @@ public class ControllerAccount {
         stage.setScene(scene);
     }
 
-    public void setAvatar(javafx.scene.input.MouseEvent mouseEvent) {
+    public void setAvatar(MouseEvent mouseEvent) {
+        System.out.println("mouse clicked");
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Chọn ảnh làm avatar");
         fileChooser.getExtensionFilters().addAll(
