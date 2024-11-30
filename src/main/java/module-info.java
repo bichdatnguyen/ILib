@@ -44,6 +44,8 @@ module org.example.ilib {
     requires org.apache.logging.log4j;
     requires java.net.http;
     requires javafx.fxml;
+    requires java.mail;
+    requires javafx.controls;
 
     exports org.example.ilib.Controller;
     opens org.example.ilib.Controller to javafx.fxml;

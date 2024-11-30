@@ -19,6 +19,8 @@ import java.sql.SQLException;
 public class ControllerSearchHint  {
     @FXML
     private Label bookTitle;
+    @FXML
+    private HBox SearchHintHbox;
 
     private Book book;
 
@@ -46,6 +48,18 @@ public class ControllerSearchHint  {
         controllerBookDetail.showInformation(this.book);
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+    public void setStyleWhite(){
+        SearchHintHbox.setStyle("-fx-background-color: white;");
+    }
+
+    @FXML
+    public void SearchHintHboxEnter(MouseEvent event) {
+        SearchHintHbox.setStyle("-fx-background-color: blue;");
+    }
+    @FXML
+    public void SearchHintHboxExit(MouseEvent event) {
+        SearchHintHbox.setStyle("-fx-background-color: white;");
     }
 
 }

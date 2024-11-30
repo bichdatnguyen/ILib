@@ -43,6 +43,9 @@ public class ControllerTransactionHistory implements Initializable {
     private TableColumn<Transaction, Integer> priceEachCol;
     @FXML
     private TableColumn<Transaction, String> typeCol;
+    @FXML
+    private TableColumn<Transaction, String> titleCol;
+
 
     private ObservableList<Transaction> Transactions;
     private String email = Account.getInstance().getEmail();
@@ -75,6 +78,7 @@ public class ControllerTransactionHistory implements Initializable {
             setTransactionList(getTransactionList(email));
             paymentIDcol.setCellValueFactory(new PropertyValueFactory<Transaction,Integer>("paymentID"));
             bookCol.setCellValueFactory(new PropertyValueFactory<Transaction,String>("bookID"));
+            titleCol.setCellValueFactory(new PropertyValueFactory<Transaction,String>("title"));
             dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, DateTime>("date"));
             quantityCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("quantity"));
             typeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("type"));
@@ -114,7 +118,7 @@ public class ControllerTransactionHistory implements Initializable {
                   Integer quantity = resultSet.getInt("quantity");
                   // Lấy dữ liệu từ bảng Book
                   String type = resultSet.getString("type");
-                  Integer priceEach = resultSet.getInt("priceEach");
+                  Integer priceEach = resultSet.getInt("bookPrice");
 
                   Transaction transaction = new Transaction(paymentID,bookID,email,date,quantity,type,bookName,priceEach);
                   TransactionList.add(transaction);

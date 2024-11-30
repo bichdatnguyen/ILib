@@ -86,6 +86,7 @@ public class ControllerMenu implements Initializable {
     @FXML
     private VBox hints;
 
+
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
     public void accountSwitchScene(ActionEvent event) throws IOException {
@@ -153,24 +154,42 @@ public class ControllerMenu implements Initializable {
             if (newValue.isEmpty()) {
                 hints.getChildren().clear();
             } else {
-                hints.getChildren().clear();
-                try {
-                    List<Book> bookHints = DBConnection.getInstance().allHints(newValue);
-                    for (Book bookHint : bookHints) {
-                        FXMLLoader fx = new FXMLLoader();
-                        fx.setLocation(getClass().getResource("/org/example/ilib/SearchHint.fxml"));
-                        HBox hint = fx.load();
-                        ControllerSearchHint controllerSearchHint = fx.getController();
-                        controllerSearchHint.setBook(bookHint);
-                        controllerSearchHint.showBook(bookHint);
-                        hints.getChildren().add(hint);
-                    }
-                } catch (SQLException | IOException e) {
-                    throw new RuntimeException(e);
+                if (executorService.isShutdown()) {
+                    executorService = Executors.newFixedThreadPool(2);
+                    System.out.println("ExecutorService restart");
                 }
+                executorService.submit(() -> {
+                    try {
+                        List<Book> bookHints = DBConnection.getInstance().allHints(newValue);
+                        Platform.runLater(() -> {
+                            hints.getChildren().clear();
+                            for (Book bookHint : bookHints) {
+                                FXMLLoader fx = new FXMLLoader();
+                                fx.setLocation(getClass().getResource("/org/example/ilib/SearchHint.fxml"));
+                                try {
+                                    HBox hint = fx.load();
+                                    ControllerSearchHint controllerSearchHint = fx.getController();
+                                    controllerSearchHint.setStyleWhite();
+                                    controllerSearchHint.setBook(bookHint);
+                                    controllerSearchHint.showBook(bookHint);
+                                    hints.getChildren().add(hint);
+
+
+                                } catch (IOException e) {
+                                    showErrAndEx.showAlert("Lỗi khi tải gợi ý tìm kiếm.");
+                                }
+                            }
+                            shutdownExecutorService();
+                        });
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        Platform.runLater(() -> showErrAndEx.showAlert("Lỗi khi truy vấn cơ sở dữ liệu để lấy gợi ý."));
+                    }
+                });
             }
         });
     }
+
 
     public void handleSearch(KeyEvent keyEvent) {
         showHints();
@@ -180,7 +199,7 @@ public class ControllerMenu implements Initializable {
             if (!searchText.isEmpty()) {
                 if (executorService.isShutdown()) {
                     // Nếu đã tắt, khởi tạo lại ExecutorService
-                    executorService = Executors.newFixedThreadPool(8);
+                    executorService = Executors.newFixedThreadPool(2);
                     System.out.println("ExecutorService restart");
                 }
 

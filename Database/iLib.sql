@@ -155,27 +155,28 @@ CREATE TABLE IF NOT EXISTS `ilib`.`history` (
 -- -----------------------------------------------------
 -- Table `ilib`.`payment`
 -- -----------------------------------------------------
+-- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ilib`.`payment` (
-        `paymentID` INT NOT NULL AUTO_INCREMENT,
-        `bookID` VARCHAR(50) NOT NULL,
-        `email` VARCHAR(50) NOT NULL,
-        `date` DATETIME NULL DEFAULT NULL,
-        `quantity` INT NULL DEFAULT NULL,
-        `type` VARCHAR(10) NULL DEFAULT NULL,
-        PRIMARY KEY (`paymentID`),
-        UNIQUE INDEX `Email_UNIQUE` (`bookID` ASC) VISIBLE,
-        UNIQUE INDEX `paymentID_UNIQUE` (`paymentID` ASC) VISIBLE,
-        INDEX `fk_Buy_User_idx` (`email` ASC) VISIBLE,
-        CONSTRAINT `fk_Payment_Books`
-        FOREIGN KEY (`bookID`)
+`paymentID` INT NOT NULL AUTO_INCREMENT,
+`bookID` VARCHAR(50) NOT NULL,
+`email` VARCHAR(50) NOT NULL,
+`date` DATETIME NULL DEFAULT NULL,
+`quantity` INT NULL DEFAULT NULL,
+`type` VARCHAR(10) NULL DEFAULT NULL,
+PRIMARY KEY (`paymentID`),
+INDEX `fk_Buy_User_idx` (`email` ASC) VISIBLE,
+CONSTRAINT `fk_Payment_Books`
+    FOREIGN KEY (`bookID`)
         REFERENCES `ilib`.`books` (`bookID`)
         ON UPDATE CASCADE,
-        CONSTRAINT `fk_Payment_User`
-        FOREIGN KEY (`email`)
+CONSTRAINT `fk_Payment_User`
+    FOREIGN KEY (`email`)
         REFERENCES `ilib`.`user` (`Email`)
-        ON UPDATE CASCADE)
+        ON UPDATE CASCADE
+)
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8mb3;
+
 
 
 -- -----------------------------------------------------
@@ -186,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `ilib`.`rating` (
    `bookID` VARCHAR(50) NOT NULL,
    `Comment` TEXT NULL DEFAULT NULL,
    `Time` DATETIME NOT NULL,
-   PRIMARY KEY (`Email`, `bookID`, `Time`),borrow
+   PRIMARY KEY (`Email`, `bookID`, `Time`),
    INDEX `fk_Rating_Books` (`bookID` ASC) VISIBLE,
    CONSTRAINT `fk_Rating_Books`
        FOREIGN KEY (`bookID`)
@@ -250,4 +251,6 @@ select * from author;
 select * from cart;
 insert into user values ('ton@gmail.com','1234567890','Vu Dat','1234556',null,'user');
 select * from payment;
+select * from borrow;
 insert into user values ('ton1@gmail.com','1234567890','Vu Dat','1234556',null,'admin');
+insert into user values ('vudat090305@gmail.com','1234567890','Vu Dat','123456',null,'user');
