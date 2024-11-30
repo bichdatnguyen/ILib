@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerBookDetail extends ControllerBook {
+public class ControllerBookDetail {
 
     @FXML
     private Button BackButton;
@@ -192,7 +192,7 @@ public class ControllerBookDetail extends ControllerBook {
         if (book.getQuantity() == 0) {
             return;
         } else {
-            DBConnection db = DBConnection.getInstance();
+            DBConnection db = DBConnection.getInstance();//try with
 
             Button moveToCmt = new Button("Bình luận");
             Button saveToShelf = new Button("Lưu");

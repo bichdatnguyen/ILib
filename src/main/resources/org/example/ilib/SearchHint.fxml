@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="51.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerSearchHint">
+   <children>
+      <Label fx:id="bookTitle" onMouseClicked="#gotoBookDetail" prefHeight="51.0" prefWidth="357.0" text="Title">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </children>
+</HBox>

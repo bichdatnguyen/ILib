@@ -53,6 +53,7 @@ public class ControllerTopBooks implements Initializable {
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
+                controllerBook.setBook(bookList.get(i));
                 controllerBook.showBook(bookList.get(i));
                 hbox_top_book2.getChildren().add(cardbox);
             }
