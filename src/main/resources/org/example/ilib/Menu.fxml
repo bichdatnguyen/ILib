@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
@@ -20,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
    <top>
       <AnchorPane prefHeight="127.0" prefWidth="972.0" BorderPane.alignment="CENTER">
          <children>
@@ -28,7 +23,7 @@
                <font>
                   <Font size="57.0" />
                </font></Label>
-            <TextField fx:id="search" layoutX="214.0" layoutY="33.0" onKeyPressed="#handleSearch" prefHeight="51.0" prefWidth="357.0" promptText="search" />
+            <TextField fx:id="search" layoutX="207.0" layoutY="38.0" onKeyPressed="#handleSearch" prefHeight="51.0" prefWidth="357.0" promptText="search" />
             <ImageView fitHeight="49.0" fitWidth="81.0" layoutX="577.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../assets/search-2907.png" />
@@ -50,6 +45,7 @@
                   <Font size="26.0" />
                </font>
             </MenuButton>
+            <VBox fx:id="hints" layoutX="207.0" layoutY="88.0" prefHeight="39.0" prefWidth="356.0" />
          </children>
       </AnchorPane>
    </top>

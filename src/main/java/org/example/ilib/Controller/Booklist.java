@@ -17,7 +17,6 @@ public class Booklist {
 
     private static Booklist instance;
     protected List<Book> TopBookList = new ArrayList<>();
-    protected List<Book> CategoriesBookList = new ArrayList<>();
     protected List<Book> RecentlyBookList = new ArrayList<>();
 
     public static Booklist getInstance() {
@@ -41,12 +40,10 @@ public class Booklist {
 
 
     private List<Book> addTopBookList() throws SQLException, IOException {
-        DBConnection db = DBConnection.getInstance();
-        return db.getTopBooks(9);
+        return DBConnection.getInstance().getTopBooks(9);
     }
 
     protected List<Book> addRecentlyBookList() throws SQLException, IOException {
-        DBConnection db = DBConnection.getInstance();
-        return db.getRecentlyBooks(9);
+        return DBConnection.getInstance().getRecentlyBooks(9);
     }
 }

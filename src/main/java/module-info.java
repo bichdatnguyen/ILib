@@ -36,7 +36,6 @@ module org.example.ilib {
     requires mysql.connector.j;
     requires org.json;
 
-
     requires javafx.swing;
     requires spark.core;
     requires org.eclipse.jetty.util;
@@ -48,10 +47,8 @@ module org.example.ilib {
     requires java.mail;
     requires javafx.controls;
 
-
     exports org.example.ilib.Controller;
     opens org.example.ilib.Controller to javafx.fxml;
     exports org.example.ilib.Processor;
     opens org.example.ilib.Processor to javafx.fxml;
-
 }

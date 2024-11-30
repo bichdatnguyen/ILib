@@ -18,6 +18,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.AdminApp;
@@ -82,6 +83,8 @@ public class ControllerMenu implements Initializable {
     private HBox CategoriesHbox;
     @FXML
     private HBox ReadingHbox;
+    @FXML
+    private VBox hints;
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
@@ -145,7 +148,33 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
+    public void showHints() {
+        search.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.isEmpty()) {
+                hints.getChildren().clear();
+            } else {
+                hints.getChildren().clear();
+                try {
+                    List<Book> bookHints = DBConnection.getInstance().allHints(newValue);
+                    for (Book bookHint : bookHints) {
+                        FXMLLoader fx = new FXMLLoader();
+                        fx.setLocation(getClass().getResource("/org/example/ilib/SearchHint.fxml"));
+                        HBox hint = fx.load();
+                        ControllerSearchHint controllerSearchHint = fx.getController();
+                        controllerSearchHint.setBook(bookHint);
+                        controllerSearchHint.showBook(bookHint);
+                        hints.getChildren().add(hint);
+                    }
+                } catch (SQLException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
     public void handleSearch(KeyEvent keyEvent) {
+        showHints();
+
         if (keyEvent.getCode() == KeyCode.ENTER) {
             String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
             if (!searchText.isEmpty()) {
@@ -158,7 +187,7 @@ public class ControllerMenu implements Initializable {
                 executorService.submit(() -> {
                     try {
                         GoogleBooksAPI api = new GoogleBooksAPI();
-                        JsonArray bookDetails = api.getInformation(searchText, 5);
+                        JsonArray bookDetails = api.getInformation(searchText, 30);
 
                         if (bookDetails != null && !bookDetails.isEmpty()) {
                             Platform.runLater(() -> {

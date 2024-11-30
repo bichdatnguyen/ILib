@@ -38,8 +38,8 @@ public class DBConnection {
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         config.setMaximumPoolSize(100);
-        config.setMinimumIdle(10);
-        config.setIdleTimeout(5000);
+        config.setMinimumIdle(30);
+        config.setIdleTimeout(10000);
         config.setMaxLifetime(240000);
         config.setConnectionTimeout(30000);
         config.setLeakDetectionThreshold(5000);
@@ -380,6 +380,31 @@ public class DBConnection {
                 e.printStackTrace();
             }
             return comments;
+        }
+    }
+
+    public List<Book> allHints(String text) throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM books WHERE title LIKE ? LIMIT 4";
+        try(PreparedStatement stmt = createStatement(sql)) {;
+            stmt.setString(1, "%" + text + "%");
+            List<Book> books = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
+
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return books;
         }
     }
 }
