@@ -42,6 +42,8 @@ public class ControllerSearchHint  {
         Parent root = fx.load();
         ControllerBookDetail controllerBookDetail = fx.getController();
         controllerBookDetail.saveForwardScene(bookTitle.getScene());
+        controllerBookDetail.setOptionInBook(this.book);
+        controllerBookDetail.showInformation(this.book);
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }

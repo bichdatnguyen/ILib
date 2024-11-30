@@ -161,6 +161,7 @@ public class ControllerMenu implements Initializable {
                         fx.setLocation(getClass().getResource("/org/example/ilib/SearchHint.fxml"));
                         HBox hint = fx.load();
                         ControllerSearchHint controllerSearchHint = fx.getController();
+                        controllerSearchHint.setBook(bookHint);
                         controllerSearchHint.showBook(bookHint);
                         hints.getChildren().add(hint);
                     }
