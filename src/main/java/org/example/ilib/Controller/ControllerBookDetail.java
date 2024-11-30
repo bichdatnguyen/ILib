@@ -159,17 +159,33 @@ public class ControllerBookDetail extends ControllerBook {
                 return;
             }
             int quantity = Integer.parseInt(VolumeTextField.getText());
-            int volBook = Integer.parseInt(quantityText.getText().trim());
-
-         if( quantity > volBook){
+            int quantityInStock = Integer.parseInt(quantityText.getText().trim());
+          if(quantityInStock == 0){
+              showErrAndEx.showAlert("Sách hiện tại chưa có tại thư viện");
+              return;
+          }
+         if( quantity > quantityInStock){
              showErrAndEx.showAlert("Vượt quá số lượng có sẵn");
              return;
          }
+         if(quantity > 5 && status == Buy){
+             showErrAndEx.showAlert("Bạn chỉ có thể  mua 5 quyển 1 lúc");
+             return;
+         }
+         if(quantity > 1 && status == Borrow){
+             showErrAndEx.showAlert("Bạn chỉ có thể mượn 1 quyển");
+             return;
+         }
+
             if(quantity > 0){
               //int bookId = Integer.parseInt(Bookid.getText());
               String bookId = idText.getText();
               try{
                   System.out.println(quantity);
+                  if(status == Borrow && checkBookBorrow()){
+                      showErrAndEx.showAlert("Bạn đã mượn sách này");
+                      return;
+                  }
                   addBookToCart(email,bookId,quantity,status);
                   showErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
               } catch (SQLException e) {
@@ -246,5 +262,26 @@ public class ControllerBookDetail extends ControllerBook {
                 }
             });
         }
+    }
+
+    public boolean checkBookBorrow(){
+        String query = "select count(*) from borrow where Email = ? and bookID = ?";
+        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query) ){
+               stmt.setString(1, email);
+               stmt.setString(2, idText.getText());
+                try(ResultSet rs = stmt.executeQuery()){
+                    if(rs.next()){
+                        int count = rs.getInt(1);
+                        if(count == 0){
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    }
+                }
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 }

@@ -166,7 +166,8 @@ public class ControllerBookAdmin implements Initializable {
     public void searchEnter(KeyEvent event) {
         if(!searchText.getText().equals("")){
             FilteredList<Book> filteredBooks = new FilteredList<>(BookList, b -> true);
-            BookTable.setItems(filteredBooks); searchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            BookTable.setItems(filteredBooks);
+            searchText.textProperty().addListener((observable, oldValue, newValue) -> {
                 filteredBooks.setPredicate(book -> {
                     if (newValue == null || newValue.isEmpty()) {
                         return true;
