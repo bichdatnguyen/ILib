@@ -37,6 +37,7 @@ public class ControllerAddEdit {
 
     @FXML
     private TextField priceText;
+    private boolean checkCondition = false;
 
     @FXML
     private Label TextLabel;
@@ -57,6 +58,10 @@ public class ControllerAddEdit {
                     showErrAndEx.showAlert("Vui lòng nhập ID sách");
                     return;
                 }
+                if(titleText.getText().equals("")) {
+                    showErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
+                    return;
+                }
                 Book book = new Book();
                 book.setId(bookIdText.getText());
                 book.setPrice(Integer.parseInt(priceText.getText()));
@@ -65,10 +70,17 @@ public class ControllerAddEdit {
                 book.setAuthor(authorText.getText());
                 book.setQuantity(Integer.parseInt(quantityText.getText()));
                 addBook(book);
-                Stage stage = (Stage) updateVbox.getScene().getWindow();
-                stage.close();
+
 
             } else if(status == EDIT) {
+                if(bookIdText.getText().equals("")) {
+                    showErrAndEx.showAlert("Vui lòng nhập id sách");
+                    return;
+                }
+                if(titleText.getText().equals("")) {
+                    showErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
+                    return;
+                }
                 Book book = new Book();
                 book.setId(bookIdText.getText());
                 book.setPrice(Integer.parseInt(priceText.getText()));
@@ -77,10 +89,12 @@ public class ControllerAddEdit {
                 book.setAuthor(authorText.getText());
                 book.setQuantity(Integer.parseInt(quantityText.getText()));
                 updateBook(book,book.getId());
-                Stage stage = (Stage) updateVbox.getScene().getWindow();
-                stage.close();
-            }
 
+            }
+        if(checkCondition){
+            Stage stage = (Stage) updateVbox.getScene().getWindow();
+            stage.close();
+        }
 
     }
     public void setBookIdText(String bookId) {
@@ -111,6 +125,7 @@ public class ControllerAddEdit {
         try{
             if(DBConnection.getInstance().bookExist(book.getId())){
                 showErrAndEx.showAlert("Sách này có mã ID trùng với sách khác\n Vui lòng nhập lại");
+                checkCondition = false;
                 return;
             }
         } catch (SQLException e) {
@@ -135,7 +150,7 @@ public class ControllerAddEdit {
             } catch(SQLException e){
                 e.printStackTrace();
             }
-
+            checkCondition = true;
         } catch (SQLException e){
             e.printStackTrace();
         }
@@ -143,6 +158,15 @@ public class ControllerAddEdit {
     }
     public void updateBook(Book book, String bookID) {
         String query = "update books set bookID = ?, description = ?, title = ?, bookPrice = ?, quantityInStock =? where bookID = ?";
+        try{
+            if(DBConnection.getInstance().bookExist(book.getId())){
+                showErrAndEx.showAlert("bạn đã thiết lập id sách trùng với 1 sách khác \n Vui lòng nhập lại");
+                checkCondition = false;
+                return;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
         try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query) ){
             stmt.setString(1, book.getId());
             stmt.setString(2, book.getDescription());
@@ -151,6 +175,7 @@ public class ControllerAddEdit {
             stmt.setInt(5, book.getQuantity());
             stmt.setString(6, bookID);
             stmt.executeUpdate();
+            checkCondition = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
