@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
@@ -15,52 +21,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
-   <top>
-      <AnchorPane prefHeight="127.0" prefWidth="972.0" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
+   <children>
+      <VBox layoutY="127.0" prefHeight="526.0" prefWidth="253.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="17.0" prefHeight="84.0" prefWidth="116.0" text="Ilib" textFill="#17d355">
-               <font>
-                  <Font size="57.0" />
-               </font></Label>
-            <TextField fx:id="search" layoutX="207.0" layoutY="38.0" onKeyPressed="#handleSearch" prefHeight="51.0" prefWidth="357.0" promptText="search" />
-            <ImageView fitHeight="49.0" fitWidth="81.0" layoutX="577.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../assets/search-2907.png" />
-               </image></ImageView>
-            <ImageView fx:id="avatarUser" fitHeight="65.0" fitWidth="85.0" layoutX="667.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../assets/user-3296.png" />
-               </image>
-            </ImageView>
-            <MenuButton fx:id="UserButton" alignment="CENTER" layoutX="764.0" layoutY="30.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="146.0" text="User">
-              <items>
-                <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountSwitchScene" text="Account" />
-                <MenuItem fx:id="Cart" mnemonicParsing="false" onAction="#MoveToCart" text="Cart" />
-                  <MenuItem fx:id="TransactionItem" mnemonicParsing="false" onAction="#gotoTransactionHistory" text="Transaction History" />
-                  <MenuItem fx:id="signOut" mnemonicParsing="false" onAction="#signOutMenu" text="Signout" />
-                  <MenuItem fx:id="Admin" mnemonicParsing="false" onAction="#gotoAdvanceSetting" text="Admin" visible="false" />
-              </items>
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </MenuButton>
-            <VBox fx:id="hints" layoutX="207.0" layoutY="88.0" prefHeight="39.0" prefWidth="356.0" />
-         </children>
-      </AnchorPane>
-   </top>
-   <left>
-      <VBox prefHeight="595.0" prefWidth="247.0" BorderPane.alignment="CENTER">
-         <children>
-            <VBox prefHeight="320.0" prefWidth="247.0">
+            <VBox prefHeight="229.0" prefWidth="247.0">
                <children>
-                  <Label prefHeight="43.0" prefWidth="171.0" text="  Browse">
+                  <Label prefHeight="54.0" prefWidth="171.0" text="  Browse">
                      <font>
                         <Font size="26.0" />
                      </font>
                   </Label>
                   <Separator prefHeight="0.0" prefWidth="247.0" />
-                  <HBox fx:id="TopBookHbox" onMouseEntered="#TopBookHboxEnter" onMouseExited="#TopBookHboxExit" prefHeight="100.0" prefWidth="200.0">
+                  <HBox fx:id="TopBookHbox" onMouseEntered="#TopBookHboxEnter" onMouseExited="#TopBookHboxExit" prefHeight="95.0" prefWidth="247.0">
                      <children>
                         <ImageView fitHeight="92.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -76,8 +49,10 @@
                            </font>
                            <HBox.margin>
                               <Insets top="10.0" />
-                           </HBox.margin></Label>
-                     </children></HBox>
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                   <HBox fx:id="CategoriesHbox" onMouseEntered="#CategoriesHboxEnter" onMouseExited="#CategoriesHboxExit" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <ImageView fitHeight="65.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
@@ -94,13 +69,15 @@
                            </font>
                            <HBox.margin>
                               <Insets top="10.0" />
-                           </HBox.margin></Label>
-                     </children></HBox>
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="328.0" prefWidth="247.0">
+            <VBox prefHeight="204.0" prefWidth="247.0">
                <children>
-                  <Label prefHeight="41.0" prefWidth="194.0" text="  Your Books">
+                  <Label prefHeight="67.0" prefWidth="194.0" text="  Your Books">
                      <font>
                         <Font size="26.0" />
                      </font>
@@ -122,35 +99,66 @@
                            </font>
                            <HBox.margin>
                               <Insets top="10.0" />
-                           </HBox.margin></Label>
-                     </children></HBox>
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>
       </VBox>
-   </left>
-   <center>
-      <VBox prefHeight="543.0" prefWidth="687.0" BorderPane.alignment="CENTER">
+      <VBox layoutX="265.0" layoutY="129.0" prefHeight="526.0" prefWidth="687.0">
          <children>
             <Label prefHeight="47.0" prefWidth="265.0" text="Recently Add">
                <font>
                   <Font size="25.0" />
-               </font></Label>
+               </font>
+            </Label>
             <ScrollPane prefHeight="217.0" prefWidth="725.0">
                <content>
                   <HBox fx:id="recentlyAddHbox" prefHeight="200.0" prefWidth="1287.0" />
                </content>
             </ScrollPane>
-            <Label prefHeight="72.0" prefWidth="320.0" text="Recommended For You">
+            <Label prefHeight="33.0" prefWidth="320.0" text="Recommended For You">
                <font>
                   <Font size="25.0" />
-               </font></Label>
-            <ScrollPane prefHeight="240.0" prefWidth="725.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
+               </font>
+            </Label>
+            <ScrollPane prefHeight="223.0" prefWidth="687.0" />
          </children>
       </VBox>
-   </center>
-</BorderPane>
+      <AnchorPane prefHeight="127.0" prefWidth="972.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="17.0" prefHeight="84.0" prefWidth="116.0" text="Ilib" textFill="#17d355">
+               <font>
+                  <Font size="57.0" />
+               </font>
+            </Label>
+            <TextField fx:id="search" layoutX="207.0" layoutY="38.0" onKeyPressed="#handleSearch" prefHeight="51.0" prefWidth="357.0" promptText="search" />
+            <ImageView fitHeight="49.0" fitWidth="81.0" layoutX="577.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/search-2907.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="avatarUser" fitHeight="65.0" fitWidth="85.0" layoutX="667.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../assets/user-3296.png" />
+               </image>
+            </ImageView>
+            <MenuButton fx:id="UserButton" alignment="CENTER" layoutX="764.0" layoutY="30.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="146.0" text="User">
+               <font>
+                  <Font size="26.0" />
+               </font>
+               <items>
+                  <MenuItem fx:id="account" mnemonicParsing="false" onAction="#accountSwitchScene" text="Account" />
+                  <MenuItem fx:id="Cart" mnemonicParsing="false" onAction="#MoveToCart" text="Cart" />
+                  <MenuItem fx:id="TransactionItem" mnemonicParsing="false" onAction="#gotoTransactionHistory" text="Transaction History" />
+                  <MenuItem fx:id="signOut" mnemonicParsing="false" onAction="#signOutMenu" text="Signout" />
+                  <MenuItem fx:id="Admin" mnemonicParsing="false" onAction="#gotoAdvanceSetting" text="Admin" visible="false" />
+               </items>
+            </MenuButton>
+            <VBox fx:id="hints" layoutX="207.0" layoutY="88.0" prefHeight="39.0" prefWidth="356.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
