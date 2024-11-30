@@ -1,20 +1,28 @@
 package org.example.ilib.Controller;
 
+import com.sun.source.tree.LambdaExpressionTree;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.example.ilib.Processor.Book;
 import org.example.ilib.Processor.CartItem;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,6 +39,8 @@ public class ControllerBookAdmin implements Initializable {
 
     @FXML
     private TextField searchText;
+    @FXML
+    private Button RefreshButton;
 
     @FXML
     private Button DeleteButton;
@@ -45,6 +55,8 @@ public class ControllerBookAdmin implements Initializable {
     private TableColumn<Book, String> titleCol;
     @FXML
     private TableColumn<Book, Integer> quanityCol;
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     private TableColumn<Book, String> bookIDCol;
@@ -61,18 +73,71 @@ public class ControllerBookAdmin implements Initializable {
 
     @FXML
     void AddButtonClick(MouseEvent event) {
+           try{
+               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AddEditBook.fxml"));
+               Parent root = fxmlLoader.load();
+               ControllerAddEdit controllerAddEdit =fxmlLoader.getController();
+               controllerAddEdit.setTextLabel("Hãy thêm sách và nhấn cập nhập");
+               controllerAddEdit.setStatus(ControllerAddEdit.ADD);
+               Stage popup = new Stage();
+               popup.initModality(Modality.APPLICATION_MODAL);
+               popup.setTitle("Add Book");
+               Scene scene = new Scene(root);
+               popup.setScene(scene);
+               popup.showAndWait();
 
+
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
     }
 
 
     @FXML
     void EditButtonClick(MouseEvent event) {
+        if(BookTable.getSelectionModel().getSelectedItem() == null){
+            showErrAndEx.showAlert("Vui lòng chon sách cần chỉnh sửa");
+            return;
+        }
+        Book book = BookTable.getSelectionModel().getSelectedItem();
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AddEditBook.fxml"));
+            Parent root = fxmlLoader.load();
+            ControllerAddEdit controllerAddEdit =fxmlLoader.getController();
+            controllerAddEdit.setStatus(ControllerAddEdit.EDIT);
+            controllerAddEdit.setTextLabel("Chỉnh sửa thông tin và nhấn cập nhập");
+            controllerAddEdit.setAuthorText(book.getAuthor());
+            controllerAddEdit.setTitleText(book.getTitle());
+            controllerAddEdit.setBookIdText(book.getId());
+            controllerAddEdit.setQuantityText(String.valueOf(book.getQuantity()));
+            controllerAddEdit.setDescriptionText(book.getDescription());
+            controllerAddEdit.setPriceText(String.valueOf(book.getPrice()));
+            controllerAddEdit.setBook(book);
+            Stage popup = new Stage();
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.setTitle("Edit Book");
+            Scene scene = new Scene(root);
+            popup.setScene(scene);
+            popup.showAndWait();
 
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     void DeleteButtonClick(MouseEvent event) {
-
+            if(BookTable.getSelectionModel().getSelectedItem() == null){
+                showErrAndEx.showAlert("Vui lòng chọn sách cần xóa");
+            } else{
+                Alert alert = showErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
+                if(alert.getResult() == ButtonType.OK){
+                    BookList.remove(BookTable.getSelectionModel().getSelectedItem());
+                    BookTable.refresh();
+                    deleteBook(BookTable.getSelectionModel().getSelectedItem().getId());
+                }
+            }
     }
 
 
@@ -86,6 +151,12 @@ public class ControllerBookAdmin implements Initializable {
             priceCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("price"));
             quanityCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("quantity"));
             BookTable.setItems(BookList);
+            anchorPane.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (!BookTable.isHover() &&
+                        !(EditButton.isHover() || AddButton.isHover() || DeleteButton.isHover())) {
+                    BookTable.getSelectionModel().clearSelection();
+                }
+            });
 
         } catch(Exception e){
             e.printStackTrace();
@@ -184,4 +255,18 @@ public class ControllerBookAdmin implements Initializable {
         }
     }
 
+    public void deleteBook(String bookID) {
+        String query = "delete from books where bookID = ?";
+        try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)){
+            stmt.setString(1, bookID);
+            stmt.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public void RefreshButtonClick(MouseEvent event) {
+        getBooksfromDB();
+        BookTable.setItems(BookList);
+        BookTable.refresh();
+    }
 }

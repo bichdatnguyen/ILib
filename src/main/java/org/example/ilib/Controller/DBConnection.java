@@ -147,13 +147,17 @@ public class DBConnection {
         String sql = "SELECT quantityInStock FROM books WHERE bookID = ?";
         PreparedStatement stmt = createStatement(sql);
         stmt.setString(1, bookID);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            int quantity = rs.getInt(1);
-            return quantity;
-        } else {
-            return 0;
+        try(ResultSet rs = stmt.executeQuery();){
+            if (rs.next()) {
+                int quantity = rs.getInt(1);
+                return quantity;
+            } else {
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return 0;
     }
 
     public List<Book> getTopBooks(int number) throws SQLException {

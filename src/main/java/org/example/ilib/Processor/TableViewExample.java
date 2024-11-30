@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -74,9 +75,16 @@ public class TableViewExample extends Application {
             }
         });
 
+
+
         // Tạo layout và cảnh
         VBox vbox = new VBox(tableView, addButton,deleteButton);
         Scene scene = new Scene(vbox);
+        scene.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+            if (!tableView.isHover()) { // Kiểm tra nếu chuột không nằm trong TableView
+                tableView.getSelectionModel().clearSelection();
+            }
+        });
         stage.setScene(scene);
         stage.setTitle("Editable TableView Example");
         stage.show();

@@ -13,6 +13,7 @@ public class Book {
         private String description;
         private int quantity;
         private int price;
+        public Book(){}
         public Book(String id) {
                 this.id = id;
         }

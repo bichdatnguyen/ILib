@@ -46,6 +46,7 @@ module org.example.ilib {
     requires javafx.fxml;
     requires java.mail;
     requires javafx.controls;
+    requires jdk.compiler;
 
     exports org.example.ilib.Controller;
     opens org.example.ilib.Controller to javafx.fxml;

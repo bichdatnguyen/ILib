@@ -12,6 +12,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.controlsfx.control.tableview2.filter.filtereditor.SouthFilter;
 import org.example.ilib.Processor.Account;
@@ -45,6 +46,8 @@ public class ControllerCartItemList implements Initializable {
 
     @FXML
     private Button substract;
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     private TableView<CartItem> CartTable;
@@ -126,20 +129,18 @@ public class ControllerCartItemList implements Initializable {
                    String path = "The amount paid is: " + String.valueOf(totalMonet) + " USD \n Have a nice day!";
                    // Tạo mã QR và lấy đường dẫn
                    String qrImagePath = QRCodeAuto.taoQrCode(path);
+                   // Đặt hình ảnh QR vào ImageView
+                   QRCode.setImage(new Image(qrImagePath));
+                   savePayments(email,CartList.stream().toList());
                    boolean SendIt = SendEmail.sendEmail(email, "Thanh toán thư viện", path);
                    if(SendIt){
                        System.out.println("Chuyển email thành công");
-                       // showErrAndEx.showAlert("Chuyển email thành công");
                    } else{
                        System.out.println("Chuyển email không thành công");
                        showErrAndEx.showAlert("Chuyển email không thành công");
                    }
-
-                   // Đặt hình ảnh QR vào ImageView
-                   QRCode.setImage(new Image(qrImagePath));
                    updateQuantityInStock();
                    updateBorrowBook();
-                   savePayments(email,CartList.stream().toList());
                    removeBookFromCart(email,"is not null");
 
                } catch (IOException | WriterException e) {
@@ -235,6 +236,11 @@ public class ControllerCartItemList implements Initializable {
            StatusCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("status"));
            VoucherCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("voucher"));
            CartTable.setItems(CartList);
+           anchorPane.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+               if (!CartTable.isHover()) { // Kiểm tra nếu chuột không nằm trong TableView
+                   CartTable.getSelectionModel().clearSelection();
+               }
+           });
 
        } catch(Exception e){
            e.printStackTrace();

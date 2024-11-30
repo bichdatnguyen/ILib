@@ -177,6 +177,7 @@ public class ControllerBookDetail {
              return;
          }
 
+
             if(quantity > 0){
               //int bookId = Integer.parseInt(Bookid.getText());
               String bookId = idText.getText();
@@ -184,6 +185,10 @@ public class ControllerBookDetail {
                   System.out.println(quantity);
                   if(status == Borrow && checkBookBorrow()){
                       showErrAndEx.showAlert("Bạn đã mượn sách này");
+                      return;
+                  }
+                  if(checkBookInCart()){
+                      showErrAndEx.showAlert("Sách đã có trong giỏ hàng");
                       return;
                   }
                   addBookToCart(email,bookId,quantity,status);
@@ -280,6 +285,27 @@ public class ControllerBookDetail {
                     }
                 }
         } catch(SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean checkBookInCart(){
+        String query = "select count(*) from cart where bookID = ? and type =?";
+        try(Connection connection =DBConnection.getInstance().getConnection() ; PreparedStatement stmt = connection.prepareStatement(query)){
+            stmt.setString(1, idText.getText());
+            stmt.setString(2, status == Borrow ? "BORROW" : "BUY");
+            try(ResultSet rs = stmt.executeQuery()){
+                if(rs.next()){
+                    int count = rs.getInt(1);
+                    if(count > 0){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
