@@ -7,8 +7,6 @@ module org.example.ilib {
     requires com.google.api.client;
     requires com.google.api.client.auth;
     requires google.api.services.drive.v3.rev136;
-    requires google.oauth.client.java6;
-    requires com.google.api.client.extensions.jetty.auth;
     requires com.google.gson;
 
 //    opens org.example.ilib to javafx.fxml;
@@ -19,16 +17,6 @@ module org.example.ilib {
 //    opens org.example.ilib.Processor to javafx.fxml;
 //
 
-
-
-    requires com.google.zxing;
-    requires com.google.zxing.javase;
-
-    requires spring.boot;
-    requires spring.boot.autoconfigure;
-    requires spring.context;
-    requires spring.web;
-    requires spring.webmvc;  // Nếu sử dụng Spring MVC
     requires stripe.java;
 
     opens org.example.ilib to javafx.fxml;
@@ -47,6 +35,8 @@ module org.example.ilib {
     requires java.mail;
     requires javafx.controls;
     requires jdk.compiler;
+    requires javafx.media;
+    requires com.google.zxing;
 
     exports org.example.ilib.Controller;
     opens org.example.ilib.Controller to javafx.fxml;
