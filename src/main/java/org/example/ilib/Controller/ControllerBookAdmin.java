@@ -257,9 +257,22 @@ public class ControllerBookAdmin implements Initializable {
 
     public void deleteBook(String bookID) {
         String query = "delete from books where bookID = ?";
-        try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)){
-            stmt.setString(1, bookID);
-            stmt.executeUpdate();
+        String query2 = "delete from author where bookID = ?";
+        try(Connection connection =DBConnection.getInstance().getConnection();){
+
+            try(PreparedStatement stmt2 = connection.prepareStatement(query2)){
+                stmt2.setString(1, bookID);
+                stmt2.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            try( PreparedStatement stmt = connection.prepareStatement(query)){
+                stmt.setString(1, bookID);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         } catch(SQLException e){
             e.printStackTrace();
         }

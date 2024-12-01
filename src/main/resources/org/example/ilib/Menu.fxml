@@ -134,12 +134,7 @@
                   <Font size="57.0" />
                </font>
             </Label>
-            <TextField fx:id="search" layoutX="207.0" layoutY="38.0" onKeyPressed="#handleSearch" prefHeight="51.0" prefWidth="357.0" promptText="search" />
-            <ImageView fitHeight="49.0" fitWidth="81.0" layoutX="577.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../assets/search-2907.png" />
-               </image>
-            </ImageView>
+            <TextField fx:id="search" layoutX="207.0" layoutY="38.0" onKeyPressed="#handleSearch" prefHeight="40.0" prefWidth="357.0" promptText="search" />
             <ImageView fx:id="avatarUser" fitHeight="65.0" fitWidth="85.0" layoutX="667.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../assets/user-3296.png" />
@@ -157,7 +152,9 @@
                   <MenuItem fx:id="Admin" mnemonicParsing="false" onAction="#gotoAdvanceSetting" text="Admin" visible="false" />
                </items>
             </MenuButton>
-            <VBox fx:id="hints" layoutX="207.0" layoutY="88.0" prefHeight="39.0" prefWidth="356.0" />
+            <VBox fx:id="hintVbox" layoutX="207.0" layoutY="88.0" prefHeight="39.0" prefWidth="356.0" visible="false" />
+            <Button fx:id="chatBot" layoutX="144.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#chatBotClick" onMouseEntered="#chatBotEnter" onMouseExited="#chatBotExit" prefHeight="40.0" prefWidth="40.0" text="cBot" />
+            <Button fx:id="clickButton" layoutX="564.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#clickButtonClick" onMouseEntered="#clickButtonEnter" onMouseExited="#clickButtonExit" prefHeight="40.0" prefWidth="40.0" text="click" />
          </children>
       </AnchorPane>
    </children>

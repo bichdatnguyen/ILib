@@ -5,6 +5,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import org.example.ilib.Processor.Account;
@@ -21,16 +25,16 @@ public class ControllerChatBot {
     private VBox QnA;
 
     @FXML
-    private Button postButton;
+    private Button clickButton;
 
     @FXML
-    private TextArea question;
+    private TextArea questionText;
 
-    @FXML
-    public void post(MouseEvent event) throws SQLException {
+
+    public void handleQuestion() throws SQLException {
         QnA.getChildren().clear();
 
-        if (question == null) {
+        if (questionText == null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Bạn chưa đặt câu hỏi");
             alert.show();
@@ -48,7 +52,7 @@ public class ControllerChatBot {
             }
             ControllerComment you = user.getController();
             String email = "Bạn";
-            String qText = question.getText();
+            String qText = questionText.getText();
             LocalDateTime now = LocalDateTime.now();
             you.showCmt(email, qText, Timestamp.valueOf(now));
             QnA.getChildren().add(userBox);
@@ -66,7 +70,40 @@ public class ControllerChatBot {
             bot.showCmt(emailBot, qTextBot, Timestamp.valueOf(nowBot));
             QnA.getChildren().add(chatBox);
 
-            question.clear();
+            questionText.clear();
         }
     }
+    @FXML
+    public void clickButtonClick(MouseEvent event) {
+        try{
+            handleQuestion();
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    public void questionTextRelease(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            try{
+                handleQuestion();
+            } catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+    public void initialize() {
+        ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/org/assets/click-2399.png")));
+        imageView.setFitWidth(30);
+        imageView.setFitHeight(30);
+        clickButton.setGraphic(imageView);
+    }
+    @FXML
+    public void clickButtonEnter(MouseEvent event) {
+        clickButton.setStyle("-fx-background-color: white;");
+    }
+    @FXML
+    public void clickButtonExit(MouseEvent event) {
+        clickButton.setStyle("-fx-background-color: transparent;");
+    }
+
 }

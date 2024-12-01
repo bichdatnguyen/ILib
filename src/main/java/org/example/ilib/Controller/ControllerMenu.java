@@ -19,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.AdminApp;
@@ -28,6 +30,7 @@ import org.json.JSONArray;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,7 +87,11 @@ public class ControllerMenu implements Initializable {
     @FXML
     private HBox ReadingHbox;
     @FXML
-    private VBox hints;
+    private VBox hintVbox;
+    @FXML
+    private Button chatBot;
+    @FXML
+    private Button clickButton;
 
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
@@ -152,17 +159,13 @@ public class ControllerMenu implements Initializable {
     public void showHints() {
         search.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
-                hints.getChildren().clear();
+                hintVbox.getChildren().clear();
             } else {
-                if (executorService.isShutdown()) {
-                    executorService = Executors.newFixedThreadPool(2);
-                    System.out.println("ExecutorService restart");
-                }
                 executorService.submit(() -> {
                     try {
                         List<Book> bookHints = DBConnection.getInstance().allHints(newValue);
                         Platform.runLater(() -> {
-                            hints.getChildren().clear();
+                            hintVbox.getChildren().clear();
                             for (Book bookHint : bookHints) {
                                 FXMLLoader fx = new FXMLLoader();
                                 fx.setLocation(getClass().getResource("/org/example/ilib/SearchHint.fxml"));
@@ -172,77 +175,76 @@ public class ControllerMenu implements Initializable {
                                     controllerSearchHint.setStyleWhite();
                                     controllerSearchHint.setBook(bookHint);
                                     controllerSearchHint.showBook(bookHint);
-                                    hints.getChildren().add(hint);
-
-
+                                    hintVbox.getChildren().add(hint);
                                 } catch (IOException e) {
                                     showErrAndEx.showAlert("Lỗi khi tải gợi ý tìm kiếm.");
                                 }
                             }
-                            shutdownExecutorService();
                         });
                     } catch (SQLException e) {
                         e.printStackTrace();
-                        Platform.runLater(() -> showErrAndEx.showAlert("Lỗi khi truy vấn cơ sở dữ liệu để lấy gợi ý."));
+                        showErrAndEx.showAlert("Lỗi khi truy vấn cơ sở dữ liệu để lấy gợi ý.");
                     }
                 });
             }
         });
     }
 
-
     public void handleSearch(KeyEvent keyEvent) {
         showHints();
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
-            String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
-            if (!searchText.isEmpty()) {
-                if (executorService.isShutdown()) {
-                    // Nếu đã tắt, khởi tạo lại ExecutorService
-                    executorService = Executors.newFixedThreadPool(2);
-                    System.out.println("ExecutorService restart");
-                }
-
-                executorService.submit(() -> {
-                    try {
-                        GoogleBooksAPI api = new GoogleBooksAPI();
-                        JsonArray bookDetails = api.getInformation(searchText, 30);
-
-                        if (bookDetails != null && !bookDetails.isEmpty()) {
-                            Platform.runLater(() -> {
-                                try {
-                                    Stage stage = (Stage) search.getScene().getWindow();
-                                    FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/org/example/ilib/SearchingBook.fxml"));
-                                    Parent root = fxmlLoader1.load();
-                                    ControllerSearchingBook controllerSearchingBook = fxmlLoader1.getController();
-                                    controllerSearchingBook.setLabel(searchText);
-
-                                    for (JsonElement book : bookDetails) {
-                                        JsonObject item = book.getAsJsonObject();
-                                        String id = item.get("id").getAsString();
-
-                                        Book bk = api.getBooksByID(id);
-                                        controllerSearchingBook.addBook(bk);
-                                    }
-                                    controllerSearchingBook.showSearchResult(1);
-                                    controllerSearchingBook.showNumberOfPages((bookDetails.size() - 1) / 4 + 1);
-                                    Scene scene1 = new Scene(root);
-                                    stage.setScene(scene1);
-
-                                } catch (IOException e) {
-                                    showErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
-                                } catch (SQLException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            });
-                        } else {
-                            Platform.runLater(() -> showErrAndEx.showAlert("Không tìm thấy sách phù hợp"));
-                        }
-                    } catch (Exception e) {
-                        Platform.runLater(() -> showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API."));
-                    }
-                });
+            Search();
+        }
+    }
+    public void Search(){
+        String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
+        if (!searchText.isEmpty()) {
+            if (executorService.isShutdown()) {
+                // Nếu đã tắt, khởi tạo lại ExecutorService
+                executorService = Executors.newFixedThreadPool(2);
+                System.out.println("ExecutorService restart");
             }
+
+            executorService.submit(() -> {
+                try {
+                    GoogleBooksAPI api = new GoogleBooksAPI();
+                    JsonArray bookDetails = api.getInformation(searchText, 30);
+
+                    if (bookDetails != null && !bookDetails.isEmpty()) {
+                        Platform.runLater(() -> {
+                            try {
+                                Stage stage = (Stage) search.getScene().getWindow();
+                                FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/org/example/ilib/SearchingBook.fxml"));
+                                Parent root = fxmlLoader1.load();
+                                ControllerSearchingBook controllerSearchingBook = fxmlLoader1.getController();
+                                controllerSearchingBook.setLabel(searchText);
+
+                                for (JsonElement book : bookDetails) {
+                                    JsonObject item = book.getAsJsonObject();
+                                    String id = item.get("id").getAsString();
+
+                                    Book bk = api.getBooksByID(id);
+                                    controllerSearchingBook.addBook(bk);
+                                }
+                                controllerSearchingBook.showSearchResult(1);
+                                controllerSearchingBook.showNumberOfPages((bookDetails.size() - 1) / 4 + 1);
+                                Scene scene1 = new Scene(root);
+                                stage.setScene(scene1);
+
+                            } catch (IOException e) {
+                                showErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+                    } else {
+                        Platform.runLater(() -> showErrAndEx.showAlert("Không tìm thấy sách phù hợp"));
+                    }
+                } catch (Exception e) {
+                    Platform.runLater(() -> showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API."));
+                }
+            });
         }
     }
 
@@ -286,6 +288,17 @@ public class ControllerMenu implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
+
+            ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/org/assets/robot-chatbot-8201.png")));
+            imageView.setFitWidth(30); // Đặt chiều rộng
+            imageView.setFitHeight(30); // Đặt chiều cao
+            chatBot.setGraphic(imageView);
+            chatBot.setStyle("-fx-background-color: transparent;");
+            ImageView imageView1 = new ImageView(new Image(getClass().getResourceAsStream("/org/assets/search-2907.png")));
+            imageView1.setFitWidth(30);
+            imageView1.setFitHeight(30);
+            clickButton.setGraphic(imageView1);
+            clickButton.setStyle("-fx-background-color: transparent;");
             TopBookHbox.setStyle("-fx-background-color: transparent");
             CategoriesHbox.setStyle("-fx-background-color: transparent");
             ReadingHbox.setStyle("-fx-background-color: transparent");
@@ -369,5 +382,41 @@ public class ControllerMenu implements Initializable {
     public void ReadingHboxExit(MouseEvent event) {
        ReadingHbox.setStyle("-fx-background-color: transparent");
     }
+    @FXML
+    public void chatBotEnter(MouseEvent event) {
+            chatBot.setStyle("-fx-background-color: green");
+    }
+    @FXML
+    public void chatBotExit(MouseEvent event) {
+            chatBot.setStyle("-fx-background-color: transparent");
+    }
+    @FXML
+    public void chatBotClick(MouseEvent event) {
+       try{
+           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Chatbot.fxml"));
+           Parent root = fxmlLoader.load();
+           Stage popup = new Stage();
+           popup.initModality(Modality.APPLICATION_MODAL);
+           popup.setTitle("ChatBot");
+           Scene scene = new Scene(root);
+           popup.setScene(scene);
+           popup.showAndWait();
+       } catch(IOException e){
+           e.printStackTrace();
+       }
+    }
+    @FXML
+    public void clickButtonEnter(MouseEvent event) {
+            clickButton.setStyle("-fx-background-color: green");
+    }
+    @FXML
+    public void clickButtonExit(MouseEvent event) {
+        clickButton.setStyle("-fx-background-color: transparent");
+    }
+    @FXML
+    public void clickButtonClick(MouseEvent event) {
+        Search();
+    }
+
 
 }
