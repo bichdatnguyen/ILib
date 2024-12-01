@@ -161,6 +161,10 @@ public class ControllerMenu implements Initializable {
             if (newValue.isEmpty()) {
                 hintVbox.getChildren().clear();
             } else {
+                if (executorService.isShutdown()) {
+                    executorService = Executors.newFixedThreadPool(2);
+                    System.out.println("ExecutorService restart");
+                }
                 executorService.submit(() -> {
                     try {
                         List<Book> bookHints = DBConnection.getInstance().allHints(newValue);
@@ -176,6 +180,7 @@ public class ControllerMenu implements Initializable {
                                     controllerSearchHint.setBook(bookHint);
                                     controllerSearchHint.showBook(bookHint);
                                     hintVbox.getChildren().add(hint);
+                                 //   hintVbox.setVisible(true);
                                 } catch (IOException e) {
                                     showErrAndEx.showAlert("Lỗi khi tải gợi ý tìm kiếm.");
                                 }
@@ -191,7 +196,7 @@ public class ControllerMenu implements Initializable {
     }
 
     public void handleSearch(KeyEvent keyEvent) {
-        showHints();
+       showHints();
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
             Search();

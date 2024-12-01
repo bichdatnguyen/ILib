@@ -37,12 +37,11 @@ public class DBConnection {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setMaximumPoolSize(1000);
-        config.setMinimumIdle(50);
-        config.setIdleTimeout(10000);
-        config.setMaxLifetime(240000);
+        config.setMaximumPoolSize(100);
+        config.setMinimumIdle(20);
+        config.setIdleTimeout(4000);  // Giảm thời gian giữ kết nối không dùng
+        config.setMaxLifetime(240000); // Tăng thời gian sống tối đa nếu cần
         config.setConnectionTimeout(5000);
-        config.setLeakDetectionThreshold(5000);
 
         dataSource = new HikariDataSource(config);
     }
