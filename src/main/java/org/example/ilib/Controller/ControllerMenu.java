@@ -188,7 +188,7 @@ public class ControllerMenu implements Initializable {
                                 try {
                                     HBox hint = fx.load();
                                     ControllerSearchHint controllerSearchHint = fx.getController();
-                                    controllerSearchHint.setStyleWhite();
+                                    controllerSearchHint.setStyleGreen();
                                     controllerSearchHint.setBook(bookHint);
                                     controllerSearchHint.showBook(bookHint);
                                     hintVbox.getChildren().add(hint);

@@ -237,7 +237,7 @@ public class ControllerCartItemList implements Initializable {
            VoucherCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("voucher"));
            CartTable.setItems(CartList);
            anchorPane.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-               if (!CartTable.isHover()) { // Kiểm tra nếu chuột không nằm trong TableView
+               if (!CartTable.isHover() && !(deleteBook.isHover()||add.isHover()||substract.isHover()||VoulumeText.isHover())) { // Kiểm tra nếu chuột không nằm trong TableView
                    CartTable.getSelectionModel().clearSelection();
                }
            });
