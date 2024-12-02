@@ -4,20 +4,16 @@ package org.example.ilib.Controller;
 import org.example.ilib.Processor.Book;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class Booklist {
 
     private static Booklist instance;
     protected List<Book> TopBookList = new ArrayList<>();
     protected List<Book> RecentlyBookList = new ArrayList<>();
+    protected List<Book> RecommendBookList = new ArrayList<>();
 
     public static Booklist getInstance() {
         if(instance == null){
@@ -25,13 +21,17 @@ public class Booklist {
         }
         return instance;
     }
-   private Booklist(){
+
+    private Booklist(){
         try{
-            if(TopBookList.isEmpty()){
+            if (TopBookList.isEmpty()) {
                 TopBookList = addTopBookList();
             }
-            if(RecentlyBookList.isEmpty()){
+            if (RecentlyBookList.isEmpty()) {
                RecentlyBookList = addRecentlyBookList();
+            }
+            if (RecommendBookList.isEmpty()) {
+               RecommendBookList = addRecommendForYou();
             }
         } catch (SQLException | IOException e) {
            e.printStackTrace();
@@ -43,7 +43,11 @@ public class Booklist {
         return DBConnection.getInstance().getTopBooks(9);
     }
 
-    protected List<Book> addRecentlyBookList() throws SQLException, IOException {
+    private List<Book> addRecentlyBookList() throws SQLException, IOException {
         return DBConnection.getInstance().getRecentlyBooks(9);
+    }
+
+    private List<Book> addRecommendForYou() throws SQLException, IOException {
+        return DBConnection.getInstance().getRecommendedBooks(9);
     }
 }

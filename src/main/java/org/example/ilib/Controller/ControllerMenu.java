@@ -74,6 +74,9 @@ public class ControllerMenu implements Initializable {
     private HBox recentlyAddHbox;
 
     @FXML
+    private HBox recommendHBox;
+
+    @FXML
     private MenuItem account;
 
     @FXML
@@ -374,6 +377,17 @@ public class ControllerMenu implements Initializable {
                     controllerBook.showBook(recentlyBooks.get(i));
                     recentlyAddHbox.getChildren().add(cardbox);
                 }
+
+                List<Book> recommendBooks = Booklist.getInstance().RecommendBookList;
+                for (int i = 0; i < recommendBooks.size(); i++) {
+                    FXMLLoader fx = new FXMLLoader();
+                    fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
+                    HBox cardbox = (HBox) fx.load();
+                    ControllerBook controllerBook = (ControllerBook) fx.getController();
+                    controllerBook.setBook(recommendBooks.get(i));
+                    controllerBook.showBook(recommendBooks.get(i));
+                    recommendHBox.getChildren().add(cardbox);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -475,6 +489,4 @@ public class ControllerMenu implements Initializable {
         //anchorPaneLoad.setDisable(isLoading);
       //  anchorPaneLoad.setOpacity(isLoading ? 0.5 : 1);
     }
-
-
 }

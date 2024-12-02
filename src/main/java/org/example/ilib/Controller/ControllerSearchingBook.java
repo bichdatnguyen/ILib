@@ -82,7 +82,7 @@ public class ControllerSearchingBook  {
                ControllerBook controllerBook = (ControllerBook) fxmlLoader.getController();
                controllerBook.setBook(book);
                controllerBook.showBook(book);
-               if(column == 2){
+               if(column == 2) {
                    column = 0;
                    row++;
                }
