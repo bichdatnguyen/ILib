@@ -75,20 +75,30 @@ public class ControllerChatBot {
     }
     @FXML
     public void clickButtonClick(MouseEvent event) {
-        try{
-            handleQuestion();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+        if (!questionText.getText().trim().equals("")) {
+            try{
+               handleQuestion();
+           } catch (SQLException e){
+               e.printStackTrace();
+           }
+       } else{
+           showErrAndEx.showAlert("Vui lòng nhập câu hỏi");
+           return;
+       }
     }
     @FXML
     public void questionTextRelease(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
-            try{
-                handleQuestion();
-            } catch (SQLException e){
-                e.printStackTrace();
-            }
+            if (!questionText.getText().trim().equals("")) {
+               try{
+                   handleQuestion();
+               } catch (SQLException e){
+                   e.printStackTrace();
+               }
+           } else{
+               showErrAndEx.showAlert("Vui lòng nhập câu hỏi cần giải đáp");
+               return;
+           }
         }
     }
     public void initialize() {

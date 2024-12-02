@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -83,22 +84,22 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     private MenuItem TransactionItem;
-
     @FXML
     private HBox TopBookHbox;
-
     @FXML
     private HBox CategoriesHbox;
-
     @FXML
     private HBox ReadingHbox;
-
     @FXML
     private VBox hintVbox;
     @FXML
     private Button chatBot;
     @FXML
     private Button clickButton;
+    @FXML
+    private ProgressIndicator loadingIndicator;
+    @FXML
+    private AnchorPane anchorPaneLoad;
 
     @FXML
     private ImageView music;
@@ -213,7 +214,6 @@ public class ControllerMenu implements Initializable {
             Search();
         }
     }
-    
     public void Search(){
         String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
         if (!searchText.isEmpty()) {
@@ -222,7 +222,7 @@ public class ControllerMenu implements Initializable {
                 executorService = Executors.newFixedThreadPool(2);
                 System.out.println("ExecutorService restart");
             }
-
+            Loading(true);
             executorService.submit(() -> {
                 try {
                     GoogleBooksAPI api = new GoogleBooksAPI();
@@ -248,6 +248,7 @@ public class ControllerMenu implements Initializable {
                                 controllerSearchingBook.showNumberOfPages((bookDetails.size() - 1) / 4 + 1);
                                 Scene scene1 = new Scene(root);
                                 stage.setScene(scene1);
+                                Loading(false);
 
                             } catch (IOException e) {
                                 showErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
@@ -256,10 +257,12 @@ public class ControllerMenu implements Initializable {
                             }
                         });
                     } else {
-                        Platform.runLater(() -> showErrAndEx.showAlert("Không tìm thấy sách phù hợp"));
+
+                        Platform.runLater(() -> {Loading(false);showErrAndEx.showAlert("Không tìm thấy sách phù hợp");});
                     }
                 } catch (Exception e) {
-                    Platform.runLater(() -> showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API."));
+
+                    Platform.runLater(() -> {Loading(false);showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API.");});
                 }
             });
         }
@@ -459,6 +462,18 @@ public class ControllerMenu implements Initializable {
     @FXML
     public void clickButtonClick(MouseEvent event) {
         Search();
+    }
+
+
+    private void Loading(boolean isLoading) {
+        loadingIndicator.setVisible(isLoading);
+        if (isLoading) {
+            loadingIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+        } else {
+            loadingIndicator.setProgress(0); // Đặt lại nếu không còn loading
+        }
+        //anchorPaneLoad.setDisable(isLoading);
+      //  anchorPaneLoad.setOpacity(isLoading ? 0.5 : 1);
     }
 
 

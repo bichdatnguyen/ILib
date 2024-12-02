@@ -133,9 +133,10 @@ public class ControllerBookAdmin implements Initializable {
             } else{
                 Alert alert = showErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
                 if(alert.getResult() == ButtonType.OK){
+                    deleteBook(BookTable.getSelectionModel().getSelectedItem().getId());
                     BookList.remove(BookTable.getSelectionModel().getSelectedItem());
                     BookTable.refresh();
-                    deleteBook(BookTable.getSelectionModel().getSelectedItem().getId());
+
                 }
             }
     }
@@ -254,18 +255,12 @@ public class ControllerBookAdmin implements Initializable {
             });
         }
     }
-
+//rating , shelf, payment , borrow,history,categories,cart,author,books
     public void deleteBook(String bookID) {
         String query = "delete from books where bookID = ?";
-        String query2 = "delete from author where bookID = ?";
+
         try(Connection connection =DBConnection.getInstance().getConnection();){
 
-            try(PreparedStatement stmt2 = connection.prepareStatement(query2)){
-                stmt2.setString(1, bookID);
-                stmt2.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
             try( PreparedStatement stmt = connection.prepareStatement(query)){
                 stmt.setString(1, bookID);
                 stmt.executeUpdate();
