@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBookComment">
+<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBookComment">
    <children>
-      <Button fx:id="postCmt" layoutX="856.0" layoutY="542.0" mnemonicParsing="false" onMouseClicked="#postCmtInBook" prefHeight="29.0" prefWidth="65.0" text="Đăng">
+      <Button fx:id="postCmt" layoutX="826.0" layoutY="542.0" mnemonicParsing="false" onMouseClicked="#postCmtInBook" prefHeight="36.0" prefWidth="95.0" text="Update">
          <font>
-            <Font size="16.0" />
+            <Font name="Comic Sans MS" size="16.0" />
          </font>
       </Button>
       <ScrollPane layoutX="32.0" layoutY="42.0" prefHeight="365.0" prefWidth="900.0">
@@ -22,18 +22,18 @@
       </ScrollPane>
       <Button fx:id="backToBookDetail" layoutX="32.0" layoutY="542.0" mnemonicParsing="false" onMouseClicked="#back" text="Back">
          <font>
-            <Font size="16.0" />
+            <Font name="Comic Sans MS" size="16.0" />
          </font>
       </Button>
-      <Label layoutX="32.0" layoutY="427.0" prefHeight="22.0" prefWidth="98.0" text="Viết bình luận ">
+      <Label layoutX="32.0" layoutY="427.0" prefHeight="22.0" prefWidth="169.0" text="Write your comments">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <TextArea fx:id="cmt" layoutX="32.0" layoutY="459.0" prefHeight="69.0" prefWidth="900.0" />
-      <Label layoutX="32.0" layoutY="14.0" prefHeight="18.0" prefWidth="66.0" text="Bình luận ">
+      <Label layoutX="32.0" layoutY="14.0" prefHeight="22.0" prefWidth="104.0" text="Comments">
          <font>
-            <Font size="15.0" />
+            <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
    </children>
