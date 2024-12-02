@@ -27,6 +27,12 @@ public class ControllerComment {
     @FXML
     private Label timeCmt;
 
+    /** show comment.
+     * @param email email information
+     * @param cmt comment
+     * @param now real time
+     * @throws SQLException prevent sql exception
+     */
     public void showCmt(String email, String cmt, Timestamp now) throws SQLException {
         this.emailCmt.setText(email);
         this.cmt.setText(cmt);

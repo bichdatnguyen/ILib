@@ -37,14 +37,23 @@ public class ControllerBookComment {
     private String bookID;
     private Scene FowardScene;
 
+    /** bookID setter.
+     * @param bookID set to this.bookID
+     */
     public void setBookID(String bookID) {
         this.bookID = bookID;
     }
 
+    /** save the scene before.
+     * @param scene  set to this.FowardScene
+     */
     public void saveFowardScene(Scene scene) {
         this.FowardScene = scene;
     }
 
+    /** back to scene before.
+     * @param event go back when button clicked
+     */
     @FXML
     public void back(MouseEvent event) {
         Stage stage = (Stage) backToBookDetail.getScene().getWindow();
@@ -53,6 +62,9 @@ public class ControllerBookComment {
         stage.setScene(scene);
     }
 
+    /** post comment in each books.
+     * @param event post your comment when button is clicked.
+     */
     @FXML
     public void postCmtInBook(MouseEvent event) {
         if (cmt == null) {
@@ -83,6 +95,9 @@ public class ControllerBookComment {
         }
     }
 
+    /**
+     * show all comments of book.
+     */
     public void showAllCmtInBook() {
         cmtBox.getChildren().clear();
         List<Comment> comments;

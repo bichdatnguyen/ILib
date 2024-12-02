@@ -171,6 +171,9 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
+    /**
+     * show hints when search for books.
+     */
     public void showHints() {
 
         search.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -217,6 +220,9 @@ public class ControllerMenu implements Initializable {
         });
     }
 
+    /** handle search bar.
+     * @param keyEvent find books when key pressed
+     */
     public void handleSearch(KeyEvent keyEvent) {
        showHints();
 
@@ -224,6 +230,10 @@ public class ControllerMenu implements Initializable {
             Search();
         }
     }
+
+    /**
+     * search books using Google Book API.
+     */
     public void Search(){
         String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
         if (!searchText.isEmpty()) {
@@ -278,6 +288,10 @@ public class ControllerMenu implements Initializable {
         }
     }
 
+    /** top book menu.
+     * @param event go to top book when clicked
+     * @throws IOException prevent IO exception
+     */
     public void topBookMenu(MouseEvent event) throws IOException {
         Stage stage = (Stage) topBooks.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -288,6 +302,10 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
+    /** categories menu.
+     * @param e go to categorize menu when clicked
+     * @throws IOException prevent IO exception
+     */
     public void categoriesMenu(MouseEvent e) throws IOException {
         Stage stage = (Stage) Categories.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -297,6 +315,10 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
+    /** reading menu.
+     * @param e go to reading shelf when clicked
+     * @throws IOException prevent IO exception
+     */
     public void readingMenu(MouseEvent e) throws IOException {
 
         Stage stage = (Stage) reading.getScene().getWindow();
@@ -315,6 +337,9 @@ public class ControllerMenu implements Initializable {
         }
     }
 
+    /**
+     * music initialize.
+     */
     public void initMusic() {
         try {
             String url = getClass().getResource("/org/music/backgroundMusic.mp3").toExternalForm();
@@ -328,6 +353,9 @@ public class ControllerMenu implements Initializable {
         }
     }
 
+    /** turn music.
+     * @param event turn on and pause music when clicked
+     */
     @FXML
     void turnMusic(MouseEvent event) {
         if (mediaPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
@@ -339,6 +367,10 @@ public class ControllerMenu implements Initializable {
         }
     }
 
+    /** menu initialize.
+     * @param url url
+     * @param resourceBundle resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
@@ -457,6 +489,10 @@ public class ControllerMenu implements Initializable {
     public void chatBotExit(MouseEvent event) {
             chatBot.setStyle("-fx-background-color: transparent");
     }
+
+    /** chatbot menu.
+     * @param event go to chatbot menu when button clicked
+     */
     @FXML
     public void chatBotClick(MouseEvent event) {
        try{
@@ -480,11 +516,14 @@ public class ControllerMenu implements Initializable {
     public void clickButtonExit(MouseEvent event) {
         clickButton.setStyle("-fx-background-color: transparent");
     }
+
+    /** search book by button.
+     * @param event search books when button is clicked
+     */
     @FXML
     public void clickButtonClick(MouseEvent event) {
         Search();
     }
-
 
     private void Loading(boolean isLoading) {
         loadingIndicator.setVisible(isLoading);

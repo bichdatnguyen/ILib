@@ -60,6 +60,9 @@ public class ControllerAccount {
 
     private static ControllerAccount instance;
 
+    /**
+     * initialize ControllerAccount.
+     */
     @FXML
     public void initialize() {
         setPropertiesFromDatabase();
@@ -112,6 +115,10 @@ public class ControllerAccount {
         }
     }
 
+    /** Back to menu.
+     * @param mouseEvent back when you click mouse
+     * @throws IOException throw IOException
+     */
     public void Back(javafx.scene.input.MouseEvent mouseEvent) throws IOException {
         Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader fx = new FXMLLoader();

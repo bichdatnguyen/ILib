@@ -29,6 +29,9 @@ public class DBConnection {
         return dataSource.getConnection();
     }
 
+    /**
+     * constructor.
+     */
     private DBConnection() {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(url);
@@ -45,6 +48,11 @@ public class DBConnection {
 
         dataSource = new HikariDataSource(config);
     }
+
+    /** get DBConnection's instance.
+     * @return DBConnection's instance
+     * @throws SQLException prevent SQL exception
+     */
     public static DBConnection getInstance() throws SQLException {
         if (instance == null) {
             synchronized (DBConnection.class) {
@@ -60,6 +68,15 @@ public class DBConnection {
         return DBConnection.getInstance().getConnection().prepareStatement(sql);
     }
 
+    /** add account to database.
+     * @param email email's info
+     * @param phoneNumber phone number's info
+     * @param fullName name's info
+     * @param password password's info
+     * @param avatarPath avatar's info
+     * @param role user or admin
+     * @throws SQLException prevent SQL exception
+     */
     public void createAccount(String email, String phoneNumber, String fullName,
                               String password, String avatarPath, String role) throws SQLException {
         String sql = "INSERT INTO user (email, phoneNumber, fullName, password, avatarPath, role) " +
@@ -77,6 +94,11 @@ public class DBConnection {
        }
     }
 
+    /** create voucher.
+     * @param email add voucher to this email
+     * @param discountPercentage voucher's discount percentage
+     * @throws SQLException prevent SQL exception
+     */
     public void createVoucher(String email, int discountPercentage) throws SQLException {
         String sql = "INSERT INTO Voucher (Email, discountPercentage) VALUES (?, ?)";
         try(PreparedStatement stmt = createStatement(sql)){
@@ -131,6 +153,11 @@ public class DBConnection {
         return false;
     }
 
+    /** check if book already exist in database.
+     * @param bookID bookID which is checked
+     * @return true or false
+     * @throws SQLException prevent SQL exception
+     */
     public boolean bookExist(String bookID) throws SQLException {
         String sql = "SELECT EXISTS (SELECT 1 FROM books WHERE bookID = ?)";
         try (Connection connection = DBConnection.getInstance().getConnection();
@@ -142,23 +169,11 @@ public class DBConnection {
         }
     }
 
-    public int getQuantity(String bookID) throws SQLException {
-        String sql = "SELECT quantityInStock FROM books WHERE bookID = ?";
-        PreparedStatement stmt = createStatement(sql);
-        stmt.setString(1, bookID);
-        try(ResultSet rs = stmt.executeQuery();){
-            if (rs.next()) {
-                int quantity = rs.getInt(1);
-                return quantity;
-            } else {
-                return 0;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
+    /** get all top books in database.
+     * @param number number of books want to take from database
+     * @return list of top books
+     * @throws SQLException prevent SQL exception
+     */
     public List<Book> getTopBooks(int number) throws SQLException {
         String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
                 "FROM books ORDER BY averageRating DESC LIMIT ?";
@@ -184,6 +199,11 @@ public class DBConnection {
         }
     }
 
+    /** get all books by category in database.
+     * @param category category want to take
+     * @return list of books by category
+     * @throws SQLException prevent SQL exception
+     */
     public List<Book> getTopCategories(String category) throws SQLException {
         String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
                 "FROM books NATURAL JOIN categories WHERE category = ? " +
@@ -210,6 +230,11 @@ public class DBConnection {
         }
     }
 
+    /** get authors of a book.
+     * @param bookID book ID of a book when to find authors.
+     * @return authors name.
+     * @throws SQLException prevent SQL exception
+     */
     public String getAuthor(String bookID) throws SQLException {
         String sql = "SELECT authorName FROM author WHERE bookID = ?";
         try(PreparedStatement stmt = createStatement(sql)){
@@ -228,6 +253,11 @@ public class DBConnection {
         return null;
     }
 
+    /** get all recently add books in database.
+     * @param number number of books want to take
+     * @return list of recently add books.
+     * @throws SQLException prevent SQL exception
+     */
     public List<Book> getRecentlyBooks(int number) throws SQLException {
         String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
                 "FROM books ORDER BY addDate DESC LIMIT ?";
@@ -253,6 +283,11 @@ public class DBConnection {
         }
     }
 
+    /** get recommend books from database.
+     * @param number number of books want to take
+     * @return list of recommend books
+     * @throws SQLException prevent SQL exception
+     */
     public List<Book> getRecommendedBooks(int number) throws SQLException {
         String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
                 "FROM books ORDER BY averageRating ASC LIMIT ?";
@@ -278,6 +313,10 @@ public class DBConnection {
         }
     }
 
+    /** get all categories in database.
+     * @return list of categories
+     * @throws SQLException prevent SQL exception
+     */
     public List<String> getAllSubjectFromDB() throws SQLException {
         String sql = "SELECT DISTINCT Category FROM categories ORDER BY Category ASC";
         try(PreparedStatement stmt = createStatement(sql);  ){
@@ -296,6 +335,11 @@ public class DBConnection {
         return null;
     }
 
+    /** check if book exist in shelf.
+     * @param bookID book ID want to check
+     * @return true or false
+     * @throws SQLException prevent SQL exception
+     */
     public boolean existInShelf(String bookID) throws SQLException {
         String sql = "SELECT EXISTS (SELECT 1 FROM shelf WHERE bookID = ?)";
         try (Connection connection = DBConnection.getInstance().getConnection();
@@ -307,6 +351,10 @@ public class DBConnection {
         }
     }
 
+    /** add book to shelf.
+     * @param bookID book ID want to add
+     * @throws SQLException prevent SQL exception
+     */
     public void saveBookToShelf(String bookID) throws SQLException {
         String sql = "INSERT INTO shelf (Email, bookID) VALUES (?, ?)";
         try(PreparedStatement stmt = createStatement(sql)) {
@@ -316,6 +364,10 @@ public class DBConnection {
         }
     }
 
+    /** delete book from shelf.
+     * @param bookID book ID want to delete
+     * @throws SQLException prevent SQL exception
+     */
     public void deleteBookFromShelf(String bookID) throws SQLException {
         String sql = "DELETE FROM shelf WHERE bookID = ?";
         try(PreparedStatement stmt = createStatement(sql)) {
@@ -324,6 +376,10 @@ public class DBConnection {
         }
     }
 
+    /** take all borrow books of user.
+     * @return list of borrow books
+     * @throws SQLException
+     */
     public List<Book> allBorrowBooks() throws SQLException {
         String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
                 "FROM borrow NATURAL JOIN books WHERE Email = ?";
@@ -349,6 +405,10 @@ public class DBConnection {
         }
     }
 
+    /** take all books saved in shelf of user.
+     * @return list of books
+     * @throws SQLException prevent SQL exception
+     */
     public List<Book> allBookInShelf() throws SQLException {
         String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
                 "FROM shelf NATURAL JOIN books WHERE Email = ?";
@@ -374,6 +434,12 @@ public class DBConnection {
         }
     }
 
+    /** save book's comment.
+     * @param email user who post comment
+     * @param bookID book ID which is comment
+     * @param cmt comment
+     * @param now real time
+     */
     public void saveCmt(String email, String bookID, String cmt, Timestamp now) {
         String sql = "INSERT INTO rating (Email, bookID, Comment, Time) " +
                 "VALUES (?, ?, ?, ?)";
@@ -388,6 +454,11 @@ public class DBConnection {
         }
     }
 
+    /** take all comments of a book.
+     * @param bookID book ID want to take comment
+     * @return list of comments
+     * @throws SQLException prevent SQL exception
+     */
     public List<Comment> allBookCmt(String bookID) throws SQLException {
         String sql = "SELECT Email, Comment, Time FROM rating WHERE bookID = ?";
 
@@ -411,6 +482,11 @@ public class DBConnection {
         }
     }
 
+    /** hints of book when searching.
+     * @param text key word which user want to find
+     * @return list of books suggest to user
+     * @throws SQLException prevent SQL exception
+     */
     public List<Book> allHints(String text) throws SQLException {
         String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
                 "FROM books WHERE title LIKE ? LIMIT 4";

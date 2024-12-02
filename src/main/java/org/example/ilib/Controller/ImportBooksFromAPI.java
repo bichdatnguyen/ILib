@@ -18,10 +18,18 @@ public class ImportBooksFromAPI {
     private static String[] subjects
             = {"Philosophy", "Psychology", "Sociology", "Mathematics", "Physics"};
 
+    /** get book ID.
+     * @param item item which contain book ID
+     * @return book ID
+     */
     public static String getID(JsonElement item) {
         return item.getAsJsonObject().get("id").getAsString();
     }
 
+    /** get title
+     * @param volumeInfo volumeInfo which contain book's title
+     * @return book's title
+     */
     public static String getTitle(JsonObject volumeInfo) {
         if (volumeInfo.has("title")) {
             return volumeInfo.get("title").getAsString();
@@ -30,6 +38,10 @@ public class ImportBooksFromAPI {
         }
     }
 
+    /** get a list of authors.
+     * @param volumeInfo volumeInfo which contain book's title
+     * @return list of book's authors
+     */
     public static List<String> getAuthors(JsonObject volumeInfo) {
         List<String> authors = new ArrayList<>();
         if (volumeInfo.has("authors")) {
@@ -41,6 +53,10 @@ public class ImportBooksFromAPI {
         return authors;
     }
 
+    /** get book price.
+     * @param saleInfo saleInfo which contain book's price
+     * @return book's price
+     */
     public static int getBookPrice(JsonObject saleInfo) {
         String saleability = saleInfo.get("saleability").getAsString();
         if (!saleability.equals("FOR_SALE")) {
@@ -54,6 +70,10 @@ public class ImportBooksFromAPI {
         }
     }
 
+    /** get book's description
+     * @param volumeInfo volumeInfo which contain book's title
+     * @return book's description
+     */
     public static String getDescription(JsonObject volumeInfo) {
         if (volumeInfo.has("description")) {
             return volumeInfo.get("description").getAsString();
@@ -62,11 +82,18 @@ public class ImportBooksFromAPI {
         }
     }
 
+    /** get real time date
+     * @return real time
+     */
     public static Timestamp getDate() {
         LocalDateTime now = LocalDateTime.now();
         return Timestamp.valueOf(now);
     }
 
+    /** get book's rating.
+     * @param volumeInfo volumeInfo which contain book's title
+     * @return book's average rating
+     */
     public static double getAverageRating(JsonObject volumeInfo) {
         if (volumeInfo.has("averageRating")) {
             return volumeInfo.get("averageRating").getAsDouble();
@@ -75,6 +102,10 @@ public class ImportBooksFromAPI {
         }
     }
 
+    /** list of book's categories
+     * @param volumeInfo volumeInfo which contain book's title
+     * @return book's categories
+     */
     public static List<String> getCategory(JsonObject volumeInfo) {
         List<String> categories = new ArrayList<>();
         if (volumeInfo.has("categories")) {
@@ -86,6 +117,10 @@ public class ImportBooksFromAPI {
         return categories;
     }
 
+    /** book's thumbnail.
+     * @param volumeInfo volumeInfo which contain book's title
+     * @return book's thumbnal url
+     */
     public static String getThumbnail(JsonObject volumeInfo) {
         if (volumeInfo.has("imageLinks")) {
             JsonObject imageLinks = volumeInfo.getAsJsonObject("imageLinks");
@@ -96,6 +131,11 @@ public class ImportBooksFromAPI {
         return "E:/java/iLib/ILib/src/main/resources/org/assets/noImage.png";
     }
 
+    /** take books from API to test.
+     * @param args args
+     * @throws SQLException prevent SQL exception
+     * @throws IOException prevent IO exception
+     */
     public static void main(String[] args) throws SQLException, IOException {
         GoogleBooksAPI gg = new GoogleBooksAPI();
         DBConnection db = DBConnection.getInstance();

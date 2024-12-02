@@ -31,10 +31,16 @@ public class ControllerCategories implements Initializable {
     private static List<String> subjects;
     private static Map<String, List<Book>> bookByCategory;
 
+    /** subjects setter.
+     * @param subjects set to ControllerCategorise.subjects
+     */
     public static void setSubjects(List<String> subjects) {
         ControllerCategories.subjects = subjects;
     }
 
+    /** contructor.
+     * @throws SQLException prevent sql exception
+     */
     public ControllerCategories() throws SQLException {
         gridPaneCategory = new GridPane();
         DBConnection db = DBConnection.getInstance();
@@ -42,6 +48,10 @@ public class ControllerCategories implements Initializable {
         bookByCategory = new HashMap<>();
     }
 
+    /** back to menu.
+     * @param event back to menu when clicked
+     * @throws IOException prevent IO exception
+     */
     public void BackToMenu(MouseEvent event) throws IOException {
         Stage stage = (Stage) Back.getScene().getWindow();
         FXMLLoader fx = new FXMLLoader();
@@ -51,6 +61,11 @@ public class ControllerCategories implements Initializable {
         bookByCategory.clear();
     }
 
+    /** create page's buttons.
+     * @param page page's number
+     * @param category page's category
+     * @return
+     */
     public Button createPageButton(String page, String category) {
         Button button = new Button(page);
         button.setOnMouseClicked(_ -> {
@@ -63,6 +78,10 @@ public class ControllerCategories implements Initializable {
         return button;
     }
 
+    /** show all pages.
+     * @param pages number of pages.
+     * @param category page's category
+     */
     public void showNumberOfPages(int pages, String category) {
         categoryPage.getChildren().clear();
         for (int i = 1; i <= pages; i++) {
@@ -71,11 +90,21 @@ public class ControllerCategories implements Initializable {
         }
     }
 
+    /** get book by category from database.
+     * @param category book's category
+     * @throws SQLException prevent sql exception
+     * @throws IOException prevent IO exception
+     */
     public void setBooks(String category) throws SQLException, IOException {
         DBConnection db = DBConnection.getInstance();
         bookByCategory.put(category, db.getTopCategories(category));
     }
 
+    /** show books.
+     * @param page books are show in this page
+     * @param category book's category
+     * @throws SQLException prevent sql exception
+     */
     public void showResult(int page, String category) throws SQLException {
         if (gridPaneCategory != null) {
             gridPaneCategory.getChildren().clear();
@@ -106,6 +135,10 @@ public class ControllerCategories implements Initializable {
         }
     }
 
+    /** categories initialize.
+     * @param location location
+     * @param resources resources
+     */
     public void initialize(URL location, ResourceBundle resources) {
 
         if (categoryChoice != null) {

@@ -24,18 +24,32 @@ public class ControllerSearchHint  {
 
     private Book book;
 
+    /** book setter.
+     * @param book set to this.book
+     */
     public void setBook(Book book) {
         this.book = book;
     }
 
+    /** book getter.
+     * @return this.book
+     */
     public Book getBook() {
         return this.book;
     }
 
+    /** show book's information.
+     * @param book book's information
+     */
     public void showBook(Book book) {
         bookTitle.setText(book.getTitle());
     }
 
+    /** go to book's detail.
+     * @param event show book detail when click on book.
+     * @throws IOException prevent IO exception
+     * @throws SQLException prevent SQL exception
+     */
     @FXML
     public void gotoBookDetail(MouseEvent event) throws IOException, SQLException {
         Stage stage = (Stage) bookTitle.getScene().getWindow();
