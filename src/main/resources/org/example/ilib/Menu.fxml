@@ -99,6 +99,7 @@
                   </HBox>
                </children>
             </VBox>
+            <ImageView fx:id="music" fitHeight="40.0" fitWidth="40.0" onMouseClicked="#turnMusic" pickOnBounds="true" preserveRatio="true" />
          </children>
       </VBox>
       <VBox layoutX="265.0" layoutY="129.0" prefHeight="526.0" prefWidth="687.0">
@@ -149,7 +150,6 @@
             <VBox fx:id="hintVbox" layoutX="207.0" layoutY="88.0" prefHeight="39.0" prefWidth="356.0" />
             <Button fx:id="chatBot" layoutX="144.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#chatBotClick" onMouseEntered="#chatBotEnter" onMouseExited="#chatBotExit" prefHeight="40.0" prefWidth="40.0" text="cBot" />
             <Button fx:id="clickButton" layoutX="564.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#clickButtonClick" onMouseEntered="#clickButtonEnter" onMouseExited="#clickButtonExit" prefHeight="40.0" prefWidth="40.0" text="click" />
-            <ImageView fx:id="music" fitHeight="40.0" fitWidth="40.0" layoutX="625.0" layoutY="38.0" onMouseClicked="#turnMusic" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
    </children>
