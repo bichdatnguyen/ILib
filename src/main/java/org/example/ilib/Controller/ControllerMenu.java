@@ -169,6 +169,7 @@ public class ControllerMenu implements Initializable {
     }
 
     public void showHints() {
+
         search.textProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue.isEmpty()) {
                 hintVbox.getChildren().clear();
@@ -181,6 +182,7 @@ public class ControllerMenu implements Initializable {
                     try {
                         List<Book> bookHints = DBConnection.getInstance().allHints(newValue);
                         Platform.runLater(() -> {
+
                             hintVbox.getChildren().clear();
                             for (Book bookHint : bookHints) {
                                 FXMLLoader fx = new FXMLLoader();
@@ -188,10 +190,15 @@ public class ControllerMenu implements Initializable {
                                 try {
                                     HBox hint = fx.load();
                                     ControllerSearchHint controllerSearchHint = fx.getController();
-                                    controllerSearchHint.setStyleGreen();
+                                    controllerSearchHint.setStyleWhite();
                                     controllerSearchHint.setBook(bookHint);
                                     controllerSearchHint.showBook(bookHint);
                                     hintVbox.getChildren().add(hint);
+                                    if(hintVbox.getChildren().size() == 0){
+                                        hintVbox.setVisible(false);
+                                    } else{
+                                        hintVbox.setVisible(true);
+                                    }
                                  //   hintVbox.setVisible(true);
                                 } catch (IOException e) {
                                     showErrAndEx.showAlert("Lỗi khi tải gợi ý tìm kiếm.");
@@ -453,7 +460,7 @@ public class ControllerMenu implements Initializable {
     }
     @FXML
     public void clickButtonEnter(MouseEvent event) {
-            clickButton.setStyle("-fx-background-color: white");
+            clickButton.setStyle("-fx-background-color: green");
     }
     @FXML
     public void clickButtonExit(MouseEvent event) {
