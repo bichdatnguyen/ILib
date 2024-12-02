@@ -37,7 +37,7 @@ public class DBConnection {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setMaximumPoolSize(10000000);
+        config.setMaximumPoolSize(100000000);
         config.setMinimumIdle(20);
         config.setIdleTimeout(4000);  // Giảm thời gian giữ kết nối không dùng
         config.setMaxLifetime(240000); // Tăng thời gian sống tối đa nếu cần
@@ -231,6 +231,31 @@ public class DBConnection {
     public List<Book> getRecentlyBooks(int number) throws SQLException {
         String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
                 "FROM books ORDER BY addDate DESC LIMIT ?";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setInt(1, number);
+            List<Book> books = new ArrayList<>();
+            try(ResultSet rs = stmt.executeQuery()){
+                while(rs.next()) {
+                    String bookID = rs.getString(1);
+                    String thumbnail = rs.getString(2);
+                    String description = rs.getString(3);
+                    String title = rs.getString(4);
+                    String authors = getAuthor(bookID);
+                    int quantityInStock = rs.getInt(5);
+
+                    Book book = new Book(thumbnail, title, authors, description, bookID, quantityInStock);
+                    books.add(book);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return books;
+        }
+    }
+
+    public List<Book> getRecommendedBooks(int number) throws SQLException {
+        String sql = "SELECT bookID, thumbnail, description, title, quantityInStock " +
+                "FROM books ORDER BY averageRating ASC LIMIT ?";
         try(PreparedStatement stmt = createStatement(sql)){
             stmt.setInt(1, number);
             List<Book> books = new ArrayList<>();
