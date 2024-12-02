@@ -62,6 +62,6 @@
          <font>
             <Font name="Comic Sans MS" size="12.0" />
          </font></Button>
-      <TextField fx:id="VoulumeText" alignment="CENTER" layoutX="440.0" layoutY="480.0" prefHeight="51.0" prefWidth="134.0" promptText="Số lượng" />
+      <TextField fx:id="VoulumeText" alignment="CENTER" layoutX="440.0" layoutY="480.0" prefHeight="51.0" prefWidth="134.0" promptText="Quantity" />
    </children>
 </AnchorPane>

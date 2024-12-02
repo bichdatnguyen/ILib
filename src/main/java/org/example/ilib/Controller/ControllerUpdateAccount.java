@@ -93,7 +93,7 @@ public class ControllerUpdateAccount {
                 if (!e.equals(Account.getInstance().getEmail())) {
                     try {
                         if (DBConnection.getInstance().checkDataExit(e,p)) {
-                            commentText.setText("Email và password đã có trong cơ sở dữ liệu!");
+                            commentText.setText("Email and password already exist in the database!");
                             commentText.setStyle("-fx-fill: red;");
                             return;
                         }
@@ -102,7 +102,7 @@ public class ControllerUpdateAccount {
                     }
                 }
                 updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(),Account.getInstance().getPassword());
-                commentText.setText("Cập nhật thông tin thành công!");
+                commentText.setText("Information updated successfully!");
                 commentText.setStyle("-fx-fill: green;");
                 return;
             }
@@ -115,27 +115,27 @@ public class ControllerUpdateAccount {
                         updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(),updateAccount.getInstance().getNewPassword());
                         Account.getInstance().setEmail(e);
                         Account.getInstance().setPassword(p);
-                        commentText.setText("Cập nhật thông tin thành công!");
+                        commentText.setText("Information updated successfully!");
                         commentText.setStyle("-fx-fill: green;");
                     } else {
-                        commentText.setText("Email và password đã có trong cơ sở dữ liệu!");
+                        commentText.setText("Email and password are already in the database!");
                         commentText.setStyle("-fx-fill: red;");
                     }
                 } catch (SQLException t) {
                     System.out.println(t.getMessage());
                 }
             } else {
-                commentText.setText("Mật khẩu mới không khớp.");
+                commentText.setText("New password does not match.");
                 commentText.setStyle("-fx-fill: red;");
             }
         } else {
-            commentText.setText("Mật khẩu cũ không khớp?");
+            commentText.setText("Old password does not match?");
             commentText.setStyle("-fx-fill: red;");
         }
     }
 
     public void changingPasswordAlert(MouseEvent mouseEvent) {
-        commentText.setText("Bạn muốn đổi mật khẩu?");
+        commentText.setText("Do you want to change your password?");
         commentText.setStyle("-fx-fill: blue;");
     }
 
@@ -144,27 +144,27 @@ public class ControllerUpdateAccount {
     }
 
     public void acceptedPasswordAlert(MouseEvent mouseEvent) {
-        commentText.setText("Nhập lại mật khẩu nếu như bạn đã điền vào ô trên.");
+        commentText.setText("Re-enter the password if you have filled in the field above.");
         commentText.setStyle("-fx-fill: blue;");
     }
 
     public void oldPasswordAlert(MouseEvent mouseEvent) {
-        commentText.setText("Nhập mật khẩu hiện tại để xác nhận các thay đổi (bắt buộc).");
+        commentText.setText("Enter your current password to confirm the changes (required).");
         commentText.setStyle("-fx-fill: blue;");
     }
 
     public void userNameAlert(MouseEvent mouseEvent) {
-        commentText.setText("Nhập liệu để thay đổi họ và tên.");
+        commentText.setText("Input to change your first and last name.");
         commentText.setStyle("-fx-fill: blue;");
     }
 
     public void phoneAlert(MouseEvent mouseEvent) {
-        commentText.setText("Nhập liệu để thay đổi số điện thoại.");
+        commentText.setText("Input to change your phone number.");
         commentText.setStyle("-fx-fill: blue;");
     }
 
     public void emailAlert(MouseEvent mouseEvent) {
-        commentText.setText("Nhâp liệu để thay đổi email.");
+        commentText.setText("Input to change your email address.");
         commentText.setStyle("-fx-fill: blue;");
     }
 }
