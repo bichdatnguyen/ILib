@@ -27,7 +27,6 @@ public class ControllerBook  {
     @FXML
     private HBox BookHbox;
 
-
     private Book book;
 
     private Image loadImage(String path) {
@@ -38,14 +37,23 @@ public class ControllerBook  {
         }
     }
 
+    /** this.book setter.
+     * @param book set to this.book
+     */
     public void setBook(Book book) {
         this.book = book;
     }
 
+    /** this.book getter.
+     * @return this.book
+     */
     public Book getBook() {
         return this.book;
     }
 
+    /** show book information.
+     * @param book information needed to show
+     */
     public void showBook(Book book) {
         Image img = loadImage(book.getImage());
         author.setText(book.getAuthor());
@@ -53,6 +61,11 @@ public class ControllerBook  {
         image.setImage(img);
     }
 
+    /** go to book detail.
+     * @param event after click book will go to book detail
+     * @throws IOException prevent IO exception
+     * @throws SQLException prevent sql exception
+     */
     @FXML
     public void gotoBookDetail(MouseEvent event) throws IOException, SQLException {
         Stage stage = (Stage) image.getScene().getWindow();

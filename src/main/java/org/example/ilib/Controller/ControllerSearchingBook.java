@@ -36,14 +36,24 @@ public class ControllerSearchingBook  {
 
     private List<Book> booksearching = new ArrayList();
 
+    /** set searchLabel.
+     * @param label set text to searchLabel
+     */
     public void setLabel(String label){
         searchLabel.setText(label);
     }
 
+    /** add all finding books.
+     * @param book booked which is found
+     */
     public void addBook(Book book) {
        booksearching.add(book);
     }
 
+    /** back to menu
+     * @param event go back to menu when button is clicked.
+     * @throws IOException prevent IO exception
+     */
     @FXML
     void BackToMenu(MouseEvent event) throws IOException {
             Stage stage = (Stage) Back.getScene().getWindow();
@@ -52,6 +62,10 @@ public class ControllerSearchingBook  {
             stage.setScene(scene);
     }
 
+    /** create one page's button.
+     * @param page page's number
+     * @return create button
+     */
     public Button createPageButton(String page) {
         Button button = new Button(page);
         button.setOnMouseClicked(event -> {
@@ -60,6 +74,9 @@ public class ControllerSearchingBook  {
         return button;
     }
 
+    /** create all buttons.
+     * @param pages the number of pages.
+     */
     public void showNumberOfPages(int pages) {
         pageBox.getChildren().clear();
         for (int i = 1; i <= pages; i++) {
@@ -68,6 +85,9 @@ public class ControllerSearchingBook  {
         }
     }
 
+    /** show all searching result.
+     * @param page page which is shown.
+     */
     void showSearchResult(int page){
         gridPaneBook.getChildren().clear();
         try {
@@ -82,7 +102,7 @@ public class ControllerSearchingBook  {
                ControllerBook controllerBook = (ControllerBook) fxmlLoader.getController();
                controllerBook.setBook(book);
                controllerBook.showBook(book);
-               if(column == 2){
+               if(column == 2) {
                    column = 0;
                    row++;
                }

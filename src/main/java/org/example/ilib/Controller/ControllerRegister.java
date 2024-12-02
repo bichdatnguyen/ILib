@@ -30,6 +30,11 @@ public class ControllerRegister {
     @FXML
     private Button BackButton;
 
+    /** create new account.
+     * @param event check and create new account when button is clicked.
+     * @throws IOException prevent IO exception
+     * @throws SQLException prevent SQL exception
+     */
     @FXML
     void CreateAccount(MouseEvent event) throws IOException, SQLException {
         if(!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
@@ -75,6 +80,10 @@ public class ControllerRegister {
         stage.setScene(scene);
     }
 
+    /** back to menu.
+     * @param event back to menu when button is clicked
+     * @throws IOException prevent IO exception
+     */
      public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage)BackButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();

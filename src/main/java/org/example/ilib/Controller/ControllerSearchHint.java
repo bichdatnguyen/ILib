@@ -24,18 +24,32 @@ public class ControllerSearchHint  {
 
     private Book book;
 
+    /** book setter.
+     * @param book set to this.book
+     */
     public void setBook(Book book) {
         this.book = book;
     }
 
+    /** book getter.
+     * @return this.book
+     */
     public Book getBook() {
         return this.book;
     }
 
+    /** show book's information.
+     * @param book book's information
+     */
     public void showBook(Book book) {
         bookTitle.setText(book.getTitle());
     }
 
+    /** go to book's detail.
+     * @param event show book detail when click on book.
+     * @throws IOException prevent IO exception
+     * @throws SQLException prevent SQL exception
+     */
     @FXML
     public void gotoBookDetail(MouseEvent event) throws IOException, SQLException {
         Stage stage = (Stage) bookTitle.getScene().getWindow();
@@ -49,17 +63,17 @@ public class ControllerSearchHint  {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
-    public void setStyleGreen(){
-        SearchHintHbox.setStyle("-fx-background-color: green;");
+    public void setStyleWhite(){
+        SearchHintHbox.setStyle("-fx-background-color: white;");
     }
 
     @FXML
     public void SearchHintHboxEnter(MouseEvent event) {
-        SearchHintHbox.setStyle("-fx-background-color: blue;");
+        SearchHintHbox.setStyle("-fx-background-color: grey;");
     }
     @FXML
     public void SearchHintHboxExit(MouseEvent event) {
-        SearchHintHbox.setStyle("-fx-background-color: green;");
+        SearchHintHbox.setStyle("-fx-background-color: white;");
     }
 
 }

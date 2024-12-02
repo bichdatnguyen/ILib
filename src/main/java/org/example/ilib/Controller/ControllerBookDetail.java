@@ -70,10 +70,16 @@ public class ControllerBookDetail {
 
     private Scene Forwardsceen;
 
+    /** set the scene before.
+     * @param scene set to this.scene
+     */
     public void saveForwardScene(Scene scene) {
         this.Forwardsceen = scene;
     }
 
+    /** show all book's information.
+     * @param book book needed to show information
+     */
     public void showInformation(Book book) {
         thumbnail.setImage(new Image(book.getImage()));
         titleText.setText(book.getTitle());
@@ -88,6 +94,10 @@ public class ControllerBookDetail {
         quantityText.setText(String.valueOf(book.getQuantity()));
     }
 
+    /** back to scene before.
+     * @param event when button clicked go back
+     * @throws IOException prevent IO exception
+     */
     public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage) BackButton.getScene().getWindow();
 
@@ -95,6 +105,13 @@ public class ControllerBookDetail {
         stage.setScene(scene);
     }
 
+    /** add book to cart by sql.
+     * @param email book's email
+     * @param bookId book's id
+     * @param quantity book's quantity
+     * @param status borrow or buy
+     * @throws SQLException prevent sql exception
+     */
     public void addBookToCart(String email, String bookId, int quantity, int status) throws SQLException {
 
         System.out.println(email);
@@ -147,6 +164,9 @@ public class ControllerBookDetail {
         }
     }
 
+    /** add book to cart.
+     * @param event add book to cart when button clicked
+     */
     @FXML
     void addCart(MouseEvent event) {
             String num = VolumeTextField.getText().trim();
@@ -199,16 +219,27 @@ public class ControllerBookDetail {
 
             }
     }
+
+    /** choose to borrow.
+     * @param event click borrow option
+     */
     @FXML
     void BorrowClick(MouseEvent event) {
             status = Borrow;
     }
 
+    /** choose to buy.
+     * @param event click buy option
+     */
     @FXML
     void PurchaseClick(MouseEvent event) {
         status = Buy;
     }
 
+    /** comment book, save or delete book in shelf.
+     * @param book set option in this book
+     * @throws SQLException
+     */
     public void setOptionInBook(Book book) throws SQLException {
         if (book.getQuantity() == 0) {
             return;
@@ -289,6 +320,7 @@ public class ControllerBookDetail {
         }
         return false;
     }
+
     public boolean checkBookInCart(){
         String query = "select count(*) from cart where bookID = ? and type =?";
         try(Connection connection =DBConnection.getInstance().getConnection() ; PreparedStatement stmt = connection.prepareStatement(query)){

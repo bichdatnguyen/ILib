@@ -27,6 +27,10 @@ public class ControllerReading implements Initializable {
     @FXML
     private HBox saveBooks;
 
+    /** back to menu.
+     * @param event back to menu when button is clicked
+     * @throws IOException prevent IO exception
+     */
     public void BackToMenu(MouseEvent event)throws IOException {
         Stage stage = (Stage) Back.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -35,6 +39,10 @@ public class ControllerReading implements Initializable {
         stage.setScene(scene);
     }
 
+    /** show all user's borrow books.
+     * @throws IOException prevent IO exception
+     * @throws SQLException prevent SQL exception
+     */
     public void showBorrowBooks() throws IOException, SQLException {
         List<Book> book = DBConnection.getInstance().allBorrowBooks();
 
@@ -49,6 +57,10 @@ public class ControllerReading implements Initializable {
         }
     }
 
+    /** user's saved books.
+     * @throws SQLException prevent SQL exception
+     * @throws IOException prevent IO exception
+     */
     public void showShelf() throws SQLException, IOException {
         List<Book> book = DBConnection.getInstance().allBookInShelf();
 
@@ -63,6 +75,10 @@ public class ControllerReading implements Initializable {
         }
     }
 
+    /** shelf initialize.
+     * @param location location
+     * @param resources resources
+     */
     public void initialize(URL location, ResourceBundle resources) {
         borrowBooks.getChildren().clear();
         saveBooks.getChildren().clear();

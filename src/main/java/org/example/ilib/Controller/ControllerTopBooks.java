@@ -28,10 +28,17 @@ public class ControllerTopBooks implements Initializable {
     private HBox hbox_top_book2;
     private List<Book> bookList;
 
-    public ControllerTopBooks() throws SQLException, IOException {
+    /**
+     * ControllerTopBooks constructor.
+     */
+    public ControllerTopBooks() {
        bookList = Booklist.getInstance().TopBookList;
     }
 
+    /** top books initialize.
+     * @param location location
+     * @param resources resources
+     */
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
@@ -63,6 +70,10 @@ public class ControllerTopBooks implements Initializable {
     }
 
 
+    /** back to menu.
+     * @param e back to menu when button is clicked.
+     * @throws IOException prevent IO exception
+     */
     public void BackToMenu(MouseEvent e) throws IOException {
 
         Stage stage = (Stage) Back.getScene().getWindow();

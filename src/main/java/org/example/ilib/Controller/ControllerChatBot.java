@@ -31,6 +31,9 @@ public class ControllerChatBot {
     private TextArea questionText;
 
 
+    /** Answer question.
+     * @throws SQLException prevent sql exception
+     */
     public void handleQuestion() throws SQLException {
         QnA.getChildren().clear();
 
@@ -73,6 +76,10 @@ public class ControllerChatBot {
             questionText.clear();
         }
     }
+
+    /** post question.
+     * @param event post question when button is clicked
+     */
     @FXML
     public void clickButtonClick(MouseEvent event) {
         if (!questionText.getText().trim().equals("")) {
@@ -86,6 +93,10 @@ public class ControllerChatBot {
            return;
        }
     }
+
+    /** post question.
+     * @param event post question when key pressed
+     */
     @FXML
     public void questionTextRelease(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
@@ -101,6 +112,10 @@ public class ControllerChatBot {
            }
         }
     }
+
+    /**
+     * initialize chat bot.
+     */
     public void initialize() {
         ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/org/assets/click-2399.png")));
         imageView.setFitWidth(30);
