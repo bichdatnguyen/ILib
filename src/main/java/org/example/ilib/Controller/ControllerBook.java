@@ -69,7 +69,7 @@ public class ControllerBook  {
 
     @FXML
     public void BookHboxEnter(MouseEvent event) {
-        BookHbox.setStyle("-fx-background-color: yellow");
+        BookHbox.setStyle("-fx-background-color: white");
     }
     @FXML
     public void BookHboxExit(MouseEvent event) {

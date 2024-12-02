@@ -406,7 +406,7 @@ public class ControllerMenu implements Initializable {
     }
     @FXML
     public void TopBookHboxEnter(MouseEvent event) {
-        TopBookHbox.setStyle("-fx-background-color: green");
+        TopBookHbox.setStyle("-fx-background-color: #F2F2F2");
     }
     @FXML
     public void TopBookHboxExit(MouseEvent event) {
@@ -414,7 +414,7 @@ public class ControllerMenu implements Initializable {
     }
     @FXML
     public void CategoriesHboxEnter(MouseEvent event) {
-        CategoriesHbox.setStyle("-fx-background-color: green");
+        CategoriesHbox.setStyle("-fx-background-color: #F2F2F2");
     }
     @FXML
     public void CategoriesHboxExit(MouseEvent event) {
@@ -422,7 +422,7 @@ public class ControllerMenu implements Initializable {
     }
     @FXML
     public void ReadingHboxEnter(MouseEvent event) {
-        ReadingHbox.setStyle("-fx-background-color: green");
+        ReadingHbox.setStyle("-fx-background-color: #F2F2F2");
     }
     @FXML
     public void ReadingHboxExit(MouseEvent event) {
@@ -430,7 +430,7 @@ public class ControllerMenu implements Initializable {
     }
     @FXML
     public void chatBotEnter(MouseEvent event) {
-            chatBot.setStyle("-fx-background-color: green");
+            chatBot.setStyle("-fx-background-color: #F2F2F2");
     }
     @FXML
     public void chatBotExit(MouseEvent event) {
@@ -453,7 +453,7 @@ public class ControllerMenu implements Initializable {
     }
     @FXML
     public void clickButtonEnter(MouseEvent event) {
-            clickButton.setStyle("-fx-background-color: green");
+            clickButton.setStyle("-fx-background-color: white");
     }
     @FXML
     public void clickButtonExit(MouseEvent event) {
