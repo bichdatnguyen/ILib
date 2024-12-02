@@ -30,12 +30,12 @@
          <children>
             <ScrollPane prefHeight="345.0" prefWidth="994.0">
                <content>
-                  <HBox fx:id="top_book_hbox" prefHeight="232.0" prefWidth="1506.0" />
+                  <HBox fx:id="top_book_hbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="232.0" prefWidth="1406.0" />
                </content>
             </ScrollPane>
             <ScrollPane prefHeight="345.0" prefWidth="994.0">
                <content>
-                  <HBox fx:id="hbox_top_book2" prefHeight="339.0" prefWidth="1574.0" />
+                  <HBox fx:id="hbox_top_book2" prefHeight="339.0" prefWidth="1474.0" />
                </content>
             </ScrollPane>
          </children>

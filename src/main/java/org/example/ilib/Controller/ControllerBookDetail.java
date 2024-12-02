@@ -40,10 +40,10 @@ public class ControllerBookDetail {
     private Button addCartButton;
 
     @FXML
-    private Text authorText;
+    private Label authorText;
 
     @FXML
-    private Text descriptionText;
+    private Label descriptionText;
 
     @FXML
     private Text idText;
@@ -58,7 +58,7 @@ public class ControllerBookDetail {
     private ImageView thumbnail;
 
     @FXML
-    private Text titleText;
+    private Label titleText;
 
     @FXML
     private HBox optionInBook;
@@ -246,9 +246,9 @@ public class ControllerBookDetail {
         } else {
             DBConnection db = DBConnection.getInstance();//try with
 
-            Button moveToCmt = new Button("Bình luận");
-            Button saveToShelf = new Button("Lưu");
-            Button deleteBookInShelf = new Button("Xóa");
+            Button moveToCmt = new Button("Comment");
+            Button saveToShelf = new Button("Save");
+            Button deleteBookInShelf = new Button("Delete");
             optionInBook.getChildren().addAll(moveToCmt, saveToShelf, deleteBookInShelf);
 
             moveToCmt.setOnMouseClicked(_ -> {

@@ -51,16 +51,16 @@
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
             </Label>
-            <Text fx:id="titleText" strokeType="OUTSIDE" strokeWidth="0.0" textOrigin="TOP" wrappingWidth="585.0" GridPane.columnIndex="1">
+            <Label fx:id="titleText" GridPane.columnIndex="1">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
-            </Text>
-            <Text fx:id="authorText" layoutX="96.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="540.3333129882812" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            </Label>
+            <Label fx:id="authorText" layoutX="96.0" layoutY="52.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
                </font>
-            </Text>
+            </Label>
             <Label alignment="TOP_LEFT" layoutX="10.0" layoutY="118.0" prefHeight="0.0" prefWidth="95.0" text="ID:" GridPane.rowIndex="3">
                <font>
                   <Font name="Comic Sans MS" size="20.0" />
@@ -82,9 +82,14 @@
                </font>
             </Text>
             <HBox prefHeight="48.0" prefWidth="594.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label fx:id="descriptionText" alignment="TOP_LEFT" prefHeight="187.0" prefWidth="539.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Comic Sans MS Italic" size="20.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
-      <Button fx:id="BackButton" layoutX="928.0" layoutY="1.0" mnemonicParsing="false" onMouseClicked="#Back" text="Back">
+      <Button fx:id="BackButton" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#Back" prefHeight="26.0" prefWidth="161.0" text="Back to menu">
          <font>
             <Font name="Comic Sans MS" size="12.0" />
          </font></Button>
@@ -110,11 +115,6 @@
          </font>
       </Label>
       <TextField fx:id="VolumeTextField" alignment="CENTER" layoutX="418.0" layoutY="525.0" prefHeight="26.0" prefWidth="95.0" promptText="0" />
-      <Text fx:id="descriptionText" layoutX="334.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="553.6666870117185">
-         <font>
-            <Font name="Comic Sans MS Italic" size="20.0" />
-         </font>
-      </Text>
       <Button fx:id="addCartButton" layoutX="184.0" layoutY="407.0" mnemonicParsing="false" onMouseClicked="#addCart" prefHeight="51.0" prefWidth="331.0" text="Add to the cart now!" textFill="#377d43" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="24.0" />
@@ -125,5 +125,10 @@
       <Separator layoutX="195.0" layoutY="335.0" prefHeight="3.0" prefWidth="690.0" />
       <Separator layoutX="179.0" layoutY="1.0" orientation="VERTICAL" prefHeight="602.0" prefWidth="0.0" />
       <Separator layoutX="197.0" layoutY="382.0" prefHeight="3.0" prefWidth="690.0" />
+      <Text fill="#377d43" layoutX="659.0" layoutY="512.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ilib" underline="true">
+         <font>
+            <Font name="Candara Light" size="96.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

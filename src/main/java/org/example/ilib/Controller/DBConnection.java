@@ -40,7 +40,7 @@ public class DBConnection {
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setMaximumPoolSize(100000000);
+        config.setMaximumPoolSize(10000000);
         config.setMinimumIdle(20);
         config.setIdleTimeout(4000);  // Giảm thời gian giữ kết nối không dùng
         config.setMaxLifetime(240000); // Tăng thời gian sống tối đa nếu cần

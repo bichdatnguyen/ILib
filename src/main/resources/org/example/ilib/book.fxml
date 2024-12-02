@@ -7,20 +7,20 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="BookHbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#BookHboxEnter" onMouseExited="#BookHboxExit" prefHeight="200.0" prefWidth="161.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBook">
+<HBox fx:id="BookHbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#BookHboxEnter" onMouseExited="#BookHboxExit" prefHeight="177.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBook">
    <children>
-      <AnchorPane prefHeight="194.0" prefWidth="157.0">
+      <AnchorPane prefHeight="160.0" prefWidth="121.0">
          <children>
-            <Label fx:id="author" layoutX="2.0" layoutY="172.0" prefHeight="22.0" prefWidth="142.0" text="Author" underline="true">
+            <Label fx:id="author" layoutX="1.0" layoutY="156.0" prefHeight="22.0" prefWidth="142.0" text="Author" underline="true">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font>
             </Label>
-            <Label fx:id="title" layoutY="150.0" prefHeight="22.0" prefWidth="142.0" text="Title">
+            <Label fx:id="title" layoutX="1.0" layoutY="137.0" prefHeight="22.0" prefWidth="142.0" text="Title">
                <font>
                   <Font name="Comic Sans MS" size="15.0" />
                </font></Label>
-            <ImageView fx:id="image" fitHeight="154.0" fitWidth="155.0" layoutX="2.0" layoutY="-3.0" onMouseClicked="#gotoBookDetail" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="image" fitHeight="143.0" fitWidth="142.0" layoutX="2.0" layoutY="-3.0" onMouseClicked="#gotoBookDetail" pickOnBounds="true" preserveRatio="true" />
          </children>
          <HBox.margin>
             <Insets />

@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="anchorPaneLoad" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
+<AnchorPane fx:id="anchorPaneLoad" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
    <children>
       <AnchorPane prefHeight="127.0" prefWidth="900.0">
          <children>
@@ -58,12 +58,12 @@
                         <ImageView fx:id="music" fitHeight="40.0" fitWidth="40.0" layoutX="291.0" layoutY="59.0" onMouseClicked="#turnMusic" pickOnBounds="true" preserveRatio="true" />
             <VBox layoutX="284.0" layoutY="123.0" prefHeight="456.0" prefWidth="601.0">
                <children>
-                  <Label prefHeight="47.0" prefWidth="163.0" text="Recently Add">
+                  <Label prefHeight="21.0" prefWidth="163.0" text="Recently Add">
                      <font>
                         <Font name="Comic Sans MS" size="25.0" />
                      </font>
                   </Label>
-                  <ScrollPane minHeight="-Infinity" prefHeight="205.0" prefWidth="601.0">
+                  <ScrollPane fitToHeight="true" minHeight="-Infinity" prefHeight="195.0" prefWidth="601.0">
                      <content>
                         <HBox fx:id="recentlyAddHbox" prefHeight="198.0" />
                      </content>
@@ -73,7 +73,7 @@
                         <Font name="Comic Sans MS" size="25.0" />
                      </font>
                   </Label>
-                  <ScrollPane prefHeight="196.0" prefWidth="602.0">
+                  <ScrollPane fitToHeight="true" minHeight="-Infinity" prefHeight="195.0" prefWidth="600.0">
                      <content>
                         <HBox fx:id="recommendHBox" prefHeight="176.0" prefWidth="0.0" />
                      </content></ScrollPane>

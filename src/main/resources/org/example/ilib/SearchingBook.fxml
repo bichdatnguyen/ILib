@@ -2,28 +2,50 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="707.0" prefWidth="1003.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerSearchingBook">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerSearchingBook">
    <children>
-      <Button fx:id="Back" layoutX="913.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back" />
-      <Label alignment="CENTER" layoutY="22.0" prefHeight="35.0" prefWidth="373.0" text="Hiển thị thông tin sách" />
-      <GridPane fx:id="gridPaneBook" layoutY="108.0" prefHeight="523.0" prefWidth="1003.0">
+      <GridPane fx:id="gridPaneBook" layoutX="32.0" layoutY="123.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="428.0" prefWidth="835.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="458.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="458.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" prefWidth="458.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.33331298828125" minWidth="10.0" prefWidth="442.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="366.0" minHeight="10.0" prefHeight="338.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="389.0" minHeight="10.0" prefHeight="345.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Label alignment="CENTER" layoutX="52.0" layoutY="65.0" prefHeight="35.0" prefWidth="104.0" text="Từ khoá" />
-      <Label fx:id="searchLabel" alignment="CENTER" layoutX="177.0" layoutY="65.0" prefHeight="35.0" prefWidth="170.0" text="search" />
-      <HBox fx:id="pageBox" layoutX="278.0" layoutY="643.0" prefHeight="56.0" prefWidth="403.0" />
+      <Label alignment="CENTER" layoutX="357.0" layoutY="72.0" prefHeight="35.0" prefWidth="104.0" text="Key word:">
+         <font>
+            <Font name="Comic Sans MS" size="20.0" />
+         </font></Label>
+      <Label fx:id="searchLabel" layoutX="463.0" layoutY="72.0" prefHeight="35.0" prefWidth="205.0" text="search">
+         <font>
+            <Font name="Comic Sans MS Italic" size="20.0" />
+         </font></Label>
+      <HBox fx:id="pageBox" layoutX="110.0" layoutY="566.0" prefHeight="26.0" prefWidth="298.0" />
+      <Label layoutX="14.0" layoutY="566.0" prefHeight="26.0" prefWidth="95.0" text="Page number:">
+         <font>
+            <Font name="Comic Sans MS" size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutY="22.0" prefHeight="56.0" prefWidth="894.0" text="Search result">
+         <font>
+            <Font name="Comic Sans MS" size="40.0" />
+         </font></Label>
+      <Button fx:id="Back" layoutX="833.0" layoutY="14.0" mnemonicParsing="false" onMouseClicked="#BackToMenu" text="Back">
+         <font>
+            <Font name="Comic Sans MS" size="12.0" />
+         </font></Button>
+      <Separator layoutX="159.0" layoutY="102.0" prefHeight="20.0" prefWidth="570.0" />
    </children>
 </AnchorPane>

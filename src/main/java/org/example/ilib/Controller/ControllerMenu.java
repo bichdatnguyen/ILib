@@ -265,7 +265,7 @@ public class ControllerMenu implements Initializable {
                                     controllerSearchingBook.addBook(bk);
                                 }
                                 controllerSearchingBook.showSearchResult(1);
-                                controllerSearchingBook.showNumberOfPages((bookDetails.size() - 1) / 4 + 1);
+                                controllerSearchingBook.showNumberOfPages((bookDetails.size() - 1) / 8 + 1);
                                 Scene scene1 = new Scene(root);
                                 stage.setScene(scene1);
                                 Loading(false);

@@ -115,7 +115,7 @@ public class ControllerCategories implements Initializable {
             int row = 0;
 
             List<Book> books = bookByCategory.get(category);
-            for (int i = 4 * page - 4; i < Math.min(4 * page, books.size()); i++) {
+            for (int i = 8 * page - 8; i < Math.min(8 * page, books.size()); i++) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
@@ -123,12 +123,12 @@ public class ControllerCategories implements Initializable {
                 controllerBook.setBook(books.get(i));
                 controllerBook.showBook(books.get(i));
 
-                if(column == 2) {
+                if(column == 4) {
                     column = 0;
                     row++;
                 }
                 gridPaneCategory.add(cardbox, column++, row);
-                showNumberOfPages((books.size() - 1) / 4 + 1, category);
+                showNumberOfPages((books.size() - 1) / 8 + 1, category);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,7 +140,7 @@ public class ControllerCategories implements Initializable {
      * @param resources resources
      */
     public void initialize(URL location, ResourceBundle resources) {
-
+        //categoryChoice.setValue(subjects.get(6)); // set philosophy books default
         if (categoryChoice != null) {
             categoryChoice.getItems().addAll(subjects);
             categoryChoice.valueProperty().addListener((observable, oldValue, newValue) -> {
