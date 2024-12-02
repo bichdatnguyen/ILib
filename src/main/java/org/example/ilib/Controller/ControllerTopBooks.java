@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Book;
@@ -22,10 +23,10 @@ public class ControllerTopBooks implements Initializable {
 
     @FXML
     private Button Back;
+
     @FXML
-    private HBox top_book_hbox;
-    @FXML
-    private HBox hbox_top_book2;
+    private GridPane topBooksGrid;
+
     private List<Book> bookList;
 
     /**
@@ -40,35 +41,28 @@ public class ControllerTopBooks implements Initializable {
      * @param resources resources
      */
     public void initialize(URL location, ResourceBundle resources) {
-
         try {
-            for (int i = 0; i < Math.min(bookList.size(), 5) ; i++ ) {
-                FXMLLoader fx = new FXMLLoader();
-                fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
-                HBox cardbox = (HBox) fx.load();
-                ControllerBook controllerBook = (ControllerBook) fx.getController();
-                controllerBook.setBook(bookList.get(i));
-                controllerBook.showBook(bookList.get(i));
-                top_book_hbox.getChildren().add(cardbox);
-            }
+            int column = 0;
+            int row = 0;
 
-            if (bookList.size() < 6) {
-                return;
-            }
-            for (int i = 5; i < Math.min(bookList.size(), 9) ; i++ ) {
+            for (int i = 0; i < Math.min(8, bookList.size()); i++) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 controllerBook.showBook(bookList.get(i));
-                hbox_top_book2.getChildren().add(cardbox);
+
+                if(column == 4) {
+                    column = 0;
+                    row++;
+                }
+                topBooksGrid.add(cardbox, column++, row);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     /** back to menu.
      * @param e back to menu when button is clicked.

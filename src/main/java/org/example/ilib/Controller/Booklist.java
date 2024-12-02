@@ -49,7 +49,7 @@ public class Booklist {
      * @throws IOException throw IO exception
      */
     private List<Book> addTopBookList() throws SQLException, IOException {
-        return DBConnection.getInstance().getTopBooks(9);
+        return DBConnection.getInstance().getTopBooks(8);
     }
 
     /** add recently add books in database to list.
