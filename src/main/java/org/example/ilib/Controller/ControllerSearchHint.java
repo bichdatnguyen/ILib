@@ -49,8 +49,8 @@ public class ControllerSearchHint  {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
-    public void setStyleWhite(){
-        SearchHintHbox.setStyle("-fx-background-color: white;");
+    public void setStyleGreen(){
+        SearchHintHbox.setStyle("-fx-background-color: green;");
     }
 
     @FXML
@@ -59,7 +59,7 @@ public class ControllerSearchHint  {
     }
     @FXML
     public void SearchHintHboxExit(MouseEvent event) {
-        SearchHintHbox.setStyle("-fx-background-color: white;");
+        SearchHintHbox.setStyle("-fx-background-color: green;");
     }
 
 }
