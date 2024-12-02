@@ -36,7 +36,6 @@ public class ControllerBook  {
         } else {
             return new Image(getClass().getResourceAsStream(path));
         }
-
     }
 
     public void setBook(Book book) {

@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
+<AnchorPane fx:id="anchorPaneLoad" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="653.0" prefWidth="953.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerMenu">
    <children>
       <VBox layoutY="127.0" prefHeight="526.0" prefWidth="253.0">
          <children>
@@ -155,6 +155,7 @@
             <VBox fx:id="hintVbox" layoutX="207.0" layoutY="88.0" prefHeight="39.0" prefWidth="356.0" />
             <Button fx:id="chatBot" layoutX="144.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#chatBotClick" onMouseEntered="#chatBotEnter" onMouseExited="#chatBotExit" prefHeight="40.0" prefWidth="40.0" text="cBot" />
             <Button fx:id="clickButton" layoutX="564.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#clickButtonClick" onMouseEntered="#clickButtonEnter" onMouseExited="#clickButtonExit" prefHeight="40.0" prefWidth="40.0" text="click" />
+            <ProgressIndicator fx:id="loadingIndicator" layoutX="564.0" layoutY="38.0" prefHeight="72.0" prefWidth="48.0" progress="0.0" visible="false" />
          </children>
       </AnchorPane>
    </children>

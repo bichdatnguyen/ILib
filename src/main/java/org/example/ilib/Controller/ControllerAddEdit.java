@@ -81,14 +81,14 @@ public class ControllerAddEdit {
                     showErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
                     return;
                 }
-                Book book = new Book();
-                book.setId(bookIdText.getText());
-                book.setPrice(Integer.parseInt(priceText.getText()));
-                book.setTitle(titleText.getText());
-                book.setDescription(descriptionText.getText());
-                book.setAuthor(authorText.getText());
-                book.setQuantity(Integer.parseInt(quantityText.getText()));
-                updateBook(book,book.getId());
+                Book book1 = new Book();
+                book1.setId(bookIdText.getText());
+                book1.setPrice(Integer.parseInt(priceText.getText()));
+                book1.setTitle(titleText.getText());
+                book1.setDescription(descriptionText.getText());
+                book1.setAuthor(authorText.getText());
+                book1.setQuantity(Integer.parseInt(quantityText.getText()));
+                updateBook(book1,book.getId());
 
             }
         if(checkCondition){
