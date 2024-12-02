@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
@@ -49,6 +50,7 @@
             <VBox fx:id="hintVbox" layoutX="207.0" layoutY="88.0" prefHeight="39.0" prefWidth="356.0" visible="false" />
             <Button fx:id="chatBot" ellipsisString="" layoutX="284.0" layoutY="24.0" mnemonicParsing="false" onMouseClicked="#chatBotClick" onMouseEntered="#chatBotEnter" onMouseExited="#chatBotExit" prefHeight="29.0" prefWidth="40.0" text="cBot" />
             <Button fx:id="clickButton" ellipsisString="" layoutX="331.0" layoutY="38.0" mnemonicParsing="false" onMouseClicked="#clickButtonClick" onMouseEntered="#clickButtonEnter" onMouseExited="#clickButtonExit" prefHeight="29.0" prefWidth="33.0" text="click" />
+            <ProgressIndicator fx:id="loadingIndicator" layoutX="564.0" layoutY="38.0" prefHeight="72.0" prefWidth="48.0" progress="0.0" visible="false" />
             <Text fill="#19c240" layoutX="131.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ilib" wrappingWidth="66.0">
                <font>
                   <Font name="Candara Light" size="49.0" />
@@ -139,7 +141,7 @@
                <children>
                   <Label prefHeight="67.0" prefWidth="194.0" text="  Your Books">
                      <font>
-                        <Font size="26.0" />
+                        <Font name="Comic Sans MS" size="26.0" />
                      </font>
                   </Label>
                   <Separator prefHeight="20.0" prefWidth="247.0" />

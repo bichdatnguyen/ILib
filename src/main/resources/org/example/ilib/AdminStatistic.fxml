@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.canvas.*?>
-<?import javafx.scene.chart.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerAdminStatistic">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerAdminStatistic">
    <children>
       <HBox prefHeight="102.0" prefWidth="900.0">
          <children>
             <Label alignment="CENTER" prefHeight="102.0" prefWidth="902.0" text="Welcome to Ilib Library" textFill="#2cda32">
                <font>
-                  <Font size="53.0" />
+                  <Font name="Candara Light" size="53.0" />
                </font>
             </Label>
          </children>
       </HBox>
       <VBox layoutY="163.0" prefHeight="436.0" prefWidth="900.0">
          <children>
-            <HBox prefHeight="72.0" prefWidth="200.0">
+            <HBox prefHeight="72.0" prefWidth="865.0">
                <children>
-                  <Label prefHeight="72.0" prefWidth="238.0" text="Thống kê">
+                  <Label prefHeight="72.0" prefWidth="238.0" text="Statistics">
                      <font>
-                        <Font size="28.0" />
+                        <Font name="Cambria Math" size="28.0" />
                      </font>
                   </Label>
                </children>
