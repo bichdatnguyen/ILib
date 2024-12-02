@@ -20,7 +20,7 @@
             <Image url="@../../assets/BG001.png" />
          </image>
       </ImageView>
-        <Label id="Login" layoutX="57.0" layoutY="37.0" prefHeight="107.0" prefWidth="248.0" text="Login" textFill="#44813c">
+        <Label id="Login" layoutX="60.0" layoutY="37.0" prefHeight="107.0" prefWidth="248.0" text="Login" textFill="#44813c">
             <font>
                 <Font size="96.0" />
             </font></Label>
