@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -9,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerTopBooks">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerTopBooks">
    <top>
       <AnchorPane prefHeight="100.0" prefWidth="855.0" BorderPane.alignment="CENTER">
          <children>
@@ -35,7 +39,7 @@
             </ScrollPane>
             <ScrollPane prefHeight="345.0" prefWidth="994.0">
                <content>
-                  <HBox fx:id="hbox_top_book2" prefHeight="339.0" prefWidth="1474.0" />
+                  <HBox fx:id="hbox_top_book2" prefHeight="221.0" prefWidth="1474.0" />
                </content>
             </ScrollPane>
          </children>

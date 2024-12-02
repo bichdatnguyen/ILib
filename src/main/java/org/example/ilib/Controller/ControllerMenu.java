@@ -418,6 +418,7 @@ public class ControllerMenu implements Initializable {
                 }
 
                 List<Book> recommendBooks = Booklist.getInstance().RecommendBookList;
+                System.out.println(recommendBooks.size());
                 for (int i = 0; i < recommendBooks.size(); i++) {
                     FXMLLoader fx = new FXMLLoader();
                     fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
