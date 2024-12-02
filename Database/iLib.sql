@@ -254,3 +254,4 @@ select * from payment;
 select * from borrow;
 insert into user values ('ton1@gmail.com','1234567890','Vu Dat','1234556',null,'admin');
 insert into user values ('vudat090305@gmail.com','1234567890','Vu Dat','123456',null,'user');
+INSERT INTO user VALUES ('bichdat05@gmail.com', '0779985683', 'Nguyễn Bích Đạt', '88888888', null, 'admin');

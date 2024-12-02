@@ -16,19 +16,28 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Account;
 import org.example.ilib.Processor.AdminApp;
 import org.example.ilib.Processor.Book;
+import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
@@ -36,39 +45,54 @@ import java.util.concurrent.Executors;
 
 
 public class ControllerMenu implements Initializable {
-    private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
     @FXML
     public ImageView avatarUser;
+
     @FXML
     public MenuButton UserButton;
+    
     @FXML
     public MenuItem updateDB;
+
     @FXML
     private MenuItem signOut;
+
     @FXML
     private TextField search;
+
     @FXML
     private Label topBooks;
+
     @FXML
     private Label Categories;
+
     @FXML
     private Label reading;
+
     @FXML
     private HBox recentlyAddHbox;
+
     @FXML
     private MenuItem account;
+
     @FXML
     private MenuItem Cart;
+
     @FXML
     private MenuItem Admin;
+
     @FXML
     private MenuItem TransactionItem;
+
     @FXML
     private HBox TopBookHbox;
+
     @FXML
     private HBox CategoriesHbox;
+
     @FXML
     private HBox ReadingHbox;
+
     @FXML
     private VBox hintVbox;
     @FXML
@@ -76,13 +100,12 @@ public class ControllerMenu implements Initializable {
     @FXML
     private Button clickButton;
 
-    // Giải phóng tài nguyên (shutdown)
-    public static void shutdownExecutorService() {
-        if (executorService != null && !executorService.isShutdown()) {
-            executorService.shutdown();
-            System.out.println("ExecutorService đã được tắt.");
-        }
-    }
+    @FXML
+    private ImageView music;
+
+    private MediaPlayer mediaPlayer;
+
+    private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
     public void accountSwitchScene(ActionEvent event) throws IOException {
         Stage stage = (Stage) account.getParentPopup().getOwnerWindow();
@@ -116,16 +139,16 @@ public class ControllerMenu implements Initializable {
 
     private void loadProperties() {
         String query = "SELECT avatarPath FROM user WHERE email = ? and password = ?";
-        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
-        ) {
+        try( PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
+            ) {
 
             stmt.setString(1, Account.getInstance().getEmail());
             stmt.setString(2, Account.getInstance().getPassword());
-            try (ResultSet resultSet = stmt.executeQuery()) {
+            try( ResultSet resultSet = stmt.executeQuery()){
                 if (resultSet.next()) {
                     Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
                 }
-            } catch (SQLException e) {
+            } catch (SQLException e){
                 e.printStackTrace();
             }
 
@@ -135,7 +158,7 @@ public class ControllerMenu implements Initializable {
     }
 
     @FXML
-    void MoveToCart(ActionEvent event) throws IOException {
+    void MoveToCart(ActionEvent event)throws IOException{
         Stage stage = (Stage) Cart.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Cart.fxml"));
         Parent root = fxmlLoader.load();
@@ -149,6 +172,10 @@ public class ControllerMenu implements Initializable {
             if (newValue.isEmpty()) {
                 hintVbox.getChildren().clear();
             } else {
+                if (executorService.isShutdown()) {
+                    executorService = Executors.newFixedThreadPool(2);
+                    System.out.println("ExecutorService restart");
+                }
                 executorService.submit(() -> {
                     try {
                         List<Book> bookHints = DBConnection.getInstance().allHints(newValue);
@@ -164,6 +191,7 @@ public class ControllerMenu implements Initializable {
                                     controllerSearchHint.setBook(bookHint);
                                     controllerSearchHint.showBook(bookHint);
                                     hintVbox.getChildren().add(hint);
+                                 //   hintVbox.setVisible(true);
                                 } catch (IOException e) {
                                     showErrAndEx.showAlert("Lỗi khi tải gợi ý tìm kiếm.");
                                 }
@@ -179,14 +207,14 @@ public class ControllerMenu implements Initializable {
     }
 
     public void handleSearch(KeyEvent keyEvent) {
-        showHints();
+       showHints();
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
             Search();
         }
     }
-
-    public void Search() {
+    
+    public void Search(){
         String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
         if (!searchText.isEmpty()) {
             if (executorService.isShutdown()) {
@@ -198,7 +226,7 @@ public class ControllerMenu implements Initializable {
             executorService.submit(() -> {
                 try {
                     GoogleBooksAPI api = new GoogleBooksAPI();
-                    JsonArray bookDetails = api.getInformation(searchText, 10);
+                    JsonArray bookDetails = api.getInformation(searchText, 30);
 
                     if (bookDetails != null && !bookDetails.isEmpty()) {
                         Platform.runLater(() -> {
@@ -266,9 +294,43 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
+    // Giải phóng tài nguyên (shutdown)
+    public static void shutdownExecutorService() {
+        if (executorService != null && !executorService.isShutdown()) {
+            executorService.shutdown();
+            System.out.println("ExecutorService đã được tắt.");
+        }
+    }
+
+    public void initMusic() {
+        try {
+            String url = getClass().getResource("/org/music/backgroundMusic.mp3").toExternalForm();
+            Media media = new Media(url);
+            mediaPlayer = new MediaPlayer(media);
+            music.setImage(new Image(getClass().getResource("/org/assets/mute.png").toExternalForm()));
+        } catch (NullPointerException e) {
+            System.out.println("File music not found");
+        } catch (MediaException e) {
+            System.out.println("Can't play media");
+        }
+    }
+
+    @FXML
+    void turnMusic(MouseEvent event) {
+        if (mediaPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
+            mediaPlayer.play();
+            music.setImage(new Image(getClass().getResource("/org/assets/musicOn.png").toExternalForm()));
+        } else {
+            mediaPlayer.pause();
+            music.setImage(new Image(getClass().getResource("/org/assets/mute.png").toExternalForm()));
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try {
+        try{
+            initMusic();
+            showHints();
 
             ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/org/assets/robot-chatbot-8201.png")));
             imageView.setFitWidth(30); // Đặt chiều rộng
@@ -287,10 +349,11 @@ public class ControllerMenu implements Initializable {
                 AdminApp.getInstance().adminChecking();
                 System.out.println("adminChecking happens");
             }
-            if (Account.getInstance().getRole().equals("admin")) {
+            if(Account.getInstance().getRole().equals("admin")){
                 UserButton.setText("Admin");
                 Admin.setVisible(true);
-            } else {
+            }
+            else {
                 UserButton.setText("User");
             }
             loadProperties();
@@ -311,7 +374,7 @@ public class ControllerMenu implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch (Exception e) {
+        } catch(Exception e){
             e.printStackTrace();
         }
     }
@@ -323,11 +386,10 @@ public class ControllerMenu implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/TransactionHistory.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
-        } catch (IOException e) {
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
-
     @FXML
     public void gotoAdvanceSetting(ActionEvent actionEvent) {
         try {
@@ -335,77 +397,65 @@ public class ControllerMenu implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Admin.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
-        } catch (IOException e) {
+        } catch(IOException e){
             e.printStackTrace();
         }
     }
-
     @FXML
     public void TopBookHboxEnter(MouseEvent event) {
-        TopBookHbox.setStyle("-fx-background-color: E8E8E8");
+        TopBookHbox.setStyle("-fx-background-color: green");
     }
-
     @FXML
     public void TopBookHboxExit(MouseEvent event) {
         TopBookHbox.setStyle("-fx-background-color: transparent");
     }
-
     @FXML
     public void CategoriesHboxEnter(MouseEvent event) {
-        CategoriesHbox.setStyle("-fx-background-color: E8E8E8");
+        CategoriesHbox.setStyle("-fx-background-color: green");
     }
-
     @FXML
     public void CategoriesHboxExit(MouseEvent event) {
         CategoriesHbox.setStyle("-fx-background-color: transparent");
     }
-
     @FXML
     public void ReadingHboxEnter(MouseEvent event) {
-        ReadingHbox.setStyle("-fx-background-color: E8E8E8");
+        ReadingHbox.setStyle("-fx-background-color: green");
     }
-
     @FXML
     public void ReadingHboxExit(MouseEvent event) {
-        ReadingHbox.setStyle("-fx-background-color: transparent");
+       ReadingHbox.setStyle("-fx-background-color: transparent");
     }
-
     @FXML
     public void chatBotEnter(MouseEvent event) {
-        chatBot.setStyle("-fx-background-color: green");
+            chatBot.setStyle("-fx-background-color: green");
     }
-
     @FXML
     public void chatBotExit(MouseEvent event) {
-        chatBot.setStyle("-fx-background-color: transparent");
+            chatBot.setStyle("-fx-background-color: transparent");
     }
-
     @FXML
     public void chatBotClick(MouseEvent event) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Chatbot.fxml"));
-            Parent root = fxmlLoader.load();
-            Stage popup = new Stage();
-            popup.initModality(Modality.APPLICATION_MODAL);
-            popup.setTitle("ChatBot");
-            Scene scene = new Scene(root);
-            popup.setScene(scene);
-            popup.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       try{
+           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Chatbot.fxml"));
+           Parent root = fxmlLoader.load();
+           Stage popup = new Stage();
+           popup.initModality(Modality.APPLICATION_MODAL);
+           popup.setTitle("ChatBot");
+           Scene scene = new Scene(root);
+           popup.setScene(scene);
+           popup.showAndWait();
+       } catch(IOException e){
+           e.printStackTrace();
+       }
     }
-
     @FXML
     public void clickButtonEnter(MouseEvent event) {
-        clickButton.setStyle("-fx-background-color: green");
+            clickButton.setStyle("-fx-background-color: green");
     }
-
     @FXML
     public void clickButtonExit(MouseEvent event) {
         clickButton.setStyle("-fx-background-color: transparent");
     }
-
     @FXML
     public void clickButtonClick(MouseEvent event) {
         Search();
