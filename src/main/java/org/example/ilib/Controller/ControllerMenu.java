@@ -20,6 +20,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -97,6 +100,11 @@ public class ControllerMenu implements Initializable {
     private ProgressIndicator loadingIndicator;
     @FXML
     private AnchorPane anchorPaneLoad;
+
+    @FXML
+    private ImageView music;
+
+    private MediaPlayer mediaPlayer;
 
     private static ExecutorService executorService = Executors.newFixedThreadPool(4);// Tạo ExecutorService duy nhất
 
@@ -221,10 +229,8 @@ public class ControllerMenu implements Initializable {
                     JsonArray bookDetails = api.getInformation(searchText, 30);
 
                     if (bookDetails != null && !bookDetails.isEmpty()) {
-
                         Platform.runLater(() -> {
                             try {
-
                                 Stage stage = (Stage) search.getScene().getWindow();
                                 FXMLLoader fxmlLoader1 = new FXMLLoader(getClass().getResource("/org/example/ilib/SearchingBook.fxml"));
                                 Parent root = fxmlLoader1.load();
@@ -299,9 +305,35 @@ public class ControllerMenu implements Initializable {
         }
     }
 
+    public void initMusic() {
+        try {
+            String url = getClass().getResource("/org/music/backgroundMusic.mp3").toExternalForm();
+            Media media = new Media(url);
+            mediaPlayer = new MediaPlayer(media);
+            music.setImage(new Image(getClass().getResource("/org/assets/mute.png").toExternalForm()));
+        } catch (NullPointerException e) {
+            System.out.println("File music not found");
+        } catch (MediaException e) {
+            System.out.println("Can't play media");
+        }
+    }
+
+    @FXML
+    void turnMusic(MouseEvent event) {
+        if (mediaPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
+            mediaPlayer.play();
+            music.setImage(new Image(getClass().getResource("/org/assets/musicOn.png").toExternalForm()));
+        } else {
+            mediaPlayer.pause();
+            music.setImage(new Image(getClass().getResource("/org/assets/mute.png").toExternalForm()));
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try{
+            initMusic();
+            showHints();
 
             ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/org/assets/robot-chatbot-8201.png")));
             imageView.setFitWidth(30); // Đặt chiều rộng
