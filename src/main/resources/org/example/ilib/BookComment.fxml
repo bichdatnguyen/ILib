@@ -27,7 +27,7 @@
       </Button>
       <Label layoutX="32.0" layoutY="427.0" prefHeight="22.0" prefWidth="169.0" text="Write your comments">
          <font>
-            <Font size="15.0" />
+            <Font name="Comic Sans MS" size="15.0" />
          </font>
       </Label>
       <TextArea fx:id="cmt" layoutX="32.0" layoutY="459.0" prefHeight="69.0" prefWidth="900.0" />

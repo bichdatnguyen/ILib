@@ -162,7 +162,7 @@ public class ControllerCartItemList implements Initializable {
             }
             isTotalCalculated = true;
             isBuyQR = false;
-        totalMoney.setText(String.valueOf(totalMonet));
+        totalMoney.setText(String.valueOf(totalMonet) + '$');
     }
 
     private void setVolume(int status){

@@ -24,8 +24,28 @@
             <TableColumn fx:id="quanityCol" prefWidth="126.0" text="Quantity" />
         </columns>
       </TableView>
-      <VBox fx:id="searchVbox" layoutX="690.0" layoutY="229.0" prefHeight="147.0" prefWidth="161.0">
+      <VBox fx:id="searchVbox" layoutX="690.0" layoutY="82.0" prefHeight="219.0" prefWidth="161.0">
          <children>
+            <HBox prefHeight="83.0" prefWidth="161.0">
+               <children>
+                  <Button fx:id="AddButton" mnemonicParsing="false" onMouseClicked="#AddButtonClick" prefHeight="52.0" prefWidth="115.0" text="Add" textFill="#2cab25">
+                     <font>
+                        <Font name="Comic Sans MS" size="20.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/green-add-button-12023.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
             <HBox prefHeight="83.0" prefWidth="161.0">
                <children>
                   <Button fx:id="EditButton" mnemonicParsing="false" onMouseClicked="#EditButtonClick" prefHeight="52.0" prefWidth="115.0" text="Edit" textFill="#eda60c">
@@ -70,34 +90,11 @@
       </VBox>
       <TextField fx:id="searchText" layoutX="690.0" layoutY="21.0" onKeyPressed="#searchEnter" onKeyReleased="#searchKeyBoard" prefHeight="30.0" prefWidth="161.0" promptText="Search" />
       <ScrollPane fx:id="searchScroll" layoutX="690.0" layoutY="105.0" prefHeight="200.0" prefWidth="161.0" visible="false">
-         <content>
-            <VBox fx:id="searchVbox" prefHeight="219.0" prefWidth="162.0" />
-         </content>
       </ScrollPane>
-      <Button fx:id="RefreshButton" layoutX="690.0" layoutY="64.0" mnemonicParsing="false" onMouseClicked="#RefreshButtonClick" prefHeight="51.0" prefWidth="115.0" text="Refresh" textFill="#17614e">
+      <Button fx:id="RefreshButton" layoutX="690.0" layoutY="337.0" mnemonicParsing="false" onMouseClicked="#RefreshButtonClick" prefHeight="51.0" prefWidth="115.0" text="Refresh" textFill="#17614e">
          <font>
             <Font name="Comic Sans MS" size="20.0" />
          </font>
       </Button>
-      <HBox layoutX="690.0" layoutY="146.0" prefHeight="83.0" prefWidth="161.0">
-         <children>
-            <Button fx:id="AddButton" mnemonicParsing="false" onMouseClicked="#AddButtonClick" prefHeight="52.0" prefWidth="115.0" text="Add" textFill="#2cab25">
-               <font>
-                  <Font name="Comic Sans MS" size="20.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
-            </Button>
-            <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../assets/green-add-button-12023.png" />
-               </image>
-               <HBox.margin>
-                  <Insets top="15.0" />
-               </HBox.margin>
-            </ImageView>
-         </children>
-      </HBox>
    </children>
 </AnchorPane>
