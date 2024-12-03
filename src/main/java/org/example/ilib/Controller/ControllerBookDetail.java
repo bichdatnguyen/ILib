@@ -76,12 +76,18 @@ public class ControllerBookDetail {
     public void saveForwardScene(Scene scene) {
         this.Forwardsceen = scene;
     }
-
+    private Image loadImage(String path) {
+        if (path.startsWith("http://") || path.startsWith("https://")) {
+            return new Image(path, true);
+        } else {
+            return new Image(getClass().getResourceAsStream(path));
+        }
+    }
     /** show all book's information.
      * @param book book needed to show information
      */
     public void showInformation(Book book) {
-        thumbnail.setImage(new Image(book.getImage()));
+        thumbnail.setImage(loadImage(book.getImage()));
         titleText.setText(book.getTitle());
         authorText.setText(book.getAuthor());
         String description = book.getDescription();
