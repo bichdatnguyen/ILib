@@ -511,4 +511,32 @@ public class DBConnection {
             return books;
         }
     }
+
+    public void insertUserDetail(String userFullname, String userEmailAddress,
+                                 String userPhoneNumber, String userPassword, String userRole) {
+        String sql = "INSERT INTO user (Email, phoneNumber, fullname, password, role) " +
+                "VALUES (?, ?, ?, ?, ?)";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setString(1, userEmailAddress);
+            stmt.setString(2, userPhoneNumber);
+            stmt.setString(3, userFullname);
+            stmt.setString(4, userPassword);
+            System.out.println(userRole);
+            stmt.setString(5, userRole);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUserDetail(String userEmail, String userPassword) {
+        String sql = "DELETE FROM user WHERE Email = ? and password = ?";
+        try(PreparedStatement stmt = createStatement(sql)){
+            stmt.setString(1, userEmail);
+            stmt.setString(2, userPassword);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

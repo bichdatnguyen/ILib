@@ -27,7 +27,7 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="110.0" text="Add" textFill="#2cab25">
+                  <Button fx:id="addButton" mnemonicParsing="false" onMouseClicked="#addMemberClicked" prefHeight="52.0" prefWidth="120.0" text="Add" textFill="#2cab25">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -47,7 +47,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="110.0" text="Edit" textFill="#882ebf">
+                  <Button fx:id="editButton" mnemonicParsing="false" onMouseClicked="#editButtonClicked" prefHeight="52.0" prefWidth="120.0" text="Edit" textFill="#882ebf">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -67,7 +67,7 @@
             </HBox>
             <HBox prefHeight="53.0" prefWidth="260.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="110.0" text="Delete" textFill="#d3401b">
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onMouseClicked="#deleteButtonClicked" prefHeight="52.0" prefWidth="120.0" text="Delete" textFill="#d3401b">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
@@ -75,7 +75,7 @@
                         <Font size="25.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="59.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../assets/trash-can-10417.png" />
                      </image>
@@ -87,5 +87,10 @@
             </HBox>
          </children>
       </VBox>
+      <Button fx:id="refreshButton" onMouseClicked="#refreshButtonClicked" layoutX="598.0" layoutY="382.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="120.0" text="Refresh">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -1,15 +1,17 @@
 package org.example.ilib.Controller;
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.ilib.Processor.Member;
+import org.example.ilib.Processor.MemberAdminstrator;
 
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -24,6 +26,11 @@ public class ControllerMemberAdminstrator {
     public TableColumn<Member,String> passwordC;
     public ObservableList<Member> members = FXCollections.observableArrayList();
     public Button backButton;
+    public Button addButton;
+    public Button editButton;
+    public Button deleteButton;
+    public Button refreshButton;
+    public static boolean editMode = false;
 
     public void initialize() {
         getInformationOfUsers();
@@ -64,5 +71,70 @@ public class ControllerMemberAdminstrator {
         fx.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
         Scene scene = new Scene(fx.load());
         stage.setScene(scene);
+    }
+
+    public void addMemberClicked(MouseEvent mouseEvent) throws IOException {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AddMemberDetail.fxml"));
+            Parent root = fxmlLoader.load();
+            ControllerAddMemberDetail controllerAddMemberDetail = fxmlLoader.getController();
+            Stage popup = new Stage();
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.setTitle("Add User detail");
+            Scene scene = new Scene(root);
+            popup.setScene(scene);
+
+            popup.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editButtonClicked(MouseEvent mouseEvent) throws IOException, SQLException {
+        if (tableView.getSelectionModel().getSelectedItem() == null) {
+            showErrAndEx.showAlert("Please select an account");
+        } else {
+            editMode = true;
+            MemberAdminstrator.getInstance().setMemberFullname(
+                    tableView.getSelectionModel().getSelectedItem().nameProperty().get()
+            );
+            MemberAdminstrator.getInstance().setMemberPhoneNumber(
+                    tableView.getSelectionModel().getSelectedItem().phoneProperty().get()
+            );
+            MemberAdminstrator.getInstance().setMemberEmailAddress(
+                    tableView.getSelectionModel().getSelectedItem().emailProperty().get()
+            );
+            MemberAdminstrator.getInstance().setMemberPassword(
+                    tableView.getSelectionModel().getSelectedItem().passwordProperty().get()
+            );
+            deleteButtonClicked(mouseEvent);
+            addMemberClicked(mouseEvent);
+        }
+
+        editMode = false;
+    }
+
+    public void deleteButtonClicked(MouseEvent mouseEvent) throws SQLException {
+        if(tableView.getSelectionModel().getSelectedItem() == null){
+            showErrAndEx.showAlert("Please select an account");
+        } else {
+            if (editMode == false) {
+                Alert alert = showErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
+                if(alert.getResult() == ButtonType.OK){
+                    String selectedEmail = tableView.getSelectionModel().getSelectedItem().emailProperty().get();
+                    String selectedPassword = tableView.getSelectionModel().getSelectedItem().passwordProperty().get();
+                    DBConnection.getInstance().deleteUserDetail(selectedEmail, selectedPassword);
+                }
+            } else {
+                String selectedEmail = tableView.getSelectionModel().getSelectedItem().emailProperty().get();
+                String selectedPassword = tableView.getSelectionModel().getSelectedItem().passwordProperty().get();
+                DBConnection.getInstance().deleteUserDetail(selectedEmail, selectedPassword);
+            }
+        }
+    }
+
+    public void refreshButtonClicked(MouseEvent mouseEvent) {
+        tableView.getItems().clear();
+        initialize();
     }
 }
