@@ -132,6 +132,9 @@ public class ControllerCartItemList implements Initializable {
                    // Đặt hình ảnh QR vào ImageView
                    QRCode.setImage(new Image(qrImagePath));
                    savePayments(email,CartList.stream().toList());
+                   updateQuantityInStock();
+                   updateBorrowBook();
+                   removeBookFromCart(email,"is not null");
                    boolean SendIt = SendEmail.sendEmail(email, "Thanh toán thư viện", path);
                    if(SendIt){
                        System.out.println("Chuyển email thành công");
@@ -139,9 +142,7 @@ public class ControllerCartItemList implements Initializable {
                        System.out.println("Chuyển email không thành công");
                        showErrAndEx.showAlert("Chuyển email không thành công");
                    }
-                   updateQuantityInStock();
-                   updateBorrowBook();
-                   removeBookFromCart(email,"is not null");
+
 
                } catch (IOException | WriterException e) {
                    e.printStackTrace();

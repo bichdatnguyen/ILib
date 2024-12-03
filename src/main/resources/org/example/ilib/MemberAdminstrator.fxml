@@ -23,7 +23,7 @@
             <TableColumn fx:id="passwordC" prefWidth="170.44442749023438" text="Password" />
         </columns>
       </TableView>
-      <TextField layoutX="662.0" layoutY="28.0" prefHeight="32.0" prefWidth="196.0" promptText="SearchInformation" />
+      <TextField fx:id="searchText" layoutX="662.0" layoutY="28.0" onKeyPressed="#searchEnter" onKeyReleased="#searchKeyboard" prefHeight="32.0" prefWidth="196.0" promptText="SearchInformation" />
       <VBox layoutX="664.0" layoutY="173.0" prefHeight="284.0" prefWidth="208.0">
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
@@ -93,14 +93,10 @@
             <Font size="25.0" />
          </font>
       </Button>
-      <VBox layoutX="662.0" layoutY="60.0" prefHeight="69.0" prefWidth="196.0" visible="false">
-         <children>
-            <ScrollPane fx:id="searchingScrolPane" prefHeight="200.0" prefWidth="200.0">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-              </content>
-            </ScrollPane>
-         </children>
-      </VBox>
+      <ScrollPane fx:id="searchingScrolPane" layoutX="660.0" layoutY="60.0" prefHeight="100.0" prefWidth="196.0" visible="false">
+         <content>
+            <VBox fx:id="searchVbox" prefHeight="97.0" prefWidth="192.0" />
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
