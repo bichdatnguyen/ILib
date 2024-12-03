@@ -31,6 +31,7 @@ public class ControllerMemberAdminstrator {
     public Button deleteButton;
     public Button refreshButton;
     public static boolean editMode = false;
+    public ScrollPane searchingScrolPane;
 
     public void initialize() {
         getInformationOfUsers();
