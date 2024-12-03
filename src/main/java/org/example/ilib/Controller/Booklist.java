@@ -113,4 +113,29 @@ public class Booklist {
         }
     }
 
+    public void addBook(Book book) {
+        addBookToList(TopBookList, book);
+        addBookToList(RecentlyBookList, book);
+        addBookToList(RecommendBookList, book);
+        if (!BookMap.containsKey(book.getId())) {
+            BookMap.put(book.getId(), book);
+        }
+    }
+
+    private void addBookToList(List<Book> bookList, Book book) {
+        if (book != null && !bookList.contains(book)) {
+            bookList.add(book);
+        }
+    }
+    public void deleteBook(String bookId) {
+        deleteBookFromList(TopBookList, bookId);
+        deleteBookFromList(RecentlyBookList, bookId);
+        deleteBookFromList(RecommendBookList, bookId);
+        BookMap.remove(bookId);
+    }
+
+    private void deleteBookFromList(List<Book> bookList, String bookId) {
+        bookList.removeIf(book -> book.getId().equals(bookId));
+    }
+
 }

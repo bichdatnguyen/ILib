@@ -176,7 +176,8 @@ public class ControllerBookAdmin implements Initializable {
                         String author = rs.getString("authorName");
                         int quantity = rs.getInt("quantityInStock");
                         int price = rs.getInt("bookPrice");
-                        Book book = new Book(bookID, title, author, quantity, price);
+                        String description = rs.getString("description");
+                        Book book = new Book(bookID, title, author, quantity, price,description);
                         books.add(book);
                     }
                     this.BookList = FXCollections.observableArrayList(books);
@@ -259,7 +260,7 @@ public class ControllerBookAdmin implements Initializable {
 //rating , shelf, payment , borrow,history,categories,cart,author,books
     public void deleteBook(String bookID) {
         String query = "delete from books where bookID = ?";
-
+        Booklist.getInstance().deleteBook(bookID);
         try(Connection connection =DBConnection.getInstance().getConnection();){
 
             try( PreparedStatement stmt = connection.prepareStatement(query)){

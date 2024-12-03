@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -69,6 +70,7 @@ public class ControllerAddEdit {
                 book.setDescription(descriptionText.getText());
                 book.setAuthor(authorText.getText());
                 book.setQuantity(Integer.parseInt(quantityText.getText()));
+                book.setImage("/org/assets/noImage.png");
                 addBook(book);
 
 
@@ -86,7 +88,9 @@ public class ControllerAddEdit {
                 book1.setId(bookIdText.getText());
                 book1.setPrice(Integer.parseInt(priceText.getText()));
                 book1.setTitle(titleText.getText());
-                book1.setDescription(descriptionText.getText());
+                if(descriptionText.getText()!=null&&!descriptionText.getText().equals("")) {
+                    book1.setDescription(descriptionText.getText());
+                }
                 book1.setAuthor(authorText.getText());
                 book1.setQuantity(Integer.parseInt(quantityText.getText()));
                 updateBook(book1,book.getId());
@@ -132,7 +136,7 @@ public class ControllerAddEdit {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        Booklist.getInstance().addBook(book);
         try(Connection connection = DBConnection.getInstance().getConnection();) {
             try( PreparedStatement stmt  = connection.prepareStatement(query)){
                 stmt.setString(1, book.getId());
@@ -158,12 +162,8 @@ public class ControllerAddEdit {
 
     }
     public void updateBook(Book book, String bookID) {
-        Booklist.getInstance().updateBook(bookID,book);
-        String query1 = "update books set bookID = ?, title = ?, bookPrice = ?, quantityInStock =? where bookID = ?";
         String query2 = "update books set bookID = ?, description = ?, title = ?, bookPrice = ?, quantityInStock =? where bookID = ?";
         System.out.println(!bookID.equals(book.getId().trim()));
-      //  System.out.println(book.getId());
-
         try{
             if(DBConnection.getInstance().bookExist(book.getId()) && !bookID.equals(book.getId())){
                 showErrAndEx.showAlert("bạn đã thiết lập id sách trùng với 1 sách khác \n Vui lòng nhập lại");
@@ -173,33 +173,20 @@ public class ControllerAddEdit {
         }catch(SQLException e){
             e.printStackTrace();
         }
-        if(descriptionText.getText() ==null || descriptionText.getText().equals("")) {
-            try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query1) ){
-                stmt.setString(1, book.getId());
-                stmt.setString(2, book.getTitle());
-                stmt.setInt(3, book.getPrice());
-                stmt.setInt(4, book.getQuantity());
-                stmt.setString(5, bookID);
-                stmt.executeUpdate();
-                checkCondition = true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else{
-            try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query2) ){
-                stmt.setString(1, book.getId());
-                stmt.setString(2, book.getDescription());
-                stmt.setString(3, book.getTitle());
-                stmt.setInt(4, book.getPrice());
-                stmt.setInt(5, book.getQuantity());
-                stmt.setString(6, bookID);
-                stmt.executeUpdate();
-                checkCondition = true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
 
+        try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query2) ){
+            stmt.setString(1, book.getId());
+            stmt.setString(2, book.getDescription());
+            stmt.setString(3, book.getTitle());
+            stmt.setInt(4, book.getPrice());
+            stmt.setInt(5, book.getQuantity());
+            stmt.setString(6, bookID);
+            stmt.executeUpdate();
+            checkCondition = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Booklist.getInstance().updateBook(bookID,book);
     }
 
 
