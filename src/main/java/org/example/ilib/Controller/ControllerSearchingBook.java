@@ -94,9 +94,7 @@ public class ControllerSearchingBook  {
             int column = 0;
             int row = 0;
 
-            // trang 1: 0, 1, 2, 3... 7
-            // trang 2: 8, 9, 10, ..., 15
-           for (int i = 8 * page - 8; i < 8 * page; i++) {
+           for (int i = 8 * page - 8; i < Math.min(8 * page, booksearching.size()); i++) {
                Book book = booksearching.get(i);
                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/book.fxml"));
 
