@@ -231,6 +231,7 @@ public class ControllerBookAdmin implements Initializable {
             searchVbox.getChildren().clear();
             searchInfofromDB(searchText.getText());
         } else{
+            searchVbox.getChildren().clear();
             searchScroll.setVisible(false);
         }
     }

@@ -158,8 +158,11 @@ public class ControllerAddEdit {
     }
     public void updateBook(Book book, String bookID) {
         String query = "update books set bookID = ?, description = ?, title = ?, bookPrice = ?, quantityInStock =? where bookID = ?";
+        System.out.println(!bookID.equals(book.getId().trim()));
+      //  System.out.println(book.getId());
+
         try{
-            if(DBConnection.getInstance().bookExist(book.getId())){
+            if(DBConnection.getInstance().bookExist(book.getId()) && !bookID.equals(book.getId())){
                 showErrAndEx.showAlert("bạn đã thiết lập id sách trùng với 1 sách khác \n Vui lòng nhập lại");
                 checkCondition = false;
                 return;

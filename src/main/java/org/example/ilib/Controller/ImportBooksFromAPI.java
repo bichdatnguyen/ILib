@@ -128,7 +128,7 @@ public class ImportBooksFromAPI {
                 return imageLinks.get("thumbnail").getAsString();
             }
         }
-        return "E:/java/iLib/ILib/src/main/resources/org/assets/noImage.png";
+        return "/org/assets/noImage.png";
     }
 
     /** take books from API to test.
