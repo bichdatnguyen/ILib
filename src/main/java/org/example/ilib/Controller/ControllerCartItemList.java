@@ -390,6 +390,15 @@ public class ControllerCartItemList implements Initializable {
             } catch(SQLException e){
                 e.printStackTrace();
             }
+           for(CartItem item : CartList){
+               String bookId = item.getId();
+               if(quantityBook == null){
+                   showErrAndEx.showAlert("null");
+               }
+               int oldquantity = quantityBook.get(bookId);
+               int newquantity = oldquantity - item.getVolume();
+               Booklist.getInstance().updateBookQuantity(bookId, newquantity);
+           }
     }
     public void getQuantityInStock(){
         String query = "select bookID, quantityInStock from books";

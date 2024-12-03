@@ -33,7 +33,7 @@ public class ControllerTopBooks implements Initializable {
      * ControllerTopBooks constructor.
      */
     public ControllerTopBooks() {
-       bookList = Booklist.getInstance().TopBookList;
+       bookList = Booklist.getInstance().getTopBookList();
     }
 
     /** top books initialize.

@@ -99,4 +99,11 @@ public class Book {
         public void setPrice(int price) {
                 this.price = price;
         }
+        public boolean equals(Object o){
+                if (!(o instanceof Book)){
+                        return false;
+                }
+                Book other = (Book) o;
+                return  other.getId().equals(this.getId());
+        }
 }

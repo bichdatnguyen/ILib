@@ -406,7 +406,7 @@ public class ControllerMenu implements Initializable {
                 avatarUser.setImage(new Image(Account.getInstance().getAvatarPath()));
             }
             try {
-                List<Book> recentlyBooks = Booklist.getInstance().RecentlyBookList;
+                List<Book> recentlyBooks = Booklist.getInstance().getRecentlyBookList();
                 for (int i = 0; i < recentlyBooks.size(); i++) {
                     FXMLLoader fx = new FXMLLoader();
                     fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
@@ -417,7 +417,7 @@ public class ControllerMenu implements Initializable {
                     recentlyAddHbox.getChildren().add(cardbox);
                 }
 
-                List<Book> recommendBooks = Booklist.getInstance().RecommendBookList;
+                List<Book> recommendBooks = Booklist.getInstance().getRecommendBookList();
                 System.out.println(recommendBooks.size());
                 for (int i = 0; i < recommendBooks.size(); i++) {
                     FXMLLoader fx = new FXMLLoader();

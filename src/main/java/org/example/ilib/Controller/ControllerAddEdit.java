@@ -121,7 +121,7 @@ public class ControllerAddEdit {
     }
 
     public void addBook(Book book) {
-        String query = "insert into books(bookID,description,title,bookPrice,quantityInStock) values(?,?,?,?,?)";
+        String query = "insert into books(bookID,thumbnail,description,title,bookPrice,quantityInStock) values(?,'/org/assets/noImage.png',?,?,?,?)";
         String query2 = "insert into author(bookID,authorName) values(?,?)";
         try{
             if(DBConnection.getInstance().bookExist(book.getId())){
@@ -158,7 +158,9 @@ public class ControllerAddEdit {
 
     }
     public void updateBook(Book book, String bookID) {
-        String query = "update books set bookID = ?, description = ?, title = ?, bookPrice = ?, quantityInStock =? where bookID = ?";
+        Booklist.getInstance().updateBook(bookID,book);
+        String query1 = "update books set bookID = ?, title = ?, bookPrice = ?, quantityInStock =? where bookID = ?";
+        String query2 = "update books set bookID = ?, description = ?, title = ?, bookPrice = ?, quantityInStock =? where bookID = ?";
         System.out.println(!bookID.equals(book.getId().trim()));
       //  System.out.println(book.getId());
 
@@ -171,18 +173,33 @@ public class ControllerAddEdit {
         }catch(SQLException e){
             e.printStackTrace();
         }
-        try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query) ){
-            stmt.setString(1, book.getId());
-            stmt.setString(2, book.getDescription());
-            stmt.setString(3, book.getTitle());
-            stmt.setInt(4, book.getPrice());
-            stmt.setInt(5, book.getQuantity());
-            stmt.setString(6, bookID);
-            stmt.executeUpdate();
-            checkCondition = true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(descriptionText.getText() ==null || descriptionText.getText().equals("")) {
+            try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query1) ){
+                stmt.setString(1, book.getId());
+                stmt.setString(2, book.getTitle());
+                stmt.setInt(3, book.getPrice());
+                stmt.setInt(4, book.getQuantity());
+                stmt.setString(5, bookID);
+                stmt.executeUpdate();
+                checkCondition = true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else{
+            try(Connection connection =DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query2) ){
+                stmt.setString(1, book.getId());
+                stmt.setString(2, book.getDescription());
+                stmt.setString(3, book.getTitle());
+                stmt.setInt(4, book.getPrice());
+                stmt.setInt(5, book.getQuantity());
+                stmt.setString(6, bookID);
+                stmt.executeUpdate();
+                checkCondition = true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
     }
 
 
