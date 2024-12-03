@@ -67,22 +67,30 @@ public class Booklist {
         return BookMap.get(id); // Tìm kiếm nhanh
     }
 
-    public void updateBook(String id, Book updatedBook) {
-        if (BookMap.containsKey(id)) {
-            Book oldBook = BookMap.get(id);
-            updateBookInList(TopBookList, oldBook, updatedBook);
-            updateBookInList(RecentlyBookList, oldBook, updatedBook);
-            updateBookInList(RecommendBookList, oldBook, updatedBook);
-            BookMap.put(id, updatedBook);
+
+    public void updateBook(String oldBookId, Book updatedBook) {
+        if (!oldBookId.equals(updatedBook.getId())) {
+            updatedBook.setImage(BookMap.get(oldBookId).getImage());
+            deleteBook(oldBookId);
+            addBook(updatedBook);
         } else {
-            throw new IllegalArgumentException("Book with ID " + id + " not found.");
+            updateBookInList(TopBookList, oldBookId, updatedBook);
+            updateBookInList(RecentlyBookList, oldBookId, updatedBook);
+            updateBookInList(RecommendBookList, oldBookId, updatedBook);
+            if (BookMap.containsKey(oldBookId)) {
+                BookMap.put(oldBookId, updatedBook);
+            }
         }
     }
 
-    private void updateBookInList(List<Book> list, Book oldBook, Book updatedBook) {
-        int index = list.indexOf(oldBook);
-        if (index >= 0) {
-            list.set(index, updatedBook);
+    private void updateBookInList(List<Book> bookList, String oldBookId, Book updatedBook) {
+        updatedBook.setImage(BookMap.get(oldBookId).getImage());
+        for (int i = 0; i < bookList.size(); i++) {
+            Book book = bookList.get(i);
+            if (book.getId().equals(oldBookId)) {
+                bookList.set(i, updatedBook);
+                break;
+            }
         }
     }
 
