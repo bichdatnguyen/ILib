@@ -98,8 +98,8 @@ public class ControllerAddMemberDetail {
 
         if (editMode == false) {
             //checking account in database
-            if (connection.checkDataExit(uEmailAddress,uPassword)) {
-                alertField.setText("Email address and password has already in database");
+            if (connection.checkDataExit(uEmailAddress)) {
+                alertField.setText("Email address has already in database");
                 alertField.setStyle("-fx-text-fill: red;");
                 alertField.setVisible(true);
 

@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ControllerBookDetail {
+    @FXML
+    public Button returnBookButton;
 
     @FXML
     private Button BackButton;
@@ -70,6 +72,7 @@ public class ControllerBookDetail {
 
     private Scene Forwardsceen;
 
+
     /** set the scene before.
      * @param scene set to this.scene
      */
@@ -83,6 +86,7 @@ public class ControllerBookDetail {
             return new Image(getClass().getResourceAsStream(path));
         }
     }
+
     /** show all book's information.
      * @param book book needed to show information
      */
@@ -98,6 +102,9 @@ public class ControllerBookDetail {
         }
         idText.setText(book.getId());
         quantityText.setText(String.valueOf(book.getQuantity()));
+        if (checkBookBorrow()) {
+            returnBookButton.setVisible(true);
+        }
     }
 
     /** back to scene before.
@@ -106,7 +113,6 @@ public class ControllerBookDetail {
      */
     public void Back(MouseEvent event) throws IOException {
         Stage stage = (Stage) BackButton.getScene().getWindow();
-
         Scene scene = Forwardsceen;
         stage.setScene(scene);
     }
@@ -347,5 +353,59 @@ public class ControllerBookDetail {
             e.printStackTrace();
         }
         return false;
+    }
+
+    /**
+     * delete book from borrow table in database.
+     */
+    private void deleteBookFromBorrow() {
+        String query = "delete from borrow where email = ? and bookID = ?";
+        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            stmt.setString(2, idText.getText());
+            int rs = stmt.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * upadte quantityInStock field of books.
+     */
+    private void updateBookQuantityInStock() {
+        String query = "update books set quantityinstock = quantityinstock + 1 where  bookID = ?";
+        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, idText.getText());
+            int rs = stmt.executeUpdate();
+        } catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * a method linked with fxml file.
+     * @param mouseEvent mouse clicked
+     * @throws IOException io
+     */
+    public void returnBookToTheLibrary(MouseEvent mouseEvent) throws IOException {
+        deleteBookFromBorrow();
+        int oldQuantity = Integer.parseInt(quantityText.getText());
+        Booklist.getInstance().updateBookQuantity(idText.getText(), oldQuantity+1);
+        updateBookQuantityInStock();
+
+        //Alert
+        Alert alert = showErrAndEx.showAlert("return book to the library successfully!");
+        if(alert.getResult() == ButtonType.OK){
+            try{
+                //returnBookButton.setVisible(false);
+                Stage stage = (Stage) returnBookButton.getScene().getWindow();
+                FXMLLoader fx = new FXMLLoader();
+                fx.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
+                Scene scene = new Scene(fx.load());
+                stage.setScene(scene);
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

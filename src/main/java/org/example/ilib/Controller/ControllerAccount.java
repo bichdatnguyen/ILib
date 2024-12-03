@@ -69,6 +69,9 @@ public class ControllerAccount {
         loadProperties();
     }
 
+    /**
+     * this method will be used in initialize method.
+     */
     public void loadProperties() {
         String avatarPath = Account.getInstance().getAvatarPath();
         String phoneNumber = Account.getInstance().getPhone();
@@ -115,7 +118,8 @@ public class ControllerAccount {
         }
     }
 
-    /** Back to menu.
+    /**
+     * Back to menu.
      * @param mouseEvent back when you click mouse
      * @throws IOException throw IOException
      */
@@ -127,6 +131,10 @@ public class ControllerAccount {
         stage.setScene(scene);
     }
 
+    /**
+     * this method will handle Changing avatar in user scene.
+     * @param mouseEvent clicked text
+     */
     public void setAvatar(MouseEvent mouseEvent) {
         System.out.println("mouse clicked");
         FileChooser fileChooser = new FileChooser();
@@ -150,6 +158,10 @@ public class ControllerAccount {
         }
     }
 
+    /**
+     * this method will insert into database avatarPath of user.
+     * @param avatarPath avatar path of user
+     */
     private void updateAvatarInDatabase(String avatarPath) {
         String updateQuery = "UPDATE user SET avatarPath = ? where Email = ? and password = ?";
         try( PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)) {
@@ -162,6 +174,9 @@ public class ControllerAccount {
         }
     }
 
+    /**
+     * this method will be used to set properties for the scene.
+     */
     private void setPropertiesFromDatabase() {
         String query = "SELECT avatarPath,phoneNumber,fullName FROM user WHERE email = ? and password = ?";
         try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
@@ -183,6 +198,11 @@ public class ControllerAccount {
         }
     }
 
+    /**
+     * this method will orient user to updateAccount scene.
+     * @param mouseEvent text clicked
+     * @throws IOException io error
+     */
     public void updateAccount(MouseEvent mouseEvent) throws IOException{
         Stage stage = (Stage)updateAccount.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();

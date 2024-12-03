@@ -512,6 +512,14 @@ public class DBConnection {
         }
     }
 
+    /**
+     * this method will handle inserting user detail.
+     * @param userFullname Fullname of user
+     * @param userEmailAddress email of user
+     * @param userPhoneNumber phone number of user
+     * @param userPassword password of user
+     * @param userRole role of user
+     */
     public void insertUserDetail(String userFullname, String userEmailAddress,
                                  String userPhoneNumber, String userPassword, String userRole) {
         String sql = "INSERT INTO user (Email, phoneNumber, fullname, password, role) " +
@@ -529,6 +537,11 @@ public class DBConnection {
         }
     }
 
+    /**
+     * this method will handle deleting user detail.
+     * @param userEmail email of user
+     * @param userPassword password of user
+     */
     public void deleteUserDetail(String userEmail, String userPassword) {
         String sql = "DELETE FROM user WHERE Email = ? and password = ?";
         try(PreparedStatement stmt = createStatement(sql)){
