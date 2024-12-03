@@ -1,8 +1,10 @@
 package org.example.ilib.Controller;
 
 import com.google.zxing.WriterException;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -63,6 +65,8 @@ public class ControllerCartItemList implements Initializable {
     private TableColumn<CartItem, Integer> VolumeCol;
     @FXML
     private TextField VoulumeText;
+    @FXML
+    private ProgressIndicator LoadingIndicator;
     private boolean isTotalCalculated = false;
     private boolean isBuyQR = false;
 
@@ -123,34 +127,57 @@ public class ControllerCartItemList implements Initializable {
         } else if (totalMonet == 0) {
             showErrAndEx.showAlert("Số tiền thanh toán không hợp lệ");
         } else {
-           if(!isBuyQR) {
-               isBuyQR = true;
-               try {
-                   String path = "The amount paid is: " + String.valueOf(totalMonet) + " USD \n Have a nice day!";
-                   // Tạo mã QR và lấy đường dẫn
-                   String qrImagePath = QRCodeAuto.taoQrCode(path);
-                   // Đặt hình ảnh QR vào ImageView
-                   QRCode.setImage(new Image(qrImagePath));
-                   savePayments(email,CartList.stream().toList());
-                   boolean SendIt = SendEmail.sendEmail(email, "Thanh toán thư viện", path);
-                   if(SendIt){
-                       System.out.println("Chuyển email thành công");
-                   } else{
-                       System.out.println("Chuyển email không thành công");
-                       showErrAndEx.showAlert("Chuyển email không thành công");
-                   }
-                   updateQuantityInStock();
-                   updateBorrowBook();
-                   removeBookFromCart(email,"is not null");
+            if (!isBuyQR) {
+                Loading(true);
+                isBuyQR = true;
 
-               } catch (IOException | WriterException e) {
-                   e.printStackTrace();
-               }
-           } else {
-               showErrAndEx.showAlert("Bạn đã thanh toán thành công");
-           }
+                Task<Void> task = new Task<>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        try {
+                            String path = "The amount paid is: " + totalMonet + " USD \n Have a nice day!";
+                            String qrImagePath = QRCodeAuto.taoQrCode(path);
+                            savePayments(email, CartList.stream().toList());
+                            updateQuantityInStock();
+                            updateBorrowBook();
+                            removeBookFromCart(email, "is not null");
+                            Platform.runLater(() -> QRCode.setImage(new Image(qrImagePath)));
+                            boolean sendIt = SendEmail.sendEmail(email, "Thanh toán thư viện", path);
+                            if (!sendIt) {
+                                throw new IOException("Chuyển email không thành công");
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    protected void succeeded() {
+                        super.succeeded();
+                        Platform.runLater(() -> {
+                            Loading(false);
+                            showErrAndEx.showAlert("Thanh toán thành công!");
+                        });
+                    }
+
+                    @Override
+                    protected void failed() {
+                        super.failed();
+                        Platform.runLater(() -> {
+                            Loading(false);
+                            showErrAndEx.showAlert("Đã xảy ra lỗi!");
+                        });
+                    }
+                };
+                new Thread(task).start();
+            } else {
+                showErrAndEx.showAlert("Bạn đã thanh toán thành công");
+            }
         }
     }
+
 
     @FXML
     void totalMoneyClick(MouseEvent event) {
@@ -403,6 +430,12 @@ public class ControllerCartItemList implements Initializable {
         }
     }
 
-
-
+    private void Loading(boolean isLoading) {
+        LoadingIndicator.setVisible(isLoading);
+        if (isLoading) {
+            LoadingIndicator.setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+        } else {
+            LoadingIndicator.setProgress(0); // Đặt lại nếu không còn loading
+        }
+    }
 }

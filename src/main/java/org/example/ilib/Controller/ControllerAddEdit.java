@@ -54,11 +54,11 @@ public class ControllerAddEdit {
     @FXML
     void UpdateButtonClick(MouseEvent event) {
             if(status == ADD) {
-                if(bookIdText.getText().equals("")) {
+                if(bookIdText.getText()==null||bookIdText.getText().equals("")) {
                     showErrAndEx.showAlert("Vui lòng nhập ID sách");
                     return;
                 }
-                if(titleText.getText().equals("")) {
+                if(titleText.getText()==null||titleText.getText().equals("")) {
                     showErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
                     return;
                 }
@@ -73,14 +73,15 @@ public class ControllerAddEdit {
 
 
             } else if(status == EDIT) {
-                if(bookIdText.getText().equals("")) {
+                if(bookIdText.getText()== null||bookIdText.getText().equals("")) {
                     showErrAndEx.showAlert("Vui lòng nhập id sách");
                     return;
                 }
-                if(titleText.getText().equals("")) {
+                if(titleText.getText()==null||titleText.getText().equals("")) {
                     showErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
                     return;
                 }
+
                 Book book1 = new Book();
                 book1.setId(bookIdText.getText());
                 book1.setPrice(Integer.parseInt(priceText.getText()));
