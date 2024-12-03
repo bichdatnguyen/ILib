@@ -1,11 +1,9 @@
 package org.example.ilib.Controller;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import javafx.scene.image.Image;
-import org.example.ilib.Processor.Book;
+import org.example.ilib.Book.Book;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +12,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

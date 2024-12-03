@@ -42,4 +42,26 @@ module org.example.ilib {
     opens org.example.ilib.Controller to javafx.fxml;
     exports org.example.ilib.Processor;
     opens org.example.ilib.Processor to javafx.fxml;
+    exports org.example.ilib.Account;
+    opens org.example.ilib.Account to javafx.fxml;
+    exports org.example.ilib.Book;
+    opens org.example.ilib.Book to javafx.fxml;
+    exports org.example.ilib.LoginAndRegister;
+    opens org.example.ilib.LoginAndRegister to javafx.fxml;
+    exports org.example.ilib.Menu;
+    opens org.example.ilib.Menu to javafx.fxml;
+    exports org.example.ilib.BookList;
+    opens org.example.ilib.BookList to javafx.fxml;
+    exports org.example.ilib.AdminMenu.BookAdmin;
+    opens org.example.ilib.AdminMenu.BookAdmin to javafx.fxml;
+    exports org.example.ilib.AdminMenu;
+    opens org.example.ilib.AdminMenu to javafx.fxml;
+    exports org.example.ilib.Cart;
+    opens org.example.ilib.Cart to javafx.fxml;
+    exports org.example.ilib.AdminMenu.Member;
+    opens org.example.ilib.AdminMenu.Member to javafx.fxml;
+    exports org.example.ilib.TransactionHistory;
+    opens org.example.ilib.TransactionHistory to javafx.fxml;
+    exports org.example.ilib.Book.BookDetail;
+    opens org.example.ilib.Book.BookDetail to javafx.fxml;
 }

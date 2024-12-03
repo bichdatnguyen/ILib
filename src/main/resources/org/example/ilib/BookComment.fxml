@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBookComment">
+<AnchorPane prefHeight="600.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Book.BookDetail.ControllerBookComment">
    <children>
       <Button fx:id="postCmt" layoutX="826.0" layoutY="542.0" mnemonicParsing="false" onMouseClicked="#postCmtInBook" prefHeight="36.0" prefWidth="95.0" text="Update">
          <font>

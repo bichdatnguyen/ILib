@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="552.0" prefWidth="1046.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerTransactionHistory">
+<AnchorPane prefHeight="552.0" prefWidth="1046.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.TransactionHistory.ControllerTransactionHistory">
    <children>
       <TableView fx:id="TransactionTable" layoutX="-4.0" layoutY="75.0" prefHeight="476.0" prefWidth="1046.0">
         <columns>

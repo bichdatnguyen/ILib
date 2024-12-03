@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="BookHbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#BookHboxEnter" onMouseExited="#BookHboxExit" prefHeight="177.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Controller.ControllerBook">
+<HBox fx:id="BookHbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseEntered="#BookHboxEnter" onMouseExited="#BookHboxExit" prefHeight="177.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Book.ControllerBook">
    <children>
       <AnchorPane prefHeight="160.0" prefWidth="121.0">
          <children>
