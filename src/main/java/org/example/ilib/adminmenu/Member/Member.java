@@ -4,10 +4,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class Member {
-    private StringProperty email;
-    private StringProperty name;
-    private StringProperty phone;
-    private StringProperty password;
+    private final StringProperty email;
+    private final StringProperty name;
+    private final StringProperty phone;
+    private final StringProperty password;
 
     public Member(String email, String name, String phone, String password) {
         this.email = new SimpleStringProperty(email);

@@ -1,8 +1,11 @@
 package org.example.ilib.adminmenu.Member;
 
 public class MemberAdminstrator {
-    private MemberAdminstrator() {}
+    private MemberAdminstrator() {
+    }
+
     private static MemberAdminstrator instance;
+
     public static MemberAdminstrator getInstance() {
         if (instance == null) {
             instance = new MemberAdminstrator();

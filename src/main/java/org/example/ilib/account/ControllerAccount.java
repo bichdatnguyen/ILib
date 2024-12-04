@@ -30,10 +30,10 @@ public class ControllerAccount {
     private Label phone;
 
     @FXML
-    private  Label password;
+    private Label password;
 
     @FXML
-    private  Label email;
+    private Label email;
 
     @FXML
     private Label fullName;
@@ -97,7 +97,7 @@ public class ControllerAccount {
 
         if (password != null) {
             int size = Account.getInstance().getPassword().length();
-            String p = new String();
+            String p = "";
             for (int i = 0; i < size; i++) {
                 p += "*";
             }
@@ -109,6 +109,7 @@ public class ControllerAccount {
 
     /**
      * Back to menu.
+     *
      * @param mouseEvent back when you click mouse
      * @throws IOException throw IOException
      */
@@ -122,6 +123,7 @@ public class ControllerAccount {
 
     /**
      * this method will handle Changing avatar in user scene.
+     *
      * @param mouseEvent clicked text
      */
     public void setAvatar(MouseEvent mouseEvent) {
@@ -149,11 +151,12 @@ public class ControllerAccount {
 
     /**
      * this method will insert into database avatarPath of user.
+     *
      * @param avatarPath avatar path of user
      */
     private void updateAvatarInDatabase(String avatarPath) {
         String updateQuery = "UPDATE user SET avatarPath = ? where Email = ? and password = ?";
-        try( PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)) {
+        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)) {
             stmt.setString(1, avatarPath);
             stmt.setString(2, Account.getInstance().getEmail());
             stmt.setString(3, Account.getInstance().getPassword());
@@ -168,17 +171,17 @@ public class ControllerAccount {
      */
     private void setPropertiesFromDatabase() {
         String query = "SELECT avatarPath,phoneNumber,fullName FROM user WHERE email = ? and password = ?";
-        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
-             ) {
+        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query)
+        ) {
             stmt.setString(1, Account.getInstance().getEmail());
             stmt.setString(2, Account.getInstance().getPassword());
-            try(ResultSet resultSet = stmt.executeQuery()){
+            try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
                     Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
                     Account.getInstance().setPhone(resultSet.getString("phoneNumber"));
                     Account.getInstance().setFullName(resultSet.getString("fullName"));
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
 
@@ -189,11 +192,12 @@ public class ControllerAccount {
 
     /**
      * this method will orient user to updateAccount scene.
+     *
      * @param mouseEvent text clicked
      * @throws IOException io error
      */
-    public void updateAccount(MouseEvent mouseEvent) throws IOException{
-        Stage stage = (Stage)updateAccount.getScene().getWindow();
+    public void updateAccount(MouseEvent mouseEvent) throws IOException {
+        Stage stage = (Stage) updateAccount.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/UpdateAccount.fxml"));
         Scene scene = new Scene(loader.load());

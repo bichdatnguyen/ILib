@@ -30,7 +30,9 @@ public class ControllerChatBot {
     private TextArea questionText;
 
 
-    /** Answer question.
+    /**
+     * Answer question.
+     *
      * @throws SQLException prevent sql exception
      */
     public void handleQuestion() throws SQLException {
@@ -48,7 +50,7 @@ public class ControllerChatBot {
 
             VBox userBox = null;
             try {
-                userBox = (VBox) user.load();
+                userBox = user.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -61,7 +63,7 @@ public class ControllerChatBot {
 
             VBox chatBox = null;
             try {
-                chatBox = (VBox) chat.load();
+                chatBox = chat.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -76,39 +78,41 @@ public class ControllerChatBot {
         }
     }
 
-    /** post question.
+    /**
+     * post question.
+     *
      * @param event post question when button is clicked
      */
     @FXML
     public void clickButtonClick(MouseEvent event) {
         if (!questionText.getText().trim().equals("")) {
-            try{
-               handleQuestion();
-           } catch (SQLException e){
-               e.printStackTrace();
-           }
-       } else{
-           showErrAndEx.showAlert("Vui lòng nhập câu hỏi");
-           return;
-       }
+            try {
+                handleQuestion();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            showErrAndEx.showAlert("Vui lòng nhập câu hỏi");
+        }
     }
 
-    /** post question.
+    /**
+     * post question.
+     *
      * @param event post question when key pressed
      */
     @FXML
     public void questionTextRelease(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER) {
             if (!questionText.getText().trim().equals("")) {
-               try{
-                   handleQuestion();
-               } catch (SQLException e){
-                   e.printStackTrace();
-               }
-           } else{
-               showErrAndEx.showAlert("Vui lòng nhập câu hỏi cần giải đáp");
-               return;
-           }
+                try {
+                    handleQuestion();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                showErrAndEx.showAlert("Vui lòng nhập câu hỏi cần giải đáp");
+            }
         }
     }
 
@@ -121,10 +125,12 @@ public class ControllerChatBot {
         imageView.setFitHeight(30);
         clickButton.setGraphic(imageView);
     }
+
     @FXML
     public void clickButtonEnter(MouseEvent event) {
         clickButton.setStyle("-fx-background-color: white;");
     }
+
     @FXML
     public void clickButtonExit(MouseEvent event) {
         clickButton.setStyle("-fx-background-color: transparent;");

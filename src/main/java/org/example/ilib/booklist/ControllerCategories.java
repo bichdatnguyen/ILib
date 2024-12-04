@@ -10,14 +10,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.example.ilib.book.ControllerBook;
 import org.example.ilib.book.Book;
+import org.example.ilib.book.ControllerBook;
 import org.example.ilib.controller.DBConnection;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
 public class ControllerCategories implements Initializable {
     @FXML
@@ -31,14 +34,18 @@ public class ControllerCategories implements Initializable {
     private static List<String> subjects;
     private static Map<String, List<Book>> bookByCategory;
 
-    /** subjects setter.
+    /**
+     * subjects setter.
+     *
      * @param subjects set to ControllerCategorise.subjects
      */
     public static void setSubjects(List<String> subjects) {
         ControllerCategories.subjects = subjects;
     }
 
-    /** contructor.
+    /**
+     * contructor.
+     *
      * @throws SQLException prevent sql exception
      */
     public ControllerCategories() throws SQLException {
@@ -48,7 +55,9 @@ public class ControllerCategories implements Initializable {
         bookByCategory = new HashMap<>();
     }
 
-    /** back to menu.
+    /**
+     * back to menu.
+     *
      * @param event back to menu when clicked
      * @throws IOException prevent IO exception
      */
@@ -61,8 +70,10 @@ public class ControllerCategories implements Initializable {
         bookByCategory.clear();
     }
 
-    /** create page's buttons.
-     * @param page page's number
+    /**
+     * create page's buttons.
+     *
+     * @param page     page's number
      * @param category page's category
      * @return
      */
@@ -78,8 +89,10 @@ public class ControllerCategories implements Initializable {
         return button;
     }
 
-    /** show all pages.
-     * @param pages number of pages.
+    /**
+     * show all pages.
+     *
+     * @param pages    number of pages.
      * @param category page's category
      */
     public void showNumberOfPages(int pages, String category) {
@@ -90,18 +103,22 @@ public class ControllerCategories implements Initializable {
         }
     }
 
-    /** get book by category from database.
+    /**
+     * get book by category from database.
+     *
      * @param category book's category
      * @throws SQLException prevent sql exception
-     * @throws IOException prevent IO exception
+     * @throws IOException  prevent IO exception
      */
     public void setBooks(String category) throws SQLException, IOException {
         DBConnection db = DBConnection.getInstance();
         bookByCategory.put(category, db.getTopCategories(category));
     }
 
-    /** show books.
-     * @param page books are show in this page
+    /**
+     * show books.
+     *
+     * @param page     books are show in this page
      * @param category book's category
      * @throws SQLException prevent sql exception
      */
@@ -118,12 +135,12 @@ public class ControllerCategories implements Initializable {
             for (int i = 8 * page - 8; i < Math.min(8 * page, books.size()); i++) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
-                HBox cardbox = (HBox) fx.load();
-                ControllerBook controllerBook = (ControllerBook) fx.getController();
+                HBox cardbox = fx.load();
+                ControllerBook controllerBook = fx.getController();
                 controllerBook.setBook(books.get(i));
                 controllerBook.showBook(books.get(i));
 
-                if(column == 4) {
+                if (column == 4) {
                     column = 0;
                     row++;
                 }
@@ -135,8 +152,10 @@ public class ControllerCategories implements Initializable {
         }
     }
 
-    /** categories initialize.
-     * @param location location
+    /**
+     * categories initialize.
+     *
+     * @param location  location
      * @param resources resources
      */
     public void initialize(URL location, ResourceBundle resources) {

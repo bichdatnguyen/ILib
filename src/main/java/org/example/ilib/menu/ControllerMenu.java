@@ -25,11 +25,13 @@ import javafx.scene.media.MediaPlayer;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.ilib.account.Account;
-import org.example.ilib.book.ControllerBook;
-import org.example.ilib.booklist.Booklist;
-import org.example.ilib.controller.*;
 import org.example.ilib.account.AdminApp;
 import org.example.ilib.book.Book;
+import org.example.ilib.book.ControllerBook;
+import org.example.ilib.booklist.Booklist;
+import org.example.ilib.controller.DBConnection;
+import org.example.ilib.controller.GoogleBooksAPI;
+import org.example.ilib.controller.showErrAndEx;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,7 +50,7 @@ public class ControllerMenu implements Initializable {
 
     @FXML
     public MenuButton UserButton;
-    
+
     @FXML
     public MenuItem updateDB;
 
@@ -140,16 +142,16 @@ public class ControllerMenu implements Initializable {
 
     private void loadProperties() {
         String query = "SELECT avatarPath FROM user WHERE email = ? and password = ?";
-        try(PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query);
-            ) {
+        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(query)
+        ) {
 
             stmt.setString(1, Account.getInstance().getEmail());
             stmt.setString(2, Account.getInstance().getPassword());
-            try( ResultSet resultSet = stmt.executeQuery()){
+            try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
                     Account.getInstance().setAvatarPath(resultSet.getString("avatarPath"));
                 }
-            } catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
 
@@ -159,7 +161,7 @@ public class ControllerMenu implements Initializable {
     }
 
     @FXML
-    void MoveToCart(ActionEvent event)throws IOException{
+    void MoveToCart(ActionEvent event) throws IOException {
         Stage stage = (Stage) Cart.getParentPopup().getOwnerWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Cart.fxml"));
         Parent root = fxmlLoader.load();
@@ -197,12 +199,8 @@ public class ControllerMenu implements Initializable {
                                     controllerSearchHint.setBook(bookHint);
                                     controllerSearchHint.showBook(bookHint);
                                     hintVbox.getChildren().add(hint);
-                                    if(hintVbox.getChildren().size() == 0){
-                                        hintVbox.setVisible(false);
-                                    } else{
-                                        hintVbox.setVisible(true);
-                                    }
-                                 //   hintVbox.setVisible(true);
+                                    hintVbox.setVisible(hintVbox.getChildren().size() != 0);
+                                    //   hintVbox.setVisible(true);
                                 } catch (IOException e) {
                                     showErrAndEx.showAlert("Lỗi khi tải gợi ý tìm kiếm.");
                                 }
@@ -217,11 +215,13 @@ public class ControllerMenu implements Initializable {
         });
     }
 
-    /** handle search bar.
+    /**
+     * handle search bar.
+     *
      * @param keyEvent find books when key pressed
      */
     public void handleSearch(KeyEvent keyEvent) {
-       showHints();
+        showHints();
 
         if (keyEvent.getCode() == KeyCode.ENTER) {
             Search();
@@ -231,7 +231,7 @@ public class ControllerMenu implements Initializable {
     /**
      * search books using Google Book API.
      */
-    public void Search(){
+    public void Search() {
         String searchText = search.getText().trim(); // Lấy nội dung từ trường tìm kiếm
         if (!searchText.isEmpty()) {
             if (executorService.isShutdown()) {
@@ -275,17 +275,25 @@ public class ControllerMenu implements Initializable {
                         });
                     } else {
 
-                        Platform.runLater(() -> {Loading(false);showErrAndEx.showAlert("Không tìm thấy sách phù hợp");});
+                        Platform.runLater(() -> {
+                            Loading(false);
+                            showErrAndEx.showAlert("Không tìm thấy sách phù hợp");
+                        });
                     }
                 } catch (Exception e) {
 
-                    Platform.runLater(() -> {Loading(false);showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API.");});
+                    Platform.runLater(() -> {
+                        Loading(false);
+                        showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API.");
+                    });
                 }
             });
         }
     }
 
-    /** top book menu.
+    /**
+     * top book menu.
+     *
      * @param event go to top book when clicked
      * @throws IOException prevent IO exception
      */
@@ -299,7 +307,9 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
-    /** categories menu.
+    /**
+     * categories menu.
+     *
      * @param e go to categorize menu when clicked
      * @throws IOException prevent IO exception
      */
@@ -312,7 +322,9 @@ public class ControllerMenu implements Initializable {
         stage.setScene(scene);
     }
 
-    /** reading menu.
+    /**
+     * reading menu.
+     *
      * @param e go to reading shelf when clicked
      * @throws IOException prevent IO exception
      */
@@ -350,7 +362,9 @@ public class ControllerMenu implements Initializable {
         }
     }
 
-    /** turn music.
+    /**
+     * turn music.
+     *
      * @param event turn on and pause music when clicked
      */
     @FXML
@@ -364,13 +378,15 @@ public class ControllerMenu implements Initializable {
         }
     }
 
-    /** menu initialize.
-     * @param url url
+    /**
+     * menu initialize.
+     *
+     * @param url            url
      * @param resourceBundle resourceBundle
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try{
+        try {
             initMusic();
             showHints();
 
@@ -391,11 +407,10 @@ public class ControllerMenu implements Initializable {
                 AdminApp.getInstance().adminChecking();
                 System.out.println("adminChecking happens");
             }
-            if(Account.getInstance().getRole().equals("admin")){
+            if (Account.getInstance().getRole().equals("admin")) {
                 UserButton.setText("Admin");
                 Admin.setVisible(true);
-            }
-            else {
+            } else {
                 UserButton.setText("User");
             }
             loadProperties();
@@ -407,8 +422,8 @@ public class ControllerMenu implements Initializable {
                 for (int i = 0; i < recentlyBooks.size(); i++) {
                     FXMLLoader fx = new FXMLLoader();
                     fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
-                    HBox cardbox = (HBox) fx.load();
-                    ControllerBook controllerBook = (ControllerBook) fx.getController();
+                    HBox cardbox = fx.load();
+                    ControllerBook controllerBook = fx.getController();
                     controllerBook.setBook(recentlyBooks.get(i));
                     controllerBook.showBook(recentlyBooks.get(i));
                     recentlyAddHbox.getChildren().add(cardbox);
@@ -419,8 +434,8 @@ public class ControllerMenu implements Initializable {
                 for (int i = 0; i < recommendBooks.size(); i++) {
                     FXMLLoader fx = new FXMLLoader();
                     fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
-                    HBox cardbox = (HBox) fx.load();
-                    ControllerBook controllerBook = (ControllerBook) fx.getController();
+                    HBox cardbox = fx.load();
+                    ControllerBook controllerBook = fx.getController();
                     controllerBook.setBook(recommendBooks.get(i));
                     controllerBook.showBook(recommendBooks.get(i));
                     recommendHBox.getChildren().add(cardbox);
@@ -428,7 +443,7 @@ public class ControllerMenu implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -440,10 +455,11 @@ public class ControllerMenu implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/TransactionHistory.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void gotoAdvanceSetting(ActionEvent actionEvent) {
         try {
@@ -451,71 +467,85 @@ public class ControllerMenu implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Admin.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setScene(scene);
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     public void TopBookHboxEnter(MouseEvent event) {
         TopBookHbox.setStyle("-fx-background-color: #F2F2F2");
     }
+
     @FXML
     public void TopBookHboxExit(MouseEvent event) {
         TopBookHbox.setStyle("-fx-background-color: transparent");
     }
+
     @FXML
     public void CategoriesHboxEnter(MouseEvent event) {
         CategoriesHbox.setStyle("-fx-background-color: #F2F2F2");
     }
+
     @FXML
     public void CategoriesHboxExit(MouseEvent event) {
         CategoriesHbox.setStyle("-fx-background-color: transparent");
     }
+
     @FXML
     public void ReadingHboxEnter(MouseEvent event) {
         ReadingHbox.setStyle("-fx-background-color: #F2F2F2");
     }
+
     @FXML
     public void ReadingHboxExit(MouseEvent event) {
-       ReadingHbox.setStyle("-fx-background-color: transparent");
-    }
-    @FXML
-    public void chatBotEnter(MouseEvent event) {
-            chatBot.setStyle("-fx-background-color: #F2F2F2");
-    }
-    @FXML
-    public void chatBotExit(MouseEvent event) {
-            chatBot.setStyle("-fx-background-color: transparent");
+        ReadingHbox.setStyle("-fx-background-color: transparent");
     }
 
-    /** chatbot menu.
+    @FXML
+    public void chatBotEnter(MouseEvent event) {
+        chatBot.setStyle("-fx-background-color: #F2F2F2");
+    }
+
+    @FXML
+    public void chatBotExit(MouseEvent event) {
+        chatBot.setStyle("-fx-background-color: transparent");
+    }
+
+    /**
+     * chatbot menu.
+     *
      * @param event go to chatbot menu when button clicked
      */
     @FXML
     public void chatBotClick(MouseEvent event) {
-       try{
-           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Chatbot.fxml"));
-           Parent root = fxmlLoader.load();
-           Stage popup = new Stage();
-           popup.initModality(Modality.APPLICATION_MODAL);
-           popup.setTitle("ChatBot");
-           Scene scene = new Scene(root);
-           popup.setScene(scene);
-           popup.showAndWait();
-       } catch(IOException e){
-           e.printStackTrace();
-       }
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Chatbot.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage popup = new Stage();
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.setTitle("ChatBot");
+            Scene scene = new Scene(root);
+            popup.setScene(scene);
+            popup.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
     @FXML
     public void clickButtonEnter(MouseEvent event) {
-            clickButton.setStyle("-fx-background-color: green");
+        clickButton.setStyle("-fx-background-color: green");
     }
+
     @FXML
     public void clickButtonExit(MouseEvent event) {
         clickButton.setStyle("-fx-background-color: transparent");
     }
 
-    /** search book by button.
+    /**
+     * search book by button.
+     *
      * @param event search books when button is clicked
      */
     @FXML
@@ -531,6 +561,6 @@ public class ControllerMenu implements Initializable {
             loadingIndicator.setProgress(0); // Đặt lại nếu không còn loading
         }
         //anchorPaneLoad.setDisable(isLoading);
-      //  anchorPaneLoad.setOpacity(isLoading ? 0.5 : 1);
+        //  anchorPaneLoad.setOpacity(isLoading ? 0.5 : 1);
     }
 }

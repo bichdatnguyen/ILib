@@ -45,7 +45,7 @@ public class ControllerAddMemberDetail {
         userRoleAsAdmin.setToggleGroup(toggleGroup);
         userRoleAsUser.setToggleGroup(toggleGroup);
 
-        if (editMode == true) {
+        if (editMode) {
             setDefaultInformation(
                     MemberAdminstrator.getInstance().getMemberEmailAddress(),
                     MemberAdminstrator.getInstance().getMemberPassword(),
@@ -58,11 +58,12 @@ public class ControllerAddMemberDetail {
 
     /**
      * this method keep editButton in MemberAdminstrator work
-     * @param userEmail email address of user
-     * @param userPassword password of user
-     * @param userFullname fullname of user
+     *
+     * @param userEmail       email address of user
+     * @param userPassword    password of user
+     * @param userFullname    fullname of user
      * @param userPhoneNumber phone number of user
-     * @param userRole role of user
+     * @param userRole        role of user
      */
     public void setDefaultInformation(String userEmail, String userPassword,
                                       String userFullname, String userPhoneNumber,
@@ -84,7 +85,7 @@ public class ControllerAddMemberDetail {
         String uEmailAddress = userEmailAddress.getText();
         String uPhoneNumber = userPhoneNumber.getText();
         String uPassword = userPassword.getText();
-        String userRole = new String();
+        String userRole = "";
         if (userRoleAsAdmin.isSelected()) {
             userRole = "admin";
         }
@@ -93,7 +94,7 @@ public class ControllerAddMemberDetail {
             userRole = "user";
         }
 
-        if (editMode == false) {
+        if (!editMode) {
             //checking account in database
             if (connection.checkDataExit(uEmailAddress)) {
                 alertField.setText("Email address has already in database");
@@ -108,7 +109,7 @@ public class ControllerAddMemberDetail {
                 alertField.setStyle("-fx-text-fill: green;");
                 alertField.setVisible(true);
 
-                connection.insertUserDetail(uFullname,uEmailAddress,uPhoneNumber,uPassword,userRole);
+                connection.insertUserDetail(uFullname, uEmailAddress, uPhoneNumber, uPassword, userRole);
 
                 PauseTransition pause = new PauseTransition(Duration.seconds(3));
                 pause.setOnFinished(event -> alertField.setVisible(false));
@@ -120,7 +121,7 @@ public class ControllerAddMemberDetail {
             alertField.setStyle("-fx-text-fill: green;");
             alertField.setVisible(true);
 
-            connection.insertUserDetail(uFullname,uEmailAddress,uPhoneNumber,uPassword,userRole);
+            connection.insertUserDetail(uFullname, uEmailAddress, uPhoneNumber, uPassword, userRole);
 
             PauseTransition pause = new PauseTransition(Duration.seconds(3));
             pause.setOnFinished(event -> alertField.setVisible(false));

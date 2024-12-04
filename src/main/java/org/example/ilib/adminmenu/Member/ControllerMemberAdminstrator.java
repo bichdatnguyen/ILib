@@ -21,10 +21,10 @@ import java.sql.*;
 
 public class ControllerMemberAdminstrator {
     public TableView<Member> tableView;
-    public TableColumn<Member,String> emailC;
-    public TableColumn<Member,String> nameC;
-    public TableColumn<Member,String> phoneC;
-    public TableColumn<Member,String> passwordC;
+    public TableColumn<Member, String> emailC;
+    public TableColumn<Member, String> nameC;
+    public TableColumn<Member, String> phoneC;
+    public TableColumn<Member, String> passwordC;
     public ObservableList<Member> members = FXCollections.observableArrayList();
     public Button backButton;
     public Button addButton;
@@ -52,7 +52,7 @@ public class ControllerMemberAdminstrator {
             DBConnection connection = DBConnection.getInstance();
 
             String query = "SELECT email, fullname, phoneNumber, password FROM user";
-            Statement stmt = connection.createStatement(query);
+            Statement stmt = DBConnection.createStatement(query);
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
@@ -63,7 +63,7 @@ public class ControllerMemberAdminstrator {
 
                 members.add(new Member(email, name, phone, password));
             }
-        } catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -78,7 +78,7 @@ public class ControllerMemberAdminstrator {
     }
 
     public void addMemberClicked(MouseEvent mouseEvent) throws IOException {
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AddMemberDetail.fxml"));
             Parent root = fxmlLoader.load();
             ControllerAddMemberDetail controllerAddMemberDetail = fxmlLoader.getController();
@@ -121,12 +121,12 @@ public class ControllerMemberAdminstrator {
     }
 
     public void deleteButtonClicked(MouseEvent mouseEvent) throws SQLException {
-        if(tableView.getSelectionModel().getSelectedItem() == null){
+        if (tableView.getSelectionModel().getSelectedItem() == null) {
             showErrAndEx.showAlert("Please select an account");
         } else {
-            if (editMode == false) {
+            if (!editMode) {
                 Alert alert = showErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
-                if(alert.getResult() == ButtonType.OK){
+                if (alert.getResult() == ButtonType.OK) {
                     String selectedEmail = tableView.getSelectionModel().getSelectedItem().emailProperty().get();
                     String selectedPassword = tableView.getSelectionModel().getSelectedItem().passwordProperty().get();
                     DBConnection.getInstance().deleteUserDetail(selectedEmail, selectedPassword);
@@ -149,15 +149,15 @@ public class ControllerMemberAdminstrator {
                 + "or phoneNumber like ? "
                 + "or fullname like ? "
                 + "or password like ?;";
-        try(Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = DBConnection.getInstance().getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             String queryPattern = "%" + search + "%";
             preparedStatement.setString(1, queryPattern);
             preparedStatement.setString(2, queryPattern);
             preparedStatement.setString(3, queryPattern);
             preparedStatement.setString(4, queryPattern);
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                while(resultSet.next()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     String title = resultSet.getString("email");
                     Text text = new Text(title);
                     text.setOnMouseClicked(mouseEvent -> {
@@ -172,11 +172,7 @@ public class ControllerMemberAdminstrator {
                     });
                     searchVbox.getChildren().add(text);
                 }
-                if (!searchVbox.getChildren().isEmpty()) {
-                    searchingScrolPane.setVisible(true);
-                } else {
-                    searchingScrolPane.setVisible(false);
-                }
+                searchingScrolPane.setVisible(!searchVbox.getChildren().isEmpty());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -184,7 +180,7 @@ public class ControllerMemberAdminstrator {
     }
 
     public void searchEnter(KeyEvent keyEvent) {
-        if(!searchText.getText().equals("")){
+        if (!searchText.getText().equals("")) {
             FilteredList<Member> filteredBooks = new FilteredList<>(members, b -> true);
             tableView.setItems(filteredBooks);
             searchText.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -195,20 +191,17 @@ public class ControllerMemberAdminstrator {
                     String lowerCaseFilter = newValue.toLowerCase();
                     if (Member.emailProperty().get().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (Member.nameProperty().get().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    }
-                    return false;
+                    } else return Member.nameProperty().get().toLowerCase().contains(lowerCaseFilter);
                 });
             });
         }
     }
 
     public void searchKeyboard(KeyEvent keyEvent) throws SQLException {
-        if(!searchText.getText().equals("")){
+        if (!searchText.getText().equals("")) {
             searchVbox.getChildren().clear();
             searchInfofromDB(searchText.getText());
-        } else{
+        } else {
             searchVbox.getChildren().clear();
             searchingScrolPane.setVisible(false);
         }

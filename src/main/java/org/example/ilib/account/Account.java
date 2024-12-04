@@ -10,7 +10,8 @@ public class Account {
     private String role;
     private static Account instance;
 
-    protected Account() {}
+    protected Account() {
+    }
 
     public static Account getInstance() {
         if (instance == null) {
@@ -18,6 +19,7 @@ public class Account {
         }
         return instance;
     }
+
     public String getRole() {
         return role;
     }

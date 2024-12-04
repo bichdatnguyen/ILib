@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 
-public class ControllerBook  {
+public class ControllerBook {
 
     @FXML
     private ImageView image;
@@ -37,21 +37,27 @@ public class ControllerBook  {
         }
     }
 
-    /** this.book setter.
+    /**
+     * this.book setter.
+     *
      * @param book set to this.book
      */
     public void setBook(Book book) {
         this.book = book;
     }
 
-    /** this.book getter.
+    /**
+     * this.book getter.
+     *
      * @return this.book
      */
     public Book getBook() {
         return this.book;
     }
 
-    /** show book information.
+    /**
+     * show book information.
+     *
      * @param book information needed to show
      */
     public void showBook(Book book) {
@@ -61,9 +67,11 @@ public class ControllerBook  {
         image.setImage(img);
     }
 
-    /** go to book detail.
+    /**
+     * go to book detail.
+     *
      * @param event after click book will go to book detail
-     * @throws IOException prevent IO exception
+     * @throws IOException  prevent IO exception
      * @throws SQLException prevent sql exception
      */
     @FXML
@@ -84,6 +92,7 @@ public class ControllerBook  {
     public void BookHboxEnter(MouseEvent event) {
         BookHbox.setStyle("-fx-background-color: white");
     }
+
     @FXML
     public void BookHboxExit(MouseEvent event) {
         BookHbox.setStyle("-fx-background-color: transparent");

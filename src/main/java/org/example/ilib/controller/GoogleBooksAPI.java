@@ -18,10 +18,12 @@ import java.util.List;
 
 import static java.lang.System.getenv;
 
-public class GoogleBooksAPI { 
+public class GoogleBooksAPI {
     private static final String apiKey = getenv("APIKey");
 
-    /** check connection and get books
+    /**
+     * check connection and get books
+     *
      * @param urlString url string
      * @return JsonArray of books
      * @throws IOException prevent IO exception
@@ -55,7 +57,9 @@ public class GoogleBooksAPI {
         }
     }
 
-    /** check connection and get book.
+    /**
+     * check connection and get book.
+     *
      * @param urlString url string
      * @return book
      * @throws IOException prevent IO exception
@@ -87,8 +91,10 @@ public class GoogleBooksAPI {
         }
     }
 
-    /** get JsonArray base on key word.
-     * @param query user's key word
+    /**
+     * get JsonArray base on key word.
+     *
+     * @param query     user's key word
      * @param maxresult number of books want to find (max is 40)
      * @return JsonArray of books
      * @throws IOException prevent IO exception
@@ -100,8 +106,10 @@ public class GoogleBooksAPI {
         return checkConnectionAndGetBooks(urlString);
     }
 
-    /** get books by subject.
-     * @param subject subject want to find
+    /**
+     * get books by subject.
+     *
+     * @param subject   subject want to find
      * @param maxresult number of books want to find (max is 40)
      * @return JsonArray of books
      * @throws IOException prevent IO exception
@@ -114,7 +122,9 @@ public class GoogleBooksAPI {
         return checkConnectionAndGetBooks(urlString);
     }
 
-    /** get book's title.
+    /**
+     * get book's title.
+     *
      * @param volumeInfo volumeInfo in book's information
      * @return book's title
      */
@@ -126,7 +136,9 @@ public class GoogleBooksAPI {
         }
     }
 
-    /** get all book's author.
+    /**
+     * get all book's author.
+     *
      * @param volumeInfo volumeInfo in book's information
      * @return list of book's author
      */
@@ -141,7 +153,9 @@ public class GoogleBooksAPI {
         return authors;
     }
 
-    /** rewrite authors in string.
+    /**
+     * rewrite authors in string.
+     *
      * @param authors list of authors.
      * @return authors's name
      */
@@ -156,7 +170,9 @@ public class GoogleBooksAPI {
         return authorsString.toString();
     }
 
-    /** get book description.
+    /**
+     * get book description.
+     *
      * @param volumeInfo volumeInfo in book's information
      * @return book's description
      */
@@ -172,7 +188,9 @@ public class GoogleBooksAPI {
         }
     }
 
-    /** get book thumbnail.
+    /**
+     * get book thumbnail.
+     *
      * @param volumeInfo volumeInfo in book's information
      * @return book's thumbnail
      */
@@ -184,10 +202,12 @@ public class GoogleBooksAPI {
         }
     }
 
-    /** get books by ID using API.
+    /**
+     * get books by ID using API.
+     *
      * @param id id want to find
      * @return book which have this id
-     * @throws IOException prevent IO exception
+     * @throws IOException  prevent IO exception
      * @throws SQLException prevent SQL exception
      */
     public Book getBooksByID(String id) throws IOException, SQLException {

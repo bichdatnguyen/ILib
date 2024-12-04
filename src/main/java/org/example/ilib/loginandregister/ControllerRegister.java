@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -28,41 +27,43 @@ public class ControllerRegister {
     @FXML
     private Button BackButton;
 
-    /** create new account.
+    /**
+     * create new account.
+     *
      * @param event check and create new account when button is clicked.
-     * @throws IOException prevent IO exception
+     * @throws IOException  prevent IO exception
      * @throws SQLException prevent SQL exception
      */
     @FXML
     void CreateAccount(MouseEvent event) throws IOException, SQLException {
-        if(!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")){
+        if (!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             showErrAndEx.showAlert("Email không hợp lệ");
             return;
         }
-        if(!phoneTextField.getText().matches("[0-9]+")){
+        if (!phoneTextField.getText().matches("[0-9]+")) {
             showErrAndEx.showAlert("Số điện thoại không hợp lệ");
             return;
         }
-        if(!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")){
+        if (!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")) {
             showErrAndEx.showAlert("Tên không hợp lệ");
             return;
         }
-        if(!passwordTextField.getText().matches("[0-9a-zA-Z]+")){
+        if (!passwordTextField.getText().matches("[0-9a-zA-Z]+")) {
             showErrAndEx.showAlert("Password không hợp lệ");
             return;
         }
 
         DBConnection db = DBConnection.getInstance();
 
-        boolean check = db.checkDataExit(emailTextField.getText(),passwordTextField.getText());
-        if(check) {
-           showErrAndEx.showAlert("Tài khoản hiện đã có");
-           return;
+        boolean check = db.checkDataExit(emailTextField.getText(), passwordTextField.getText());
+        if (check) {
+            showErrAndEx.showAlert("Tài khoản hiện đã có");
+            return;
         }
         boolean check2 = db.checkDataExit(emailTextField.getText());
-        if(check2){
-           showErrAndEx.showAlert("Email này da tồn tại");
-           return;
+        if (check2) {
+            showErrAndEx.showAlert("Email này da tồn tại");
+            return;
         }
         String email = emailTextField.getText();
         String password = passwordTextField.getText();
@@ -78,16 +79,18 @@ public class ControllerRegister {
         stage.setScene(scene);
     }
 
-    /** back to menu.
+    /**
+     * back to menu.
+     *
      * @param event back to menu when button is clicked
      * @throws IOException prevent IO exception
      */
-     public void Back(MouseEvent event) throws IOException {
-        Stage stage = (Stage)BackButton.getScene().getWindow();
+    public void Back(MouseEvent event) throws IOException {
+        Stage stage = (Stage) BackButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
-     }
+    }
 
 }

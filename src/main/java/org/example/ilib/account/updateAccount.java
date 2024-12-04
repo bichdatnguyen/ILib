@@ -7,9 +7,12 @@ public class updateAccount {
     private String newName;
     private String newPhoneNumber;
     private static updateAccount instance;
-    private updateAccount() {}
+
+    private updateAccount() {
+    }
+
     public static updateAccount getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new updateAccount();
         }
         return instance;

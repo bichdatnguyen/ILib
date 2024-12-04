@@ -5,16 +5,21 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImportBooksFromAPI {
-    private static String[] subjects
+    private static final String[] subjects
             = {"Philosophy", "Psychology", "Sociology", "Mathematics", "Physics"};
 
-    /** get book ID.
+    /**
+     * get book ID.
+     *
      * @param item item which contain book ID
      * @return book ID
      */
@@ -22,7 +27,9 @@ public class ImportBooksFromAPI {
         return item.getAsJsonObject().get("id").getAsString();
     }
 
-    /** get title
+    /**
+     * get title
+     *
      * @param volumeInfo volumeInfo which contain book's title
      * @return book's title
      */
@@ -34,7 +41,9 @@ public class ImportBooksFromAPI {
         }
     }
 
-    /** get a list of authors.
+    /**
+     * get a list of authors.
+     *
      * @param volumeInfo volumeInfo which contain book's title
      * @return list of book's authors
      */
@@ -49,7 +58,9 @@ public class ImportBooksFromAPI {
         return authors;
     }
 
-    /** get book price.
+    /**
+     * get book price.
+     *
      * @param saleInfo saleInfo which contain book's price
      * @return book's price
      */
@@ -66,7 +77,9 @@ public class ImportBooksFromAPI {
         }
     }
 
-    /** get book's description
+    /**
+     * get book's description
+     *
      * @param volumeInfo volumeInfo which contain book's title
      * @return book's description
      */
@@ -78,7 +91,9 @@ public class ImportBooksFromAPI {
         }
     }
 
-    /** get real time date
+    /**
+     * get real time date
+     *
      * @return real time
      */
     public static Timestamp getDate() {
@@ -86,7 +101,9 @@ public class ImportBooksFromAPI {
         return Timestamp.valueOf(now);
     }
 
-    /** get book's rating.
+    /**
+     * get book's rating.
+     *
      * @param volumeInfo volumeInfo which contain book's title
      * @return book's average rating
      */
@@ -98,7 +115,9 @@ public class ImportBooksFromAPI {
         }
     }
 
-    /** list of book's categories
+    /**
+     * list of book's categories
+     *
      * @param volumeInfo volumeInfo which contain book's title
      * @return book's categories
      */
@@ -113,7 +132,9 @@ public class ImportBooksFromAPI {
         return categories;
     }
 
-    /** book's thumbnail.
+    /**
+     * book's thumbnail.
+     *
      * @param volumeInfo volumeInfo which contain book's title
      * @return book's thumbnal url
      */
@@ -127,10 +148,12 @@ public class ImportBooksFromAPI {
         return "/org/assets/noImage.png";
     }
 
-    /** take books from API to test.
+    /**
+     * take books from API to test.
+     *
      * @param args args
      * @throws SQLException prevent SQL exception
-     * @throws IOException prevent IO exception
+     * @throws IOException  prevent IO exception
      */
     public static void main(String[] args) throws SQLException, IOException {
         GoogleBooksAPI gg = new GoogleBooksAPI();

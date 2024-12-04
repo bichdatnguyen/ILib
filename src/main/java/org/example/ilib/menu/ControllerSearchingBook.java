@@ -9,14 +9,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.example.ilib.book.ControllerBook;
 import org.example.ilib.book.Book;
+import org.example.ilib.book.ControllerBook;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerSearchingBook  {
+public class ControllerSearchingBook {
 
     @FXML
     private Button Back;
@@ -27,35 +27,43 @@ public class ControllerSearchingBook  {
     @FXML
     private HBox pageBox;
 
-    private List<Book> booksearching = new ArrayList();
+    private final List<Book> booksearching = new ArrayList();
 
-    /** set searchLabel.
+    /**
+     * set searchLabel.
+     *
      * @param label set text to searchLabel
      */
-    public void setLabel(String label){
+    public void setLabel(String label) {
         searchLabel.setText(label);
     }
 
-    /** add all finding books.
+    /**
+     * add all finding books.
+     *
      * @param book booked which is found
      */
     public void addBook(Book book) {
-       booksearching.add(book);
+        booksearching.add(book);
     }
 
-    /** back to menu
+    /**
+     * back to menu
+     *
      * @param event go back to menu when button is clicked.
      * @throws IOException prevent IO exception
      */
     @FXML
-   public void BackToMenu(MouseEvent event) throws IOException {
-            Stage stage = (Stage) Back.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Menu.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setScene(scene);
+    public void BackToMenu(MouseEvent event) throws IOException {
+        Stage stage = (Stage) Back.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Menu.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        stage.setScene(scene);
     }
 
-    /** create one page's button.
+    /**
+     * create one page's button.
+     *
      * @param page page's number
      * @return create button
      */
@@ -67,7 +75,9 @@ public class ControllerSearchingBook  {
         return button;
     }
 
-    /** create all buttons.
+    /**
+     * create all buttons.
+     *
      * @param pages the number of pages.
      */
     public void showNumberOfPages(int pages) {
@@ -78,30 +88,32 @@ public class ControllerSearchingBook  {
         }
     }
 
-    /** show all searching result.
+    /**
+     * show all searching result.
+     *
      * @param page page which is shown.
      */
-   public void showSearchResult(int page){
+    public void showSearchResult(int page) {
         gridPaneBook.getChildren().clear();
         try {
             int column = 0;
             int row = 0;
 
-           for (int i = 8 * page - 8; i < Math.min(8 * page, booksearching.size()); i++) {
-               Book book = booksearching.get(i);
-               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Book.fxml"));
+            for (int i = 8 * page - 8; i < Math.min(8 * page, booksearching.size()); i++) {
+                Book book = booksearching.get(i);
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Book.fxml"));
 
-               HBox hbox = (HBox) fxmlLoader.load();
-               ControllerBook controllerBook = (ControllerBook) fxmlLoader.getController();
-               controllerBook.setBook(book);
-               controllerBook.showBook(book);
-               if(column == 4) {
-                   column = 0;
-                   row++;
-               }
-               gridPaneBook.add(hbox, column++, row);
-           }
-        } catch (Exception e){
+                HBox hbox = fxmlLoader.load();
+                ControllerBook controllerBook = fxmlLoader.getController();
+                controllerBook.setBook(book);
+                controllerBook.showBook(book);
+                if (column == 4) {
+                    column = 0;
+                    row++;
+                }
+                gridPaneBook.add(hbox, column++, row);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

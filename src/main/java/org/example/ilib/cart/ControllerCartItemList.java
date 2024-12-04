@@ -22,7 +22,10 @@ import org.example.ilib.controller.showErrAndEx;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 public class ControllerCartItemList implements Initializable {
@@ -71,9 +74,9 @@ public class ControllerCartItemList implements Initializable {
     private ObservableList<CartItem> CartList;
     private static final int ADDVOLUME = 1;
     private static final int SUBSTRACTVOLUME = 2;
-    private static int totalMonet =0;
-    private String email = Account.getInstance().getEmail();
-    private Map<String,Integer > quantityBook = new HashMap<>() ;
+    private static int totalMonet = 0;
+    private final String email = Account.getInstance().getEmail();
+    private final Map<String, Integer> quantityBook = new HashMap<>();
 
     public void setCartList(List<CartItem> CartList) {
         // Chuyển List thành ObservableList
@@ -91,7 +94,7 @@ public class ControllerCartItemList implements Initializable {
 
     @FXML
     void deleteBook(MouseEvent event) {
-        if(CartList.isEmpty()) {
+        if (CartList.isEmpty()) {
             showErrAndEx.showAlert("Giỏ hàng hiện tại đang trống");
             return;
         }
@@ -99,10 +102,10 @@ public class ControllerCartItemList implements Initializable {
         Alert alert = showErrAndEx.showAlert("Bạn có muốn xóa đi không");
 
         if (alert.getResult() == ButtonType.OK) {
-            if(CartTable.getSelectionModel().getSelectedItem() != null) {
+            if (CartTable.getSelectionModel().getSelectedItem() != null) {
                 CartItem cartItem = CartTable.getSelectionModel().getSelectedItem();
                 try {
-                    removeBookFromCart(email,cartItem.getId());
+                    removeBookFromCart(email, cartItem.getId());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -111,11 +114,11 @@ public class ControllerCartItemList implements Initializable {
             } else {
                 showErrAndEx.showAlert("Bạn chưa chọn hàng cần xóa");
             }
-        } else{
+        } else {
             CartTable.getSelectionModel().clearSelection();
         }
 
-       // CartList.remove(CartTable.getSelectionModel().getSelectedItem());
+        // CartList.remove(CartTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -180,17 +183,17 @@ public class ControllerCartItemList implements Initializable {
     @FXML
     void totalMoneyClick(MouseEvent event) {
         totalMonet = 0;
-            for(int i = 0 ; i < CartList.size(); i++) {
-                int vol = CartList.get(i).getVolume();
-                int money = CartList.get(i).getMoney();
-                totalMonet +=  money*vol;
-            }
-            isTotalCalculated = true;
-            isBuyQR = false;
+        for (int i = 0; i < CartList.size(); i++) {
+            int vol = CartList.get(i).getVolume();
+            int money = CartList.get(i).getMoney();
+            totalMonet += money * vol;
+        }
+        isTotalCalculated = true;
+        isBuyQR = false;
         totalMoney.setText(String.valueOf(totalMonet) + '$');
     }
 
-    private void setVolume(int status){
+    private void setVolume(int status) {
         if (VoulumeText != null) {
             String vol = VoulumeText.getText().trim(); // Loại bỏ khoảng trắng thừa
             if (vol.isEmpty()) {
@@ -206,12 +209,12 @@ public class ControllerCartItemList implements Initializable {
                         int currVol = CartTable.getSelectionModel().getSelectedItem().getVolume();
                         CartItem cartItem = CartTable.getSelectionModel().getSelectedItem();
                         int total = 0;
-                        if(status == ADDVOLUME){
-                             total = currVol  + volNum;
+                        if (status == ADDVOLUME) {
+                            total = currVol + volNum;
                             CartTable.getSelectionModel().getSelectedItem().setVolume(total);
 
-                        } else if(status == SUBSTRACTVOLUME){
-                            if(volNum >= currVol){
+                        } else if (status == SUBSTRACTVOLUME) {
+                            if (volNum >= currVol) {
                                 CartTable.getSelectionModel().getSelectedItem().setVolume(0);
                             } else {
                                 total = currVol - volNum;
@@ -219,7 +222,7 @@ public class ControllerCartItemList implements Initializable {
                             }
                         }
                         try {
-                            updateBookQuantityInCart(email,cartItem.getId(),total);
+                            updateBookQuantityInCart(email, cartItem.getId(), total);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -239,6 +242,7 @@ public class ControllerCartItemList implements Initializable {
         }
 
     }
+
     @FXML
     void addVolume(MouseEvent event) {
         setVolume(ADDVOLUME);
@@ -253,29 +257,28 @@ public class ControllerCartItemList implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       try{
-           setCartList(getCartsByEmail(email));
-           NameCol.setCellValueFactory(new PropertyValueFactory<CartItem,String>("name"));
-           VolumeCol.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("volume"));
-           MoneyCol.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("money"));
-           StatusCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("status"));
-           VoucherCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("voucher"));
-           CartTable.setItems(CartList);
-           anchorPane.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
-               if (!CartTable.isHover() && !(deleteBook.isHover()||add.isHover()||substract.isHover()||VoulumeText.isHover())) { // Kiểm tra nếu chuột không nằm trong TableView
-                   CartTable.getSelectionModel().clearSelection();
-               }
-           });
+        try {
+            setCartList(getCartsByEmail(email));
+            NameCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("name"));
+            VolumeCol.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("volume"));
+            MoneyCol.setCellValueFactory(new PropertyValueFactory<CartItem, Integer>("money"));
+            StatusCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("status"));
+            VoucherCol.setCellValueFactory(new PropertyValueFactory<CartItem, String>("voucher"));
+            CartTable.setItems(CartList);
+            anchorPane.addEventFilter(MouseEvent.MOUSE_CLICKED, event -> {
+                if (!CartTable.isHover() && !(deleteBook.isHover() || add.isHover() || substract.isHover() || VoulumeText.isHover())) { // Kiểm tra nếu chuột không nằm trong TableView
+                    CartTable.getSelectionModel().clearSelection();
+                }
+            });
 
-       } catch(Exception e){
-           e.printStackTrace();
-       }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
 
-
-    public List<CartItem> getCartsByEmail(String email)  {
+    public List<CartItem> getCartsByEmail(String email) {
         // Câu lệnh SQL sử dụng INNER JOIN để lấy thông tin từ cả bảng Payment và Book
         String query = "SELECT cart.*, books.title, books.bookPrice " +
                 "FROM cart " +
@@ -284,13 +287,13 @@ public class ControllerCartItemList implements Initializable {
         List<CartItem> cartItems = new ArrayList<>();
 
         try (Connection conn = DBConnection.getInstance().getConnection(); // Kết nối tới cơ sở dữ liệu
-             PreparedStatement stmt = conn.prepareStatement(query);
-           ) {
+             PreparedStatement stmt = conn.prepareStatement(query)
+        ) {
 
             // Set giá trị tham số cho câu lệnh (email)
             stmt.setString(1, email);
             // Xử lý kết quả trả về
-            try(  ResultSet resultSet = stmt.executeQuery()){
+            try (ResultSet resultSet = stmt.executeQuery()) {
                 while (resultSet.next()) {
                     // Lấy dữ liệu từ bảng Payment
                     String id = resultSet.getString("bookID");
@@ -300,7 +303,7 @@ public class ControllerCartItemList implements Initializable {
                     // Lấy dữ liệu từ bảng Book
                     String bookName = resultSet.getString("title");
                     int bookPrice = resultSet.getInt("bookPrice");
-                    CartItem cartItem = new CartItem(id,bookName,volume,bookPrice,type,"null");
+                    CartItem cartItem = new CartItem(id, bookName, volume, bookPrice, type, "null");
                     cartItems.add(cartItem);
                 }
             } catch (SQLException e) {
@@ -335,10 +338,10 @@ public class ControllerCartItemList implements Initializable {
         }
     }
 
-    public void updateBookQuantityInCart(String email, String bookId, int newQuantity)  {
+    public void updateBookQuantityInCart(String email, String bookId, int newQuantity) {
         String queryUpdate = "UPDATE cart SET quantity = ? WHERE email = ? AND bookID = ?";
 
-        try (Connection connection = DBConnection.getInstance().getConnection() ;
+        try (Connection connection = DBConnection.getInstance().getConnection();
              PreparedStatement stmt = connection.prepareStatement(queryUpdate)) {
             stmt.setInt(1, newQuantity);
             stmt.setString(2, email);
@@ -369,48 +372,49 @@ public class ControllerCartItemList implements Initializable {
         }
     }
 
-    public void updateQuantityInStock()  {
-            getQuantityInStock();
-            String query = "update books set quantityInStock = ? where bookID = ?";
-            try(Connection connection = DBConnection.getInstance().getConnection();PreparedStatement stmt = connection.prepareStatement(query)) {
-                for(CartItem item : CartList){
-                        String bookId = item.getId();
-                        if(quantityBook == null){
-                            showErrAndEx.showAlert("null");
-                        }
-                        int Oldquantity  = quantityBook.get(bookId);
-                        int newquantity = Oldquantity -item.getVolume();
-                        stmt.setInt(1, newquantity);
-                        stmt.setString(2, bookId);
-                        stmt.addBatch();
+    public void updateQuantityInStock() {
+        getQuantityInStock();
+        String query = "update books set quantityInStock = ? where bookID = ?";
+        try (Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            for (CartItem item : CartList) {
+                String bookId = item.getId();
+                if (quantityBook == null) {
+                    showErrAndEx.showAlert("null");
                 }
-                stmt.executeBatch();
-            } catch(SQLException e){
+                int Oldquantity = quantityBook.get(bookId);
+                int newquantity = Oldquantity - item.getVolume();
+                stmt.setInt(1, newquantity);
+                stmt.setString(2, bookId);
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        for (CartItem item : CartList) {
+            String bookId = item.getId();
+            if (quantityBook == null) {
+                showErrAndEx.showAlert("null");
+            }
+            int oldquantity = quantityBook.get(bookId);
+            int newquantity = oldquantity - item.getVolume();
+            Booklist.getInstance().updateBookQuantity(bookId, newquantity);
+        }
+    }
+
+    public void getQuantityInStock() {
+        String query = "select bookID, quantityInStock from books";
+        try (Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String bookID = rs.getString("bookID");
+                    int quantity = rs.getInt("quantityInStock");
+                    quantityBook.put(bookID, quantity);
+                }
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
-           for(CartItem item : CartList){
-               String bookId = item.getId();
-               if(quantityBook == null){
-                   showErrAndEx.showAlert("null");
-               }
-               int oldquantity = quantityBook.get(bookId);
-               int newquantity = oldquantity - item.getVolume();
-               Booklist.getInstance().updateBookQuantity(bookId, newquantity);
-           }
-    }
-    public void getQuantityInStock(){
-        String query = "select bookID, quantityInStock from books";
-        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)){
-                try(ResultSet rs = stmt.executeQuery()){
-                    while(rs.next()){
-                        String bookID = rs.getString("bookID");
-                        int quantity = rs.getInt("quantityInStock");
-                        quantityBook.put(bookID, quantity);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -424,7 +428,7 @@ public class ControllerCartItemList implements Initializable {
 
             // Duyệt qua danh sách CartList và thêm vào batch
             for (CartItem item : CartList) {
-                if(item.getStatus().equals("BORROW")){
+                if (item.getStatus().equals("BORROW")) {
                     stmt.setString(1, email); // Thay email bằng biến chứa email hợp lệ
                     stmt.setString(2, item.getId());
                     stmt.addBatch(); // Thêm câu lệnh vào batch

@@ -8,8 +8,8 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.example.ilib.book.ControllerBook;
 import org.example.ilib.book.Book;
+import org.example.ilib.book.ControllerBook;
 import org.example.ilib.controller.DBConnection;
 
 import java.io.IOException;
@@ -29,11 +29,13 @@ public class ControllerReading implements Initializable {
     @FXML
     private HBox saveBooks;
 
-    /** back to menu.
+    /**
+     * back to menu.
+     *
      * @param event back to menu when button is clicked
      * @throws IOException prevent IO exception
      */
-    public void BackToMenu(MouseEvent event)throws IOException {
+    public void BackToMenu(MouseEvent event) throws IOException {
         Stage stage = (Stage) Back.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
@@ -41,8 +43,10 @@ public class ControllerReading implements Initializable {
         stage.setScene(scene);
     }
 
-    /** show all user's borrow books.
-     * @throws IOException prevent IO exception
+    /**
+     * show all user's borrow books.
+     *
+     * @throws IOException  prevent IO exception
      * @throws SQLException prevent SQL exception
      */
     public void showBorrowBooks() throws IOException, SQLException {
@@ -51,17 +55,19 @@ public class ControllerReading implements Initializable {
         for (int i = 0; i < book.size(); i++) {
             FXMLLoader fx = new FXMLLoader();
             fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
-            HBox cardbox = (HBox) fx.load();
-            ControllerBook controllerBook = (ControllerBook) fx.getController();
+            HBox cardbox = fx.load();
+            ControllerBook controllerBook = fx.getController();
             controllerBook.setBook(book.get(i));
             controllerBook.showBook(book.get(i));
             borrowBooks.getChildren().add(cardbox);
         }
     }
 
-    /** user's saved books.
+    /**
+     * user's saved books.
+     *
      * @throws SQLException prevent SQL exception
-     * @throws IOException prevent IO exception
+     * @throws IOException  prevent IO exception
      */
     public void showShelf() throws SQLException, IOException {
         List<Book> book = DBConnection.getInstance().allBookInShelf();
@@ -69,16 +75,18 @@ public class ControllerReading implements Initializable {
         for (int i = 0; i < book.size(); i++) {
             FXMLLoader fx = new FXMLLoader();
             fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
-            HBox cardbox = (HBox) fx.load();
-            ControllerBook controllerBook = (ControllerBook) fx.getController();
+            HBox cardbox = fx.load();
+            ControllerBook controllerBook = fx.getController();
             controllerBook.setBook(book.get(i));
             controllerBook.showBook(book.get(i));
             saveBooks.getChildren().add(cardbox);
         }
     }
 
-    /** shelf initialize.
-     * @param location location
+    /**
+     * shelf initialize.
+     *
+     * @param location  location
      * @param resources resources
      */
     public void initialize(URL location, ResourceBundle resources) {

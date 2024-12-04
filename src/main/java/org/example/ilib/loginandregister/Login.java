@@ -16,10 +16,11 @@ public class Login extends Application {
 
     /**
      * this method will show the login scene.
+     *
      * @param primaryStage the primary stage for this application, onto which
-     * the application scene can be set.
-     * Applications may create other stages, if needed, but they will not be
-     * primary stages.
+     *                     the application scene can be set.
+     *                     Applications may create other stages, if needed, but they will not be
+     *                     primary stages.
      * @throws IOException in case FXML file cannot be loaded
      */
     @Override

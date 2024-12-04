@@ -46,7 +46,7 @@ public class ControllerTransactionHistory implements Initializable {
 
 
     private ObservableList<Transaction> Transactions;
-    private String email = Account.getInstance().getEmail();
+    private final String email = Account.getInstance().getEmail();
 
 
     public void setTransactionList(List<Transaction> TransactionList) {
@@ -55,36 +55,35 @@ public class ControllerTransactionHistory implements Initializable {
     }
 
 
-
     @FXML
     void BackToMenu(MouseEvent event) {
-       try {
-           Stage stage = (Stage) Back.getScene().getWindow();
-           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Menu.fxml"));
-           Scene scene = new Scene( fxmlLoader.load());
-           stage.setScene(scene);
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
+        try {
+            Stage stage = (Stage) Back.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Menu.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        try{
+        try {
             setTransactionList(getTransactionList(email));
-            paymentIDcol.setCellValueFactory(new PropertyValueFactory<Transaction,Integer>("paymentID"));
-            bookCol.setCellValueFactory(new PropertyValueFactory<Transaction,String>("bookID"));
-            titleCol.setCellValueFactory(new PropertyValueFactory<Transaction,String>("title"));
+            paymentIDcol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("paymentID"));
+            bookCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("bookID"));
+            titleCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("title"));
             dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, DateTime>("date"));
             quantityCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("quantity"));
             typeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("type"));
             priceEachCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("priceEach"));
 
-           TransactionTable.setItems(Transactions);
+            TransactionTable.setItems(Transactions);
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -104,26 +103,26 @@ public class ControllerTransactionHistory implements Initializable {
             stmt.setString(1, email);
 
             // Thực thi câu lệnh và lấy kết quả
-          try(  ResultSet resultSet = stmt.executeQuery()){
-              // Xử lý kết quả trả về
-              while (resultSet.next()) {
-                  // Lấy dữ liệu từ bảng Payment
-                  String paymentID = resultSet.getString("paymentID");
-                  String bookID = resultSet.getString("bookID");
-                  String bookName = resultSet.getString("title");
-                  Timestamp dateTime = resultSet.getTimestamp("date");
-                  DateTime date = new DateTime(dateTime);
-                  Integer quantity = resultSet.getInt("quantity");
-                  // Lấy dữ liệu từ bảng Book
-                  String type = resultSet.getString("type");
-                  Integer priceEach = resultSet.getInt("bookPrice");
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                // Xử lý kết quả trả về
+                while (resultSet.next()) {
+                    // Lấy dữ liệu từ bảng Payment
+                    String paymentID = resultSet.getString("paymentID");
+                    String bookID = resultSet.getString("bookID");
+                    String bookName = resultSet.getString("title");
+                    Timestamp dateTime = resultSet.getTimestamp("date");
+                    DateTime date = new DateTime(dateTime);
+                    Integer quantity = resultSet.getInt("quantity");
+                    // Lấy dữ liệu từ bảng Book
+                    String type = resultSet.getString("type");
+                    Integer priceEach = resultSet.getInt("bookPrice");
 
-                  Transaction transaction = new Transaction(paymentID,bookID,email,date,quantity,type,bookName,priceEach);
-                  TransactionList.add(transaction);
-              }
-          } catch (SQLException e){
-              e.printStackTrace();
-          }
+                    Transaction transaction = new Transaction(paymentID, bookID, email, date, quantity, type, bookName, priceEach);
+                    TransactionList.add(transaction);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

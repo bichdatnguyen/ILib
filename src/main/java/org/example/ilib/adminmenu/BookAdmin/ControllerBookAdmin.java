@@ -73,37 +73,37 @@ public class ControllerBookAdmin implements Initializable {
 
     @FXML
     void AddButtonClick(MouseEvent event) {
-           try{
-               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AddEditBook.fxml"));
-               Parent root = fxmlLoader.load();
-               ControllerAddEdit controllerAddEdit =fxmlLoader.getController();
-               controllerAddEdit.setTextLabel("Hãy thêm sách và nhấn cập nhập");
-               controllerAddEdit.setStatus(ControllerAddEdit.ADD);
-               Stage popup = new Stage();
-               popup.initModality(Modality.APPLICATION_MODAL);
-               popup.setTitle("Add Book");
-               Scene scene = new Scene(root);
-               popup.setScene(scene);
-               popup.showAndWait();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AddEditBook.fxml"));
+            Parent root = fxmlLoader.load();
+            ControllerAddEdit controllerAddEdit = fxmlLoader.getController();
+            controllerAddEdit.setTextLabel("Hãy thêm sách và nhấn cập nhập");
+            controllerAddEdit.setStatus(ControllerAddEdit.ADD);
+            Stage popup = new Stage();
+            popup.initModality(Modality.APPLICATION_MODAL);
+            popup.setTitle("Add Book");
+            Scene scene = new Scene(root);
+            popup.setScene(scene);
+            popup.showAndWait();
 
 
-           } catch (IOException e) {
-               e.printStackTrace();
-           }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
     @FXML
     void EditButtonClick(MouseEvent event) {
-        if(BookTable.getSelectionModel().getSelectedItem() == null){
+        if (BookTable.getSelectionModel().getSelectedItem() == null) {
             showErrAndEx.showAlert("Vui lòng chon sách cần chỉnh sửa");
             return;
         }
         Book book = BookTable.getSelectionModel().getSelectedItem();
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AddEditBook.fxml"));
             Parent root = fxmlLoader.load();
-            ControllerAddEdit controllerAddEdit =fxmlLoader.getController();
+            ControllerAddEdit controllerAddEdit = fxmlLoader.getController();
             controllerAddEdit.setStatus(ControllerAddEdit.EDIT);
             controllerAddEdit.setTextLabel("Chỉnh sửa thông tin và nhấn cập nhập");
             controllerAddEdit.setAuthorText(book.getAuthor());
@@ -128,25 +128,25 @@ public class ControllerBookAdmin implements Initializable {
 
     @FXML
     void DeleteButtonClick(MouseEvent event) {
-            if(BookTable.getSelectionModel().getSelectedItem() == null){
-                showErrAndEx.showAlert("Vui lòng chọn sách cần xóa");
-            } else{
-                Alert alert = showErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
-                if(alert.getResult() == ButtonType.OK){
-                    deleteBook(BookTable.getSelectionModel().getSelectedItem().getId());
-                    BookList.remove(BookTable.getSelectionModel().getSelectedItem());
-                    BookTable.refresh();
+        if (BookTable.getSelectionModel().getSelectedItem() == null) {
+            showErrAndEx.showAlert("Vui lòng chọn sách cần xóa");
+        } else {
+            Alert alert = showErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
+            if (alert.getResult() == ButtonType.OK) {
+                deleteBook(BookTable.getSelectionModel().getSelectedItem().getId());
+                BookList.remove(BookTable.getSelectionModel().getSelectedItem());
+                BookTable.refresh();
 
-                }
             }
+        }
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        try{
+        try {
             getBooksfromDB();
-            bookIDCol.setCellValueFactory(new PropertyValueFactory<Book,String>("id"));
+            bookIDCol.setCellValueFactory(new PropertyValueFactory<Book, String>("id"));
             titleCol.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
             authorCol.setCellValueFactory(new PropertyValueFactory<Book, String>("author"));
             priceCol.setCellValueFactory(new PropertyValueFactory<Book, Integer>("price"));
@@ -159,30 +159,30 @@ public class ControllerBookAdmin implements Initializable {
                 }
             });
 
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public void getBooksfromDB(){
+    public void getBooksfromDB() {
         String query = "select *, authorName from books natural join author";
         List<Book> books = new ArrayList<>();
-        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)){
-                try(ResultSet rs = stmt.executeQuery()){
-                    while(rs.next()){
-                        String bookID = rs.getString("bookID");
-                        String title = rs.getString("title");
-                        String author = rs.getString("authorName");
-                        int quantity = rs.getInt("quantityInStock");
-                        int price = rs.getInt("bookPrice");
-                        String description = rs.getString("description");
-                        Book book = new Book(bookID, title, author, quantity, price,description);
-                        books.add(book);
-                    }
-                    this.BookList = FXCollections.observableArrayList(books);
+        try (Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    String bookID = rs.getString("bookID");
+                    String title = rs.getString("title");
+                    String author = rs.getString("authorName");
+                    int quantity = rs.getInt("quantityInStock");
+                    int price = rs.getInt("bookPrice");
+                    String description = rs.getString("description");
+                    Book book = new Book(bookID, title, author, quantity, price, description);
+                    books.add(book);
                 }
-        } catch(Exception e){
+                this.BookList = FXCollections.observableArrayList(books);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -190,14 +190,14 @@ public class ControllerBookAdmin implements Initializable {
 
     public void searchInfofromDB(String search) {
         String query = "SELECT title FROM books natural join author WHERE title LIKE ? OR bookID LIKE ? OR description LIKE ? OR authorName LIKE ?";
-        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             String queryPattern = "%" + search + "%";
             preparedStatement.setString(1, queryPattern);
             preparedStatement.setString(2, queryPattern);
             preparedStatement.setString(3, queryPattern);
             preparedStatement.setString(4, queryPattern);
-            try(ResultSet resultSet = preparedStatement.executeQuery()){
-                while(resultSet.next()){
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
                     String title = resultSet.getString("title");
                     Text text = new Text(title);
                     text.setOnMouseClicked(mouseEvent -> {
@@ -212,33 +212,30 @@ public class ControllerBookAdmin implements Initializable {
                     });
                     searchVbox.getChildren().add(text);
                 }
-                if (!searchVbox.getChildren().isEmpty()) {
-                    searchScroll.setVisible(true);
-                } else {
-                    searchScroll.setVisible(false);
-                }
+                searchScroll.setVisible(!searchVbox.getChildren().isEmpty());
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-        }  catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @FXML
     public void searchKeyBoard(KeyEvent event) {
-        if(!searchText.getText().equals("")){
+        if (!searchText.getText().equals("")) {
             searchVbox.getChildren().clear();
             searchInfofromDB(searchText.getText());
-        } else{
+        } else {
             searchVbox.getChildren().clear();
             searchScroll.setVisible(false);
         }
     }
+
     @FXML
     public void searchEnter(KeyEvent event) {
-        if(!searchText.getText().equals("")){
+        if (!searchText.getText().equals("")) {
             FilteredList<Book> filteredBooks = new FilteredList<>(BookList, b -> true);
             BookTable.setItems(filteredBooks);
             searchText.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -249,31 +246,30 @@ public class ControllerBookAdmin implements Initializable {
                     String lowerCaseFilter = newValue.toLowerCase();
                     if (book.getTitle().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (book.getAuthor().toLowerCase().contains(lowerCaseFilter)) {
-                        return true;
-                    }
-                    return false;
+                    } else return book.getAuthor().toLowerCase().contains(lowerCaseFilter);
                 });
             });
         }
     }
-//rating , shelf, payment , borrow,history,categories,cart,author,books
+
+    //rating , shelf, payment , borrow,history,categories,cart,author,books
     public void deleteBook(String bookID) {
         String query = "delete from books where bookID = ?";
         Booklist.getInstance().deleteBook(bookID);
-        try(Connection connection =DBConnection.getInstance().getConnection();){
+        try (Connection connection = DBConnection.getInstance().getConnection()) {
 
-            try( PreparedStatement stmt = connection.prepareStatement(query)){
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
                 stmt.setString(1, bookID);
                 stmt.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public void RefreshButtonClick(MouseEvent event) {
         getBooksfromDB();
         BookTable.setItems(BookList);

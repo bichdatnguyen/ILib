@@ -66,17 +66,20 @@ public class ControllerBookDetail {
     private static final int Buy = 2;
     private static final int Borrow = 1;
     private static int status = 0;
-    private String email = Account.getInstance().getEmail();
+    private final String email = Account.getInstance().getEmail();
 
     private Scene Forwardsceen;
 
 
-    /** set the scene before.
+    /**
+     * set the scene before.
+     *
      * @param scene set to this.scene
      */
     public void saveForwardScene(Scene scene) {
         this.Forwardsceen = scene;
     }
+
     private Image loadImage(String path) {
         if (path.startsWith("http://") || path.startsWith("https://")) {
             return new Image(path, true);
@@ -85,7 +88,9 @@ public class ControllerBookDetail {
         }
     }
 
-    /** show all book's information.
+    /**
+     * show all book's information.
+     *
      * @param book book needed to show information
      */
     public void showInformation(Book book) {
@@ -105,7 +110,9 @@ public class ControllerBookDetail {
         }
     }
 
-    /** back to scene before.
+    /**
+     * back to scene before.
+     *
      * @param event when button clicked go back
      * @throws IOException prevent IO exception
      */
@@ -115,11 +122,13 @@ public class ControllerBookDetail {
         stage.setScene(scene);
     }
 
-    /** add book to cart by sql.
-     * @param email book's email
-     * @param bookId book's id
+    /**
+     * add book to cart by sql.
+     *
+     * @param email    book's email
+     * @param bookId   book's id
      * @param quantity book's quantity
-     * @param status borrow or buy
+     * @param status   borrow or buy
      * @throws SQLException prevent sql exception
      */
     public void addBookToCart(String email, String bookId, int quantity, int status) throws SQLException {
@@ -130,19 +139,19 @@ public class ControllerBookDetail {
 
         try (Connection connection = DBConnection.getInstance().getConnection()) {
             // Kiểm tra nếu sách đã có trong giỏ hàng
-            try (PreparedStatement stmtCheck = connection.prepareStatement(queryCheck);
-               ) {
+            try (PreparedStatement stmtCheck = connection.prepareStatement(queryCheck)
+            ) {
                 stmtCheck.setString(1, bookId);
                 stmtCheck.setString(2, email);
 
-                String statusBook = (status == Borrow) ? "BORROW" :"BUY";
-                try(  ResultSet rs = stmtCheck.executeQuery()){
+                String statusBook = (status == Borrow) ? "BORROW" : "BUY";
+                try (ResultSet rs = stmtCheck.executeQuery()) {
                     if (rs.next()) {
                         String currentStatus = rs.getString("type");
                         // Kiểm tra nếu trạng thái khác, có thể xử lý logic tùy ý
 
                         // Nếu sách đã có, cập nhật số lượng và trạng thái
-                        if(currentStatus.equals(statusBook)) {
+                        if (currentStatus.equals(statusBook)) {
                             showErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
                         } else {
                             try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
@@ -174,71 +183,77 @@ public class ControllerBookDetail {
         }
     }
 
-    /** add book to cart.
+    /**
+     * add book to cart.
+     *
      * @param event add book to cart when button clicked
      */
     @FXML
     void addCart(MouseEvent event) {
-            String num = VolumeTextField.getText().trim();
-            if (num.isEmpty()) {
-                showErrAndEx.showAlert("Vui lòng nhập số lượng!");
-                return;
-            }
-            if(status == 0) {
-                showErrAndEx.showAlert("Vui lòng kiểm tra trang thái");
-                return;
-            }
-            int quantity = Integer.parseInt(VolumeTextField.getText());
-            int quantityInStock = Integer.parseInt(quantityText.getText().trim());
-          if(quantityInStock == 0){
-              showErrAndEx.showAlert("Sách hiện tại chưa có tại thư viện");
-              return;
-          }
-         if( quantity > quantityInStock){
-             showErrAndEx.showAlert("Vượt quá số lượng có sẵn");
-             return;
-         }
-         if(quantity > 5 && status == Buy){
-             showErrAndEx.showAlert("Bạn chỉ có thể  mua 5 quyển 1 lúc");
-             return;
-         }
-         if(quantity > 1 && status == Borrow){
-             showErrAndEx.showAlert("Bạn chỉ có thể mượn 1 quyển");
-             return;
-         }
+        String num = VolumeTextField.getText().trim();
+        if (num.isEmpty()) {
+            showErrAndEx.showAlert("Vui lòng nhập số lượng!");
+            return;
+        }
+        if (status == 0) {
+            showErrAndEx.showAlert("Vui lòng kiểm tra trang thái");
+            return;
+        }
+        int quantity = Integer.parseInt(VolumeTextField.getText());
+        int quantityInStock = Integer.parseInt(quantityText.getText().trim());
+        if (quantityInStock == 0) {
+            showErrAndEx.showAlert("Sách hiện tại chưa có tại thư viện");
+            return;
+        }
+        if (quantity > quantityInStock) {
+            showErrAndEx.showAlert("Vượt quá số lượng có sẵn");
+            return;
+        }
+        if (quantity > 5 && status == Buy) {
+            showErrAndEx.showAlert("Bạn chỉ có thể  mua 5 quyển 1 lúc");
+            return;
+        }
+        if (quantity > 1 && status == Borrow) {
+            showErrAndEx.showAlert("Bạn chỉ có thể mượn 1 quyển");
+            return;
+        }
 
 
-            if(quantity > 0){
-              //int bookId = Integer.parseInt(Bookid.getText());
-              String bookId = idText.getText();
-              try{
-                  System.out.println(quantity);
-                  if(status == Borrow && checkBookBorrow()){
-                      showErrAndEx.showAlert("Bạn đã mượn sách này");
-                      return;
-                  }
-                  if(checkBookInCart()){
-                      showErrAndEx.showAlert("Sách đã có trong giỏ hàng");
-                      return;
-                  }
-                  addBookToCart(email,bookId,quantity,status);
-                  showErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
-              } catch (SQLException e) {
-                  e.printStackTrace();
-              }
-
+        if (quantity > 0) {
+            //int bookId = Integer.parseInt(Bookid.getText());
+            String bookId = idText.getText();
+            try {
+                System.out.println(quantity);
+                if (status == Borrow && checkBookBorrow()) {
+                    showErrAndEx.showAlert("Bạn đã mượn sách này");
+                    return;
+                }
+                if (checkBookInCart()) {
+                    showErrAndEx.showAlert("Sách đã có trong giỏ hàng");
+                    return;
+                }
+                addBookToCart(email, bookId, quantity, status);
+                showErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
+        }
     }
 
-    /** choose to borrow.
+    /**
+     * choose to borrow.
+     *
      * @param event click borrow option
      */
     @FXML
     void BorrowClick(MouseEvent event) {
-            status = Borrow;
+        status = Borrow;
     }
 
-    /** choose to buy.
+    /**
+     * choose to buy.
+     *
      * @param event click buy option
      */
     @FXML
@@ -246,13 +261,14 @@ public class ControllerBookDetail {
         status = Buy;
     }
 
-    /** comment book, save or delete book in shelf.
+    /**
+     * comment book, save or delete book in shelf.
+     *
      * @param book set option in this book
      * @throws SQLException
      */
     public void setOptionInBook(Book book) throws SQLException {
         if (book.getQuantity() == 0) {
-            return;
         } else {
             DBConnection db = DBConnection.getInstance();//try with
 
@@ -310,40 +326,32 @@ public class ControllerBookDetail {
         }
     }
 
-    public boolean checkBookBorrow(){
+    public boolean checkBookBorrow() {
         String query = "select count(*) from borrow where Email = ? and bookID = ?";
-        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query) ){
-               stmt.setString(1, email);
-               stmt.setString(2, idText.getText());
-                try(ResultSet rs = stmt.executeQuery()){
-                    if(rs.next()){
-                        int count = rs.getInt(1);
-                        if(count == 0){
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    }
+        try (Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, email);
+            stmt.setString(2, idText.getText());
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count != 0;
                 }
-        } catch(SQLException e){
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public boolean checkBookInCart(){
+    public boolean checkBookInCart() {
         String query = "select count(*) from cart where bookID = ? and type =?";
-        try(Connection connection =DBConnection.getInstance().getConnection() ; PreparedStatement stmt = connection.prepareStatement(query)){
+        try (Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, idText.getText());
             stmt.setString(2, status == Borrow ? "BORROW" : "BUY");
-            try(ResultSet rs = stmt.executeQuery()){
-                if(rs.next()){
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
                     int count = rs.getInt(1);
-                    if(count > 0){
-                        return true;
-                    } else {
-                        return false;
-                    }
+                    return count > 0;
                 }
             }
 
@@ -358,11 +366,11 @@ public class ControllerBookDetail {
      */
     private void deleteBookFromBorrow() {
         String query = "delete from borrow where email = ? and bookID = ?";
-        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, email);
             stmt.setString(2, idText.getText());
             int rs = stmt.executeUpdate();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -372,36 +380,37 @@ public class ControllerBookDetail {
      */
     private void updateBookQuantityInStock() {
         String query = "update books set quantityinstock = quantityinstock + 1 where  bookID = ?";
-        try(Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (Connection connection = DBConnection.getInstance().getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, idText.getText());
             int rs = stmt.executeUpdate();
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
      * a method linked with fxml file.
+     *
      * @param mouseEvent mouse clicked
      * @throws IOException io
      */
     public void returnBookToTheLibrary(MouseEvent mouseEvent) throws IOException {
         deleteBookFromBorrow();
         int oldQuantity = Integer.parseInt(quantityText.getText());
-        Booklist.getInstance().updateBookQuantity(idText.getText(), oldQuantity+1);
+        Booklist.getInstance().updateBookQuantity(idText.getText(), oldQuantity + 1);
         updateBookQuantityInStock();
 
         //Alert
         Alert alert = showErrAndEx.showAlert("return book to the library successfully!");
-        if(alert.getResult() == ButtonType.OK){
-            try{
+        if (alert.getResult() == ButtonType.OK) {
+            try {
                 //returnBookButton.setVisible(false);
                 Stage stage = (Stage) returnBookButton.getScene().getWindow();
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
                 Scene scene = new Scene(fx.load());
                 stage.setScene(scene);
-            } catch(IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

@@ -3,7 +3,9 @@ package org.example.ilib.book.BookDetail;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -32,21 +34,27 @@ public class ControllerBookComment {
     private String bookID;
     private Scene FowardScene;
 
-    /** bookID setter.
+    /**
+     * bookID setter.
+     *
      * @param bookID set to this.bookID
      */
     public void setBookID(String bookID) {
         this.bookID = bookID;
     }
 
-    /** save the scene before.
-     * @param scene  set to this.FowardScene
+    /**
+     * save the scene before.
+     *
+     * @param scene set to this.FowardScene
      */
     public void saveFowardScene(Scene scene) {
         this.FowardScene = scene;
     }
 
-    /** back to scene before.
+    /**
+     * back to scene before.
+     *
      * @param event go back when button clicked
      */
     @FXML
@@ -57,7 +65,9 @@ public class ControllerBookComment {
         stage.setScene(scene);
     }
 
-    /** post comment in each books.
+    /**
+     * post comment in each books.
+     *
      * @param event post your comment when button is clicked.
      */
     @FXML
@@ -71,7 +81,7 @@ public class ControllerBookComment {
             fx.setLocation(getClass().getResource("/org/example/ilib/Comment.fxml"));
             VBox commentBox = null;
             try {
-                commentBox = (VBox) fx.load();
+                commentBox = fx.load();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -102,12 +112,12 @@ public class ControllerBookComment {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        for (Comment comment: comments) {
+        for (Comment comment : comments) {
             FXMLLoader fx = new FXMLLoader();
             fx.setLocation(getClass().getResource("/org/example/ilib/Comment.fxml"));
             VBox commentBox = null;
             try {
-                commentBox = (VBox) fx.load();
+                commentBox = fx.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -45,6 +45,6 @@ public class ControllerAdminStatistic implements Initializable {
         for (XYChart.Data<String, Number> data : series.getData()) {
             data.getNode().setStyle("-fx-bar-width: 10px"); // Điều chỉnh độ rộng thanh
         }
-       // UserChart.setLegendVisible(false); // Ẩn thanh ký hiệu
+        // UserChart.setLegendVisible(false); // Ẩn thanh ký hiệu
     }
 }

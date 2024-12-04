@@ -31,8 +31,9 @@ public class ControllerUpdateAccount {
         phoneNumberBox.setText(Account.getInstance().getPhone());
         userNameBox.setText(Account.getInstance().getFullName());
     }
+
     public void backToAccountScene(MouseEvent mouseEvent) throws IOException {
-        Stage stage = (Stage)backButton.getScene().getWindow();
+        Stage stage = (Stage) backButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Account.fxml"));
         Scene scene = new Scene(loader.load());
@@ -60,7 +61,7 @@ public class ControllerUpdateAccount {
         String updateQuery = "UPDATE user SET Email = ?, "
                 + "phoneNumber=?, fullName=?, password=? "
                 + "where Email = ? and password = ?";
-        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)){
+        try (PreparedStatement stmt = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)) {
             //DBConnection conn = DBConnection.getInstance().getConnection().prepareStatement(updateQuery)
 
             stmt.setString(1, nEmail);
@@ -89,7 +90,7 @@ public class ControllerUpdateAccount {
                 String p = Account.getInstance().getPassword();
                 if (!e.equals(Account.getInstance().getEmail())) {
                     try {
-                        if (DBConnection.getInstance().checkDataExit(e,p)) {
+                        if (DBConnection.getInstance().checkDataExit(e, p)) {
                             commentText.setText("Email and password already exist in the database!");
                             commentText.setStyle("-fx-fill: red;");
                             return;
@@ -98,7 +99,7 @@ public class ControllerUpdateAccount {
                         eN.printStackTrace();
                     }
                 }
-                updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(),Account.getInstance().getPassword());
+                updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(), Account.getInstance().getPassword());
                 commentText.setText("Information updated successfully!");
                 commentText.setStyle("-fx-fill: green;");
                 return;
@@ -108,8 +109,8 @@ public class ControllerUpdateAccount {
                 String e = updateAccount.getInstance().getNewEmail();
                 String p = updateAccount.getInstance().getNewPassword();
                 try {
-                    if (!DBConnection.getInstance().checkDataExit(e,p)) {
-                        updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(),updateAccount.getInstance().getNewPassword());
+                    if (!DBConnection.getInstance().checkDataExit(e, p)) {
+                        updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(), updateAccount.getInstance().getNewPassword());
                         Account.getInstance().setEmail(e);
                         Account.getInstance().setPassword(p);
                         commentText.setText("Information updated successfully!");

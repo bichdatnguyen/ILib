@@ -23,7 +23,7 @@ public class Transaction {
         this.priceEach = priceEach;
     }
 
-    public Transaction(){
+    public Transaction() {
 
     }
 
@@ -74,15 +74,19 @@ public class Transaction {
     public void setType(String type) {
         this.type = type;
     }
+
     public int getPriceEach() {
         return priceEach;
     }
+
     public void setPriceEach(int priceEach) {
         this.priceEach = priceEach;
     }
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }

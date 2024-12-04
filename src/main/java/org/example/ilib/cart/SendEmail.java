@@ -8,8 +8,9 @@ import java.util.Properties;
 public class SendEmail {
     // Hàm gửi email
 
-    private static String emailAdmin = System.getenv("EMAIL_ADMIN");
-    private static String passwordAdmin = System.getenv("PASSWORD_ADMIN");
+    private static final String emailAdmin = System.getenv("EMAIL_ADMIN");
+    private static final String passwordAdmin = System.getenv("PASSWORD_ADMIN");
+
     public static boolean sendEmail(String to, String subject, String messageText) {
 
 

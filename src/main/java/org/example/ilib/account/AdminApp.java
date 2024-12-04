@@ -8,7 +8,10 @@ import java.sql.SQLException;
 
 public class AdminApp {
     private static AdminApp instance;
-    private AdminApp() {}
+
+    private AdminApp() {
+    }
+
     public static AdminApp getInstance() {
         if (instance == null) {
             instance = new AdminApp();

@@ -9,8 +9,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.example.ilib.book.ControllerBook;
 import org.example.ilib.book.Book;
+import org.example.ilib.book.ControllerBook;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,17 +26,19 @@ public class ControllerTopBooks implements Initializable {
     @FXML
     private GridPane topBooksGrid;
 
-    private List<Book> bookList;
+    private final List<Book> bookList;
 
     /**
      * ControllerTopBooks constructor.
      */
     public ControllerTopBooks() {
-       bookList = Booklist.getInstance().getTopBookList();
+        bookList = Booklist.getInstance().getTopBookList();
     }
 
-    /** top books initialize.
-     * @param location location
+    /**
+     * top books initialize.
+     *
+     * @param location  location
      * @param resources resources
      */
     public void initialize(URL location, ResourceBundle resources) {
@@ -47,12 +49,12 @@ public class ControllerTopBooks implements Initializable {
             for (int i = 0; i < Math.min(8, bookList.size()); i++) {
                 FXMLLoader fx = new FXMLLoader();
                 fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
-                HBox cardbox = (HBox) fx.load();
-                ControllerBook controllerBook = (ControllerBook) fx.getController();
+                HBox cardbox = fx.load();
+                ControllerBook controllerBook = fx.getController();
                 controllerBook.setBook(bookList.get(i));
                 controllerBook.showBook(bookList.get(i));
 
-                if(column == 4) {
+                if (column == 4) {
                     column = 0;
                     row++;
                 }
@@ -63,7 +65,9 @@ public class ControllerTopBooks implements Initializable {
         }
     }
 
-    /** back to menu.
+    /**
+     * back to menu.
+     *
      * @param e back to menu when button is clicked.
      * @throws IOException prevent IO exception
      */

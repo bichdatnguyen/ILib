@@ -38,19 +38,21 @@ public class ControllerAdminMenu implements Initializable {
     void MenuHboxEnter(MouseEvent event) {
         menuhbox.setStyle("-fx-background-color: green");
     }
+
     @FXML
     void MenuHboxExit(MouseEvent event) {
         menuhbox.setStyle("-fx-background-color: transparent");
     }
+
     @FXML
     void MenuHboxClick(MouseEvent event) {
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AdminStatistic.fxml"));
             AnchorPane memberEditPane = fxmlLoader.load();
             ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
             ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
 
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -59,19 +61,21 @@ public class ControllerAdminMenu implements Initializable {
     void BookHboxEnter(MouseEvent event) {
         bookshbox.setStyle("-fx-background-color: green");
     }
+
     @FXML
     void BookHboxExit(MouseEvent event) {
         bookshbox.setStyle("-fx-background-color: transparent");
     }
+
     @FXML
     void BookHboxClick(MouseEvent event) {
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/BookAdmin.fxml"));
             AnchorPane memberEditPane = fxmlLoader.load();
             ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
             ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
 
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -80,19 +84,21 @@ public class ControllerAdminMenu implements Initializable {
     void UserHboxEnter(MouseEvent event) {
         userhbox.setStyle("-fx-background-color: green");
     }
+
     @FXML
     void UserHboxExit(MouseEvent event) {
         userhbox.setStyle("-fx-background-color: transparent");
     }
+
     @FXML
     void UserHboxClick(MouseEvent event) {
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/MemberAdminstrator.fxml"));
             AnchorPane memberEditPane = fxmlLoader.load();
             ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
             ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
 
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -101,42 +107,44 @@ public class ControllerAdminMenu implements Initializable {
     void ExitHboxEnter(MouseEvent event) {
         exithbox.setStyle("-fx-background-color: green");
     }
+
     @FXML
     void ExitHboxExit(MouseEvent event) {
         exithbox.setStyle("-fx-background-color: transparent");
     }
+
     @FXML
     void ExitHboxClick(MouseEvent event) {
         Alert alert = showErrAndEx.showAlert("Bạn có muốn thoát ra không");
-        if(alert.getResult() == ButtonType.OK){
-           try{
-               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Menu.fxml"));
-               Stage stage = (Stage) ShowScene.getScene().getWindow();
-               Scene scene = new Scene(fxmlLoader.load());
-               stage.setScene(scene);
-               stage.show();
-           } catch(IOException e){
-               e.printStackTrace();
-           }
+        if (alert.getResult() == ButtonType.OK) {
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Menu.fxml"));
+                Stage stage = (Stage) ShowScene.getScene().getWindow();
+                Scene scene = new Scene(fxmlLoader.load());
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       // AdminLabel.setStyle("-fx-background-color: black");
+        // AdminLabel.setStyle("-fx-background-color: black");
         menuhbox.setStyle("-fx-background-color: transparent");
         bookshbox.setStyle("-fx-background-color: transparent");
         userhbox.setStyle("-fx-background-color: transparent");
         exithbox.setStyle("-fx-background-color: transparent");
-       try{
-           FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AdminStatistic.fxml"));
-           AnchorPane memberEditPane = fxmlLoader.load();
-           ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
-           ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AdminStatistic.fxml"));
+            AnchorPane memberEditPane = fxmlLoader.load();
+            ShowScene.getChildren().clear(); // Xóa các phần tử cũ trong AnchorPane
+            ShowScene.getChildren().add(memberEditPane); // Thêm nội dung mới
 
-       } catch(IOException e){
-           e.printStackTrace();
-       }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

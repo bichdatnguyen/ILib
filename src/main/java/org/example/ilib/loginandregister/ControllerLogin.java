@@ -36,14 +36,14 @@ public class ControllerLogin {
         DBConnection db = DBConnection.getInstance();
         String email = emailText.getText();
         String password = passwordText.getText();
-         if(!db.checkDataExit(email, password)) {
+        if (!db.checkDataExit(email, password)) {
             showErrAndEx.showAlert("Email hoặc mật khẩu không đúng");
             return;
-         } else {
-             //initialize user properties
-             Account.getInstance().setEmail(email);
-             Account.getInstance().setPassword(password);
-         }
+        } else {
+            //initialize user properties
+            Account.getInstance().setEmail(email);
+            Account.getInstance().setPassword(password);
+        }
         Stage stage = (Stage) LoginSuccessButton.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/Menu.fxml"));
@@ -59,7 +59,7 @@ public class ControllerLogin {
      * @throws IOException in case FXML file cannot be loaded
      */
     public void backToMenu(MouseEvent event) throws IOException {
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/org/example/ilib/LoginAndRegister.fxml"));
         Scene scene = new Scene(loader.load());

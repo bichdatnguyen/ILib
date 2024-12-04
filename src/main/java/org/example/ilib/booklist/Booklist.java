@@ -5,7 +5,10 @@ import org.example.ilib.controller.DBConnection;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Booklist {
     private static Booklist instance;
@@ -16,6 +19,7 @@ public class Booklist {
 
     /**
      * getInstance method in singleton design pattern.
+     *
      * @return Booklist instance
      */
     public static Booklist getInstance() {
@@ -136,6 +140,7 @@ public class Booklist {
             bookList.add(book);
         }
     }
+
     public void deleteBook(String bookId) {
         deleteBookFromList(TopBookList, bookId);
         deleteBookFromList(RecentlyBookList, bookId);
