@@ -77,7 +77,7 @@ public class ControllerBookAdmin implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/AddEditBook.fxml"));
             Parent root = fxmlLoader.load();
             ControllerAddEdit controllerAddEdit = fxmlLoader.getController();
-            controllerAddEdit.setTextLabel("Hãy thêm sách và nhấn cập nhập");
+            controllerAddEdit.setTextLabel(" Please add book and click update.");
             controllerAddEdit.setStatus(ControllerAddEdit.ADD);
             Stage popup = new Stage();
             popup.initModality(Modality.APPLICATION_MODAL);
@@ -96,7 +96,7 @@ public class ControllerBookAdmin implements Initializable {
     @FXML
     void EditButtonClick(MouseEvent event) {
         if (BookTable.getSelectionModel().getSelectedItem() == null) {
-            ShowErrAndEx.showAlert("Vui lòng chon sách cần chỉnh sửa");
+            ShowErrAndEx.showAlert("Please select book you want to update.");
             return;
         }
         Book book = BookTable.getSelectionModel().getSelectedItem();
@@ -105,7 +105,7 @@ public class ControllerBookAdmin implements Initializable {
             Parent root = fxmlLoader.load();
             ControllerAddEdit controllerAddEdit = fxmlLoader.getController();
             controllerAddEdit.setStatus(ControllerAddEdit.EDIT);
-            controllerAddEdit.setTextLabel("Chỉnh sửa thông tin và nhấn cập nhập");
+            controllerAddEdit.setTextLabel("Please edit book and click update.");
             controllerAddEdit.setAuthorText(book.getAuthor());
             controllerAddEdit.setTitleText(book.getTitle());
             controllerAddEdit.setBookIdText(book.getId());
