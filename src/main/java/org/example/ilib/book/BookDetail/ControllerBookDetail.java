@@ -15,7 +15,7 @@ import org.example.ilib.account.Account;
 import org.example.ilib.book.Book;
 import org.example.ilib.booklist.Booklist;
 import org.example.ilib.controller.DBConnection;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -152,7 +152,7 @@ public class ControllerBookDetail {
 
                         // Nếu sách đã có, cập nhật số lượng và trạng thái
                         if (currentStatus.equals(statusBook)) {
-                            showErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
+                            ShowErrAndEx.showAlert("Sách đã được thêm vào giỏ hàng");
                         } else {
                             try (PreparedStatement stmtInsert = connection.prepareStatement(queryInsert)) {
                                 stmtInsert.setString(1, bookId);
@@ -192,29 +192,29 @@ public class ControllerBookDetail {
     void addCart(MouseEvent event) {
         String num = VolumeTextField.getText().trim();
         if (num.isEmpty()) {
-            showErrAndEx.showAlert("Vui lòng nhập số lượng!");
+            ShowErrAndEx.showAlert("Vui lòng nhập số lượng!");
             return;
         }
         if (status == 0) {
-            showErrAndEx.showAlert("Vui lòng kiểm tra trang thái");
+            ShowErrAndEx.showAlert("Vui lòng kiểm tra trang thái");
             return;
         }
         int quantity = Integer.parseInt(VolumeTextField.getText());
         int quantityInStock = Integer.parseInt(quantityText.getText().trim());
         if (quantityInStock == 0) {
-            showErrAndEx.showAlert("Sách hiện tại chưa có tại thư viện");
+            ShowErrAndEx.showAlert("Sách hiện tại chưa có tại thư viện");
             return;
         }
         if (quantity > quantityInStock) {
-            showErrAndEx.showAlert("Vượt quá số lượng có sẵn");
+            ShowErrAndEx.showAlert("Vượt quá số lượng có sẵn");
             return;
         }
         if (quantity > 5 && status == Buy) {
-            showErrAndEx.showAlert("Bạn chỉ có thể  mua 5 quyển 1 lúc");
+            ShowErrAndEx.showAlert("Bạn chỉ có thể  mua 5 quyển 1 lúc");
             return;
         }
         if (quantity > 1 && status == Borrow) {
-            showErrAndEx.showAlert("Bạn chỉ có thể mượn 1 quyển");
+            ShowErrAndEx.showAlert("Bạn chỉ có thể mượn 1 quyển");
             return;
         }
 
@@ -225,15 +225,15 @@ public class ControllerBookDetail {
             try {
                 System.out.println(quantity);
                 if (status == Borrow && checkBookBorrow()) {
-                    showErrAndEx.showAlert("Bạn đã mượn sách này");
+                    ShowErrAndEx.showAlert("Bạn đã mượn sách này");
                     return;
                 }
                 if (checkBookInCart()) {
-                    showErrAndEx.showAlert("Sách đã có trong giỏ hàng");
+                    ShowErrAndEx.showAlert("Sách đã có trong giỏ hàng");
                     return;
                 }
                 addBookToCart(email, bookId, quantity, status);
-                showErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
+                ShowErrAndEx.showAlert("Đã thêm sách vào giỏ hàng");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -401,7 +401,7 @@ public class ControllerBookDetail {
         updateBookQuantityInStock();
 
         //Alert
-        Alert alert = showErrAndEx.showAlert("return book to the library successfully!");
+        Alert alert = ShowErrAndEx.showAlert("return book to the library successfully!");
         if (alert.getResult() == ButtonType.OK) {
             try {
                 //returnBookButton.setVisible(false);

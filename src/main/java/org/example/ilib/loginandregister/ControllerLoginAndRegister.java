@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 
@@ -58,7 +58,7 @@ public class ControllerLoginAndRegister {
      */
     public void Exit(MouseEvent event) {
         // Tạo thông báo xác nhận thoát
-        Alert alert = showErrAndEx.showAlert("Bạn có muốn thoát ra không");
+        Alert alert = ShowErrAndEx.showAlert("Bạn có muốn thoát ra không");
 
         // Hiển thị thông báo và chờ người dùng chọn
         if (alert.getResult() == ButtonType.OK) {

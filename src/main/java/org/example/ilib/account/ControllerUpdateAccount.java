@@ -45,19 +45,19 @@ public class ControllerUpdateAccount {
     }
 
     private boolean checkingNewPassword() {
-        return newPassWordBox.getText().equals(updateAccount.getInstance().getAcceptedPassword());
+        return newPassWordBox.getText().equals(UpdateAccount.getInstance().getAcceptedPassword());
     }
 
     private void updatePropertiesInDatabase(String newE, String newP) {
         //String nEmail = updateAccount.getInstance().getNewEmail();
         String nEmail = newE;
 
-        String nPhoneNumber = updateAccount.getInstance().getNewPhoneNumber();
+        String nPhoneNumber = UpdateAccount.getInstance().getNewPhoneNumber();
 
         //String nPassword = updateAccount.getInstance().getNewPassword();
         String nPassword = newP;
 
-        String nFullname = updateAccount.getInstance().getNewName();
+        String nFullname = UpdateAccount.getInstance().getNewName();
         String updateQuery = "UPDATE user SET Email = ?, "
                 + "phoneNumber=?, fullName=?, password=? "
                 + "where Email = ? and password = ?";
@@ -77,16 +77,16 @@ public class ControllerUpdateAccount {
     }
 
     public void commited(MouseEvent keyEvent) {
-        updateAccount.getInstance().setNewEmail(emailBox.getText());
-        System.out.println("new Email: " + updateAccount.getInstance().getNewEmail());
-        updateAccount.getInstance().setNewName(userNameBox.getText());
-        updateAccount.getInstance().setAcceptedPassword(acceptedPassword.getText());
-        updateAccount.getInstance().setNewPassword(newPassWordBox.getText());
-        updateAccount.getInstance().setNewPhoneNumber(phoneNumberBox.getText());
+        UpdateAccount.getInstance().setNewEmail(emailBox.getText());
+        System.out.println("new Email: " + UpdateAccount.getInstance().getNewEmail());
+        UpdateAccount.getInstance().setNewName(userNameBox.getText());
+        UpdateAccount.getInstance().setAcceptedPassword(acceptedPassword.getText());
+        UpdateAccount.getInstance().setNewPassword(newPassWordBox.getText());
+        UpdateAccount.getInstance().setNewPhoneNumber(phoneNumberBox.getText());
         if (checkingOldPassword()) {
             // case user did not change his/her password
             if (newPassWordBox.getText().equals("")) {
-                String e = updateAccount.getInstance().getNewEmail();
+                String e = UpdateAccount.getInstance().getNewEmail();
                 String p = Account.getInstance().getPassword();
                 if (!e.equals(Account.getInstance().getEmail())) {
                     try {
@@ -99,18 +99,18 @@ public class ControllerUpdateAccount {
                         eN.printStackTrace();
                     }
                 }
-                updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(), Account.getInstance().getPassword());
+                updatePropertiesInDatabase(UpdateAccount.getInstance().getNewEmail(), Account.getInstance().getPassword());
                 commentText.setText("Information updated successfully!");
                 commentText.setStyle("-fx-fill: green;");
                 return;
             }
             // case user changed his/her password
             if (checkingNewPassword()) {
-                String e = updateAccount.getInstance().getNewEmail();
-                String p = updateAccount.getInstance().getNewPassword();
+                String e = UpdateAccount.getInstance().getNewEmail();
+                String p = UpdateAccount.getInstance().getNewPassword();
                 try {
                     if (!DBConnection.getInstance().checkDataExit(e, p)) {
-                        updatePropertiesInDatabase(updateAccount.getInstance().getNewEmail(), updateAccount.getInstance().getNewPassword());
+                        updatePropertiesInDatabase(UpdateAccount.getInstance().getNewEmail(), UpdateAccount.getInstance().getNewPassword());
                         Account.getInstance().setEmail(e);
                         Account.getInstance().setPassword(p);
                         commentText.setText("Information updated successfully!");

@@ -1,19 +1,19 @@
 package org.example.ilib.account;
 
-public class updateAccount {
+public class UpdateAccount {
     private String newEmail;
     private String newPassword;
     private String acceptedPassword;
     private String newName;
     private String newPhoneNumber;
-    private static updateAccount instance;
+    private static UpdateAccount instance;
 
-    private updateAccount() {
+    private UpdateAccount() {
     }
 
-    public static updateAccount getInstance() {
+    public static UpdateAccount getInstance() {
         if (instance == null) {
-            instance = new updateAccount();
+            instance = new UpdateAccount();
         }
         return instance;
     }

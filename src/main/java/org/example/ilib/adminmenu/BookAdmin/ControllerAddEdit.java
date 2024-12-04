@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import org.example.ilib.book.Book;
 import org.example.ilib.booklist.Booklist;
 import org.example.ilib.controller.DBConnection;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,11 +61,11 @@ public class ControllerAddEdit {
     void UpdateButtonClick(MouseEvent event) {
         if (status == ADD) {
             if (bookIdText.getText() == null || bookIdText.getText().equals("")) {
-                showErrAndEx.showAlert("Vui lòng nhập ID sách");
+                ShowErrAndEx.showAlert("Vui lòng nhập ID sách");
                 return;
             }
             if (titleText.getText() == null || titleText.getText().equals("")) {
-                showErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
+                ShowErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
                 return;
             }
             Book book = new Book();
@@ -81,11 +81,11 @@ public class ControllerAddEdit {
 
         } else if (status == EDIT) {
             if (bookIdText.getText() == null || bookIdText.getText().equals("")) {
-                showErrAndEx.showAlert("Vui lòng nhập id sách");
+                ShowErrAndEx.showAlert("Vui lòng nhập id sách");
                 return;
             }
             if (titleText.getText() == null || titleText.getText().equals("")) {
-                showErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
+                ShowErrAndEx.showAlert("Vui lòng nhập tiêu đề sách");
                 return;
             }
 
@@ -141,7 +141,7 @@ public class ControllerAddEdit {
         String query2 = "insert into author(bookID,authorName) values(?,?)";
         try {
             if (DBConnection.getInstance().bookExist(book.getId())) {
-                showErrAndEx.showAlert("Sách này có mã ID trùng với sách khác\n Vui lòng nhập lại");
+                ShowErrAndEx.showAlert("Sách này có mã ID trùng với sách khác\n Vui lòng nhập lại");
                 checkCondition = false;
                 return;
             }
@@ -179,7 +179,7 @@ public class ControllerAddEdit {
         System.out.println(!bookID.equals(book.getId().trim()));
         try {
             if (DBConnection.getInstance().bookExist(book.getId()) && !bookID.equals(book.getId())) {
-                showErrAndEx.showAlert("bạn đã thiết lập id sách trùng với 1 sách khác \n Vui lòng nhập lại");
+                ShowErrAndEx.showAlert("bạn đã thiết lập id sách trùng với 1 sách khác \n Vui lòng nhập lại");
                 checkCondition = false;
                 return;
             }

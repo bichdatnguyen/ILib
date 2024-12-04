@@ -20,7 +20,7 @@ import javafx.stage.Stage;
 import org.example.ilib.book.Book;
 import org.example.ilib.booklist.Booklist;
 import org.example.ilib.controller.DBConnection;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.net.URL;
@@ -96,7 +96,7 @@ public class ControllerBookAdmin implements Initializable {
     @FXML
     void EditButtonClick(MouseEvent event) {
         if (BookTable.getSelectionModel().getSelectedItem() == null) {
-            showErrAndEx.showAlert("Vui lòng chon sách cần chỉnh sửa");
+            ShowErrAndEx.showAlert("Vui lòng chon sách cần chỉnh sửa");
             return;
         }
         Book book = BookTable.getSelectionModel().getSelectedItem();
@@ -129,9 +129,9 @@ public class ControllerBookAdmin implements Initializable {
     @FXML
     void DeleteButtonClick(MouseEvent event) {
         if (BookTable.getSelectionModel().getSelectedItem() == null) {
-            showErrAndEx.showAlert("Vui lòng chọn sách cần xóa");
+            ShowErrAndEx.showAlert("Vui lòng chọn sách cần xóa");
         } else {
-            Alert alert = showErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
+            Alert alert = ShowErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
             if (alert.getResult() == ButtonType.OK) {
                 deleteBook(BookTable.getSelectionModel().getSelectedItem().getId());
                 BookList.remove(BookTable.getSelectionModel().getSelectedItem());

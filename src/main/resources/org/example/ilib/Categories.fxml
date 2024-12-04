@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.booklist.ControllerCategories">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.booklist.ControllerCategories">
    <top>
       <AnchorPane prefHeight="81.0" prefWidth="900.0" BorderPane.alignment="CENTER">
          <children>
@@ -29,10 +29,10 @@
          <children>
             <GridPane fx:id="gridPaneCategory" prefHeight="422.0" prefWidth="844.0">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="217.39999389648438" minWidth="10.0" prefWidth="201.3999755859375" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="267.4000244140625" minWidth="10.0" prefWidth="218.2000244140625" />
+                  <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="232.79995117187502" minWidth="10.0" prefWidth="213.39998779296877" />
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="203.39996337890625" minWidth="10.0" prefWidth="197.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />

@@ -78,7 +78,7 @@ public class ControllerBook {
     public void gotoBookDetail(MouseEvent event) throws IOException, SQLException {
         Stage stage = (Stage) image.getScene().getWindow();
 
-        FXMLLoader fx = new FXMLLoader(getClass().getResource("/org/example/ilib/bookDetail.fxml"));
+        FXMLLoader fx = new FXMLLoader(getClass().getResource("/org/example/ilib/BookDetail.fxml"));
         Parent root = fx.load();
         ControllerBookDetail controllerBookDetail = fx.getController();
         controllerBookDetail.saveForwardScene(image.getScene());

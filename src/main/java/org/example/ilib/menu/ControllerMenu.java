@@ -31,7 +31,7 @@ import org.example.ilib.book.ControllerBook;
 import org.example.ilib.booklist.Booklist;
 import org.example.ilib.controller.DBConnection;
 import org.example.ilib.controller.GoogleBooksAPI;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.net.URL;
@@ -202,13 +202,13 @@ public class ControllerMenu implements Initializable {
                                     hintVbox.setVisible(hintVbox.getChildren().size() != 0);
                                     //   hintVbox.setVisible(true);
                                 } catch (IOException e) {
-                                    showErrAndEx.showAlert("Lỗi khi tải gợi ý tìm kiếm.");
+                                    ShowErrAndEx.showAlert("Lỗi khi tải gợi ý tìm kiếm.");
                                 }
                             }
                         });
                     } catch (SQLException e) {
                         e.printStackTrace();
-                        showErrAndEx.showAlert("Lỗi khi truy vấn cơ sở dữ liệu để lấy gợi ý.");
+                        ShowErrAndEx.showAlert("Lỗi khi truy vấn cơ sở dữ liệu để lấy gợi ý.");
                     }
                 });
             }
@@ -268,7 +268,7 @@ public class ControllerMenu implements Initializable {
                                 Loading(false);
 
                             } catch (IOException e) {
-                                showErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
+                                ShowErrAndEx.showAlert("Lỗi khi tải giao diện tìm kiếm.");
                             } catch (SQLException e) {
                                 throw new RuntimeException(e);
                             }
@@ -277,14 +277,14 @@ public class ControllerMenu implements Initializable {
 
                         Platform.runLater(() -> {
                             Loading(false);
-                            showErrAndEx.showAlert("Không tìm thấy sách phù hợp");
+                            ShowErrAndEx.showAlert("Không tìm thấy sách phù hợp");
                         });
                     }
                 } catch (Exception e) {
 
                     Platform.runLater(() -> {
                         Loading(false);
-                        showErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API.");
+                        ShowErrAndEx.showAlert("Đã xảy ra lỗi trong khi truy vấn API.");
                     });
                 }
             });

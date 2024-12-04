@@ -11,7 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.net.URL;
@@ -115,7 +115,7 @@ public class ControllerAdminMenu implements Initializable {
 
     @FXML
     void ExitHboxClick(MouseEvent event) {
-        Alert alert = showErrAndEx.showAlert("Bạn có muốn thoát ra không");
+        Alert alert = ShowErrAndEx.showAlert("Bạn có muốn thoát ra không");
         if (alert.getResult() == ButtonType.OK) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Menu.fxml"));

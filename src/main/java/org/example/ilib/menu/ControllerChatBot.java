@@ -12,7 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import org.example.ilib.book.BookDetail.ControllerComment;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -92,7 +92,7 @@ public class ControllerChatBot {
                 e.printStackTrace();
             }
         } else {
-            showErrAndEx.showAlert("Vui lòng nhập câu hỏi");
+            ShowErrAndEx.showAlert("Vui lòng nhập câu hỏi");
         }
     }
 
@@ -111,7 +111,7 @@ public class ControllerChatBot {
                     e.printStackTrace();
                 }
             } else {
-                showErrAndEx.showAlert("Vui lòng nhập câu hỏi cần giải đáp");
+                ShowErrAndEx.showAlert("Vui lòng nhập câu hỏi cần giải đáp");
             }
         }
     }

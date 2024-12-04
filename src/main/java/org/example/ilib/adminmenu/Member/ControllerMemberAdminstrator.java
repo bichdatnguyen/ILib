@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.ilib.controller.DBConnection;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.sql.*;
@@ -97,7 +97,7 @@ public class ControllerMemberAdminstrator {
 
     public void editButtonClicked(MouseEvent mouseEvent) throws IOException, SQLException {
         if (tableView.getSelectionModel().getSelectedItem() == null) {
-            showErrAndEx.showAlert("Please select an account");
+            ShowErrAndEx.showAlert("Please select an account");
         } else {
             editMode = true;
             MemberAdminstrator.getInstance().setMemberFullname(
@@ -122,10 +122,10 @@ public class ControllerMemberAdminstrator {
 
     public void deleteButtonClicked(MouseEvent mouseEvent) throws SQLException {
         if (tableView.getSelectionModel().getSelectedItem() == null) {
-            showErrAndEx.showAlert("Please select an account");
+            ShowErrAndEx.showAlert("Please select an account");
         } else {
             if (!editMode) {
-                Alert alert = showErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
+                Alert alert = ShowErrAndEx.showAlert("Bạn chắc chắn muốn xóa chứ");
                 if (alert.getResult() == ButtonType.OK) {
                     String selectedEmail = tableView.getSelectionModel().getSelectedItem().emailProperty().get();
                     String selectedPassword = tableView.getSelectionModel().getSelectedItem().passwordProperty().get();

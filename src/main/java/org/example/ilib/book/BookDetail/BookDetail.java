@@ -16,7 +16,7 @@ public class BookDetail extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ilib/bookDetail.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/ilib/BookDetail.fxml"));
         Parent root = loader.load();
 
         primaryStage.setTitle("Book detail");

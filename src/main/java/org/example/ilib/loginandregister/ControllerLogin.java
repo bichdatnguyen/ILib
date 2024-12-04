@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.ilib.account.Account;
 import org.example.ilib.controller.DBConnection;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,7 +37,7 @@ public class ControllerLogin {
         String email = emailText.getText();
         String password = passwordText.getText();
         if (!db.checkDataExit(email, password)) {
-            showErrAndEx.showAlert("Email hoặc mật khẩu không đúng");
+            ShowErrAndEx.showAlert("Email hoặc mật khẩu không đúng");
             return;
         } else {
             //initialize user properties

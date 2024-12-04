@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.example.ilib.controller.DBConnection;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -37,19 +37,19 @@ public class ControllerRegister {
     @FXML
     void CreateAccount(MouseEvent event) throws IOException, SQLException {
         if (!emailTextField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-            showErrAndEx.showAlert("Email không hợp lệ");
+            ShowErrAndEx.showAlert("Email không hợp lệ");
             return;
         }
         if (!phoneTextField.getText().matches("[0-9]+")) {
-            showErrAndEx.showAlert("Số điện thoại không hợp lệ");
+            ShowErrAndEx.showAlert("Số điện thoại không hợp lệ");
             return;
         }
         if (!nameTextField.getText().matches("^[\\p{L}]+([\\s][\\p{L}]+)*$")) {
-            showErrAndEx.showAlert("Tên không hợp lệ");
+            ShowErrAndEx.showAlert("Tên không hợp lệ");
             return;
         }
         if (!passwordTextField.getText().matches("[0-9a-zA-Z]+")) {
-            showErrAndEx.showAlert("Password không hợp lệ");
+            ShowErrAndEx.showAlert("Password không hợp lệ");
             return;
         }
 
@@ -57,12 +57,12 @@ public class ControllerRegister {
 
         boolean check = db.checkDataExit(emailTextField.getText(), passwordTextField.getText());
         if (check) {
-            showErrAndEx.showAlert("Tài khoản hiện đã có");
+            ShowErrAndEx.showAlert("Tài khoản hiện đã có");
             return;
         }
         boolean check2 = db.checkDataExit(emailTextField.getText());
         if (check2) {
-            showErrAndEx.showAlert("Email này da tồn tại");
+            ShowErrAndEx.showAlert("Email này da tồn tại");
             return;
         }
         String email = emailTextField.getText();

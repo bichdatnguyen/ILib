@@ -20,18 +20,18 @@
 <AnchorPane prefHeight="602.0" prefWidth="969.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.book.BookDetail.ControllerBookDetail">
    <children>
       <GridPane layoutX="196.0" layoutY="8.0" prefHeight="422.0" prefWidth="677.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="390.0" minWidth="10.0" prefWidth="138.00001017252603" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="812.8" minWidth="10.0" prefWidth="539.999989827474" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="90.20000305175782" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="172.60000000000002" minHeight="8.599996948242179" prefHeight="35.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="255.99999389648437" minHeight="10.0" prefHeight="203.20001831054685" vgrow="SOMETIMES" />
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="390.0" minWidth="10.0" prefWidth="138.00001017252603" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="812.8" minWidth="10.0" prefWidth="539.999989827474" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="90.20000305175782" minHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="172.60000000000002" minHeight="8.599996948242179" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="255.99999389648437" minHeight="10.0" prefHeight="203.20001831054685" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="207.40001220703127" minHeight="0.0" prefHeight="53.79998779296875" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="106.19998779296873" minHeight="10.0" prefHeight="45.80001220703127" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="106.19998779296873" minHeight="10.0" prefHeight="47.600006103515625" vgrow="SOMETIMES" />
-        </rowConstraints>
+         </rowConstraints>
          <children>
             <Label alignment="TOP_LEFT" prefHeight="0.0" prefWidth="94.0" text="Title:">
                <font>

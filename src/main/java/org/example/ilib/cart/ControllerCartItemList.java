@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import org.example.ilib.account.Account;
 import org.example.ilib.booklist.Booklist;
 import org.example.ilib.controller.DBConnection;
-import org.example.ilib.controller.showErrAndEx;
+import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;
 import java.net.URL;
@@ -95,11 +95,11 @@ public class ControllerCartItemList implements Initializable {
     @FXML
     void deleteBook(MouseEvent event) {
         if (CartList.isEmpty()) {
-            showErrAndEx.showAlert("Giỏ hàng hiện tại đang trống");
+            ShowErrAndEx.showAlert("Giỏ hàng hiện tại đang trống");
             return;
         }
 
-        Alert alert = showErrAndEx.showAlert("Bạn có muốn xóa đi không");
+        Alert alert = ShowErrAndEx.showAlert("Bạn có muốn xóa đi không");
 
         if (alert.getResult() == ButtonType.OK) {
             if (CartTable.getSelectionModel().getSelectedItem() != null) {
@@ -112,7 +112,7 @@ public class ControllerCartItemList implements Initializable {
                 CartList.remove(CartTable.getSelectionModel().getSelectedItem());
                 isTotalCalculated = false;
             } else {
-                showErrAndEx.showAlert("Bạn chưa chọn hàng cần xóa");
+                ShowErrAndEx.showAlert("Bạn chưa chọn hàng cần xóa");
             }
         } else {
             CartTable.getSelectionModel().clearSelection();
@@ -124,9 +124,9 @@ public class ControllerCartItemList implements Initializable {
     @FXML
     void BuyQRclick(MouseEvent event) {
         if (!isTotalCalculated) {
-            showErrAndEx.showAlert("Vui lòng nhấn tổng tiền để thanh toán");
+            ShowErrAndEx.showAlert("Vui lòng nhấn tổng tiền để thanh toán");
         } else if (totalMonet == 0) {
-            showErrAndEx.showAlert("Số tiền thanh toán không hợp lệ");
+            ShowErrAndEx.showAlert("Số tiền thanh toán không hợp lệ");
         } else {
             if (!isBuyQR) {
                 Loading(true);
@@ -159,7 +159,7 @@ public class ControllerCartItemList implements Initializable {
                         super.succeeded();
                         Platform.runLater(() -> {
                             Loading(false);
-                            showErrAndEx.showAlert("Thanh toán thành công!");
+                            ShowErrAndEx.showAlert("Thanh toán thành công!");
                         });
                     }
 
@@ -168,13 +168,13 @@ public class ControllerCartItemList implements Initializable {
                         super.failed();
                         Platform.runLater(() -> {
                             Loading(false);
-                            showErrAndEx.showAlert("Đã xảy ra lỗi!");
+                            ShowErrAndEx.showAlert("Đã xảy ra lỗi!");
                         });
                     }
                 };
                 new Thread(task).start();
             } else {
-                showErrAndEx.showAlert("Bạn đã thanh toán thành công");
+                ShowErrAndEx.showAlert("Bạn đã thanh toán thành công");
             }
         }
     }
@@ -197,7 +197,7 @@ public class ControllerCartItemList implements Initializable {
         if (VoulumeText != null) {
             String vol = VoulumeText.getText().trim(); // Loại bỏ khoảng trắng thừa
             if (vol.isEmpty()) {
-                showErrAndEx.showAlert("Vui lòng nhập số lượng!");
+                ShowErrAndEx.showAlert("Vui lòng nhập số lượng!");
                 return;
             }
 
@@ -229,16 +229,16 @@ public class ControllerCartItemList implements Initializable {
                         CartTable.refresh();
                         System.out.println(CartTable.getSelectionModel().getSelectedItem().getVolume());
                     } else {
-                        showErrAndEx.showAlert("Vui lòng chọn một mục trong bảng!");
+                        ShowErrAndEx.showAlert("Vui lòng chọn một mục trong bảng!");
                     }
                 } else {
-                    showErrAndEx.showAlert("Số lượng phải lớn hơn 0!");
+                    ShowErrAndEx.showAlert("Số lượng phải lớn hơn 0!");
                 }
             } catch (NumberFormatException e) {
-                showErrAndEx.showAlert("Vui lòng nhập một số hợp lệ!");
+                ShowErrAndEx.showAlert("Vui lòng nhập một số hợp lệ!");
             }
         } else {
-            showErrAndEx.showAlert("Vui lòng nhập số lượng!");
+            ShowErrAndEx.showAlert("Vui lòng nhập số lượng!");
         }
 
     }
@@ -379,7 +379,7 @@ public class ControllerCartItemList implements Initializable {
             for (CartItem item : CartList) {
                 String bookId = item.getId();
                 if (quantityBook == null) {
-                    showErrAndEx.showAlert("null");
+                    ShowErrAndEx.showAlert("null");
                 }
                 int Oldquantity = quantityBook.get(bookId);
                 int newquantity = Oldquantity - item.getVolume();
@@ -394,7 +394,7 @@ public class ControllerCartItemList implements Initializable {
         for (CartItem item : CartList) {
             String bookId = item.getId();
             if (quantityBook == null) {
-                showErrAndEx.showAlert("null");
+                ShowErrAndEx.showAlert("null");
             }
             int oldquantity = quantityBook.get(bookId);
             int newquantity = oldquantity - item.getVolume();
