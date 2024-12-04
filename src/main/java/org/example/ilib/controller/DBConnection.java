@@ -4,7 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.example.ilib.account.Account;
 import org.example.ilib.book.Book;
-import org.example.ilib.book.BookDetail.Comment;
+import org.example.ilib.book.bookdetail.Comment;
 
 import java.sql.*;
 import java.util.ArrayList;

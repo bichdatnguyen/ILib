@@ -1,4 +1,4 @@
-package org.example.ilib.book.BookDetail;
+package org.example.ilib.book.bookdetail;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

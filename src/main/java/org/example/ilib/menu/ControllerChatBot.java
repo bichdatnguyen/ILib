@@ -11,7 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import org.example.ilib.book.BookDetail.ControllerComment;
+import org.example.ilib.book.bookdetail.ControllerComment;
 import org.example.ilib.controller.ShowErrAndEx;
 
 import java.io.IOException;

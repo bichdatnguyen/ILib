@@ -62,6 +62,6 @@ module org.example.ilib {
     opens org.example.ilib.adminmenu.Member to javafx.fxml;
     exports org.example.ilib.transactionhistory;
     opens org.example.ilib.transactionhistory to javafx.fxml;
-    exports org.example.ilib.book.BookDetail;
-    opens org.example.ilib.book.BookDetail to javafx.fxml;
+    exports org.example.ilib.book.bookdetail;
+    opens org.example.ilib.book.bookdetail to javafx.fxml;
 }

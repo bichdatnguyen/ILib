@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import org.example.ilib.book.Book;
-import org.example.ilib.book.BookDetail.ControllerBookDetail;
+import org.example.ilib.book.bookdetail.ControllerBookDetail;
 
 import java.io.IOException;
 import java.sql.SQLException;
