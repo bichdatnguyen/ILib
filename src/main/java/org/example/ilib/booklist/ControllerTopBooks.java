@@ -46,7 +46,7 @@ public class ControllerTopBooks implements Initializable {
 
             for (int i = 0; i < Math.min(8, bookList.size()); i++) {
                 FXMLLoader fx = new FXMLLoader();
-                fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
+                fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(bookList.get(i));

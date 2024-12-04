@@ -89,7 +89,7 @@ public class ControllerSearchingBook  {
 
            for (int i = 8 * page - 8; i < Math.min(8 * page, booksearching.size()); i++) {
                Book book = booksearching.get(i);
-               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/book.fxml"));
+               FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/ilib/Book.fxml"));
 
                HBox hbox = (HBox) fxmlLoader.load();
                ControllerBook controllerBook = (ControllerBook) fxmlLoader.getController();

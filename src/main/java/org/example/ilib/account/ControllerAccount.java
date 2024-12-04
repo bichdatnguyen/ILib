@@ -195,7 +195,7 @@ public class ControllerAccount {
     public void updateAccount(MouseEvent mouseEvent) throws IOException{
         Stage stage = (Stage)updateAccount.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/org/example/ilib/updateAccount.fxml"));
+        loader.setLocation(getClass().getResource("/org/example/ilib/UpdateAccount.fxml"));
         Scene scene = new Scene(loader.load());
         stage.setScene(scene);
     }

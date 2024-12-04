@@ -406,7 +406,7 @@ public class ControllerMenu implements Initializable {
                 List<Book> recentlyBooks = Booklist.getInstance().getRecentlyBookList();
                 for (int i = 0; i < recentlyBooks.size(); i++) {
                     FXMLLoader fx = new FXMLLoader();
-                    fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
+                    fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
                     HBox cardbox = (HBox) fx.load();
                     ControllerBook controllerBook = (ControllerBook) fx.getController();
                     controllerBook.setBook(recentlyBooks.get(i));
@@ -418,7 +418,7 @@ public class ControllerMenu implements Initializable {
                 System.out.println(recommendBooks.size());
                 for (int i = 0; i < recommendBooks.size(); i++) {
                     FXMLLoader fx = new FXMLLoader();
-                    fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
+                    fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
                     HBox cardbox = (HBox) fx.load();
                     ControllerBook controllerBook = (ControllerBook) fx.getController();
                     controllerBook.setBook(recommendBooks.get(i));

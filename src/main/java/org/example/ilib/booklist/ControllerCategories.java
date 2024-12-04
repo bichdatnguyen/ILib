@@ -117,7 +117,7 @@ public class ControllerCategories implements Initializable {
             List<Book> books = bookByCategory.get(category);
             for (int i = 8 * page - 8; i < Math.min(8 * page, books.size()); i++) {
                 FXMLLoader fx = new FXMLLoader();
-                fx.setLocation(getClass().getResource("/org/example/ilib/book.fxml"));
+                fx.setLocation(getClass().getResource("/org/example/ilib/Book.fxml"));
                 HBox cardbox = (HBox) fx.load();
                 ControllerBook controllerBook = (ControllerBook) fx.getController();
                 controllerBook.setBook(books.get(i));
