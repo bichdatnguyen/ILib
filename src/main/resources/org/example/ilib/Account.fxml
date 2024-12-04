@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Account.ControllerAccount">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.account.ControllerAccount">
    <children>
       <ImageView fx:id="background" fitHeight="220.0" fitWidth="604.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="tinyField" fitHeight="31.0" fitWidth="120.0" layoutX="238.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" />

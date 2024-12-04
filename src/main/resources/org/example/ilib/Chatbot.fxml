@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="468.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.Menu.ControllerChatBot">
+<AnchorPane prefHeight="468.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.menu.ControllerChatBot">
    <children>
       <TextArea fx:id="questionText" layoutX="30.0" layoutY="406.0" onKeyReleased="#questionTextRelease" prefHeight="50.0" prefWidth="361.0" />
       <Button fx:id="clickButton" layoutX="392.0" layoutY="406.0" mnemonicParsing="false" onMouseClicked="#clickButtonClick" onMouseEntered="#clickButtonEnter" onMouseExited="#clickButtonExit" prefHeight="50.0" prefWidth="103.0" text="Accepted">

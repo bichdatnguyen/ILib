@@ -11,10 +11,10 @@ module org.example.ilib {
 
 //    opens org.example.ilib to javafx.fxml;
 //
-//    exports org.example.ilib.Controller;
-//    opens org.example.ilib.Controller to javafx.fxml;
-//    exports org.example.ilib.Processor;
-//    opens org.example.ilib.Processor to javafx.fxml;
+//    exports org.example.ilib.controller;
+//    opens org.example.ilib.controller to javafx.fxml;
+//    exports org.example.ilib.processor;
+//    opens org.example.ilib.processor to javafx.fxml;
 //
 
     requires stripe.java;
@@ -38,30 +38,30 @@ module org.example.ilib {
     requires javafx.media;
     requires com.google.zxing;
 
-    exports org.example.ilib.Controller;
-    opens org.example.ilib.Controller to javafx.fxml;
-    exports org.example.ilib.Processor;
-    opens org.example.ilib.Processor to javafx.fxml;
-    exports org.example.ilib.Account;
-    opens org.example.ilib.Account to javafx.fxml;
-    exports org.example.ilib.Book;
-    opens org.example.ilib.Book to javafx.fxml;
-    exports org.example.ilib.LoginAndRegister;
-    opens org.example.ilib.LoginAndRegister to javafx.fxml;
-    exports org.example.ilib.Menu;
-    opens org.example.ilib.Menu to javafx.fxml;
-    exports org.example.ilib.BookList;
-    opens org.example.ilib.BookList to javafx.fxml;
-    exports org.example.ilib.AdminMenu.BookAdmin;
-    opens org.example.ilib.AdminMenu.BookAdmin to javafx.fxml;
-    exports org.example.ilib.AdminMenu;
-    opens org.example.ilib.AdminMenu to javafx.fxml;
-    exports org.example.ilib.Cart;
-    opens org.example.ilib.Cart to javafx.fxml;
-    exports org.example.ilib.AdminMenu.Member;
-    opens org.example.ilib.AdminMenu.Member to javafx.fxml;
-    exports org.example.ilib.TransactionHistory;
-    opens org.example.ilib.TransactionHistory to javafx.fxml;
-    exports org.example.ilib.Book.BookDetail;
-    opens org.example.ilib.Book.BookDetail to javafx.fxml;
+    exports org.example.ilib.controller;
+    opens org.example.ilib.controller to javafx.fxml;
+    exports org.example.ilib.processor;
+    opens org.example.ilib.processor to javafx.fxml;
+    exports org.example.ilib.account;
+    opens org.example.ilib.account to javafx.fxml;
+    exports org.example.ilib.book;
+    opens org.example.ilib.book to javafx.fxml;
+    exports org.example.ilib.loginandregister;
+    opens org.example.ilib.loginandregister to javafx.fxml;
+    exports org.example.ilib.menu;
+    opens org.example.ilib.menu to javafx.fxml;
+    exports org.example.ilib.booklist;
+    opens org.example.ilib.booklist to javafx.fxml;
+    exports org.example.ilib.adminmenu.BookAdmin;
+    opens org.example.ilib.adminmenu.BookAdmin to javafx.fxml;
+    exports org.example.ilib.adminmenu;
+    opens org.example.ilib.adminmenu to javafx.fxml;
+    exports org.example.ilib.cart;
+    opens org.example.ilib.cart to javafx.fxml;
+    exports org.example.ilib.adminmenu.Member;
+    opens org.example.ilib.adminmenu.Member to javafx.fxml;
+    exports org.example.ilib.transactionhistory;
+    opens org.example.ilib.transactionhistory to javafx.fxml;
+    exports org.example.ilib.book.BookDetail;
+    opens org.example.ilib.book.BookDetail to javafx.fxml;
 }

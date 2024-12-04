@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.AdminMenu.BookAdmin.ControllerBookAdmin">
+<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ilib.adminmenu.BookAdmin.ControllerBookAdmin">
    <children>
       <TableView fx:id="BookTable" layoutX="2.0" layoutY="21.0" prefHeight="572.0" prefWidth="659.0">
         <columns>
